@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="app/src/main/res/drawable/ic_metronome.xml" value="0.22395833333333334" />
+        <entry key="app/src/main/res/drawable/ic_settings.xml" value="0.38" />
+        <entry key="app/src/main/res/drawable/ic_tuning_fork.xml" value="0.30185185185185187" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.16893115942028986" />
+        <entry key="app/src/main/res/menu/menu_bottom_navigation_bar.xml" value="0.19322916666666667" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
