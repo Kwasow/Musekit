@@ -64,9 +64,12 @@ class NoteForkFragment : Fragment() {
         }
 
         binding.buttonDown.setOnClickListener {
+            val oldNoteFrequency = note.getFrequency()
             note.down()
-            refreshTextViews()
-            restartPlayer()
+            if (oldNoteFrequency != note.getFrequency()) {
+                refreshTextViews()
+                restartPlayer()
+            }
         }
 
         binding.buttonStartStop.setOnClickListener {
