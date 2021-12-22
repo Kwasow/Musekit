@@ -10,6 +10,11 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent">
 
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/mainPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
         <com.github.kwasow.bottomnavigationcircles.BottomNavigationCircles
             android:id="@+id/bottomNavigation"
             android:layout_width="match_parent"

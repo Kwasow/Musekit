@@ -1,4 +1,4 @@
-package com.kwasow.musekit.utils
+package com.kwasow.musekit
 
 import kotlin.math.pow
 import kotlin.properties.Delegates
@@ -19,20 +19,23 @@ class Note {
         GisAs(11, "G♯/A♭")
     }
 
-    private var pitch by Delegates.notNull<Int>()
-    private lateinit var note: Notes
-    private var octave by Delegates.notNull<Int>()
+    var pitch by Delegates.notNull<Int>()
+    private var note: Notes
+    private var octave: Int
 
     constructor() : this(440, Notes.A, 4)
+
     constructor(pitch: Int) : this(pitch, Notes.A, 4)
+
     constructor(note: Notes) : this(440, note, 4)
+
     constructor(pitch: Int, note: Notes, octave: Int) {
         this.pitch = pitch
         this.note = note
         this.octave = octave
     }
 
-    private fun frequency(): Double {
+    fun getFrequency(): Double {
         val semitones = note.semitones
 
         return pitch *
@@ -40,9 +43,9 @@ class Note {
                 2.0.pow(semitones / 12.0)
     }
 
-    fun frequencyString(): String = String.format("%.2f", frequency())
+    fun getFrequencyString(): String = String.format("%.2f", getFrequency())
 
-    fun noteName(): String = note.noteName
+    fun getNoteName(): String = note.noteName
 
     fun up() {
         if (note.semitones == 11) {

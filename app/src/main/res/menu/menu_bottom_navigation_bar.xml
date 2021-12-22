@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- TODO: Proper translations -->
     <item
-        android:id="@+id/action_tuner"
+        android:id="@+id/action_fork"
         android:title="Note fork"
         android:icon="@drawable/ic_tuning_fork" />
     <item
