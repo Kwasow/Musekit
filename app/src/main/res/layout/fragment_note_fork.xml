@@ -67,4 +67,12 @@
         app:layout_constraintTop_toBottomOf="@id/buttonUp"
         app:layout_constraintStart_toStartOf="parent"/>
 
+    <Button
+        android:id="@+id/buttonStartStop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start/Stop"
+        app:layout_constraintTop_toBottomOf="@id/buttonDown"
+        app:layout_constraintStart_toStartOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
