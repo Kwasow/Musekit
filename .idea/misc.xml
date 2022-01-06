@@ -7,6 +7,7 @@
         <entry key="app/src/main/res/drawable/ic_settings.xml" value="0.38" />
         <entry key="app/src/main/res/drawable/ic_tuning_fork.xml" value="0.30185185185185187" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.16893115942028986" />
+        <entry key="app/src/main/res/layout/fragment_metronome.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_note_fork.xml" value="0.34791666666666665" />
         <entry key="app/src/main/res/menu/menu_bottom_navigation_bar.xml" value="0.19322916666666667" />
       </map>

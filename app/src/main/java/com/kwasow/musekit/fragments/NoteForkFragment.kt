@@ -37,8 +37,8 @@ class NoteForkFragment : Fragment() {
         note = Note()
 
         refreshTextViews()
-        setupListeners()
         setupPlayer()
+        setupListeners()
     }
 
     override fun onDestroy() {
@@ -54,6 +54,13 @@ class NoteForkFragment : Fragment() {
         binding.pitch.text = "${note.pitch}Hz"
         binding.frequency.text = "${note.getFrequencyString()}Hz"
         binding.note.text = note.getNoteName()
+    }
+
+    private fun setupPlayer() {
+        player = AudioTrack.Builder()
+            .setTransferMode(AudioTrack.MODE_STREAM)
+            .build()
+        sampleRate = player.sampleRate
     }
 
     private fun setupListeners() {
@@ -88,15 +95,8 @@ class NoteForkFragment : Fragment() {
         playSound()
     }
 
-    private fun setupPlayer() {
-        player = AudioTrack.Builder()
-            .setTransferMode(AudioTrack.MODE_STREAM)
-            .build()
-        sampleRate = player.sampleRate
-    }
-
     private fun playSound() {
-        val buffer = createSineWave(note.getFrequency())
+        val tone = createSineWave(note.getFrequency())
 
         player.play()
 
@@ -105,7 +105,7 @@ class NoteForkFragment : Fragment() {
             while (playing && notePlaying == note.getFrequency()) {
                 // Only write if the buffer is about to end to safe memory
                 if (player.bufferSizeInFrames < sampleRate) {
-                    player.write(buffer, 0, buffer.size)
+                    player.write(tone, 0, tone.size)
                 }
             }
         }
@@ -125,7 +125,7 @@ class NoteForkFragment : Fragment() {
     }
 
     private fun stopSound() {
-        player.flush()
         player.stop()
+        player.flush()
     }
 }
