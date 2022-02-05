@@ -3,7 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../layout/compose-model-1644076300660.xml" value="0.16596283783783783" />
         <entry key="app/src/main/res/drawable/ic_metronome.xml" value="0.22395833333333334" />
+        <entry key="app/src/main/res/drawable/ic_minus_circle.xml" value="0.1895" />
+        <entry key="app/src/main/res/drawable/ic_play_circle.xml" value="0.1895" />
+        <entry key="app/src/main/res/drawable/ic_plus_circle.xml" value="0.1895" />
         <entry key="app/src/main/res/drawable/ic_settings.xml" value="0.38" />
         <entry key="app/src/main/res/drawable/ic_tuning_fork.xml" value="0.30185185185185187" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.16893115942028986" />

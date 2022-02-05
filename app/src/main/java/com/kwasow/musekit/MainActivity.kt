@@ -2,7 +2,6 @@ package com.kwasow.musekit
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.google.android.material.color.DynamicColors
 import com.google.android.material.navigation.NavigationBarView
 import com.kwasow.musekit.adapters.MainPagerAdapter
 import com.kwasow.musekit.databinding.ActivityMainBinding

@@ -8,6 +8,7 @@ fun versionCode(): Int {
     // This will fail eventually, but well… It's the best we have
     return secondsSinceEpoch.toInt()
 }
+val composeVersion: String by rootProject.extra
 
 android {
     compileSdk = 31
@@ -43,6 +44,11 @@ android {
 
     buildFeatures {
         viewBinding = true
+        // compose = true
+    }
+
+    composeOptions {
+        // kotlinCompilerExtensionVersion = composeVersion
     }
 }
 
@@ -52,7 +58,21 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
     implementation("com.google.android.material:material:1.5.0")
+
+    // Compose
+    /* TODO: Enable compose when necessary (and possible)
+    implementation("androidx.activity:activity-compose:1.4.0")
+    implementation("androidx.compose.material3:material3:1.0.0-alpha04")
+    implementation("androidx.compose.ui:ui:$composeVersion")
+    implementation("androidx.compose.ui:ui-tooling-preview:$composeVersion")
+    */
+
+    // Testing
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    // androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeVersion")
+
+    // Debug
+    // debugImplementation("androidx.compose.ui:ui-tooling:$composeVersion")
 }

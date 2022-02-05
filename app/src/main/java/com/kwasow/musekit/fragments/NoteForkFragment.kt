@@ -1,6 +1,5 @@
 package com.kwasow.musekit.fragments
 
-import android.annotation.SuppressLint
 import android.media.AudioTrack
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.kwasow.musekit.Note
+import com.kwasow.musekit.R
 import com.kwasow.musekit.databinding.FragmentNoteForkBinding
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -49,11 +49,9 @@ class NoteForkFragment : Fragment() {
         }
     }
 
-    @SuppressLint("SetTextI18n")
     private fun refreshTextViews() {
-        binding.pitch.text = "${note.pitch}Hz"
-        binding.frequency.text = "${note.getFrequencyString()}Hz"
-        binding.note.text = note.getNoteName()
+        binding.textPitch.text = getString(R.string.pitch_placeholder, note.pitch)
+        binding.textNote.text = getString(R.string.note_placeholder, note.getNoteName(), note.octave)
     }
 
     private fun setupPlayer() {
@@ -64,19 +62,31 @@ class NoteForkFragment : Fragment() {
     }
 
     private fun setupListeners() {
-        binding.buttonUp.setOnClickListener {
+        binding.buttonNoteUp.setOnClickListener {
             note.up()
             refreshTextViews()
             restartPlayer()
         }
 
-        binding.buttonDown.setOnClickListener {
+        binding.buttonNoteDown.setOnClickListener {
             val oldNoteFrequency = note.getFrequency()
             note.down()
             if (oldNoteFrequency != note.getFrequency()) {
                 refreshTextViews()
                 restartPlayer()
             }
+        }
+
+        binding.buttonPitchUp.setOnClickListener {
+            note.pitch += 1
+            refreshTextViews()
+            restartPlayer()
+        }
+
+        binding.buttonPitchDown.setOnClickListener {
+            note.pitch -= 1
+            refreshTextViews()
+            restartPlayer()
         }
 
         binding.buttonStartStop.setOnClickListener {

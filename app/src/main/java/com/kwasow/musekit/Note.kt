@@ -3,6 +3,9 @@ package com.kwasow.musekit
 import kotlin.math.pow
 import kotlin.properties.Delegates
 
+// TODO: Fix octave counting system, as it assumes that A is the beginning of the octave, and even
+//       it's not a problem for the implementation it might cause problems if the octave number
+//       is needed outside of this class
 class Note {
     enum class Notes(val semitones: Int, val noteName: String) {
         A(0, "A"),
@@ -21,7 +24,7 @@ class Note {
 
     var pitch by Delegates.notNull<Int>()
     private var note: Notes
-    private var octave: Int
+    var octave: Int
 
     constructor() : this(440, Notes.A, 4)
 
