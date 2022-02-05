@@ -3,10 +3,11 @@ package com.kwasow.musekit
 import kotlin.math.pow
 import kotlin.properties.Delegates
 
-// TODO: Fix octave counting system, as it assumes that A is the beginning of the octave, and even
-//       it's not a problem for the implementation it might cause problems if the octave number
-//       is needed outside of this class
 class Note {
+    // Enum classes named using a polish convention where
+    //  - the "is" suffix is added to a note with a sharp
+    //  - the "as" suffix is added to a note with a flat
+    //  - the note one half step below C is known as H; H flat is B
     enum class Notes(val semitones: Int, val noteName: String) {
         A(0, "A"),
         AisB(1, "A♯/B♭"),
@@ -40,9 +41,12 @@ class Note {
 
     fun getFrequency(): Double {
         val semitones = note.semitones
+        val octavePower =
+            if (note.semitones >= 3) { octave - 5 }
+            else { octave - 4 }
 
         return pitch *
-                2.0.pow(octave - 4.0) *
+                2.0.pow(octavePower) *
                 2.0.pow(semitones / 12.0)
     }
 
@@ -51,22 +55,26 @@ class Note {
     fun getNoteName(): String = note.noteName
 
     fun up() {
-        if (note.semitones == 11) {
-            note = Notes.A
-            octave += 1
-        } else {
-            note = Notes.values().first { it.semitones == note.semitones + 1 }
+        when (note) {
+            Notes.GisAs -> note = Notes.A
+            Notes.H -> {
+                note = Notes.C
+                octave += 1
+            }
+            else -> note = Notes.values().first { it.semitones == note.semitones + 1 }
         }
     }
 
     fun down() {
-        if (note.semitones == 0) {
-            if (octave != 1) {
-                note = Notes.GisAs
-                octave -= 1
+        when (note) {
+            Notes.A -> note = Notes.GisAs
+            Notes.C -> {
+                if (octave != 1) {
+                    note = Notes.H
+                    octave -= 1
+                }
             }
-        } else {
-            note = Notes.values().first { it.semitones == note.semitones - 1 }
+            else -> note = Notes.values().first { it.semitones == note.semitones - 1 }
         }
     }
 }
