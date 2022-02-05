@@ -6,7 +6,7 @@ buildscript {
         maven { url = java.net.URI("https://jitpack.io") }
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:7.0.3")
+        classpath("com.android.tools.build:gradle:7.1.0")
         classpath(kotlin("gradle-plugin", "1.5.31"))
 
         // NOTE: Do not place your application dependencies here; they belong
