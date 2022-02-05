@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- TODO: Proper translations -->
     <item
         android:id="@+id/action_fork"
-        android:title="Note fork"
+        android:title="@string/note_fork"
         android:icon="@drawable/ic_tuning_fork" />
     <item
         android:id="@+id/action_metronome"
-        android:title="Metronome"
+        android:title="@string/metronome"
         android:icon="@drawable/ic_metronome" />
     <item
         android:id="@+id/action_settings"
-        android:title="Settings"
+        android:title="@string/settings"
         android:icon="@drawable/ic_settings" />
 </menu>

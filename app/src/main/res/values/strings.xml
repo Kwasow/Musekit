@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">Musekit</string>
 
+    <!-- Bottom navigation bar labels -->
+    <string name="note_fork">Note fork</string>
+    <string name="metronome">Metronome</string>
+    <string name="settings">Settings</string>
+
     <!-- Note fork strings -->
     <string name="note">Note</string>
     <string name="note_placeholder">%1$s%2$d</string>
