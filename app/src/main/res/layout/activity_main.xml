@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
-        <com.github.kwasow.bottomnavigationcircles.BottomNavigationCircles
+        <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigation"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"

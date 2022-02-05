@@ -2,6 +2,8 @@ package com.kwasow.musekit
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.google.android.material.color.DynamicColors
+import com.google.android.material.navigation.NavigationBarView
 import com.kwasow.musekit.adapters.MainPagerAdapter
 import com.kwasow.musekit.databinding.ActivityMainBinding
 
@@ -25,14 +27,15 @@ class MainActivity : AppCompatActivity() {
         pager.adapter = pagerAdapter
         pager.isUserInputEnabled = false
 
-        binding.bottomNavigation.setOnNavigationItemSelectedListener {
-            when (it.itemId) {
-                R.id.action_fork -> pager.currentItem = 0
-                R.id.action_metronome -> pager.currentItem = 1
-                R.id.action_settings -> pager.currentItem = 2
-            }
+        binding.bottomNavigation.setOnItemSelectedListener(
+            NavigationBarView.OnItemSelectedListener { item ->
+                when (item.itemId) {
+                    R.id.action_fork -> pager.currentItem = 0
+                    R.id.action_metronome -> pager.currentItem = 1
+                    R.id.action_settings -> pager.currentItem = 2
+                }
 
-            return@setOnNavigationItemSelectedListener true
-        }
+                return@OnItemSelectedListener true
+            })
     }
 }
