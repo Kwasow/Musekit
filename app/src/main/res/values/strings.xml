@@ -12,4 +12,8 @@
     <string name="pitch">Pitch</string>
     <string name="pitch_placeholder">%1$dHz</string>
 
+    <!-- Note fork presets -->
+    <string name="presets">Presets</string>
+    <string name="defaultPreset">Default</string>
+
 </resources>

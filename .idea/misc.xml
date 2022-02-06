@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/compose-model-1644076300660.xml" value="0.16596283783783783" />
+        <entry key="app/src/main/res/drawable/ic_add.xml" value="0.199" />
         <entry key="app/src/main/res/drawable/ic_metronome.xml" value="0.22395833333333334" />
         <entry key="app/src/main/res/drawable/ic_minus_circle.xml" value="0.1895" />
         <entry key="app/src/main/res/drawable/ic_play_circle.xml" value="0.1895" />
@@ -13,7 +14,9 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.16893115942028986" />
         <entry key="app/src/main/res/layout/fragment_metronome.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_note_fork.xml" value="0.34791666666666665" />
+        <entry key="app/src/main/res/layout/list_item.xml" value="0.18125" />
         <entry key="app/src/main/res/menu/menu_bottom_navigation_bar.xml" value="0.19322916666666667" />
+        <entry key="app/src/main/res/menu/note_fork_presets.xml" value="0.18125" />
       </map>
     </option>
   </component>

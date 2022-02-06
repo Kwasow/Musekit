@@ -24,14 +24,14 @@ class Note {
     }
 
     var pitch by Delegates.notNull<Int>()
-    private var note: Notes
+    var note: Notes
     var octave: Int
 
     constructor() : this(440, Notes.A, 4)
 
     constructor(pitch: Int) : this(pitch, Notes.A, 4)
 
-    constructor(note: Notes) : this(440, note, 4)
+    constructor(note: Notes, octave: Int) : this(440, note, octave)
 
     constructor(pitch: Int, note: Notes, octave: Int) {
         this.pitch = pitch

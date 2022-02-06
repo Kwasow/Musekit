@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import com.kwasow.musekit.Note
 import com.kwasow.musekit.R
@@ -17,6 +18,8 @@ import kotlin.properties.Delegates
 class NoteForkFragment : Fragment() {
     private lateinit var binding: FragmentNoteForkBinding
     private lateinit var note: Note
+
+    private var presetSelection = 0
 
     private lateinit var player: AudioTrack
     private var playing = false
@@ -37,6 +40,7 @@ class NoteForkFragment : Fragment() {
         note = Note()
 
         refreshTextViews()
+        setupPresets()
         setupPlayer()
         setupListeners()
     }
@@ -52,6 +56,25 @@ class NoteForkFragment : Fragment() {
     private fun refreshTextViews() {
         binding.textPitch.text = getString(R.string.pitch_placeholder, note.pitch)
         binding.textNote.text = getString(R.string.note_placeholder, note.getNoteName(), note.octave)
+    }
+
+    private fun setupPresets() {
+        val presetsList = listOf(
+            getString(R.string.defaultPreset),
+        )
+        val presetsDetails = listOf(
+            Note(440, Note.Notes.A, 4),
+        )
+        val presetsAdapter = ArrayAdapter(requireContext(), R.layout.list_item, presetsList)
+        binding.presetsPicker.setAdapter(presetsAdapter)
+        binding.presetsPicker.setText(getString(R.string.defaultPreset), false)
+        binding.presetsPicker.setOnItemClickListener { _, _, i, _ ->
+            note.octave = presetsDetails[i].octave
+            note.pitch = presetsDetails[i].pitch
+            note.note = presetsDetails[i].note
+            refreshTextViews()
+            restartPlayer()
+        }
     }
 
     private fun setupPlayer() {
@@ -113,7 +136,7 @@ class NoteForkFragment : Fragment() {
         GlobalScope.launch {
             val notePlaying = note.getFrequency()
             while (playing && notePlaying == note.getFrequency()) {
-                // Only write if the buffer is about to end to safe memory
+                // Only write if the buffer is about to end to save memory
                 if (player.bufferSizeInFrames < sampleRate) {
                     player.write(tone, 0, tone.size)
                 }
