@@ -7,8 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
-import com.kwasow.musekit.Note
+import com.kwasow.musekit.data.Note
 import com.kwasow.musekit.R
+import com.kwasow.musekit.data.Notes
 import com.kwasow.musekit.databinding.FragmentNoteForkBinding
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -18,8 +19,6 @@ import kotlin.properties.Delegates
 class NoteForkFragment : Fragment() {
     private lateinit var binding: FragmentNoteForkBinding
     private lateinit var note: Note
-
-    private var presetSelection = 0
 
     private lateinit var player: AudioTrack
     private var playing = false
@@ -63,7 +62,7 @@ class NoteForkFragment : Fragment() {
             getString(R.string.defaultPreset),
         )
         val presetsDetails = listOf(
-            Note(440, Note.Notes.A, 4),
+            Note(440, Notes.A, 4),
         )
         val presetsAdapter = ArrayAdapter(requireContext(), R.layout.list_item, presetsList)
         binding.presetsPicker.setAdapter(presetsAdapter)
