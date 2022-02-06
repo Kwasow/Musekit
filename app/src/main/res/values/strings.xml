@@ -14,6 +14,10 @@
 
     <!-- Note fork presets -->
     <string name="presets">Presets</string>
-    <string name="defaultPreset">Default</string>
+    <string name="default_preset">Default</string>
+    <string name="save_preset">Save preset</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="preset_name">Preset name</string>
 
 </resources>

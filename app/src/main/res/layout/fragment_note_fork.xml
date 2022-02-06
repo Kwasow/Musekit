@@ -8,13 +8,11 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/presetsPickerLayout"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/buttonAddPreset"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
         <AutoCompleteTextView
@@ -25,18 +23,6 @@
             android:inputType="none"/>
 
     </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonAddPreset"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        app:icon="@drawable/ic_add"
-        app:iconSize="28dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/presetsPickerLayout"
-        app:layout_constraintBottom_toBottomOf="@id/presetsPickerLayout"
-        style="@style/Widget.Material3.Button.IconButton"/>
 
     <LinearLayout
         android:id="@+id/topCards"
@@ -172,6 +158,15 @@
         </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonSavePreset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/save_preset"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topCards"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonStartStop"

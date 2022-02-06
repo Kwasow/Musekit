@@ -16,5 +16,25 @@ enum class Notes(val semitones: Int, val noteName: String) {
     F(8, "F"),
     FisGes(9, "F♯/G♭"),
     G(10, "G"),
-    GisAs(11, "G♯/A♭")
+    GisAs(11, "G♯/A♭");
+
+    companion object {
+        // TODO: This could probably be better
+        fun fromSemitones(semitones: Int): Notes {
+            return when (semitones) {
+                1    -> AisB
+                2    -> H
+                3    -> C
+                4    -> CisDes
+                5    -> D
+                6    -> DisEs
+                7    -> E
+                8    -> F
+                9    -> FisGes
+                10   -> G
+                11   -> GisAs
+                else -> A
+            }
+        }
+    }
 }
