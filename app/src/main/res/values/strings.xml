@@ -19,5 +19,8 @@
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
     <string name="preset_name">Preset name</string>
+    <string name="delete_preset">Delete preset</string>
+    <string name="warning_preset_deletion">The preset \"%1$s\" will be permanently deleted.</string>
+    <string name="delete">Delete</string>
 
 </resources>

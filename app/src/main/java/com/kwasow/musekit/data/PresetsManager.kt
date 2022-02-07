@@ -17,14 +17,14 @@ class PresetsManager {
 
         fun savePreset(preset: Preset, context: Context) {
             if (preset.name.isNotBlank()) {
-                var filename = toFileName(preset.name) + " "
+                var filename = toFileName(preset.name) + 0
                 val directory = File(context.filesDir, PRESET_DIR)
 
                 if (!directory.exists()) {
                     directory.mkdir()
                 }
 
-                var i = 0
+                var i = 1
                 while (File(directory, filename).exists()) {
                     filename = filename.dropLast(1) + i
                     i++
@@ -33,7 +33,7 @@ class PresetsManager {
                 val file = File(directory, filename)
                 val contents = """
                 $VER_1
-                ${preset.name}
+                ${preset.name}${if (i == 1) "" else " - (${i - 1})" }
                 ${preset.semitones}
                 ${preset.octave}
                 ${preset.pitch}
@@ -62,6 +62,22 @@ class PresetsManager {
             }
 
             return presets
+        }
+
+        fun removePreset(name: String, context: Context) {
+            if (name.isNotBlank()) {
+                val directory = File(context.filesDir, PRESET_DIR)
+
+                directory.listFiles()?.forEach {
+                    if (it.isFile) {
+                        val nameFromFile = it.readLines()[1]
+                        if (name == nameFromFile) {
+                            it.delete()
+                            return@forEach
+                        }
+                    }
+                }
+            }
         }
 
         private fun toFileName(name: String): String {

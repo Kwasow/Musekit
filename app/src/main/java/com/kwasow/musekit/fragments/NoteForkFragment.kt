@@ -8,11 +8,11 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kwasow.musekit.data.Note
 import com.kwasow.musekit.R
+import com.kwasow.musekit.adapters.PresetsAdapter
 import com.kwasow.musekit.data.Notes
 import com.kwasow.musekit.data.PresetsManager
 import com.kwasow.musekit.databinding.DialogSavePresetBinding
@@ -48,7 +48,7 @@ class NoteForkFragment : Fragment() {
         setupPresets()
         setupPlayer()
         setupListeners()
-        setupDialog(layoutInflater)
+        setupSavePresetDialog()
     }
 
     override fun onDestroy() {
@@ -65,6 +65,7 @@ class NoteForkFragment : Fragment() {
     }
 
     private fun setupPresets() {
+        // Setup lists and adapter
         val presetsNames = mutableListOf(
             getString(R.string.default_preset),
         )
@@ -79,8 +80,9 @@ class NoteForkFragment : Fragment() {
             presetsNames.add(name)
             presetsDetails.add(note)
         }
+        val presetsAdapter = PresetsAdapter(requireContext(), presetsNames)
 
-        val presetsAdapter = ArrayAdapter(requireContext(), R.layout.list_item, presetsNames)
+        // Attach adapter to view
         binding.presetsPicker.setAdapter(presetsAdapter)
         binding.presetsPicker.setText(getString(R.string.default_preset), false)
         binding.presetsPicker.setOnItemClickListener { _, _, i, _ ->
@@ -177,44 +179,46 @@ class NoteForkFragment : Fragment() {
         player.flush()
     }
 
-    private fun setupDialog(inflater: LayoutInflater) {
-        binding.buttonSavePreset.setOnClickListener {
-            val dialogBinding = DialogSavePresetBinding.inflate(inflater)
+    private fun setupSavePresetDialog() {
+        binding.buttonSavePreset.setOnClickListener { showSavePresetDialog() }
+    }
 
-            val dialog = MaterialAlertDialogBuilder(requireContext())
-                .setTitle(getString(R.string.save_preset))
-                .setView(dialogBinding.root)
-                .setNeutralButton(getString(R.string.cancel)) { _, _ -> }
-                .setPositiveButton(getString(R.string.save)) { _, _ ->
-                    // Get preset details
-                    val preset = PresetsManager.Companion.Preset(
-                        name = dialogBinding.presetName.text.toString(),
-                        semitones = note.note.semitones,
-                        octave = note.octave,
-                        pitch = note.pitch
-                    )
+    private fun showSavePresetDialog() {
+        val dialogBinding = DialogSavePresetBinding.inflate(layoutInflater)
 
-                    // Save preset
-                    PresetsManager.savePreset(preset, requireContext())
+        val dialog = MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.save_preset)
+            .setView(dialogBinding.root)
+            .setNeutralButton(R.string.cancel) { _, _ -> }
+            .setPositiveButton(R.string.save) { _, _ ->
+                // Get preset details
+                val preset = PresetsManager.Companion.Preset(
+                    name = dialogBinding.presetName.text.toString(),
+                    semitones = note.note.semitones,
+                    octave = note.octave,
+                    pitch = note.pitch
+                )
 
-                    // Refresh presets list
-                    setupPresets()
-                }
-                .create()
+                // Save preset
+                PresetsManager.savePreset(preset, requireContext())
 
-            dialog.show()
-            dialog.getButton(DialogInterface.BUTTON_POSITIVE)?.isEnabled = false
+                // Refresh presets list
+                setupPresets()
+            }
+            .create()
 
-            // Disable "Save" button if text field is empty
-            dialogBinding.presetName.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+        dialog.show()
+        dialog.getButton(DialogInterface.BUTTON_POSITIVE)?.isEnabled = false
 
-                override fun afterTextChanged(p0: Editable?) {
-                    dialog.getButton(DialogInterface.BUTTON_POSITIVE)?.isEnabled =
-                        p0?.isBlank() != true
-                }
-            })
-        }
+        // Disable "Save" button if text field is empty
+        dialogBinding.presetName.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun afterTextChanged(p0: Editable?) {
+                dialog.getButton(DialogInterface.BUTTON_POSITIVE)?.isEnabled =
+                    p0?.isBlank() != true
+            }
+        })
     }
 }
