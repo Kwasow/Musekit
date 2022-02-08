@@ -8,8 +8,8 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/image_app_icon_wrapper"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_marginTop="36dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,7 +18,8 @@
 
         <!-- TODO: This needs a separate drawable -->
         <androidx.appcompat.widget.AppCompatImageView
-            android:src="@mipmap/ic_launcher"
+            android:background="@color/ic_launcher_background"
+            android:foreground="@drawable/ic_launcher_foreground"
             android:contentDescription="@string/contentDescription_app_icon"
             android:layout_width="200dp"
             android:layout_height="200dp"/>
