@@ -17,8 +17,6 @@ import com.kwasow.musekit.data.Notes
 import com.kwasow.musekit.data.PresetsManager
 import com.kwasow.musekit.databinding.DialogSavePresetBinding
 import com.kwasow.musekit.databinding.FragmentNoteForkBinding
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import kotlin.math.sin
 import kotlin.properties.Delegates
 
@@ -90,15 +88,18 @@ class NoteForkFragment : Fragment() {
             note.pitch = presetsDetails[i].pitch
             note.note = presetsDetails[i].note
             refreshTextViews()
-            restartPlayer()
+            if (playing) {
+                restartPlayer()
+            }
         }
     }
 
     private fun setupPlayer() {
+        sampleRate = AudioTrack.getNativeOutputSampleRate(AudioTrack.MODE_STATIC)
         player = AudioTrack.Builder()
-            .setTransferMode(AudioTrack.MODE_STREAM)
+            .setTransferMode(AudioTrack.MODE_STATIC)
+            .setBufferSizeInBytes(sampleRate * 2)
             .build()
-        sampleRate = player.sampleRate
     }
 
     private fun setupListeners() {
@@ -146,30 +147,24 @@ class NoteForkFragment : Fragment() {
     }
 
     // TODO: Animate play/pause button
-    // TODO: Fix bug with selecting the same preset twice
     private fun playSound() {
-        val tone = createSineWave(note.getFrequency())
+        if (player.playState != AudioTrack.PLAYSTATE_PLAYING) {
+            val tone = createSineWave(note.getFrequency())
 
-        player.play()
+            player.write(tone, 0, tone.size)
+            val loopEnd = player.bufferSizeInFrames
+            player.setLoopPoints(0, loopEnd, -1)
 
-        GlobalScope.launch {
-            val notePlaying = note.getFrequency()
-            while (playing && notePlaying == note.getFrequency()) {
-                // Only write if the buffer is about to end to save memory
-                if (player.bufferSizeInFrames < sampleRate) {
-                    player.write(tone, 0, tone.size)
-                }
-            }
+            player.play()
         }
     }
 
     private fun createSineWave(frequency: Double): ShortArray {
-        val numberOfSamples = 10 * sampleRate
-        val samples = DoubleArray(numberOfSamples)
-        val buffer = ShortArray(numberOfSamples)
+        val samples = DoubleArray(sampleRate * 2)
+        val buffer = ShortArray(sampleRate * 2)
 
-        for (i in 0 until numberOfSamples) {
-            samples[i] = sin(i * 2 * Math.PI * frequency / sampleRate)
+        for (i in buffer.indices) {
+            samples[i] = sin(i * 2 * Math.PI * frequency.toInt() / sampleRate)
             buffer[i] = (samples[i] * Short.MAX_VALUE).toInt().toShort()
         }
 
