@@ -2,36 +2,49 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/image_app_icon_wrapper"
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imageAppIcon"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_marginTop="36dp"
+        android:foreground="@drawable/ic_launcher_foreground"
+        android:contentDescription="@string/contentDescription_app_icon"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/appName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textStyle="bold"
+        style="@style/TextAppearance.Material3.HeadlineMedium"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        style="?attr/materialCardViewElevatedStyle">
+        app:layout_constraintTop_toBottomOf="@id/imageAppIcon"/>
 
-        <!-- TODO: This needs a separate drawable -->
-        <androidx.appcompat.widget.AppCompatImageView
-            android:background="@color/ic_launcher_background"
-            android:foreground="@drawable/ic_launcher_foreground"
-            android:contentDescription="@string/contentDescription_app_icon"
-            android:layout_width="200dp"
-            android:layout_height="200dp"/>
-
-    </com.google.android.material.card.MaterialCardView>
+    <TextView
+        android:id="@+id/appVersion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Placeholder: 1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appName"
+        tools:ignore="HardcodedText" />
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="32dp"
         style="@style/Widget.Material3.CardView.Filled"
-        app:layout_constraintTop_toBottomOf="@id/image_app_icon_wrapper">
+        app:layout_constraintTop_toBottomOf="@id/appVersion">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -39,67 +52,82 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/buttonSourceCode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingVertical="8dp">
+                android:paddingVertical="12dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_github"
-                    android:layout_marginStart="8dp"
-                    android:layout_gravity="center_vertical"/>
+                    android:layout_marginStart="12dp"
+                    android:layout_gravity="center_vertical"
+                    android:contentDescription="@string/contentDescription_github_logo"/>
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/source_code"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="12dp"
                     android:layout_gravity="center_vertical"/>
 
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/buttonTwitter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingVertical="8dp">
+                android:paddingVertical="12dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_twitter"
-                    android:layout_marginStart="8dp"
-                    android:layout_gravity="center_vertical"/>
+                    android:layout_marginStart="12dp"
+                    android:layout_gravity="center_vertical"
+                    android:contentDescription="@string/contentDescription_twitter_logo"/>
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/developer"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="12dp"
                     android:layout_gravity="center_vertical"/>
 
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/buttonLicenses"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingVertical="8dp">
+                android:paddingVertical="12dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_github"
-                    android:layout_marginStart="8dp"
-                    android:layout_gravity="center_vertical"/>
+                    android:src="@drawable/ic_file"
+                    android:layout_marginStart="12dp"
+                    android:layout_gravity="center_vertical"
+                    android:contentDescription="@string/contentDescription_file_icon"/>
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/licenses"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="12dp"
                     android:layout_gravity="center_vertical"/>
 
             </LinearLayout>
