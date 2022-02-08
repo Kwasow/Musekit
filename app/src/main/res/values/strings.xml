@@ -27,10 +27,12 @@
     <string name="contentDescription_app_icon">App icon</string>
     <string name="source_code">Source code</string>
     <string name="developer">Developer account</string>
+    <string name="developer_website">Developer website</string>
     <string name="licenses">Licenses</string>
     <string name="version">Version %1$s</string>
     <string name="contentDescription_github_logo">Github logo</string>
     <string name="contentDescription_twitter_logo">Twitter logo</string>
+    <string name="contentDescription_internet_globe">A globe representing the internet</string>
     <string name="contentDescription_file_icon">File icon</string>
     <string name="close">Close</string>
 

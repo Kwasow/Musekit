@@ -25,7 +25,6 @@ class AboutFragment : Fragment() {
         return binding.root
     }
 
-    // TODO: Add developer website
     override fun onStart() {
         super.onStart()
 
@@ -40,6 +39,13 @@ class AboutFragment : Fragment() {
             val browserIntent = Intent(
                 Intent.ACTION_VIEW,
                 Uri.parse("https://twitter.com/KarolWasowski")
+            )
+            startActivity(browserIntent)
+        }
+        binding.buttonWebsite.setOnClickListener {
+            val browserIntent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://kwasow.github.io/#/")
             )
             startActivity(browserIntent)
         }
