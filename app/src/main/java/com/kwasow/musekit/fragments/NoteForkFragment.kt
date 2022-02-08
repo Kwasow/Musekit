@@ -4,7 +4,11 @@ import android.content.DialogInterface
 import android.media.AudioTrack
 import android.os.Bundle
 import android.text.Editable
+import android.text.SpannableStringBuilder
+import android.text.Spanned
 import android.text.TextWatcher
+import android.text.style.SubscriptSpan
+import android.text.style.SuperscriptSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,8 +47,8 @@ class NoteForkFragment : Fragment() {
         note = Note()
 
         refreshTextViews()
-        setupPresets()
         setupPlayer()
+        setupPresets()
         setupListeners()
         setupSavePresetDialog()
     }
@@ -59,7 +63,22 @@ class NoteForkFragment : Fragment() {
 
     private fun refreshTextViews() {
         binding.textPitch.text = getString(R.string.pitch_placeholder, note.pitch)
-        binding.textNote.text = getString(R.string.note_placeholder, note.getNoteName(), note.octave)
+        binding.textNote.text = toSuperscript(getString(R.string.note_placeholder, note.getNoteName(), note.octave))
+    }
+
+    private fun toSuperscript(note: String): SpannableStringBuilder {
+        val spannableStringBuilder = SpannableStringBuilder(note)
+
+        if (note.length == 6) {
+            spannableStringBuilder.setSpan(
+                SuperscriptSpan(),
+                1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            spannableStringBuilder.setSpan(
+                SuperscriptSpan(),
+                4, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        }
+
+        return spannableStringBuilder
     }
 
     private fun setupPresets() {
@@ -148,7 +167,7 @@ class NoteForkFragment : Fragment() {
 
     // TODO: Animate play/pause button
     private fun playSound() {
-        if (player.playState != AudioTrack.PLAYSTATE_PLAYING) {
+        if (player.playState != AudioTrack.PLAYSTATE_PLAYING && playing) {
             val tone = createSineWave(note.getFrequency())
 
             player.write(tone, 0, tone.size)
@@ -172,8 +191,10 @@ class NoteForkFragment : Fragment() {
     }
 
     private fun stopSound() {
-        player.stop()
-        player.flush()
+        if (player.state == AudioTrack.STATE_INITIALIZED) {
+            player.stop()
+            player.flush()
+        }
     }
 
     private fun setupSavePresetDialog() {
