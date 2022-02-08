@@ -19,7 +19,6 @@ enum class Notes(val semitones: Int, val noteName: String) {
     GisAs(11, "G♯/A♭");
 
     companion object {
-        // TODO: This could probably be better
         fun fromSemitones(semitones: Int): Notes {
             return when (semitones) {
                 1    -> AisB

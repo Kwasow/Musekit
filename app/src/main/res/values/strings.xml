@@ -4,7 +4,7 @@
     <!-- Bottom navigation bar labels -->
     <string name="note_fork">Note fork</string>
     <string name="metronome">Metronome</string>
-    <string name="settings">Settings</string>
+    <string name="about">About</string>
 
     <!-- Note fork strings -->
     <string name="note">Note</string>
@@ -22,5 +22,11 @@
     <string name="delete_preset">Delete preset</string>
     <string name="warning_preset_deletion">The preset \"%1$s\" will be permanently deleted.</string>
     <string name="delete">Delete</string>
+
+    <!-- About strings -->
+    <string name="contentDescription_app_icon">App icon</string>
+    <string name="source_code">Source code (GitHub)</string>
+    <string name="developer">Developer (Twitter)</string>
+    <string name="licenses">Licenses</string>
 
 </resources>
