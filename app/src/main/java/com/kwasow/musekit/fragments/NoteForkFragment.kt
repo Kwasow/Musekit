@@ -145,6 +145,8 @@ class NoteForkFragment : Fragment() {
         playSound()
     }
 
+    // TODO: Animate play/pause button
+    // TODO: Fix bug with selecting the same preset twice
     private fun playSound() {
         val tone = createSineWave(note.getFrequency())
 

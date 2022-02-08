@@ -25,6 +25,7 @@ class AboutFragment : Fragment() {
         return binding.root
     }
 
+    // TODO: Add developer website
     override fun onStart() {
         super.onStart()
 

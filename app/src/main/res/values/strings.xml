@@ -34,6 +34,10 @@
     <string name="contentDescription_file_icon">File icon</string>
     <string name="close">Close</string>
 
+    <!-- Error string -->
+    <string name="whoopsie">Whoopsie, you shouldn\'t be here!</string>
+    <string name="close_app">Close app</string>
+
     <!-- Licenses dialog -->
     <string name="this_app">This app</string>
     <string name="gpl_3_0">GPLv3.0</string>
