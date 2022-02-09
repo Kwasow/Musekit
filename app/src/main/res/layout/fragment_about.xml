@@ -1,180 +1,186 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imageAppIcon"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:foreground="@drawable/ic_launcher_foreground"
-        android:contentDescription="@string/contentDescription_app_icon"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <TextView
-        android:id="@+id/appName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textStyle="bold"
-        style="@style/TextAppearance.Material3.HeadlineMedium"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageAppIcon"/>
-
-    <TextView
-        android:id="@+id/appVersion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Placeholder: 1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appName"
-        tools:ignore="HardcodedText" />
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardViewMenuWrapper"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="32dp"
-        style="@style/Widget.Material3.CardView.Filled"
-        app:layout_constraintTop_toBottomOf="@id/appVersion">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageAppIcon"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:foreground="@drawable/ic_launcher_foreground"
+            android:contentDescription="@string/contentDescription_app_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/appName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textStyle="bold"
+            style="@style/TextAppearance.Material3.HeadlineMedium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageAppIcon"/>
+
+        <TextView
+            android:id="@+id/appVersion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Placeholder: 1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appName"
+            tools:ignore="HardcodedText" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardViewMenuWrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="32dp"
+            style="@style/Widget.Material3.CardView.Filled"
+            app:layout_constraintTop_toBottomOf="@id/appVersion">
 
             <LinearLayout
-                android:id="@+id/buttonSourceCode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingVertical="12dp"
-                android:background="?android:attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true">
+                android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/buttonSourceCode"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_github"
-                    android:layout_marginStart="12dp"
-                    android:layout_gravity="center_vertical"
-                    android:contentDescription="@string/contentDescription_github_logo"/>
+                    android:orientation="horizontal"
+                    android:paddingVertical="12dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true">
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_github"
+                        android:layout_marginStart="12dp"
+                        android:layout_gravity="center_vertical"
+                        android:contentDescription="@string/contentDescription_github_logo"/>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/source_code"
+                        android:layout_marginStart="12dp"
+                        android:layout_gravity="center_vertical"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/buttonTwitter"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/source_code"
-                    android:layout_marginStart="12dp"
-                    android:layout_gravity="center_vertical"/>
+                    android:orientation="horizontal"
+                    android:paddingVertical="12dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_twitter"
+                        android:layout_marginStart="12dp"
+                        android:layout_gravity="center_vertical"
+                        android:contentDescription="@string/contentDescription_twitter_logo"/>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/developer"
+                        android:layout_marginStart="12dp"
+                        android:layout_gravity="center_vertical"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/buttonWebsite"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingVertical="12dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_globe"
+                        android:layout_marginStart="12dp"
+                        android:layout_gravity="center_vertical"
+                        android:contentDescription="@string/contentDescription_twitter_logo"/>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/developer_website"
+                        android:layout_marginStart="12dp"
+                        android:layout_gravity="center_vertical"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/buttonLicenses"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingVertical="12dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_file"
+                        android:layout_marginStart="12dp"
+                        android:layout_gravity="center_vertical"
+                        android:contentDescription="@string/contentDescription_file_icon"/>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/licenses"
+                        android:layout_marginStart="12dp"
+                        android:layout_gravity="center_vertical"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/buttonTwitter"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingVertical="12dp"
-                android:background="?android:attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true">
+        </com.google.android.material.card.MaterialCardView>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_twitter"
-                    android:layout_marginStart="12dp"
-                    android:layout_gravity="center_vertical"
-                    android:contentDescription="@string/contentDescription_twitter_logo"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/special_thanks_shape_shifter"
+            android:textStyle="italic"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:paddingVertical="16dp"
+            android:paddingHorizontal="32dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardViewMenuWrapper"/>
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/developer"
-                    android:layout_marginStart="12dp"
-                    android:layout_gravity="center_vertical"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/buttonWebsite"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingVertical="12dp"
-                android:background="?android:attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_globe"
-                    android:layout_marginStart="12dp"
-                    android:layout_gravity="center_vertical"
-                    android:contentDescription="@string/contentDescription_twitter_logo"/>
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/developer_website"
-                    android:layout_marginStart="12dp"
-                    android:layout_gravity="center_vertical"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/buttonLicenses"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingVertical="12dp"
-                android:background="?android:attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_file"
-                    android:layout_marginStart="12dp"
-                    android:layout_gravity="center_vertical"
-                    android:contentDescription="@string/contentDescription_file_icon"/>
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/licenses"
-                    android:layout_marginStart="12dp"
-                    android:layout_gravity="center_vertical"/>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/special_thanks_shape_shifter"
-        android:textStyle="italic"
-        android:textSize="12sp"
-        android:gravity="center"
-        android:layout_marginTop="16dp"
-        android:paddingHorizontal="32dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardViewMenuWrapper"/>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
