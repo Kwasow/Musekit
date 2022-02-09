@@ -70,6 +70,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_github"
+                        app:tint="?android:attr/textColorTertiary"
                         android:layout_marginStart="12dp"
                         android:layout_gravity="center_vertical"
                         android:contentDescription="@string/contentDescription_github_logo"/>
@@ -97,6 +98,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_twitter"
+                        app:tint="?android:attr/textColorTertiary"
                         android:layout_marginStart="12dp"
                         android:layout_gravity="center_vertical"
                         android:contentDescription="@string/contentDescription_twitter_logo"/>
@@ -124,6 +126,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_globe"
+                        app:tint="?android:attr/textColorTertiary"
                         android:layout_marginStart="12dp"
                         android:layout_gravity="center_vertical"
                         android:contentDescription="@string/contentDescription_twitter_logo"/>
@@ -151,6 +154,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_file"
+                        app:tint="?android:attr/textColorTertiary"
                         android:layout_marginStart="12dp"
                         android:layout_gravity="center_vertical"
                         android:contentDescription="@string/contentDescription_file_icon"/>

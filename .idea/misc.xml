@@ -15,6 +15,8 @@
         <entry key="app/src/main/res/drawable/ic_github.xml" value="0.21" />
         <entry key="app/src/main/res/drawable/ic_globe.xml" value="0.21" />
         <entry key="app/src/main/res/drawable/ic_info.xml" value="0.21" />
+        <entry key="app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_logo.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_metronome.xml" value="0.22395833333333334" />
         <entry key="app/src/main/res/drawable/ic_minus_circle.xml" value="0.1895" />
         <entry key="app/src/main/res/drawable/ic_note_fork.xml" value="0.21" />
@@ -29,7 +31,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/dialog_licenses.xml" value="0.3703125" />
         <entry key="app/src/main/res/layout/dialog_save_preset.xml" value="0.19114583333333332" />
-        <entry key="app/src/main/res/layout/fragment_about.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_about.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_error.xml" value="0.3703125" />
         <entry key="app/src/main/res/layout/fragment_metronome.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_note_fork.xml" value="0.1" />
