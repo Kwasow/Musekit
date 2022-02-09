@@ -39,6 +39,7 @@
         tools:ignore="HardcodedText" />
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardViewMenuWrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
@@ -162,5 +163,18 @@
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/special_thanks_shape_shifter"
+        android:textStyle="italic"
+        android:textSize="12sp"
+        android:gravity="center"
+        android:layout_marginTop="16dp"
+        android:paddingHorizontal="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardViewMenuWrapper"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

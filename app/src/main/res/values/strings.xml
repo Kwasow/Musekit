@@ -46,5 +46,6 @@
     <string name="icons">Icons by css.gg</string>
     <string name="mit">MIT License</string>
     <string name="contentDescription_right_arrow">Right arrow</string>
+    <string name="special_thanks_shape_shifter">Special thanks to Alex Lockwood for creating the amazing ShapeShifter tool.</string>
 
 </resources>
