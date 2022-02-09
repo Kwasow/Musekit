@@ -1,13 +1,13 @@
 package com.kwasow.musekit.fragments
 
 import android.content.DialogInterface
+import android.graphics.drawable.AnimatedVectorDrawable
 import android.media.AudioTrack
 import android.os.Bundle
 import android.text.Editable
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.TextWatcher
-import android.text.style.SubscriptSpan
 import android.text.style.SuperscriptSpan
 import android.view.LayoutInflater
 import android.view.View
@@ -49,7 +49,7 @@ class NoteForkFragment : Fragment() {
         refreshTextViews()
         setupPlayer()
         setupPresets()
-        setupListeners()
+        setupButtons()
         setupSavePresetDialog()
     }
 
@@ -121,7 +121,7 @@ class NoteForkFragment : Fragment() {
             .build()
     }
 
-    private fun setupListeners() {
+    private fun setupButtons() {
         binding.buttonNoteUp.setOnClickListener {
             note.up()
             refreshTextViews()
@@ -153,9 +153,17 @@ class NoteForkFragment : Fragment() {
             if (!playing) {
                 playing = true
                 playSound()
+                binding.buttonStartStop.apply {
+                    setIconResource(R.drawable.anim_play_to_pause)
+                    (icon as AnimatedVectorDrawable).start()
+                }
             } else {
                 playing = false
                 stopSound()
+                binding.buttonStartStop.apply {
+                    setIconResource(R.drawable.anim_pause_to_play)
+                    (icon as AnimatedVectorDrawable).start()
+                }
             }
         }
     }
@@ -165,7 +173,6 @@ class NoteForkFragment : Fragment() {
         playSound()
     }
 
-    // TODO: Animate play/pause button
     private fun playSound() {
         if (player.playState != AudioTrack.PLAYSTATE_PLAYING && playing) {
             val tone = createSineWave(note.getFrequency())

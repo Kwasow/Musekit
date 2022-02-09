@@ -4,6 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/compose-model-1644076300660.xml" value="0.16596283783783783" />
+        <entry key="app/src/main/res/drawable/anim_pause_to_play.xml" value="0.177" />
+        <entry key="app/src/main/res/drawable/anim_play_to_pause.xml" value="0.177" />
+        <entry key="app/src/main/res/drawable/avd_anim.xml" value="0.177" />
         <entry key="app/src/main/res/drawable/ic_add.xml" value="0.199" />
         <entry key="app/src/main/res/drawable/ic_arrow_right.xml" value="0.21" />
         <entry key="app/src/main/res/drawable/ic_delete.xml" value="0.21" />
@@ -15,11 +18,14 @@
         <entry key="app/src/main/res/drawable/ic_metronome.xml" value="0.22395833333333334" />
         <entry key="app/src/main/res/drawable/ic_minus_circle.xml" value="0.1895" />
         <entry key="app/src/main/res/drawable/ic_note_fork.xml" value="0.21" />
+        <entry key="app/src/main/res/drawable/ic_pause_circle.xml" value="0.21" />
         <entry key="app/src/main/res/drawable/ic_play_circle.xml" value="0.1895" />
         <entry key="app/src/main/res/drawable/ic_plus_circle.xml" value="0.1895" />
         <entry key="app/src/main/res/drawable/ic_settings.xml" value="0.38" />
         <entry key="app/src/main/res/drawable/ic_tuning_fork.xml" value="0.30185185185185187" />
         <entry key="app/src/main/res/drawable/ic_twitter.xml" value="0.21" />
+        <entry key="app/src/main/res/drawable/tmp.xml" value="0.199" />
+        <entry key="app/src/main/res/drawable/vd_play_to_pause.xml" value="0.199" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.16893115942028986" />
         <entry key="app/src/main/res/layout/dialog_licenses.xml" value="0.3703125" />
         <entry key="app/src/main/res/layout/dialog_save_preset.xml" value="0.19114583333333332" />
