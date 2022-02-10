@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-
-    <color name="green_200">#C5E1A5</color>
-    <color name="green_500">#8BC34A</color>
-    <color name="green_700">#689F38</color>
-
+    <!-- Basic colors -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <!-- App colors (light theme) -->
     <color name="colorPrimary">#4A670B</color>
     <color name="colorOnPrimary">#FFFFFF</color>
     <color name="colorPrimaryContainer">#CAEF86</color>
     <color name="colorOnPrimaryContainer">#121F00</color>
-
+    <color name="colorSecondary">#596148</color>
     <color name="colorSecondaryContainer">#DDE7C6</color>
-
     <color name="colorSurfaceVariant">#E1E4D4</color>
     <color name="colorOnSurfaceVariant">#45483C</color>
+
+    <!-- App colors (dark theme) -->
+    <color name="colorPrimary_dark">#AFD36D</color>
+    <color name="colorOnPrimary_dark">#223600</color>
+    <color name="colorPrimaryContainer_dark">#344E00</color>
+    <color name="colorOnPrimaryContainer_dark">#CAEF86</color>
+    <color name="colorSecondary_dark">#C1CBAB</color>
+    <color name="colorSecondaryContainer_dark">#414A32</color>
+    <color name="colorSurfaceVariant_dark">#45483C</color>
+    <color name="colorOnSurfaceVariant_dark">#C5C8B8</color>
 </resources>

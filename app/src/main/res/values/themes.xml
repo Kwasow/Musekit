@@ -6,13 +6,17 @@
         <item name="colorOnPrimary">@color/colorOnPrimary</item>
         <item name="colorPrimaryContainer">@color/colorPrimaryContainer</item>
         <item name="colorOnPrimaryContainer">@color/colorOnPrimaryContainer</item>
+
         <!-- Secondary colors -->
+        <item name="colorSecondary">@color/colorSecondary</item>
         <item name="colorSecondaryContainer">@color/colorSecondaryContainer</item>
-        <!-- Customize your theme here. -->
+
+        <!-- Other material colors -->
         <item name="colorSurfaceVariant">@color/colorSurfaceVariant</item>
         <item name="android:textColorTertiary">@color/colorOnSurfaceVariant</item>
         <item name="colorOnSurfaceVariant">@color/colorOnSurfaceVariant</item>
 
+        <!-- Custom theme attributes -->
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Material3.MaterialAlertDialog.Centered</item>
     </style>
 </resources>

@@ -1,7 +1,20 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <style name="Theme.Musekit" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Primary colors -->
+        <item name="colorPrimary">@color/colorPrimary_dark</item>
+        <item name="colorOnPrimary">@color/colorOnPrimary_dark</item>
+        <item name="colorPrimaryContainer">@color/colorPrimaryContainer_dark</item>
+        <item name="colorOnPrimaryContainer">@color/colorOnPrimaryContainer_dark</item>
+
+        <!-- Secondary colors -->
+        <item name="colorSecondary">@color/colorSecondary_dark</item>
+        <item name="colorSecondaryContainer">@color/colorSecondaryContainer_dark</item>
+
+        <!-- Other material colors -->
+        <item name="colorSurfaceVariant">@color/colorSurfaceVariant_dark</item>
+        <item name="android:textColorTertiary">@color/colorOnSurfaceVariant_dark</item>
+        <item name="colorOnSurfaceVariant">@color/colorOnSurfaceVariant_dark</item>
+
         <!-- Customize your theme here. -->
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Material3.MaterialAlertDialog.Centered</item>
     </style>
