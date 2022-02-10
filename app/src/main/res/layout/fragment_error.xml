@@ -17,7 +17,8 @@
         <ImageView
             android:layout_width="240dp"
             android:layout_height="240dp"
-            android:src="@drawable/ic_ghost"/>
+            android:src="@drawable/ic_ghost"
+            android:contentDescription="@string/contentDescription_ghost_icon"/>
 
         <TextView
             android:layout_width="wrap_content"

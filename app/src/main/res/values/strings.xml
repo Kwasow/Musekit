@@ -39,6 +39,7 @@
     <!-- Error string -->
     <string name="whoopsie">Whoopsie, you shouldn\'t be here!</string>
     <string name="close_app">Close app</string>
+    <string name="contentDescription_ghost_icon">Ghost icon</string>
 
     <!-- Licenses dialog -->
     <string name="this_app">This app</string>
