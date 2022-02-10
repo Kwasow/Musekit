@@ -15,8 +15,9 @@
             android:id="@+id/imageAppIcon"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:foreground="@drawable/ic_launcher_foreground"
+            android:src="@drawable/ic_launcher_foreground"
             android:contentDescription="@string/contentDescription_app_icon"
+            app:tint="?android:attr/textColorPrimary"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
