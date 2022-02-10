@@ -10,16 +10,18 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent">
 
+        <!-- The bottom navigation view is 80dp high as per the material
+                 specification -->
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/mainPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="?attr/actionBarSize"/>
+            android:paddingBottom="80dp"/>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigation"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="wrap_content"
             android:layout_gravity="start|bottom"
             app:menu="@menu/menu_bottom_navigation_bar"/>
 
