@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kwasow.musekit.data.Note
 import com.kwasow.musekit.R
@@ -21,6 +22,10 @@ import com.kwasow.musekit.data.Notes
 import com.kwasow.musekit.data.PresetsManager
 import com.kwasow.musekit.databinding.DialogSavePresetBinding
 import com.kwasow.musekit.databinding.FragmentNoteForkBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlin.math.sin
 import kotlin.properties.Delegates
 
@@ -175,26 +180,30 @@ class NoteForkFragment : Fragment() {
 
     private fun playSound() {
         if (player.playState != AudioTrack.PLAYSTATE_PLAYING && playing) {
-            val tone = createSineWave(note.getFrequency())
+            lifecycleScope.launch {
+                val tone = createSineWave(note.getFrequency())
 
-            player.write(tone, 0, tone.size)
-            val loopEnd = player.bufferSizeInFrames
-            player.setLoopPoints(0, loopEnd, -1)
+                player.write(tone, 0, tone.size)
+                val loopEnd = player.bufferSizeInFrames
+                player.setLoopPoints(0, loopEnd, -1)
 
-            player.play()
+                player.play()
+            }
         }
     }
 
-    private fun createSineWave(frequency: Double): ShortArray {
-        val samples = DoubleArray(sampleRate * 2)
-        val buffer = ShortArray(sampleRate * 2)
+    private suspend fun createSineWave(frequency: Double): ShortArray {
+        return withContext(Dispatchers.Main) {
+            val samples = DoubleArray(sampleRate * 2)
+            val buffer = ShortArray(sampleRate * 2)
 
-        for (i in buffer.indices) {
-            samples[i] = sin(i * 2 * Math.PI * frequency.toInt() / sampleRate)
-            buffer[i] = (samples[i] * Short.MAX_VALUE).toInt().toShort()
+            for (i in buffer.indices) {
+                samples[i] = sin(i * 2 * Math.PI * frequency.toInt() / sampleRate)
+                buffer[i] = (samples[i] * Short.MAX_VALUE).toInt().toShort()
+            }
+
+            return@withContext buffer
         }
-
-        return buffer
     }
 
     private fun stopSound() {
