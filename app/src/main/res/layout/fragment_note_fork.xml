@@ -80,6 +80,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:icon="@drawable/ic_minus_circle"
+                        android:contentDescription="@string/contentDescription_note_down"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/textNote"
                         style="@style/Widget.Material3.Button.IconButton" />
@@ -89,6 +90,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:icon="@drawable/ic_plus_circle"
+                        android:contentDescription="@string/contentDescription_note_up"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/textNote"
                         style="@style/Widget.Material3.Button.IconButton" />
@@ -141,6 +143,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:icon="@drawable/ic_minus_circle"
+                        android:contentDescription="@string/contentDescription_pitch_down"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/textPitch"
                         style="@style/Widget.Material3.Button.IconButton" />
@@ -150,6 +153,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:icon="@drawable/ic_plus_circle"
+                        android:contentDescription="@string/contentDescription_pitch_up"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/textPitch"
                         style="@style/Widget.Material3.Button.IconButton" />
@@ -166,6 +170,7 @@
             android:layout_height="wrap_content"
             app:icon="@drawable/anim_play_to_pause"
             app:iconSize="92dp"
+            android:contentDescription="@string/contentDescription_start_stop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/topCards"
