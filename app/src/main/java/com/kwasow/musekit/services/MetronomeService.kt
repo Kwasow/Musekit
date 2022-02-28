@@ -41,7 +41,7 @@ class MetronomeService : Service(), Runnable {
 
         soundPool = SoundPool.Builder()
             .setAudioAttributes(audioAttributes)
-            .setMaxStreams(10)
+            .setMaxStreams(3)
             .build()
 
         soundBeep = soundPool.load(this, R.raw.metronome_beep, 1)

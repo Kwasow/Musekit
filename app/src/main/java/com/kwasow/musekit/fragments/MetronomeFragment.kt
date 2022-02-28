@@ -12,7 +12,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.kwasow.musekit.databinding.FragmentMetronomeBinding
 import com.kwasow.musekit.services.MetronomeService
-import kotlin.math.floor
 
 class MetronomeFragment : Fragment() {
     private lateinit var binding: FragmentMetronomeBinding
@@ -46,7 +45,6 @@ class MetronomeFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        println("onStart metronome fragment")
         bindService()
         setupListeners()
     }
