@@ -20,7 +20,6 @@
         android:layout_height="wrap_content"
         android:valueFrom="30.0"
         android:valueTo="200.0"
-        android:value="60.0"
         android:stepSize="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/labelTempo"/>

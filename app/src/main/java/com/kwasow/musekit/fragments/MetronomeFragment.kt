@@ -1,25 +1,38 @@
 package com.kwasow.musekit.fragments
 
-import android.media.AudioAttributes
-import android.media.SoundPool
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
+import android.content.ServiceConnection
 import android.os.Bundle
+import android.os.IBinder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.kwasow.musekit.R
 import com.kwasow.musekit.databinding.FragmentMetronomeBinding
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlin.properties.Delegates
+import com.kwasow.musekit.services.MetronomeService
+import kotlin.math.floor
 
 class MetronomeFragment : Fragment() {
     private lateinit var binding: FragmentMetronomeBinding
-    private var bpm by Delegates.notNull<Int>()
 
-    private lateinit var soundPool: SoundPool
-    private var playing = false
+    private lateinit var metronomeService: MetronomeService
+    private var isBound = false
+
+    private val serviceConnection = object : ServiceConnection {
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            val binder = service as MetronomeService.LocalBinder
+            metronomeService = binder.getService()
+            isBound = true
+
+            setupSlider()
+        }
+
+        override fun onServiceDisconnected(name: ComponentName?) {
+            isBound = false
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,65 +46,42 @@ class MetronomeFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        setupDefaultBpm()
-        setupPlayer()
+        println("onStart metronome fragment")
+        bindService()
         setupListeners()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onStop() {
+        super.onStop()
 
-        if (this::soundPool.isInitialized)
-            soundPool.release()
+        requireContext().unbindService(serviceConnection)
+        isBound = false
     }
 
-    private fun setupDefaultBpm() {
-        bpm = binding.sliderTempo.value.toInt()
-    }
-
-    private fun setupPlayer() {
-        val audioAttributes = AudioAttributes.Builder()
-            .setUsage(AudioAttributes.USAGE_MEDIA)
-            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-            .build()
-
-        soundPool = SoundPool.Builder()
-            .setMaxStreams(10)
-            .setAudioAttributes(audioAttributes)
-            .build()
+    private fun bindService() {
+        Intent(requireContext(), MetronomeService::class.java).also {intent ->
+            requireContext().bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
+        }
     }
 
     private fun setupListeners() {
-        binding.sliderTempo.addOnChangeListener { _, value, _ ->
-            bpm = value.toInt()
-        }
-
         binding.buttonStartStop.setOnClickListener {
-            if (!playing) {
-                playing = true
-                startMetronome()
-            } else {
-                playing = false
+            if (isBound) {
+                metronomeService.startStopMetronome()
+            }
+        }
+
+        // TODO: Bug with last value not reported
+        binding.sliderTempo.addOnChangeListener { _, value, _ ->
+            if (isBound) {
+                metronomeService.bpm = value.toInt()
             }
         }
     }
 
-    private fun startMetronome() {
-        val sound = getSound()
-
-        // TODO: Bug around 120-130 - it's not in time
-        GlobalScope.launch {
-            while (playing) {
-                GlobalScope.launch {
-                    soundPool.play(sound, 1.0f, 1.0f, 1, 0, 1f)
-                }
-                delay(1000L * 60 / bpm)
-            }
+    private fun setupSlider() {
+        if (isBound) {
+            binding.sliderTempo.value = metronomeService.bpm.toFloat()
         }
-    }
-
-    private fun getSound(): Int {
-        // TODO: Different sounds
-        return soundPool.load(context, R.raw.metronome_beep, 1)
     }
 }
