@@ -13,8 +13,11 @@ import kotlin.properties.Delegates
 
 class MetronomeService : Service(), Runnable {
 
-    enum class Sounds(file: String, id: Int) {
-        Default("metronome_beep.mp3", 0)
+    enum class Sounds(val resourceId: Int, val resourceName: String) {
+        Default(R.raw.metronome_click, "Default"),
+        Beep(R.raw.metronome_beep, "Beep"),
+        Ding(R.raw.metronome_ding, "Ding"),
+        Wood(R.raw.metronome_wood, "Wood")
     }
     private var soundBeep by Delegates.notNull<Int>()
 
@@ -24,6 +27,7 @@ class MetronomeService : Service(), Runnable {
 
     private var binder = LocalBinder()
 
+    private val soundsList = listOf(Sounds.Default, Sounds.Beep, Sounds.Ding, Sounds.Wood)
     var sound = Sounds.Default
     var bpm = 60
 
@@ -79,10 +83,12 @@ class MetronomeService : Service(), Runnable {
     }
 
     override fun run() {
-        soundPool.play(soundBeep, 1F, 1F, 0, 0, 1F)
+        soundPool.play(sound.resourceId, 1F, 1F, 0, 0, 1F)
 
         if (isPlaying) {
             handler.postDelayed(this, (1000L * 60) / bpm)
         }
     }
+
+    fun getAvailableSounds() = soundsList
 }
