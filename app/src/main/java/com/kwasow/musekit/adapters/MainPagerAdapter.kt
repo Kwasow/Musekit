@@ -6,17 +6,18 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.kwasow.musekit.fragments.ErrorFragment
 import com.kwasow.musekit.fragments.NoteForkFragment
 import com.kwasow.musekit.fragments.AboutFragment
+import com.kwasow.musekit.fragments.MetronomeFragment
 
 class MainPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
-    private val pageCount = 2
+    private val pageCount = 3
 
     override fun getItemCount(): Int = pageCount
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
             0 -> NoteForkFragment()
-            // 1 -> MetronomeFragment()
-            1 -> AboutFragment()
+            1 -> MetronomeFragment()
+            2 -> AboutFragment()
             else -> ErrorFragment()
         }
     }

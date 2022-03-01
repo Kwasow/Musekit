@@ -28,6 +28,15 @@
     <string name="warning_preset_deletion">The preset \"%1$s\" will be permanently deleted.</string>
     <string name="delete">Delete</string>
 
+    <!-- Metronome strings -->
+    <string name="sound">Sound</string>
+    <string name="plus5">+5</string>
+    <string name="plus2">+2</string>
+    <string name="plus1">+1</string>
+    <string name="minus5">-5</string>
+    <string name="minus2">-2</string>
+    <string name="minus1">-1</string>
+
     <!-- About strings -->
     <string name="contentDescription_app_icon">App icon</string>
     <string name="source_code">Source code</string>

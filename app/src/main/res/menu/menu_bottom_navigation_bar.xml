@@ -4,12 +4,10 @@
         android:id="@+id/action_fork"
         android:title="@string/note_fork"
         android:icon="@drawable/ic_note_fork" />
-    <!--
     <item
         android:id="@+id/action_metronome"
         android:title="@string/metronome"
         android:icon="@drawable/ic_metronome" />
-        -->
     <item
         android:id="@+id/action_about"
         android:title="@string/about"

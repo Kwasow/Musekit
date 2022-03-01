@@ -31,8 +31,8 @@ class MainActivity : AppCompatActivity() {
             NavigationBarView.OnItemSelectedListener { item ->
                 when (item.itemId) {
                     R.id.action_fork -> pager.currentItem = 0
-                    // R.id.action_metronome -> pager.currentItem = 1
-                    R.id.action_about -> pager.currentItem = 1
+                    R.id.action_metronome -> pager.currentItem = 1
+                    R.id.action_about -> pager.currentItem = 2
                 }
 
                 return@OnItemSelectedListener true

@@ -34,10 +34,11 @@
         <entry key="app/src/main/res/layout/dialog_save_preset.xml" value="0.19114583333333332" />
         <entry key="app/src/main/res/layout/fragment_about.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_error.xml" value="0.3703125" />
-        <entry key="app/src/main/res/layout/fragment_metronome.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_note_fork.xml" value="0.18" />
+        <entry key="app/src/main/res/layout/fragment_metronome.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/fragment_note_fork.xml" value="0.1" />
         <entry key="app/src/main/res/layout/list_item.xml" value="0.18125" />
         <entry key="app/src/main/res/layout/preset_list_item.xml" value="0.3703125" />
+        <entry key="app/src/main/res/layout/sound_list_item.xml" value="0.1" />
         <entry key="app/src/main/res/menu/menu_bottom_navigation_bar.xml" value="0.19322916666666667" />
         <entry key="app/src/main/res/menu/note_fork_presets.xml" value="0.18125" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.21" />
