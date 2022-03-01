@@ -13,6 +13,7 @@ import com.kwasow.musekit.data.PresetsManager
 
 class PresetsAdapter(context: Context, names: List<String>) :
     ArrayAdapter<String>(context, 0, names) {
+
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val presetName = getItem(position)
         val root = convertView ?: LayoutInflater.from(context).inflate(R.layout.preset_list_item, parent, false)
@@ -35,8 +36,6 @@ class PresetsAdapter(context: Context, names: List<String>) :
 
         return root
     }
-
-
 
     private fun showDeleteDialog(presetName: String) {
         MaterialAlertDialogBuilder(context)

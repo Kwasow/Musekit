@@ -19,7 +19,6 @@ class MetronomeService : Service(), Runnable {
         Ding(R.raw.metronome_ding, "Ding"),
         Wood(R.raw.metronome_wood, "Wood")
     }
-    private var soundBeep by Delegates.notNull<Int>()
 
     inner class LocalBinder : Binder() {
         fun getService(): MetronomeService = this@MetronomeService
@@ -31,7 +30,13 @@ class MetronomeService : Service(), Runnable {
     var sound = Sounds.Default
     var bpm = 60
 
-    private var isPlaying = false
+    private var soundDefault by Delegates.notNull<Int>()
+    private var soundBeep by Delegates.notNull<Int>()
+    private var soundDing by Delegates.notNull<Int>()
+    private var soundWood by Delegates.notNull<Int>()
+
+    var isPlaying = false
+        private set
     private lateinit var soundPool: SoundPool
     private lateinit var handler: Handler
 
@@ -48,7 +53,10 @@ class MetronomeService : Service(), Runnable {
             .setMaxStreams(3)
             .build()
 
-        soundBeep = soundPool.load(this, R.raw.metronome_beep, 1)
+        soundDefault = soundPool.load(this, Sounds.Default.resourceId, 1)
+        soundBeep = soundPool.load(this, Sounds.Beep.resourceId, 1)
+        soundDing = soundPool.load(this, Sounds.Ding.resourceId, 1)
+        soundWood = soundPool.load(this, Sounds.Wood.resourceId, 1)
 
         handler = Handler(Looper.getMainLooper())
     }
@@ -83,7 +91,12 @@ class MetronomeService : Service(), Runnable {
     }
 
     override fun run() {
-        soundPool.play(sound.resourceId, 1F, 1F, 0, 0, 1F)
+        when (sound) {
+            Sounds.Default -> soundPool.play(soundDefault, 1F, 1F, 0, 0, 1F)
+            Sounds.Beep -> soundPool.play(soundBeep, 1F, 1F, 0, 0, 1F)
+            Sounds.Ding -> soundPool.play(soundDing, 1F, 1F, 0, 0, 1F)
+            Sounds.Wood -> soundPool.play(soundWood, 1F, 1F, 0, 0, 1F)
+        }
 
         if (isPlaying) {
             handler.postDelayed(this, (1000L * 60) / bpm)
