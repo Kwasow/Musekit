@@ -1,5 +1,6 @@
 package com.kwasow.musekit.services
 
+import android.animation.ValueAnimator
 import android.app.Service
 import android.content.Intent
 import android.media.AudioAttributes
@@ -8,6 +9,7 @@ import android.os.Binder
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
+import com.google.android.material.slider.Slider
 import com.kwasow.musekit.R
 import kotlin.properties.Delegates
 
@@ -40,6 +42,9 @@ class MetronomeService : Service(), Runnable {
     private lateinit var soundPool: SoundPool
     private lateinit var handler: Handler
 
+    private var ticker: Slider? = null
+    private var right = true
+
     override fun onCreate() {
         super.onCreate()
 
@@ -65,12 +70,22 @@ class MetronomeService : Service(), Runnable {
         return binder
     }
 
+    override fun onUnbind(intent: Intent?): Boolean {
+        ticker = null
+
+        return super.onUnbind(intent)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
 
         if (this::soundPool.isInitialized) {
             soundPool.release()
         }
+    }
+
+    fun connectTicker(slider: Slider) {
+        ticker = slider
     }
 
     fun startStopMetronome() {
@@ -83,24 +98,45 @@ class MetronomeService : Service(), Runnable {
 
     private fun startMetronome() {
         isPlaying = true
+        ticker?.isEnabled = true
         handler.post(this)
     }
 
     private fun stopMetronome() {
+        ticker?.isEnabled = false
         isPlaying = false
     }
 
     override fun run() {
+        val tickerAnimation = buildAnimation(bpm)
+
         when (sound) {
             Sounds.Default -> soundPool.play(soundDefault, 1F, 1F, 0, 0, 1F)
             Sounds.Beep -> soundPool.play(soundBeep, 1F, 1F, 0, 0, 1F)
             Sounds.Ding -> soundPool.play(soundDing, 1F, 1F, 0, 0, 1F)
             Sounds.Wood -> soundPool.play(soundWood, 1F, 1F, 0, 0, 1F)
         }
+        tickerAnimation.start()
 
         if (isPlaying) {
             handler.postDelayed(this, (1000L * 60) / bpm)
         }
+    }
+
+    private fun buildAnimation(bpm: Int): ValueAnimator {
+        val tickerAnimation = if (right) {
+            ValueAnimator.ofFloat(0F, 1F)
+        } else {
+            ValueAnimator.ofFloat(1F, 0F)
+        }
+        tickerAnimation.addUpdateListener {
+            val animatedValue = it.animatedValue as Float
+            ticker?.value = animatedValue
+        }
+        tickerAnimation.duration = 1000L * 60 / bpm
+        right = !right
+
+        return tickerAnimation
     }
 
     fun getAvailableSounds() = soundsList

@@ -27,8 +27,9 @@ class MetronomeFragment : Fragment() {
             val binder = service as MetronomeService.LocalBinder
             metronomeService = binder.getService()
             isBound = true
+            metronomeService.connectTicker(binding.sliderBeat)
 
-            setupBpmText()
+            updateBpmText()
             setupSoundPicker()
         }
 
@@ -87,47 +88,47 @@ class MetronomeFragment : Fragment() {
         binding.buttonPlus5.setOnClickListener {
             if (isBound) {
                 metronomeService.bpm += 5
-                setupBpmText()
+                updateBpmText()
             }
         }
 
         binding.buttonPlus2.setOnClickListener {
             if (isBound) {
                 metronomeService.bpm += 2
-                setupBpmText()
+                updateBpmText()
             }
         }
 
         binding.buttonPlus1.setOnClickListener {
             if (isBound) {
                 metronomeService.bpm += 1
-                setupBpmText()
+                updateBpmText()
             }
         }
 
         binding.buttonMinus5.setOnClickListener {
             if (isBound) {
                 metronomeService.bpm -= 5
-                setupBpmText()
+                updateBpmText()
             }
         }
 
         binding.buttonMinus2.setOnClickListener {
             if (isBound) {
                 metronomeService.bpm -= 2
-                setupBpmText()
+                updateBpmText()
             }
         }
 
         binding.buttonMinus1.setOnClickListener {
             if (isBound) {
                 metronomeService.bpm -= 1
-                setupBpmText()
+                updateBpmText()
             }
         }
     }
 
-    private fun setupBpmText() {
+    private fun updateBpmText() {
         if (isBound) binding.textBpm.text = metronomeService.bpm.toString()
     }
 
