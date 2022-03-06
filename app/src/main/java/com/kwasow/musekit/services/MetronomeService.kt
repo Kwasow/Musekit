@@ -30,16 +30,20 @@ class MetronomeService : Service(), Runnable {
 
     private val soundsList = listOf(Sounds.Default, Sounds.Beep, Sounds.Ding, Sounds.Wood)
     var sound = Sounds.Default
+        set(value) {
+            field = value
+            soundId = soundPool.load(this, value.resourceId, 1)
+        }
     var bpm = 60
+        set(value) {
+            field = value.coerceAtMost(300)
+        }
 
-    private var soundDefault by Delegates.notNull<Int>()
-    private var soundBeep by Delegates.notNull<Int>()
-    private var soundDing by Delegates.notNull<Int>()
-    private var soundWood by Delegates.notNull<Int>()
+    private var soundId by Delegates.notNull<Int>()
 
     var isPlaying = false
-        private set
-    private lateinit var soundPool: SoundPool
+    private set
+            private lateinit var soundPool: SoundPool
     private lateinit var handler: Handler
 
     private var ticker: Slider? = null
@@ -49,20 +53,16 @@ class MetronomeService : Service(), Runnable {
         super.onCreate()
 
         val audioAttributes = AudioAttributes.Builder()
-            .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
-            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+            .setUsage(AudioAttributes.USAGE_UNKNOWN)
+            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
             .build()
 
         soundPool = SoundPool.Builder()
             .setAudioAttributes(audioAttributes)
-            .setMaxStreams(3)
+            .setMaxStreams(1)
             .build()
 
-        soundDefault = soundPool.load(this, Sounds.Default.resourceId, 1)
-        soundBeep = soundPool.load(this, Sounds.Beep.resourceId, 1)
-        soundDing = soundPool.load(this, Sounds.Ding.resourceId, 1)
-        soundWood = soundPool.load(this, Sounds.Wood.resourceId, 1)
-
+        soundId = soundPool.load(this, Sounds.Default.resourceId, 1)
         handler = Handler(Looper.getMainLooper())
     }
 
@@ -108,17 +108,11 @@ class MetronomeService : Service(), Runnable {
     }
 
     override fun run() {
-        val tickerAnimation = buildAnimation(bpm)
-
-        when (sound) {
-            Sounds.Default -> soundPool.play(soundDefault, 1F, 1F, 0, 0, 1F)
-            Sounds.Beep -> soundPool.play(soundBeep, 1F, 1F, 0, 0, 1F)
-            Sounds.Ding -> soundPool.play(soundDing, 1F, 1F, 0, 0, 1F)
-            Sounds.Wood -> soundPool.play(soundWood, 1F, 1F, 0, 0, 1F)
-        }
-        tickerAnimation.start()
-
         if (isPlaying) {
+            val tickerAnimation = buildAnimation(bpm)
+            soundPool.play(soundId, 1F, 1F, 0, 0, 1F)
+            tickerAnimation.start()
+
             handler.postDelayed(this, (1000L * 60) / bpm)
         }
     }
