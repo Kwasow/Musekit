@@ -92,18 +92,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         style="@style/Widget.Material3.Button.OutlinedButton"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textBpm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
         android:text="60"
         android:textStyle="bold"
-        android:textSize="64sp"
+        android:maxLines="1"
+        android:gravity="center"
+        android:padding="12dp"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintDimensionRatio="H,1:1"
         app:layout_constraintStart_toEndOf="@id/buttonMinus5"
         app:layout_constraintEnd_toStartOf="@id/buttonPlus5"
         app:layout_constraintTop_toTopOf="@id/buttonPlus5"
         app:layout_constraintBottom_toBottomOf="@id/buttonPlus1"
-        tools:ignore="HardcodedText" />
+        tools:ignore="HardcodedText"/>
 
     <com.google.android.material.slider.Slider
         android:id="@+id/sliderBeat"
