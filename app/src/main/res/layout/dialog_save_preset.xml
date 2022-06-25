@@ -10,7 +10,9 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
+        android:minHeight="48dp"
         android:hint="@string/preset_name"
-        android:inputType="textCapWords"/>
+        android:inputType="textCapWords"
+        android:importantForAutofill="no" />
 
 </LinearLayout>

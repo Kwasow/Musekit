@@ -116,6 +116,7 @@
         android:layout_marginVertical="16dp"
         android:enabled="false"
         app:trackColor="@color/material_on_background_disabled"
+        android:contentDescription="@string/contentDescription_metronome_ticker"
         app:layout_constraintTop_toBottomOf="@id/buttonPlus1"/>
 
     <com.google.android.material.button.MaterialButton
@@ -124,6 +125,7 @@
         android:layout_height="wrap_content"
         app:icon="@drawable/anim_play_to_pause"
         app:iconSize="92dp"
+        android:contentDescription="@string/contentDescription_start_stop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sliderBeat"

@@ -5,11 +5,12 @@
     <string name="note_fork">Note fork</string>
     <string name="metronome">Metronome</string>
     <string name="about">About</string>
-    <string name="contentDescription_note_up">Note up button</string>
-    <string name="contentDescription_note_down">Note down button</string>
-    <string name="contentDescription_pitch_up">Pitch up button</string>
-    <string name="contentDescription_pitch_down">Pitch down button</string>
-    <string name="contentDescription_start_stop">Start/stop button</string>
+    <string name="contentDescription_note_up">Note up</string>
+    <string name="contentDescription_note_down">Note down</string>
+    <string name="contentDescription_pitch_up">Pitch up</string>
+    <string name="contentDescription_pitch_down">Pitch down</string>
+    <string name="contentDescription_start_stop">Start/stop</string>
+    <string name="contentDescription_metronome_ticker">Metronome ticker</string>
 
     <!-- Note fork strings -->
     <string name="note">Note</string>
