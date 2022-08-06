@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Musekit</string>
+    <string name="app_name" translatable="false">Musekit</string>
 
     <!-- Bottom navigation bar labels -->
     <string name="note_fork">Note fork</string>
@@ -14,9 +14,9 @@
 
     <!-- Note fork strings -->
     <string name="note">Note</string>
-    <string name="note_placeholder">%1$s%2$d</string>
+    <string name="note_placeholder" translatable="false">%1$s%2$d</string>
     <string name="pitch">Pitch</string>
-    <string name="pitch_placeholder">%1$dHz</string>
+    <string name="pitch_placeholder" translatable="false">%1$dHz</string>
 
     <!-- Note fork presets -->
     <string name="presets">Presets</string>
@@ -31,12 +31,18 @@
 
     <!-- Metronome strings -->
     <string name="sound">Sound</string>
-    <string name="plus5">+5</string>
-    <string name="plus2">+2</string>
-    <string name="plus1">+1</string>
-    <string name="minus5">-5</string>
-    <string name="minus2">-2</string>
-    <string name="minus1">-1</string>
+    <string name="plus5" translatable="false">+5</string>
+    <string name="plus2" translatable="false">+2</string>
+    <string name="plus1" translatable="false">+1</string>
+    <string name="minus5" translatable="false">-5</string>
+    <string name="minus2" translatable="false">-2</string>
+    <string name="minus1" translatable="false">-1</string>
+    
+    <!-- Metronome sound names -->
+    <string name="metronome_sound_default">Default</string>
+    <string name="metronome_sound_beep">Beep</string>
+    <string name="metronome_sound_ding">Ding</string>
+    <string name="metronome_sound_wood">Wood</string>
 
     <!-- About strings -->
     <string name="contentDescription_app_icon">App icon</string>
@@ -58,7 +64,7 @@
 
     <!-- Licenses dialog -->
     <string name="this_app">This app</string>
-    <string name="gpl_3_0">GPLv3.0</string>
+    <string name="gpl_3_0" translatable="false">GPLv3.0</string>
     <string name="icons">Icons by css.gg</string>
     <string name="mit">MIT License</string>
     <string name="contentDescription_right_arrow">Right arrow</string>

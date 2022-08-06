@@ -135,11 +135,12 @@ class MetronomeFragment : Fragment() {
     private fun setupSoundPicker() {
         if (isBound) {
             val sounds = metronomeService.getAvailableSounds()
-            val soundNames = sounds.map { it.resourceName }
+            val soundNames = sounds.map { getString(it.resourceNameId) }
             val soundsAdapter = SoundsAdapter(requireContext(), soundNames)
 
             binding.metronomeSoundPicker.setAdapter(soundsAdapter)
-            binding.metronomeSoundPicker.setText(metronomeService.sound.resourceName, false)
+            binding.metronomeSoundPicker.setText(
+                getString(metronomeService.sound.resourceNameId), false)
             binding.metronomeSoundPicker.setOnItemClickListener { _, _, i, _ ->
                 if (isBound) metronomeService.sound = sounds[i]
             }

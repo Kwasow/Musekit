@@ -15,11 +15,11 @@ import kotlin.properties.Delegates
 
 class MetronomeService : Service(), Runnable {
 
-    enum class Sounds(val resourceId: Int, val resourceName: String) {
-        Default(R.raw.metronome_click, "Default"),
-        Beep(R.raw.metronome_beep, "Beep"),
-        Ding(R.raw.metronome_ding, "Ding"),
-        Wood(R.raw.metronome_wood, "Wood")
+    enum class Sounds(val resourceId: Int, val resourceNameId: Int) {
+        Default(R.raw.metronome_click, R.string.metronome_sound_default),
+        Beep(R.raw.metronome_beep, R.string.metronome_sound_beep),
+        Ding(R.raw.metronome_ding, R.string.metronome_sound_ding),
+        Wood(R.raw.metronome_wood, R.string.metronome_sound_wood)
     }
 
     inner class LocalBinder : Binder() {

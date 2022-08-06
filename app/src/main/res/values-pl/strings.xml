@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="note_fork">Kamerton</string>
+    <string name="metronome">Metronom</string>
+    <string name="about">O aplikacji</string>
+    <string name="contentDescription_note_up">Dźwięk w górę</string>
+    <string name="contentDescription_note_down">Dźwięk w dół</string>
+    <string name="contentDescription_pitch_up">Zwiększ częstotliwość podstawową</string>
+    <string name="contentDescription_pitch_down">Zmniejsz częstotliowść podstawową</string>
+    <string name="contentDescription_start_stop">Start/stop</string>
+    <string name="contentDescription_metronome_ticker">Wslaźnik metronomu</string>
+    <string name="note">Dźwięk</string>
+    <string name="pitch">Częstotliwość podstawowa</string>
+    <string name="presets">Zapisane</string>
+    <string name="default_preset">Domyślne</string>
+    <string name="save_preset">Zapisz konfigurację</string>
+    <string name="save">Zapisz</string>
+    <string name="cancel">Anuluj</string>
+    <string name="preset_name">Nazwa konfiguracji (wymagane)</string>
+    <string name="delete_preset">Usuń konfigurację</string>
+    <string name="warning_preset_deletion">Konfiguracja \"%1$s\" zostanie bezpowrotnie usunięta</string>
+    <string name="delete">Usuń</string>
+    <string name="contentDescription_app_icon">Ikona aplikacji</string>
+    <string name="source_code">Kod źródłowy</string>
+    <string name="developer">Konto twórcy</string>
+    <string name="developer_website">Strona twórcy</string>
+    <string name="licenses">Licencje</string>
+    <string name="version">Wersja %1$s</string>
+    <string name="contentDescription_github_logo">Logo Githuba</string>
+    <string name="contentDescription_twitter_logo">Logo Twittera</string>
+    <string name="contentDescription_internet_globe">Globus reprezentujący świat</string>
+    <string name="contentDescription_file_icon">Ikonka pliku</string>
+    <string name="close">Zamknij</string>
+    <string name="whoopsie">Ups, nie powinno Cię tu być</string>
+    <string name="close_app">Zamknij aplikację</string>
+    <string name="contentDescription_ghost_icon">Ikonka ducha</string>
+    <string name="this_app">Ta aplikacja</string>
+    <string name="mit">Licencja MIT</string>
+    <string name="icons">Ikonki od css.gg</string>
+    <string name="contentDescription_right_arrow">Strzałka w prawo</string>
+    <string name="special_thanks_shape_shifter">Specjalne podziękowania dla Alexa Lockwooda za stworzenie narzędzia ShapeShifter.</string>
+    <string name="sound">Dźwięk metronomu</string>
+    <string name="metronome_sound_default">Domyślny</string>
+    <string name="metronome_sound_beep">Beep</string>
+    <string name="metronome_sound_ding">Ding</string>
+    <string name="metronome_sound_wood">Drewno</string>
+</resources>
