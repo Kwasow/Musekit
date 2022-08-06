@@ -38,7 +38,7 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginVertical="16dp"
@@ -47,7 +47,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:padding="16dp">
 
@@ -72,7 +72,7 @@
                         app:layout_constraintDimensionRatio="H,1:1"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/labelNote"
+                        app:layout_constraintBottom_toTopOf="@id/buttonNoteUp"
                         tools:ignore="HardcodedText"/>
 
                     <com.google.android.material.button.MaterialButton
@@ -82,7 +82,7 @@
                         app:icon="@drawable/ic_minus_circle"
                         android:contentDescription="@string/contentDescription_note_down"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/textNote"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         style="@style/Widget.Material3.Button.IconButton" />
 
                     <com.google.android.material.button.MaterialButton
@@ -92,7 +92,7 @@
                         app:icon="@drawable/ic_plus_circle"
                         android:contentDescription="@string/contentDescription_note_up"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/textNote"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         style="@style/Widget.Material3.Button.IconButton" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -101,7 +101,7 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginVertical="16dp"
@@ -110,7 +110,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:padding="16dp">
 
@@ -136,7 +136,8 @@
                         app:layout_constraintDimensionRatio="H,1:1"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/labelPitch"/>
+                        app:layout_constraintTop_toBottomOf="@id/labelPitch"
+                        app:layout_constraintBottom_toTopOf="@id/buttonPitchDown"/>
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/buttonPitchDown"
@@ -145,7 +146,7 @@
                         app:icon="@drawable/ic_minus_circle"
                         android:contentDescription="@string/contentDescription_pitch_down"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/textPitch"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         style="@style/Widget.Material3.Button.IconButton" />
 
                     <com.google.android.material.button.MaterialButton
@@ -155,7 +156,7 @@
                         app:icon="@drawable/ic_plus_circle"
                         android:contentDescription="@string/contentDescription_pitch_up"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/textPitch"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         style="@style/Widget.Material3.Button.IconButton" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

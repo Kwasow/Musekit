@@ -35,7 +35,7 @@
         <entry key="app/src/main/res/layout/fragment_about.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_error.xml" value="0.3703125" />
         <entry key="app/src/main/res/layout/fragment_metronome.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_note_fork.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_note_fork.xml" value="0.33" />
         <entry key="app/src/main/res/layout/list_item.xml" value="0.18125" />
         <entry key="app/src/main/res/layout/preset_list_item.xml" value="0.3703125" />
         <entry key="app/src/main/res/layout/sound_list_item.xml" value="0.1" />
