@@ -11,12 +11,12 @@ fun versionCode(): Int {
 val composeVersion: String by rootProject.extra
 
 android {
-    compileSdk = 31
+    compileSdk = 32
 
     defaultConfig {
         applicationId = "com.kwasow.musekit"
         minSdk = 23
-        targetSdk = 31
+        targetSdk = 32
         versionCode = versionCode()
         versionName = "1.2.2"
 
@@ -58,7 +58,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.4.2")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1-native-mt")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.1")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
     implementation("com.google.android.material:material:1.6.1")
 
     // Compose
