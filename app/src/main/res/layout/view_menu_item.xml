@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- These attributes are for preview only -->
+<merge
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:parentTag="android.widget.LinearLayout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/menuItemLeadingIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_ghost"
+        app:tint="?android:attr/textColorTertiary"
+        android:layout_marginStart="12dp"
+        android:layout_marginVertical="12dp"
+        android:layout_gravity="center_vertical"
+        android:contentDescription="Placeholder"
+        tools:ignore="HardcodedText" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/menuItemTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Placeholder title"
+        android:layout_marginStart="12dp"
+        android:layout_marginVertical="12dp"
+        android:layout_gravity="center_vertical"
+        tools:ignore="HardcodedText" />
+
+</merge>

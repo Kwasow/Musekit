@@ -29,28 +29,28 @@ class AboutFragment : Fragment() {
     super.onStart()
 
     binding.appVersion.text = getString(R.string.version, BuildConfig.VERSION_NAME)
-    binding.buttonSourceCode.setOnClickListener {
+    binding.itemSourceCode.setOnClickListener {
       val browserIntent = Intent(
         Intent.ACTION_VIEW,
         Uri.parse("https://github.com/Kwasow/Musekit")
       )
       startActivity(browserIntent)
     }
-    binding.buttonTwitter.setOnClickListener {
+    binding.itemTwitter.setOnClickListener {
       val browserIntent = Intent(
         Intent.ACTION_VIEW,
         Uri.parse("https://twitter.com/KarolWasowski")
       )
       startActivity(browserIntent)
     }
-    binding.buttonWebsite.setOnClickListener {
+    binding.itemWebsite.setOnClickListener {
       val browserIntent = Intent(
         Intent.ACTION_VIEW,
         Uri.parse("https://kwasow.github.io/#/")
       )
       startActivity(browserIntent)
     }
-    binding.buttonLicenses.setOnClickListener {
+    binding.itemLicenses.setOnClickListener {
       showLicensesDialog()
     }
   }

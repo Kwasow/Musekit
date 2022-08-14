@@ -57,117 +57,37 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:id="@+id/buttonSourceCode"
+                <com.kwasow.musekit.views.MenuItem
+                    android:id="@+id/itemSourceCode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingVertical="12dp"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true">
+                    app:itemTitle="@string/source_code"
+                    app:leadingIcon="@drawable/ic_github"
+                    app:leadingIconContentDescription="@string/contentDescription_github_logo"/>
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_github"
-                        app:tint="?android:attr/textColorTertiary"
-                        android:layout_marginStart="12dp"
-                        android:layout_gravity="center_vertical"
-                        android:contentDescription="@string/contentDescription_github_logo"/>
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/source_code"
-                        android:layout_marginStart="12dp"
-                        android:layout_gravity="center_vertical"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/buttonTwitter"
+                <com.kwasow.musekit.views.MenuItem
+                    android:id="@+id/itemTwitter"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingVertical="12dp"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true">
+                    app:itemTitle="@string/developer"
+                    app:leadingIcon="@drawable/ic_twitter"
+                    app:leadingIconContentDescription="@string/contentDescription_twitter_logo"/>
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_twitter"
-                        app:tint="?android:attr/textColorTertiary"
-                        android:layout_marginStart="12dp"
-                        android:layout_gravity="center_vertical"
-                        android:contentDescription="@string/contentDescription_twitter_logo"/>
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/developer"
-                        android:layout_marginStart="12dp"
-                        android:layout_gravity="center_vertical"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/buttonWebsite"
+                <com.kwasow.musekit.views.MenuItem
+                    android:id="@+id/itemWebsite"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingVertical="12dp"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true">
+                    app:itemTitle="@string/developer_website"
+                    app:leadingIcon="@drawable/ic_globe"
+                    app:leadingIconContentDescription="@string/contentDescription_internet_globe"/>
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_globe"
-                        app:tint="?android:attr/textColorTertiary"
-                        android:layout_marginStart="12dp"
-                        android:layout_gravity="center_vertical"
-                        android:contentDescription="@string/contentDescription_twitter_logo"/>
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/developer_website"
-                        android:layout_marginStart="12dp"
-                        android:layout_gravity="center_vertical"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/buttonLicenses"
+                <com.kwasow.musekit.views.MenuItem
+                    android:id="@+id/itemLicenses"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingVertical="12dp"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_file"
-                        app:tint="?android:attr/textColorTertiary"
-                        android:layout_marginStart="12dp"
-                        android:layout_gravity="center_vertical"
-                        android:contentDescription="@string/contentDescription_file_icon"/>
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/licenses"
-                        android:layout_marginStart="12dp"
-                        android:layout_gravity="center_vertical"/>
-
-                </LinearLayout>
+                    app:itemTitle="@string/licenses"
+                    app:leadingIcon="@drawable/ic_file"
+                    app:leadingIconContentDescription="@string/contentDescription_file_icon"/>
 
             </LinearLayout>
 
