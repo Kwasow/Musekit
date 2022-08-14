@@ -14,83 +14,84 @@ import com.kwasow.musekit.databinding.DialogLicensesBinding
 import com.kwasow.musekit.databinding.FragmentAboutBinding
 
 class AboutFragment : Fragment() {
-    private lateinit var binding: FragmentAboutBinding
+  private lateinit var binding: FragmentAboutBinding
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentAboutBinding.inflate(inflater)
-        return binding.root
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View {
+    binding = FragmentAboutBinding.inflate(inflater)
+    return binding.root
+  }
+
+  override fun onStart() {
+    super.onStart()
+
+    binding.appVersion.text = getString(R.string.version, BuildConfig.VERSION_NAME)
+    binding.buttonSourceCode.setOnClickListener {
+      val browserIntent = Intent(
+        Intent.ACTION_VIEW,
+        Uri.parse("https://github.com/Kwasow/Musekit")
+      )
+      startActivity(browserIntent)
+    }
+    binding.buttonTwitter.setOnClickListener {
+      val browserIntent = Intent(
+        Intent.ACTION_VIEW,
+        Uri.parse("https://twitter.com/KarolWasowski")
+      )
+      startActivity(browserIntent)
+    }
+    binding.buttonWebsite.setOnClickListener {
+      val browserIntent = Intent(
+        Intent.ACTION_VIEW,
+        Uri.parse("https://kwasow.github.io/#/")
+      )
+      startActivity(browserIntent)
+    }
+    binding.buttonLicenses.setOnClickListener {
+      showLicensesDialog()
+    }
+  }
+
+  private fun showLicensesDialog() {
+    val dialogBinding = DialogLicensesBinding.inflate(layoutInflater)
+
+    val dialog = MaterialAlertDialogBuilder(requireContext())
+      .setTitle(R.string.licenses)
+      .setIcon(R.drawable.ic_file)
+      .setNeutralButton(R.string.close) { _, _ -> }
+      .setView(dialogBinding.root)
+      .create()
+
+    val licenceDialogBuilder = MaterialAlertDialogBuilder(requireContext())
+      .setNeutralButton(R.string.close) { _, _ -> }
+
+    dialogBinding.buttonLicenseThisApp.setOnClickListener {
+      val inputStream = resources.openRawResource(R.raw.gpl3)
+      val b = ByteArray(inputStream.available())
+      inputStream.read(b)
+      val license = String(b)
+
+      dialog.dismiss()
+      licenceDialogBuilder.setTitle(dialogBinding.textThisApp.text)
+      licenceDialogBuilder.setMessage(license)
+      licenceDialogBuilder.show()
     }
 
-    override fun onStart() {
-        super.onStart()
+    dialogBinding.buttonLicenseIcons.setOnClickListener {
+      val inputStream = resources.openRawResource(R.raw.mit)
+      val b = ByteArray(inputStream.available())
+      inputStream.read(b)
+      val license = String(b)
 
-        binding.appVersion.text = getString(R.string.version, BuildConfig.VERSION_NAME)
-        binding.buttonSourceCode.setOnClickListener {
-            val browserIntent = Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse("https://github.com/Kwasow/Musekit"))
-            startActivity(browserIntent)
-        }
-        binding.buttonTwitter.setOnClickListener {
-            val browserIntent = Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse("https://twitter.com/KarolWasowski")
-            )
-            startActivity(browserIntent)
-        }
-        binding.buttonWebsite.setOnClickListener {
-            val browserIntent = Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse("https://kwasow.github.io/#/")
-            )
-            startActivity(browserIntent)
-        }
-        binding.buttonLicenses.setOnClickListener {
-            showLicensesDialog()
-        }
+      dialog.dismiss()
+      licenceDialogBuilder.setTitle(dialogBinding.textIcons.text)
+      licenceDialogBuilder.setMessage(license)
+      licenceDialogBuilder.show()
     }
 
-    private fun showLicensesDialog() {
-        val dialogBinding = DialogLicensesBinding.inflate(layoutInflater)
-
-        val dialog = MaterialAlertDialogBuilder(requireContext())
-            .setTitle(R.string.licenses)
-            .setIcon(R.drawable.ic_file)
-            .setNeutralButton(R.string.close) { _, _ -> }
-            .setView(dialogBinding.root)
-            .create()
-
-        val licenceDialogBuilder = MaterialAlertDialogBuilder(requireContext())
-            .setNeutralButton(R.string.close) { _, _ -> }
-
-        dialogBinding.buttonLicenseThisApp.setOnClickListener {
-            val inputStream = resources.openRawResource(R.raw.gpl3)
-            val b = ByteArray(inputStream.available())
-            inputStream.read(b)
-            val license = String(b)
-
-            dialog.dismiss()
-            licenceDialogBuilder.setTitle(dialogBinding.textThisApp.text)
-            licenceDialogBuilder.setMessage(license)
-            licenceDialogBuilder.show()
-        }
-
-        dialogBinding.buttonLicenseIcons.setOnClickListener {
-            val inputStream = resources.openRawResource(R.raw.mit)
-            val b = ByteArray(inputStream.available())
-            inputStream.read(b)
-            val license = String(b)
-
-            dialog.dismiss()
-            licenceDialogBuilder.setTitle(dialogBinding.textIcons.text)
-            licenceDialogBuilder.setMessage(license)
-            licenceDialogBuilder.show()
-        }
-
-        dialog.show()
-    }
+    dialog.show()
+  }
 }
