@@ -45,10 +45,15 @@ android {
 
     buildFeatures {
         viewBinding = true
-        // compose = true
     }
 
     namespace = "com.kwasow.musekit"
+}
+
+tasks.withType<Test> {
+    testLogging {
+        showStandardStreams = true
+    }
 }
 
 dependencies {
