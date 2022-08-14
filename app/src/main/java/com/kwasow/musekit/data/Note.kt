@@ -31,8 +31,6 @@ class Note {
                 2.0.pow(semitones / 12.0)
     }
 
-    fun getFrequencyString(): String = String.format("%.2f", getFrequency())
-
     fun getNoteName(): String = note.noteName
 
     fun up() {
