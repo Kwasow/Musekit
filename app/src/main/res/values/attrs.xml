@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="MenuItem">
-        <attr name="leadingIcon" format="reference" />
-        <attr name="leadingIconContentDescription" format="string" />
-        <attr name="itemTitle" format="string" />
+        <attr name="leadingIcon" format="reference"/>
+        <attr name="leadingIconContentDescription" format="string"/>
+        <attr name="itemTitle" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="MenuSection">
+        <attr name="sectionTitle" format="string"/>
     </declare-styleable>
 </resources>

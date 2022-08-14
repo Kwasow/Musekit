@@ -43,55 +43,46 @@
             app:layout_constraintTop_toBottomOf="@id/appName"
             tools:ignore="HardcodedText" />
 
-        <com.google.android.material.card.MaterialCardView
+        <com.kwasow.musekit.views.MenuSection
             android:id="@+id/cardViewMenuWrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="32dp"
-            style="@style/Widget.Material3.CardView.Filled"
+            app:sectionTitle="@string/about"
             app:layout_constraintTop_toBottomOf="@id/appVersion">
 
-            <LinearLayout
+            <com.kwasow.musekit.views.MenuItem
+                android:id="@+id/itemSourceCode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                app:itemTitle="@string/source_code"
+                app:leadingIcon="@drawable/ic_github"
+                app:leadingIconContentDescription="@string/contentDescription_github_logo"/>
 
-                <com.kwasow.musekit.views.MenuItem
-                    android:id="@+id/itemSourceCode"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:itemTitle="@string/source_code"
-                    app:leadingIcon="@drawable/ic_github"
-                    app:leadingIconContentDescription="@string/contentDescription_github_logo"/>
+            <com.kwasow.musekit.views.MenuItem
+                android:id="@+id/itemTwitter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:itemTitle="@string/developer"
+                app:leadingIcon="@drawable/ic_twitter"
+                app:leadingIconContentDescription="@string/contentDescription_twitter_logo"/>
 
-                <com.kwasow.musekit.views.MenuItem
-                    android:id="@+id/itemTwitter"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:itemTitle="@string/developer"
-                    app:leadingIcon="@drawable/ic_twitter"
-                    app:leadingIconContentDescription="@string/contentDescription_twitter_logo"/>
+            <com.kwasow.musekit.views.MenuItem
+                android:id="@+id/itemWebsite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:itemTitle="@string/developer_website"
+                app:leadingIcon="@drawable/ic_globe"
+                app:leadingIconContentDescription="@string/contentDescription_internet_globe"/>
 
-                <com.kwasow.musekit.views.MenuItem
-                    android:id="@+id/itemWebsite"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:itemTitle="@string/developer_website"
-                    app:leadingIcon="@drawable/ic_globe"
-                    app:leadingIconContentDescription="@string/contentDescription_internet_globe"/>
+            <com.kwasow.musekit.views.MenuItem
+                android:id="@+id/itemLicenses"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:itemTitle="@string/licenses"
+                app:leadingIcon="@drawable/ic_file"
+                app:leadingIconContentDescription="@string/contentDescription_file_icon"/>
 
-                <com.kwasow.musekit.views.MenuItem
-                    android:id="@+id/itemLicenses"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:itemTitle="@string/licenses"
-                    app:leadingIcon="@drawable/ic_file"
-                    app:leadingIconContentDescription="@string/contentDescription_file_icon"/>
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
+        </com.kwasow.musekit.views.MenuSection>
 
         <TextView
             android:layout_width="wrap_content"

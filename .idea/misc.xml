@@ -40,6 +40,7 @@
         <entry key="app/src/main/res/layout/preset_list_item.xml" value="0.3703125" />
         <entry key="app/src/main/res/layout/sound_list_item.xml" value="0.1" />
         <entry key="app/src/main/res/layout/view_menu_item.xml" value="0.3582427536231884" />
+        <entry key="app/src/main/res/layout/view_menu_section.xml" value="0.18" />
         <entry key="app/src/main/res/menu/menu_bottom_navigation_bar.xml" value="0.19322916666666667" />
         <entry key="app/src/main/res/menu/note_fork_presets.xml" value="0.18125" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.21" />
