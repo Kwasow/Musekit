@@ -48,9 +48,6 @@ android {
         // compose = true
     }
 
-    composeOptions {
-        // kotlinCompilerExtensionVersion = composeVersion
-    }
     namespace = "com.kwasow.musekit"
 }
 
@@ -62,20 +59,8 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
     implementation("com.google.android.material:material:1.6.1")
 
-    // Compose
-    /* TODO: Enable compose when necessary (and possible)
-    implementation("androidx.activity:activity-compose:1.4.0")
-    implementation("androidx.compose.material3:material3:1.0.0-alpha04")
-    implementation("androidx.compose.ui:ui:$composeVersion")
-    implementation("androidx.compose.ui:ui-tooling-preview:$composeVersion")
-    */
-
     // Testing
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
-    // androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeVersion")
-
-    // Debug
-    // debugImplementation("androidx.compose.ui:ui-tooling:$composeVersion")
 }

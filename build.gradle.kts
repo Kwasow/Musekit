@@ -1,6 +1,5 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    val composeVersion by extra { "1.0.5" }
     repositories {
         google()
         mavenCentral()
