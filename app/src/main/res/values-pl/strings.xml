@@ -10,7 +10,7 @@
     <string name="contentDescription_start_stop">Start/stop</string>
     <string name="contentDescription_metronome_ticker">Wslaźnik metronomu</string>
     <string name="note">Dźwięk</string>
-    <string name="pitch">Częstotliwość podstawowa</string>
+    <string name="pitch">Częstotliwość</string>
     <string name="presets">Zapisane</string>
     <string name="default_preset">Domyślne</string>
     <string name="save_preset">Zapisz konfigurację</string>
