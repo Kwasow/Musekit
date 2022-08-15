@@ -4,14 +4,15 @@ import android.content.Context
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.LayoutInflater
-import android.widget.LinearLayout
+import android.widget.ImageView
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.kwasow.musekit.R
 import com.kwasow.musekit.databinding.ViewMenuItemBinding
 import java.lang.RuntimeException
 
-class MenuItem(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
+class MenuItem(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs) {
   private val itemTitle: String
   private val leadingIcon: Int
   private val leadingIconContentDescription: String
@@ -48,7 +49,6 @@ class MenuItem(context: Context, attrs: AttributeSet) : LinearLayout(context, at
     val value = TypedValue()
     context.theme.resolveAttribute(android.R.attr.selectableItemBackground, value, true)
     background = AppCompatResources.getDrawable(context, value.resourceId)
-    orientation = HORIZONTAL
   }
 
   private fun setChildrenProps() {
@@ -66,6 +66,10 @@ class MenuItem(context: Context, attrs: AttributeSet) : LinearLayout(context, at
         ContextCompat.getColor(context, value.resourceId)
       )
     }
+  }
+
+  fun getTrailingImageView(): ImageView {
+    return binding.menuItemTrailingIcon
   }
 
 }

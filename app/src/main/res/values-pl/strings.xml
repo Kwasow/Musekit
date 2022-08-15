@@ -51,4 +51,6 @@
     <string name="theme_light">Jasny</string>
     <string name="theme_follow_system">Systemowy</string>
     <string name="contentDescription_moon_icon">Ikonka księżyca</string>
+    <string name="contentDescription_current_theme_symbol">Ikonka przedstawiająca aktualny motyw</string>
+    <string name="contentDescription_check_icon">Haczyk oznaczający aktualny wybór</string>
 </resources>

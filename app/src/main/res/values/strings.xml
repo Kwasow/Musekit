@@ -59,12 +59,14 @@
     <string name="contentDescription_internet_globe">A globe representing the internet</string>
     <string name="contentDescription_file_icon">File icon</string>
     <string name="contentDescription_moon_icon">A moon icon</string>
+    <string name="contentDescription_current_theme_symbol">An icon showing the current theme</string>
 
     <!-- Night mode dialog -->
     <string name="select_theme">Select theme</string>
     <string name="theme_dark">Dark</string>
     <string name="theme_light">Light</string>
     <string name="theme_follow_system">Follow system</string>
+    <string name="contentDescription_check_icon">A check mark</string>
 
     <!-- Error string -->
     <string name="whoopsie">Whoopsie, you shouldn\'t be here!</string>

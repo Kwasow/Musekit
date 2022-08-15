@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
@@ -39,9 +40,27 @@ class SettingsFragment : Fragment() {
   }
 
   private fun setupSettingsSection() {
+    binding.itemNightMode.getTrailingImageView().apply {
+      when (getCurrentNightMode()) {
+        AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> setImageResource(R.drawable.ic_theme_auto)
+        AppCompatDelegate.MODE_NIGHT_YES -> setImageResource(R.drawable.ic_theme_dark)
+        else -> setImageResource(R.drawable.ic_theme_light)
+      }
+
+      contentDescription = getString(R.string.contentDescription_current_theme_symbol)
+    }
+
     binding.itemNightMode.setOnClickListener {
       showNightModeSelectionDialog()
     }
+  }
+
+  private fun getCurrentNightMode(): Int {
+    val sharedPreferences = requireContext().getSharedPreferences(
+      getString(R.string.preferences_file_key),
+      Context.MODE_PRIVATE
+    )
+    return sharedPreferences.getInt(getString(R.string.preferences_night_mode), 1)
   }
 
   private fun showNightModeSelectionDialog() {
@@ -58,22 +77,33 @@ class SettingsFragment : Fragment() {
       dialogBinding.itemThemeFollowSystem.visibility = View.GONE
     } else {
       dialogBinding.itemThemeFollowSystem.setOnClickListener {
-        setNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        setNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM, dialog)
       }
     }
 
     dialogBinding.itemThemeLight.setOnClickListener {
-      setNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+      setNightMode(AppCompatDelegate.MODE_NIGHT_NO, dialog)
     }
 
     dialogBinding.itemThemeDark.setOnClickListener {
-      setNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+      setNightMode(AppCompatDelegate.MODE_NIGHT_YES, dialog)
+    }
+
+    val currentThemeSelectionItem = when(getCurrentNightMode()) {
+      AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> dialogBinding.itemThemeFollowSystem
+      AppCompatDelegate.MODE_NIGHT_YES -> dialogBinding.itemThemeDark
+      else -> dialogBinding.itemThemeLight
+    }
+
+    currentThemeSelectionItem.getTrailingImageView().apply {
+      setImageResource(R.drawable.ic_check)
+      contentDescription = getString(R.string.contentDescription_check_icon)
     }
 
     dialog.show()
   }
 
-  private fun setNightMode(mode: Int) {
+  private fun setNightMode(mode: Int, dialog: AlertDialog) {
     AppCompatDelegate.setDefaultNightMode(mode)
     val sharedPreferences = requireContext().getSharedPreferences(
       getString(R.string.preferences_file_key),
@@ -86,6 +116,7 @@ class SettingsFragment : Fragment() {
       )
       apply()
     }
+    dialog.dismiss()
   }
 
   private fun setupAboutSection() {
