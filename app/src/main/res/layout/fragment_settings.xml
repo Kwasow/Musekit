@@ -44,11 +44,28 @@
             tools:ignore="HardcodedText" />
 
         <com.kwasow.musekit.views.MenuSection
-            android:id="@+id/cardViewMenuWrapper"
+            android:id="@+id/menuSectionSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:sectionTitle="@string/settings"
+            app:layout_constraintTop_toBottomOf="@id/appVersion">
+
+            <com.kwasow.musekit.views.MenuItem
+                android:id="@+id/itemNightMode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:itemTitle="@string/night_mode"
+                app:leadingIcon="@drawable/ic_moon"
+                app:leadingIconContentDescription="@string/contentDescription_moon_icon"/>
+
+        </com.kwasow.musekit.views.MenuSection>
+
+        <com.kwasow.musekit.views.MenuSection
+            android:id="@+id/menuSectionAbout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:sectionTitle="@string/about"
-            app:layout_constraintTop_toBottomOf="@id/appVersion">
+            app:layout_constraintTop_toBottomOf="@id/menuSectionSettings">
 
             <com.kwasow.musekit.views.MenuItem
                 android:id="@+id/itemSourceCode"
@@ -95,7 +112,7 @@
             android:paddingHorizontal="32dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cardViewMenuWrapper"/>
+            app:layout_constraintTop_toBottomOf="@id/menuSectionAbout"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

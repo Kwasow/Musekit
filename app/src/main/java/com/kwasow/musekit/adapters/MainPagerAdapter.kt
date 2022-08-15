@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.kwasow.musekit.fragments.ErrorFragment
 import com.kwasow.musekit.fragments.NoteForkFragment
-import com.kwasow.musekit.fragments.AboutFragment
+import com.kwasow.musekit.fragments.SettingsFragment
 import com.kwasow.musekit.fragments.MetronomeFragment
 
 class MainPagerAdapter(fragmentActivity: FragmentActivity) :
@@ -18,7 +18,7 @@ class MainPagerAdapter(fragmentActivity: FragmentActivity) :
     return when (position) {
       0 -> NoteForkFragment()
       1 -> MetronomeFragment()
-      2 -> AboutFragment()
+      2 -> SettingsFragment()
       else -> ErrorFragment()
     }
   }

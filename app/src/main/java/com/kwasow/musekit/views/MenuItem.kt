@@ -6,6 +6,7 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
 import com.kwasow.musekit.R
 import com.kwasow.musekit.databinding.ViewMenuItemBinding
 import java.lang.RuntimeException
@@ -14,6 +15,7 @@ class MenuItem(context: Context, attrs: AttributeSet) : LinearLayout(context, at
   private val itemTitle: String
   private val leadingIcon: Int
   private val leadingIconContentDescription: String
+  private val useTint: Boolean
 
   private val binding: ViewMenuItemBinding
 
@@ -27,6 +29,7 @@ class MenuItem(context: Context, attrs: AttributeSet) : LinearLayout(context, at
         leadingIcon = getResourceId(R.styleable.MenuItem_leadingIcon, -1)
         leadingIconContentDescription =
           getString(R.styleable.MenuItem_leadingIconContentDescription) ?: ""
+        useTint = getBoolean(R.styleable.MenuItem_useTint, true)
 
         if (leadingIcon == -1) {
           throw RuntimeException("The 'leadingIcon' attribute on MenuItem is required")
@@ -53,6 +56,15 @@ class MenuItem(context: Context, attrs: AttributeSet) : LinearLayout(context, at
     binding.menuItemLeadingIcon.apply {
       setImageResource(leadingIcon)
       contentDescription = leadingIconContentDescription
+    }
+
+    if (useTint) {
+      val value = TypedValue()
+      context.theme.resolveAttribute(android.R.attr.textColorTertiary, value, true)
+
+      binding.menuItemLeadingIcon.setColorFilter(
+        ContextCompat.getColor(context, value.resourceId)
+      )
     }
   }
 

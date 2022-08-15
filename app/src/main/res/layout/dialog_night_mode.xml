@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <com.kwasow.musekit.views.MenuItem
+        android:id="@+id/itemThemeFollowSystem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemTitle="@string/theme_follow_system"
+        app:leadingIcon="@drawable/ic_theme_auto"
+        app:useTint="false"/>
+
+    <com.kwasow.musekit.views.MenuItem
+        android:id="@+id/itemThemeLight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemTitle="@string/theme_light"
+        app:leadingIcon="@drawable/ic_theme_light"
+        app:useTint="false"/>
+
+    <com.kwasow.musekit.views.MenuItem
+        android:id="@+id/itemThemeDark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemTitle="@string/theme_dark"
+        app:leadingIcon="@drawable/ic_theme_dark"
+        app:useTint="false"/>
+
+</LinearLayout>

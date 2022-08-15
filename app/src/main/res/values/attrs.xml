@@ -4,6 +4,7 @@
         <attr name="leadingIcon" format="reference"/>
         <attr name="leadingIconContentDescription" format="string"/>
         <attr name="itemTitle" format="string"/>
+        <attr name="useTint" format="boolean"/>
     </declare-styleable>
 
     <declare-styleable name="MenuSection">

@@ -10,6 +10,6 @@
         android:icon="@drawable/ic_metronome" />
     <item
         android:id="@+id/action_about"
-        android:title="@string/about"
-        android:icon="@drawable/ic_info" />
+        android:title="@string/settings"
+        android:icon="@drawable/ic_settings" />
 </menu>

@@ -19,23 +19,29 @@
         <entry key="app/src/main/res/drawable/ic_logo.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_metronome.xml" value="0.22395833333333334" />
         <entry key="app/src/main/res/drawable/ic_minus_circle.xml" value="0.1895" />
+        <entry key="app/src/main/res/drawable/ic_moon.xml" value="0.251" />
         <entry key="app/src/main/res/drawable/ic_music.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_note_fork.xml" value="0.21" />
         <entry key="app/src/main/res/drawable/ic_pause_circle.xml" value="0.21" />
         <entry key="app/src/main/res/drawable/ic_play_circle.xml" value="0.1895" />
         <entry key="app/src/main/res/drawable/ic_plus_circle.xml" value="0.1895" />
         <entry key="app/src/main/res/drawable/ic_settings.xml" value="0.38" />
+        <entry key="app/src/main/res/drawable/ic_theme_auto.xml" value="0.251" />
+        <entry key="app/src/main/res/drawable/ic_theme_dark.xml" value="0.251" />
+        <entry key="app/src/main/res/drawable/ic_theme_light.xml" value="0.251" />
         <entry key="app/src/main/res/drawable/ic_tuning_fork.xml" value="0.30185185185185187" />
         <entry key="app/src/main/res/drawable/ic_twitter.xml" value="0.21" />
         <entry key="app/src/main/res/drawable/tmp.xml" value="0.199" />
         <entry key="app/src/main/res/drawable/vd_play_to_pause.xml" value="0.199" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/dialog_licenses.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/dialog_night_mode.xml" value="0.35520833333333335" />
         <entry key="app/src/main/res/layout/dialog_save_preset.xml" value="0.19114583333333332" />
         <entry key="app/src/main/res/layout/fragment_about.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_error.xml" value="0.3703125" />
         <entry key="app/src/main/res/layout/fragment_metronome.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_note_fork.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.3582427536231884" />
         <entry key="app/src/main/res/layout/list_item.xml" value="0.18125" />
         <entry key="app/src/main/res/layout/preset_list_item.xml" value="0.3703125" />
         <entry key="app/src/main/res/layout/sound_list_item.xml" value="0.1" />

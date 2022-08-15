@@ -2,7 +2,7 @@
 <resources>
     <string name="note_fork">Kamerton</string>
     <string name="metronome">Metronom</string>
-    <string name="about">O aplikacji</string>
+    <string name="settings">Ustawienia</string>
     <string name="contentDescription_note_up">Dźwięk w górę</string>
     <string name="contentDescription_note_down">Dźwięk w dół</string>
     <string name="contentDescription_pitch_up">Zwiększ częstotliwość podstawową</string>
@@ -44,4 +44,11 @@
     <string name="metronome_sound_beep">Beep</string>
     <string name="metronome_sound_ding">Ding</string>
     <string name="metronome_sound_wood">Drewno</string>
+    <string name="about">O aplikacji</string>
+    <string name="night_mode">Tryb ciemny</string>
+    <string name="select_theme">Wybierz motyw</string>
+    <string name="theme_dark">Ciemny</string>
+    <string name="theme_light">Jasny</string>
+    <string name="theme_follow_system">Systemowy</string>
+    <string name="contentDescription_moon_icon">Ikonka księżyca</string>
 </resources>
