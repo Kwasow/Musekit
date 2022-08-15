@@ -3,11 +3,11 @@ package com.kwasow.musekit.views
 import android.content.Context
 import android.util.AttributeSet
 import android.util.TypedValue
-import android.widget.ImageView
+import android.view.LayoutInflater
 import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import com.kwasow.musekit.R
+import com.kwasow.musekit.databinding.ViewMenuItemBinding
 import java.lang.RuntimeException
 
 class MenuItem(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
@@ -15,15 +15,10 @@ class MenuItem(context: Context, attrs: AttributeSet) : LinearLayout(context, at
   private val leadingIcon: Int
   private val leadingIconContentDescription: String
 
-  init {
-    inflate(context, R.layout.view_menu_item, this)
+  private val binding: ViewMenuItemBinding
 
-    isClickable = true
-    isFocusable = true
-    val value = TypedValue()
-    context.theme.resolveAttribute(android.R.attr.selectableItemBackground, value, true)
-    background = AppCompatResources.getDrawable(context, value.resourceId)
-    orientation = HORIZONTAL
+  init {
+    binding = ViewMenuItemBinding.inflate(LayoutInflater.from(context), this)
 
     context.theme.obtainStyledAttributes(attrs, R.styleable.MenuItem, 0, 0)
       .apply {
@@ -40,8 +35,22 @@ class MenuItem(context: Context, attrs: AttributeSet) : LinearLayout(context, at
         recycle()
       }
 
-    findViewById<TextView>(R.id.menuItemTitle).text = itemTitle;
-    findViewById<ImageView>(R.id.menuItemLeadingIcon).apply {
+    setRootProps()
+    setChildrenProps()
+  }
+
+  private fun setRootProps() {
+    isClickable = true
+    isFocusable = true
+    val value = TypedValue()
+    context.theme.resolveAttribute(android.R.attr.selectableItemBackground, value, true)
+    background = AppCompatResources.getDrawable(context, value.resourceId)
+    orientation = HORIZONTAL
+  }
+
+  private fun setChildrenProps() {
+    binding.menuItemTitle.text = itemTitle;
+    binding.menuItemLeadingIcon.apply {
       setImageResource(leadingIcon)
       contentDescription = leadingIconContentDescription
     }

@@ -2,20 +2,22 @@ package com.kwasow.musekit.views
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import android.widget.TextView
 import com.kwasow.musekit.R
+import com.kwasow.musekit.databinding.ViewMenuSectionBinding
+import java.lang.Exception
 import java.lang.RuntimeException
 
 class MenuSection(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
-  private val sectionTitle: String
+  private var sectionTitle: String
+
+  private val binding: ViewMenuSectionBinding
 
   init {
-    inflate(context, R.layout.view_menu_section, this)
-
-    orientation = VERTICAL
+    binding = ViewMenuSectionBinding.inflate(LayoutInflater.from(context), this)
 
     context.theme.obtainStyledAttributes(attrs, R.styleable.MenuSection, 0, 0)
       .apply {
@@ -25,15 +27,23 @@ class MenuSection(context: Context, attrs: AttributeSet) : LinearLayout(context,
         recycle()
       }
 
-    findViewById<TextView>(R.id.menuSectionTitle).text = sectionTitle
+    setRootProps()
+    setChildrenProps()
+  }
+
+  private fun setRootProps() {
+    orientation = VERTICAL
+  }
+
+  private fun setChildrenProps() {
+    binding.menuSectionTitle.text = sectionTitle
   }
 
   override fun addView(child: View?, index: Int, params: ViewGroup.LayoutParams?) {
-    val view = findViewById<LinearLayout>(R.id.menuSectionItemList)
-    if (view == null) {
+    try {
+      binding.menuSectionItemList.addView(child, index, params)
+    } catch (e: Exception) {
       super.addView(child, index, params)
-    } else {
-      view.addView(child, index, params)
     }
   }
 }
