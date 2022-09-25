@@ -26,7 +26,7 @@ class MenuItem(context: Context, attrs: AttributeSet) : ConstraintLayout(context
     context.theme.obtainStyledAttributes(attrs, R.styleable.MenuItem, 0, 0)
       .apply {
         itemTitle = getString(R.styleable.MenuItem_itemTitle)
-          ?: throw RuntimeException("The 'title' attribute on MenuItem is required")
+          ?: throw RuntimeException("The 'itemTitle' attribute on MenuItem is required")
         leadingIcon = getResourceId(R.styleable.MenuItem_leadingIcon, -1)
         leadingIconContentDescription =
           getString(R.styleable.MenuItem_leadingIconContentDescription) ?: ""
@@ -70,6 +70,10 @@ class MenuItem(context: Context, attrs: AttributeSet) : ConstraintLayout(context
 
   fun getTrailingImageView(): ImageView {
     return binding.menuItemTrailingIcon
+  }
+
+  fun getLeadingImageView(): ImageView {
+    return binding.menuItemLeadingIcon
   }
 
 }

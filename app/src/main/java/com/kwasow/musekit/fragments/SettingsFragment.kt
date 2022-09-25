@@ -1,22 +1,19 @@
 package com.kwasow.musekit.fragments
 
-import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.content.edit
+import androidx.annotation.RawRes
 import androidx.fragment.app.Fragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kwasow.musekit.BuildConfig
 import com.kwasow.musekit.R
 import com.kwasow.musekit.databinding.DialogLicensesBinding
-import com.kwasow.musekit.databinding.DialogNightModeBinding
+import com.kwasow.musekit.databinding.DialogThemeSettingsBinding
 import com.kwasow.musekit.databinding.FragmentSettingsBinding
 
 class SettingsFragment : Fragment() {
@@ -40,83 +37,9 @@ class SettingsFragment : Fragment() {
   }
 
   private fun setupSettingsSection() {
-    binding.itemNightMode.getTrailingImageView().apply {
-      when (getCurrentNightMode()) {
-        AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> setImageResource(R.drawable.ic_theme_auto)
-        AppCompatDelegate.MODE_NIGHT_YES -> setImageResource(R.drawable.ic_theme_dark)
-        else -> setImageResource(R.drawable.ic_theme_light)
-      }
-
-      contentDescription = getString(R.string.contentDescription_current_theme_symbol)
+    binding.itemThemeSettings.setOnClickListener {
+      showThemeSettingsDialog()
     }
-
-    binding.itemNightMode.setOnClickListener {
-      showNightModeSelectionDialog()
-    }
-  }
-
-  private fun getCurrentNightMode(): Int {
-    val sharedPreferences = requireContext().getSharedPreferences(
-      getString(R.string.preferences_file_key),
-      Context.MODE_PRIVATE
-    )
-    return sharedPreferences.getInt(getString(R.string.preferences_night_mode), 1)
-  }
-
-  private fun showNightModeSelectionDialog() {
-    val dialogBinding = DialogNightModeBinding.inflate(layoutInflater)
-
-    val dialog = MaterialAlertDialogBuilder(requireContext())
-      .setTitle(R.string.select_theme)
-      .setIcon(R.drawable.ic_moon)
-      .setNeutralButton(R.string.close) { _, _ -> }
-      .setView(dialogBinding.root)
-      .create()
-
-    if (Build.VERSION.SDK_INT < 29) {
-      dialogBinding.itemThemeFollowSystem.visibility = View.GONE
-    } else {
-      dialogBinding.itemThemeFollowSystem.setOnClickListener {
-        setNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM, dialog)
-      }
-    }
-
-    dialogBinding.itemThemeLight.setOnClickListener {
-      setNightMode(AppCompatDelegate.MODE_NIGHT_NO, dialog)
-    }
-
-    dialogBinding.itemThemeDark.setOnClickListener {
-      setNightMode(AppCompatDelegate.MODE_NIGHT_YES, dialog)
-    }
-
-    val currentThemeSelectionItem = when(getCurrentNightMode()) {
-      AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> dialogBinding.itemThemeFollowSystem
-      AppCompatDelegate.MODE_NIGHT_YES -> dialogBinding.itemThemeDark
-      else -> dialogBinding.itemThemeLight
-    }
-
-    currentThemeSelectionItem.getTrailingImageView().apply {
-      setImageResource(R.drawable.ic_check)
-      contentDescription = getString(R.string.contentDescription_check_icon)
-    }
-
-    dialog.show()
-  }
-
-  private fun setNightMode(mode: Int, dialog: AlertDialog) {
-    AppCompatDelegate.setDefaultNightMode(mode)
-    val sharedPreferences = requireContext().getSharedPreferences(
-      getString(R.string.preferences_file_key),
-      Context.MODE_PRIVATE
-    )
-    sharedPreferences.edit {
-      putInt(
-        getString(R.string.preferences_night_mode),
-        mode
-      )
-      apply()
-    }
-    dialog.dismiss()
   }
 
   private fun setupAboutSection() {
@@ -160,10 +83,7 @@ class SettingsFragment : Fragment() {
       .setNeutralButton(R.string.close) { _, _ -> }
 
     dialogBinding.buttonLicenseThisApp.setOnClickListener {
-      val inputStream = resources.openRawResource(R.raw.gpl3)
-      val b = ByteArray(inputStream.available())
-      inputStream.read(b)
-      val license = String(b)
+      val license = readRawFileAsString(R.raw.gpl3)
 
       dialog.dismiss()
       licenceDialogBuilder.setTitle(dialogBinding.textThisApp.text)
@@ -172,15 +92,65 @@ class SettingsFragment : Fragment() {
     }
 
     dialogBinding.buttonLicenseIcons.setOnClickListener {
-      val inputStream = resources.openRawResource(R.raw.mit)
-      val b = ByteArray(inputStream.available())
-      inputStream.read(b)
-      val license = String(b)
+      val license = readRawFileAsString(R.raw.mit)
 
       dialog.dismiss()
       licenceDialogBuilder.setTitle(dialogBinding.textIcons.text)
       licenceDialogBuilder.setMessage(license)
       licenceDialogBuilder.show()
+    }
+
+    dialog.show()
+  }
+
+  private fun readRawFileAsString(@RawRes id: Int): String {
+    val inputStream = resources.openRawResource(R.raw.mit)
+    val byteArray = ByteArray(inputStream.available())
+    inputStream.read(byteArray)
+
+    return String(byteArray)
+  }
+
+  private fun showThemeSettingsDialog() {
+    val dialogBinding = DialogThemeSettingsBinding.inflate(layoutInflater)
+
+    val dialog = MaterialAlertDialogBuilder(requireContext())
+      .setNeutralButton(R.string.close) { _, _ -> }
+      .setView(dialogBinding.root)
+      .create()
+
+    dialogBinding.itemThemeFollowSystem.setOnClickListener {
+
+    }
+
+    dialogBinding.itemThemeLight.getLeadingImageView().setColorFilter(Color.WHITE)
+    dialogBinding.itemThemeLight.setOnClickListener {
+
+    }
+
+    dialogBinding.itemThemeDark.getLeadingImageView().setColorFilter(Color.BLACK)
+    dialogBinding.itemThemeDark.setOnClickListener {
+
+    }
+
+    dialogBinding.itemAccentGreen.getLeadingImageView().setColorFilter(Color.GREEN)
+    dialogBinding.itemAccentGreen.setOnClickListener {
+
+    }
+
+    dialogBinding.itemAccentRed.getLeadingImageView().setColorFilter(Color.RED)
+    dialogBinding.itemAccentRed.setOnClickListener {
+
+    }
+
+    dialogBinding.itemAccentBlue.getLeadingImageView().setColorFilter(Color.BLUE)
+    dialogBinding.itemAccentBlue.setOnClickListener {
+
+    }
+
+    dialogBinding.itemAccentYellow.getLeadingImageView().setColorFilter(Color.YELLOW)
+    dialogBinding.itemAccentYellow.setOnClickListener {
+
     }
 
     dialog.show()

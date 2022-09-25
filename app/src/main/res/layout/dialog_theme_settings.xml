@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.kwasow.musekit.views.MenuSection
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:sectionTitle="@string/theme">
+
+        <com.kwasow.musekit.views.MenuItem
+            android:id="@+id/itemThemeFollowSystem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:itemTitle="@string/theme_follow_system"
+            app:leadingIcon="@drawable/ic_theme_auto"
+            app:useTint="false" />
+
+        <com.kwasow.musekit.views.MenuItem
+            android:id="@+id/itemThemeLight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:itemTitle="@string/theme_light"
+            app:leadingIcon="@drawable/ic_circle_with_outline"
+            app:useTint="false" />
+
+        <com.kwasow.musekit.views.MenuItem
+            android:id="@+id/itemThemeDark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:itemTitle="@string/theme_dark"
+            app:leadingIcon="@drawable/ic_circle_with_outline"
+            app:useTint="false" />
+
+    </com.kwasow.musekit.views.MenuSection>
+
+    <com.kwasow.musekit.views.MenuSection
+        app:sectionTitle="@string/accent_colour"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.kwasow.musekit.views.MenuItem
+            android:id="@+id/itemAccentGreen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:itemTitle="@string/green"
+            app:leadingIcon="@drawable/ic_circle_with_outline"
+            app:useTint="false" />
+
+        <com.kwasow.musekit.views.MenuItem
+            android:id="@+id/itemAccentRed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:itemTitle="@string/red"
+            app:leadingIcon="@drawable/ic_circle_with_outline"
+            app:useTint="false" />
+
+        <com.kwasow.musekit.views.MenuItem
+            android:id="@+id/itemAccentBlue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:itemTitle="@string/blue"
+            app:leadingIcon="@drawable/ic_circle_with_outline"
+            app:useTint="false" />
+
+        <com.kwasow.musekit.views.MenuItem
+            android:id="@+id/itemAccentYellow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:itemTitle="@string/yellow"
+            app:leadingIcon="@drawable/ic_circle_with_outline"
+            app:useTint="false" />
+
+    </com.kwasow.musekit.views.MenuSection>
+
+
+</LinearLayout>
