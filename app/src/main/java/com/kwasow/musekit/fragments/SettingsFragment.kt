@@ -17,142 +17,137 @@ import com.kwasow.musekit.databinding.DialogThemeSettingsBinding
 import com.kwasow.musekit.databinding.FragmentSettingsBinding
 
 class SettingsFragment : Fragment() {
-  private lateinit var binding: FragmentSettingsBinding
+    private lateinit var binding: FragmentSettingsBinding
 
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View {
-    binding = FragmentSettingsBinding.inflate(inflater)
-    return binding.root
-  }
-
-  override fun onStart() {
-    super.onStart()
-
-    binding.appVersion.text = getString(R.string.version, BuildConfig.VERSION_NAME)
-    setupAboutSection()
-    setupSettingsSection()
-  }
-
-  private fun setupSettingsSection() {
-    binding.itemThemeSettings.setOnClickListener {
-      showThemeSettingsDialog()
-    }
-  }
-
-  private fun setupAboutSection() {
-    binding.itemSourceCode.setOnClickListener {
-      val browserIntent = Intent(
-        Intent.ACTION_VIEW,
-        Uri.parse("https://github.com/Kwasow/Musekit")
-      )
-      startActivity(browserIntent)
-    }
-    binding.itemTwitter.setOnClickListener {
-      val browserIntent = Intent(
-        Intent.ACTION_VIEW,
-        Uri.parse("https://twitter.com/KarolWasowski")
-      )
-      startActivity(browserIntent)
-    }
-    binding.itemWebsite.setOnClickListener {
-      val browserIntent = Intent(
-        Intent.ACTION_VIEW,
-        Uri.parse("https://kwasow.github.io/#/")
-      )
-      startActivity(browserIntent)
-    }
-    binding.itemLicenses.setOnClickListener {
-      showLicensesDialog()
-    }
-  }
-
-  private fun showLicensesDialog() {
-    val dialogBinding = DialogLicensesBinding.inflate(layoutInflater)
-
-    val dialog = MaterialAlertDialogBuilder(requireContext())
-      .setTitle(R.string.licenses)
-      .setIcon(R.drawable.ic_file)
-      .setNeutralButton(R.string.close) { _, _ -> }
-      .setView(dialogBinding.root)
-      .create()
-
-    val licenceDialogBuilder = MaterialAlertDialogBuilder(requireContext())
-      .setNeutralButton(R.string.close) { _, _ -> }
-
-    dialogBinding.buttonLicenseThisApp.setOnClickListener {
-      val license = readRawFileAsString(R.raw.gpl3)
-
-      dialog.dismiss()
-      licenceDialogBuilder.setTitle(dialogBinding.textThisApp.text)
-      licenceDialogBuilder.setMessage(license)
-      licenceDialogBuilder.show()
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentSettingsBinding.inflate(inflater)
+        return binding.root
     }
 
-    dialogBinding.buttonLicenseIcons.setOnClickListener {
-      val license = readRawFileAsString(R.raw.mit)
+    override fun onStart() {
+        super.onStart()
 
-      dialog.dismiss()
-      licenceDialogBuilder.setTitle(dialogBinding.textIcons.text)
-      licenceDialogBuilder.setMessage(license)
-      licenceDialogBuilder.show()
+        binding.appVersion.text = getString(R.string.version, BuildConfig.VERSION_NAME)
+        setupAboutSection()
+        setupSettingsSection()
     }
 
-    dialog.show()
-  }
-
-  private fun readRawFileAsString(@RawRes id: Int): String {
-    val inputStream = resources.openRawResource(R.raw.mit)
-    val byteArray = ByteArray(inputStream.available())
-    inputStream.read(byteArray)
-
-    return String(byteArray)
-  }
-
-  private fun showThemeSettingsDialog() {
-    val dialogBinding = DialogThemeSettingsBinding.inflate(layoutInflater)
-
-    val dialog = MaterialAlertDialogBuilder(requireContext())
-      .setNeutralButton(R.string.close) { _, _ -> }
-      .setView(dialogBinding.root)
-      .create()
-
-    dialogBinding.itemThemeFollowSystem.setOnClickListener {
-
+    private fun setupSettingsSection() {
+        binding.itemThemeSettings.setOnClickListener {
+            showThemeSettingsDialog()
+        }
     }
 
-    dialogBinding.itemThemeLight.getLeadingImageView().setColorFilter(Color.WHITE)
-    dialogBinding.itemThemeLight.setOnClickListener {
-
+    private fun setupAboutSection() {
+        binding.itemSourceCode.setOnClickListener {
+            val browserIntent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://github.com/Kwasow/Musekit")
+            )
+            startActivity(browserIntent)
+        }
+        binding.itemTwitter.setOnClickListener {
+            val browserIntent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://twitter.com/KarolWasowski")
+            )
+            startActivity(browserIntent)
+        }
+        binding.itemWebsite.setOnClickListener {
+            val browserIntent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://kwasow.github.io/#/")
+            )
+            startActivity(browserIntent)
+        }
+        binding.itemLicenses.setOnClickListener {
+            showLicensesDialog()
+        }
     }
 
-    dialogBinding.itemThemeDark.getLeadingImageView().setColorFilter(Color.BLACK)
-    dialogBinding.itemThemeDark.setOnClickListener {
+    private fun showLicensesDialog() {
+        val dialogBinding = DialogLicensesBinding.inflate(layoutInflater)
 
+        val dialog = MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.licenses)
+            .setIcon(R.drawable.ic_file)
+            .setNeutralButton(R.string.close) { _, _ -> }
+            .setView(dialogBinding.root)
+            .create()
+
+        val licenceDialogBuilder = MaterialAlertDialogBuilder(requireContext())
+            .setNeutralButton(R.string.close) { _, _ -> }
+
+        dialogBinding.buttonLicenseThisApp.setOnClickListener {
+            val license = readRawFileAsString(R.raw.gpl3)
+
+            dialog.dismiss()
+            licenceDialogBuilder.setTitle(dialogBinding.textThisApp.text)
+            licenceDialogBuilder.setMessage(license)
+            licenceDialogBuilder.show()
+        }
+
+        dialogBinding.buttonLicenseIcons.setOnClickListener {
+            val license = readRawFileAsString(R.raw.mit)
+
+            dialog.dismiss()
+            licenceDialogBuilder.setTitle(dialogBinding.textIcons.text)
+            licenceDialogBuilder.setMessage(license)
+            licenceDialogBuilder.show()
+        }
+
+        dialog.show()
     }
 
-    dialogBinding.itemAccentGreen.getLeadingImageView().setColorFilter(Color.GREEN)
-    dialogBinding.itemAccentGreen.setOnClickListener {
+    private fun readRawFileAsString(@RawRes id: Int): String {
+        val inputStream = resources.openRawResource(id)
+        val byteArray = ByteArray(inputStream.available())
+        inputStream.read(byteArray)
 
+        return String(byteArray)
     }
 
-    dialogBinding.itemAccentRed.getLeadingImageView().setColorFilter(Color.RED)
-    dialogBinding.itemAccentRed.setOnClickListener {
+    private fun showThemeSettingsDialog() {
+        val dialogBinding = DialogThemeSettingsBinding.inflate(layoutInflater)
 
+        val dialog = MaterialAlertDialogBuilder(requireContext())
+            .setNeutralButton(R.string.close) { _, _ -> }
+            .setView(dialogBinding.root)
+            .create()
+
+        // Theme settings
+        dialogBinding.itemThemeFollowSystem.setOnClickListener {
+        }
+
+        dialogBinding.itemThemeLight.getLeadingImageView().setColorFilter(Color.WHITE)
+        dialogBinding.itemThemeLight.setOnClickListener {
+        }
+
+        dialogBinding.itemThemeDark.getLeadingImageView().setColorFilter(Color.BLACK)
+        dialogBinding.itemThemeDark.setOnClickListener {
+        }
+
+        // Accent colours
+        dialogBinding.itemAccentGreen.getLeadingImageView().setColorFilter(Color.GREEN)
+        dialogBinding.itemAccentGreen.setOnClickListener {
+        }
+
+        dialogBinding.itemAccentRed.getLeadingImageView().setColorFilter(Color.RED)
+        dialogBinding.itemAccentRed.setOnClickListener {
+        }
+
+        dialogBinding.itemAccentBlue.getLeadingImageView().setColorFilter(Color.BLUE)
+        dialogBinding.itemAccentBlue.setOnClickListener {
+        }
+
+        dialogBinding.itemAccentYellow.getLeadingImageView().setColorFilter(Color.YELLOW)
+        dialogBinding.itemAccentYellow.setOnClickListener {
+        }
+
+        dialog.show()
     }
-
-    dialogBinding.itemAccentBlue.getLeadingImageView().setColorFilter(Color.BLUE)
-    dialogBinding.itemAccentBlue.setOnClickListener {
-
-    }
-
-    dialogBinding.itemAccentYellow.getLeadingImageView().setColorFilter(Color.YELLOW)
-    dialogBinding.itemAccentYellow.setOnClickListener {
-
-    }
-
-    dialog.show()
-  }
 }

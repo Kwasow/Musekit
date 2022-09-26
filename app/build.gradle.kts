@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     kotlin("android")
+    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
 }
 
 fun versionCode(): Int {

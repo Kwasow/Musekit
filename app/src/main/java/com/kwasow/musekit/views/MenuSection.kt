@@ -12,38 +12,38 @@ import java.lang.Exception
 import java.lang.RuntimeException
 
 class MenuSection(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
-  private var sectionTitle: String
+    private var sectionTitle: String
 
-  private val binding: ViewMenuSectionBinding
+    private val binding: ViewMenuSectionBinding
 
-  init {
-    binding = ViewMenuSectionBinding.inflate(LayoutInflater.from(context), this)
+    init {
+        binding = ViewMenuSectionBinding.inflate(LayoutInflater.from(context), this)
 
-    context.theme.obtainStyledAttributes(attrs, R.styleable.MenuSection, 0, 0)
-      .apply {
-        sectionTitle = getString(R.styleable.MenuSection_sectionTitle)
-          ?: throw RuntimeException("The 'sectionTitle' attribute on MenuSection is required")
+        context.theme.obtainStyledAttributes(attrs, R.styleable.MenuSection, 0, 0)
+            .apply {
+                sectionTitle = getString(R.styleable.MenuSection_sectionTitle)
+                    ?: throw RuntimeException("The 'sectionTitle' attribute on MenuSection is required")
 
-        recycle()
-      }
+                recycle()
+            }
 
-    setRootProps()
-    setChildrenProps()
-  }
-
-  private fun setRootProps() {
-    orientation = VERTICAL
-  }
-
-  private fun setChildrenProps() {
-    binding.menuSectionTitle.text = sectionTitle
-  }
-
-  override fun addView(child: View?, index: Int, params: ViewGroup.LayoutParams?) {
-    try {
-      binding.menuSectionItemList.addView(child, index, params)
-    } catch (e: Exception) {
-      super.addView(child, index, params)
+        setRootProps()
+        setChildrenProps()
     }
-  }
+
+    private fun setRootProps() {
+        orientation = VERTICAL
+    }
+
+    private fun setChildrenProps() {
+        binding.menuSectionTitle.text = sectionTitle
+    }
+
+    override fun addView(child: View?, index: Int, params: ViewGroup.LayoutParams?) {
+        try {
+            binding.menuSectionItemList.addView(child, index, params)
+        } catch (e: Exception) {
+            super.addView(child, index, params)
+        }
+    }
 }

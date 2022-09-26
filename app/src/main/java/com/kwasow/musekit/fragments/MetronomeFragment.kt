@@ -17,134 +17,134 @@ import com.kwasow.musekit.databinding.FragmentMetronomeBinding
 import com.kwasow.musekit.services.MetronomeService
 
 class MetronomeFragment : Fragment() {
-  private lateinit var binding: FragmentMetronomeBinding
+    private lateinit var binding: FragmentMetronomeBinding
 
-  private lateinit var metronomeService: MetronomeService
-  private var isBound = false
+    private lateinit var metronomeService: MetronomeService
+    private var isBound = false
 
-  private val serviceConnection = object : ServiceConnection {
-    override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-      val binder = service as MetronomeService.LocalBinder
-      metronomeService = binder.getService()
-      isBound = true
-      metronomeService.connectTicker(binding.sliderBeat)
+    private val serviceConnection = object : ServiceConnection {
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            val binder = service as MetronomeService.LocalBinder
+            metronomeService = binder.getService()
+            isBound = true
+            metronomeService.connectTicker(binding.sliderBeat)
 
-      updateBpmText()
-      setupSoundPicker()
-    }
-
-    override fun onServiceDisconnected(name: ComponentName?) {
-      isBound = false
-    }
-  }
-
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View {
-    binding = FragmentMetronomeBinding.inflate(inflater)
-    return binding.root
-  }
-
-  override fun onStart() {
-    super.onStart()
-
-    bindService()
-    setupButtons()
-  }
-
-  override fun onStop() {
-    super.onStop()
-
-    requireContext().unbindService(serviceConnection)
-    isBound = false
-  }
-
-  private fun bindService() {
-    Intent(requireContext(), MetronomeService::class.java).also { intent ->
-      requireContext().bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
-    }
-  }
-
-  private fun setupButtons() {
-    binding.buttonStartStop.setOnClickListener {
-      if (isBound) {
-        if (metronomeService.isPlaying) {
-          binding.buttonStartStop.apply {
-            setIconResource(R.drawable.anim_pause_to_play)
-            (icon as AnimatedVectorDrawable).start()
-          }
-        } else {
-          binding.buttonStartStop.apply {
-            setIconResource(R.drawable.anim_play_to_pause)
-            (icon as AnimatedVectorDrawable).start()
-          }
+            updateBpmText()
+            setupSoundPicker()
         }
-        metronomeService.startStopMetronome()
-      }
+
+        override fun onServiceDisconnected(name: ComponentName?) {
+            isBound = false
+        }
     }
 
-    binding.buttonPlus5.setOnClickListener {
-      if (isBound) {
-        metronomeService.bpm += 5
-        updateBpmText()
-      }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentMetronomeBinding.inflate(inflater)
+        return binding.root
     }
 
-    binding.buttonPlus2.setOnClickListener {
-      if (isBound) {
-        metronomeService.bpm += 2
-        updateBpmText()
-      }
+    override fun onStart() {
+        super.onStart()
+
+        bindService()
+        setupButtons()
     }
 
-    binding.buttonPlus1.setOnClickListener {
-      if (isBound) {
-        metronomeService.bpm += 1
-        updateBpmText()
-      }
+    override fun onStop() {
+        super.onStop()
+
+        requireContext().unbindService(serviceConnection)
+        isBound = false
     }
 
-    binding.buttonMinus5.setOnClickListener {
-      if (isBound) {
-        metronomeService.bpm -= 5
-        updateBpmText()
-      }
+    private fun bindService() {
+        Intent(requireContext(), MetronomeService::class.java).also { intent ->
+            requireContext().bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
+        }
     }
 
-    binding.buttonMinus2.setOnClickListener {
-      if (isBound) {
-        metronomeService.bpm -= 2
-        updateBpmText()
-      }
+    private fun setupButtons() {
+        binding.buttonStartStop.setOnClickListener {
+            if (isBound) {
+                if (metronomeService.isPlaying) {
+                    binding.buttonStartStop.apply {
+                        setIconResource(R.drawable.anim_pause_to_play)
+                        (icon as AnimatedVectorDrawable).start()
+                    }
+                } else {
+                    binding.buttonStartStop.apply {
+                        setIconResource(R.drawable.anim_play_to_pause)
+                        (icon as AnimatedVectorDrawable).start()
+                    }
+                }
+                metronomeService.startStopMetronome()
+            }
+        }
+
+        binding.buttonPlus5.setOnClickListener {
+            if (isBound) {
+                metronomeService.bpm += 5
+                updateBpmText()
+            }
+        }
+
+        binding.buttonPlus2.setOnClickListener {
+            if (isBound) {
+                metronomeService.bpm += 2
+                updateBpmText()
+            }
+        }
+
+        binding.buttonPlus1.setOnClickListener {
+            if (isBound) {
+                metronomeService.bpm += 1
+                updateBpmText()
+            }
+        }
+
+        binding.buttonMinus5.setOnClickListener {
+            if (isBound) {
+                metronomeService.bpm -= 5
+                updateBpmText()
+            }
+        }
+
+        binding.buttonMinus2.setOnClickListener {
+            if (isBound) {
+                metronomeService.bpm -= 2
+                updateBpmText()
+            }
+        }
+
+        binding.buttonMinus1.setOnClickListener {
+            if (isBound) {
+                metronomeService.bpm -= 1
+                updateBpmText()
+            }
+        }
     }
 
-    binding.buttonMinus1.setOnClickListener {
-      if (isBound) {
-        metronomeService.bpm -= 1
-        updateBpmText()
-      }
+    private fun updateBpmText() {
+        if (isBound) binding.textBpm.text = metronomeService.bpm.toString()
     }
-  }
 
-  private fun updateBpmText() {
-    if (isBound) binding.textBpm.text = metronomeService.bpm.toString()
-  }
+    private fun setupSoundPicker() {
+        if (isBound) {
+            val sounds = metronomeService.getAvailableSounds()
+            val soundNames = sounds.map { getString(it.resourceNameId) }
+            val soundsAdapter = SoundsAdapter(requireContext(), soundNames)
 
-  private fun setupSoundPicker() {
-    if (isBound) {
-      val sounds = metronomeService.getAvailableSounds()
-      val soundNames = sounds.map { getString(it.resourceNameId) }
-      val soundsAdapter = SoundsAdapter(requireContext(), soundNames)
-
-      binding.metronomeSoundPicker.setAdapter(soundsAdapter)
-      binding.metronomeSoundPicker.setText(
-        getString(metronomeService.sound.resourceNameId), false
-      )
-      binding.metronomeSoundPicker.setOnItemClickListener { _, _, i, _ ->
-        if (isBound) metronomeService.sound = sounds[i]
-      }
+            binding.metronomeSoundPicker.setAdapter(soundsAdapter)
+            binding.metronomeSoundPicker.setText(
+                getString(metronomeService.sound.resourceNameId), false
+            )
+            binding.metronomeSoundPicker.setOnItemClickListener { _, _, i, _ ->
+                if (isBound) metronomeService.sound = sounds[i]
+            }
+        }
     }
-  }
 }
