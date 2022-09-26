@@ -54,7 +54,7 @@
                 android:id="@+id/itemThemeSettings"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:itemTitle="@string/theme_settings"
+                app:itemTitle="@string/theme"
                 app:leadingIcon="@drawable/ic_moon"
                 app:leadingIconContentDescription="@string/contentDescription_moon_icon"/>
 
