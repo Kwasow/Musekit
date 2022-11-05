@@ -157,22 +157,22 @@ class SettingsFragment : Fragment() {
             setNightMode(dialog, AppCompatDelegate.MODE_NIGHT_YES)
         }
 
-        // Accent colours
-        dialogBinding.itemAccentGreen.getLeadingImageView().setColorFilter(Color.GREEN)
-        dialogBinding.itemAccentGreen.setOnClickListener {
-        }
-
-        dialogBinding.itemAccentRed.getLeadingImageView().setColorFilter(Color.RED)
-        dialogBinding.itemAccentRed.setOnClickListener {
-        }
-
-        dialogBinding.itemAccentBlue.getLeadingImageView().setColorFilter(Color.BLUE)
-        dialogBinding.itemAccentBlue.setOnClickListener {
-        }
-
-        dialogBinding.itemAccentYellow.getLeadingImageView().setColorFilter(Color.YELLOW)
-        dialogBinding.itemAccentYellow.setOnClickListener {
-        }
+//        // Accent colours
+//        dialogBinding.itemAccentGreen.getLeadingImageView().setColorFilter(Color.GREEN)
+//        dialogBinding.itemAccentGreen.setOnClickListener {
+//        }
+//
+//        dialogBinding.itemAccentRed.getLeadingImageView().setColorFilter(Color.RED)
+//        dialogBinding.itemAccentRed.setOnClickListener {
+//        }
+//
+//        dialogBinding.itemAccentBlue.getLeadingImageView().setColorFilter(Color.BLUE)
+//        dialogBinding.itemAccentBlue.setOnClickListener {
+//        }
+//
+//        dialogBinding.itemAccentYellow.getLeadingImageView().setColorFilter(Color.YELLOW)
+//        dialogBinding.itemAccentYellow.setOnClickListener {
+//        }
 
         dialog.show()
     }
