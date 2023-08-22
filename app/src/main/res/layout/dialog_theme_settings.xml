@@ -37,44 +37,4 @@
 
     </com.kwasow.musekit.views.MenuSection>
 
-<!--    <com.kwasow.musekit.views.MenuSection-->
-<!--        app:sectionTitle="@string/accent_colour"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content">-->
-
-<!--        <com.kwasow.musekit.views.MenuItem-->
-<!--            android:id="@+id/itemAccentGreen"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:itemTitle="@string/green"-->
-<!--            app:leadingIcon="@drawable/ic_circle_with_outline"-->
-<!--            app:useTint="false" />-->
-
-<!--        <com.kwasow.musekit.views.MenuItem-->
-<!--            android:id="@+id/itemAccentRed"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:itemTitle="@string/red"-->
-<!--            app:leadingIcon="@drawable/ic_circle_with_outline"-->
-<!--            app:useTint="false" />-->
-
-<!--        <com.kwasow.musekit.views.MenuItem-->
-<!--            android:id="@+id/itemAccentBlue"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:itemTitle="@string/blue"-->
-<!--            app:leadingIcon="@drawable/ic_circle_with_outline"-->
-<!--            app:useTint="false" />-->
-
-<!--        <com.kwasow.musekit.views.MenuItem-->
-<!--            android:id="@+id/itemAccentYellow"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:itemTitle="@string/yellow"-->
-<!--            app:leadingIcon="@drawable/ic_circle_with_outline"-->
-<!--            app:useTint="false" />-->
-
-<!--    </com.kwasow.musekit.views.MenuSection>-->
-
-
 </LinearLayout>
