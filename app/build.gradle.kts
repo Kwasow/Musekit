@@ -12,12 +12,12 @@ fun versionCode(): Int {
 val composeVersion: String by rootProject.extra
 
 android {
-    compileSdk = 32
+    compileSdk = 33
 
     defaultConfig {
         applicationId = "com.kwasow.musekit"
         minSdk = 23
-        targetSdk = 32
+        targetSdk = 33
         versionCode = versionCode()
         versionName = "1.2.2"
 
