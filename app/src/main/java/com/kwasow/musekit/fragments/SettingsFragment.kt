@@ -129,10 +129,12 @@ class SettingsFragment : Fragment() {
                 dialogBinding.itemThemeFollowSystem.getTrailingImageView()
                     .setImageResource(R.drawable.ic_check)
             }
+
             AppCompatDelegate.MODE_NIGHT_NO -> {
                 dialogBinding.itemThemeLight.getTrailingImageView()
                     .setImageResource(R.drawable.ic_check)
             }
+
             AppCompatDelegate.MODE_NIGHT_YES -> {
                 dialogBinding.itemThemeDark.getTrailingImageView()
                     .setImageResource(R.drawable.ic_check)
@@ -156,23 +158,6 @@ class SettingsFragment : Fragment() {
         dialogBinding.itemThemeDark.setOnClickListener {
             setNightMode(dialog, AppCompatDelegate.MODE_NIGHT_YES)
         }
-
-//        // Accent colours
-//        dialogBinding.itemAccentGreen.getLeadingImageView().setColorFilter(Color.GREEN)
-//        dialogBinding.itemAccentGreen.setOnClickListener {
-//        }
-//
-//        dialogBinding.itemAccentRed.getLeadingImageView().setColorFilter(Color.RED)
-//        dialogBinding.itemAccentRed.setOnClickListener {
-//        }
-//
-//        dialogBinding.itemAccentBlue.getLeadingImageView().setColorFilter(Color.BLUE)
-//        dialogBinding.itemAccentBlue.setOnClickListener {
-//        }
-//
-//        dialogBinding.itemAccentYellow.getLeadingImageView().setColorFilter(Color.YELLOW)
-//        dialogBinding.itemAccentYellow.setOnClickListener {
-//        }
 
         dialog.show()
     }
