@@ -54,7 +54,7 @@ class PresetsManager {
                             name = lines[1],
                             semitones = lines[2].toInt(),
                             octave = lines[3].toInt(),
-                            pitch = lines[4].toInt(),
+                            pitch = lines[4].toInt()
                         )
                         presets.add(preset)
                     }

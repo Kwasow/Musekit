@@ -140,7 +140,8 @@ class MetronomeFragment : Fragment() {
 
             binding.metronomeSoundPicker.setAdapter(soundsAdapter)
             binding.metronomeSoundPicker.setText(
-                getString(metronomeService.sound.resourceNameId), false
+                getString(metronomeService.sound.resourceNameId),
+                false
             )
             binding.metronomeSoundPicker.setOnItemClickListener { _, _, i, _ ->
                 if (isBound) metronomeService.sound = sounds[i]

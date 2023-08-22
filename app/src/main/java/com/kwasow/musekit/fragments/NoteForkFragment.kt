@@ -77,11 +77,15 @@ class NoteForkFragment : Fragment() {
         if (note.length == 6) {
             spannableStringBuilder.setSpan(
                 SuperscriptSpan(),
-                1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                1,
+                2,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
             )
             spannableStringBuilder.setSpan(
                 SuperscriptSpan(),
-                4, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                4,
+                5,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
             )
         }
 
@@ -91,10 +95,10 @@ class NoteForkFragment : Fragment() {
     private fun setupPresets() {
         // Setup lists and adapter
         val presetsNames = mutableListOf(
-            getString(R.string.default_preset),
+            getString(R.string.default_preset)
         )
         val presetsDetails = mutableListOf(
-            Note(440, Notes.A, 4),
+            Note(440, Notes.A, 4)
         )
         val savedPresets = PresetsManager.getPresets(requireContext())
         savedPresets.forEach {
