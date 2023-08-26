@@ -1,6 +1,6 @@
 plugins {
     id("com.android.application")
-    kotlin("android")
+    id("org.jetbrains.kotlin.android")
     id("org.jlleitschuh.gradle.ktlint") version "11.5.1"
 }
 
@@ -9,9 +9,9 @@ fun versionCode(): Int {
     // This will fail eventually, but well… It's the best we have
     return secondsSinceEpoch.toInt()
 }
-val composeVersion: String by rootProject.extra
 
 android {
+    namespace = "com.kwasow.musekit"
     compileSdk = 33
 
     defaultConfig {
@@ -25,7 +25,7 @@ android {
     }
 
     buildTypes {
-        getByName("release") {
+        release {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
@@ -46,9 +46,22 @@ android {
 
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 
-    namespace = "com.kwasow.musekit"
+    androidResources {
+        generateLocaleConfig = true
+    }
+
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+
+    lint {
+        disable.add("MissingTranslation")
+    }
 }
 
 tasks.withType<Test> {
