@@ -29,7 +29,7 @@ class MetronomeFragment : Fragment() {
             isBound = true
             metronomeService.connectTicker(binding.sliderBeat)
 
-            updateBpmText()
+            updateBpm()
             setupSoundPicker()
         }
 
@@ -85,51 +85,20 @@ class MetronomeFragment : Fragment() {
             }
         }
 
-        binding.buttonPlus5.setOnClickListener {
-            if (isBound) {
-                metronomeService.bpm += 5
-                updateBpmText()
-            }
-        }
+        binding.buttonPlus5.setOnClickListener { updateBpm(5) }
+        binding.buttonPlus2.setOnClickListener { updateBpm(2) }
+        binding.buttonPlus1.setOnClickListener { updateBpm(1) }
 
-        binding.buttonPlus2.setOnClickListener {
-            if (isBound) {
-                metronomeService.bpm += 2
-                updateBpmText()
-            }
-        }
-
-        binding.buttonPlus1.setOnClickListener {
-            if (isBound) {
-                metronomeService.bpm += 1
-                updateBpmText()
-            }
-        }
-
-        binding.buttonMinus5.setOnClickListener {
-            if (isBound) {
-                metronomeService.bpm -= 5
-                updateBpmText()
-            }
-        }
-
-        binding.buttonMinus2.setOnClickListener {
-            if (isBound) {
-                metronomeService.bpm -= 2
-                updateBpmText()
-            }
-        }
-
-        binding.buttonMinus1.setOnClickListener {
-            if (isBound) {
-                metronomeService.bpm -= 1
-                updateBpmText()
-            }
-        }
+        binding.buttonMinus5.setOnClickListener { updateBpm(-5) }
+        binding.buttonMinus2.setOnClickListener { updateBpm(-2) }
+        binding.buttonMinus1.setOnClickListener { updateBpm(-1) }
     }
 
-    private fun updateBpmText() {
-        if (isBound) binding.textBpm.text = metronomeService.bpm.toString()
+    private fun updateBpm(by: Int = 0) {
+        if (isBound) {
+            metronomeService.bpm += by
+            binding.textBpm.text = metronomeService.bpm.toString()
+        }
     }
 
     private fun setupSoundPicker() {
