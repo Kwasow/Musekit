@@ -12,7 +12,7 @@
     <string name="note">Dźwięk</string>
     <string name="pitch">Częstotliwość</string>
     <string name="presets">Zapisane</string>
-    <string name="default_preset">Domyślne</string>
+    <string name="default_preset">Domyślna</string>
     <string name="save_preset">Zapisz konfigurację</string>
     <string name="save">Zapisz</string>
     <string name="cancel">Anuluj</string>
