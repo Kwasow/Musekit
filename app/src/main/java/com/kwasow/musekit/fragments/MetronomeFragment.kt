@@ -97,9 +97,9 @@ class MetronomeFragment : Fragment() {
 
     private fun updateBpm(by: Int = 0) {
         if (isBound) {
-            val newBpm = max(1, metronomeService.bpm + by)
+            val newBpm = max(30, metronomeService.bpm + by)
 
-            metronomeService.bpm += newBpm
+            metronomeService.bpm = newBpm
             binding.textBpm.text = metronomeService.bpm.toString()
         }
     }
