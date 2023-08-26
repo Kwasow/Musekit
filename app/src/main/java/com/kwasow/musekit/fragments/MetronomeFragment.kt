@@ -15,7 +15,6 @@ import com.kwasow.musekit.R
 import com.kwasow.musekit.adapters.SoundsAdapter
 import com.kwasow.musekit.databinding.FragmentMetronomeBinding
 import com.kwasow.musekit.services.MetronomeService
-import kotlin.math.max
 
 class MetronomeFragment : Fragment() {
     private lateinit var binding: FragmentMetronomeBinding
@@ -97,9 +96,7 @@ class MetronomeFragment : Fragment() {
 
     private fun updateBpm(by: Int = 0) {
         if (isBound) {
-            val newBpm = max(30, metronomeService.bpm + by)
-
-            metronomeService.bpm = newBpm
+            metronomeService.bpm += by
             binding.textBpm.text = metronomeService.bpm.toString()
         }
     }

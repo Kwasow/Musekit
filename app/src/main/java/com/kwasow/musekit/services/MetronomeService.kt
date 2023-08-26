@@ -36,7 +36,7 @@ class MetronomeService : Service(), Runnable {
         }
     var bpm = 60
         set(value) {
-            field = value.coerceAtMost(300)
+            field = value.coerceIn(30..300)
         }
 
     private var soundId by Delegates.notNull<Int>()
