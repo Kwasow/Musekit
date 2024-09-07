@@ -4,12 +4,6 @@ plugins {
     id("org.jlleitschuh.gradle.ktlint") version "11.5.1"
 }
 
-fun versionCode(): Int {
-    val secondsSinceEpoch = System.currentTimeMillis() / 1000
-    // This will fail eventually, but well… It's the best we have
-    return secondsSinceEpoch.toInt()
-}
-
 android {
     namespace = "com.kwasow.musekit"
     compileSdk = 35
@@ -18,7 +12,7 @@ android {
         applicationId = "com.kwasow.musekit"
         minSdk = 23
         targetSdk = 35
-        versionCode = versionCode()
+        versionCode = 1721768328
         versionName = "1.4.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
