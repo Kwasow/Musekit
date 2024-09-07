@@ -12,12 +12,12 @@ fun versionCode(): Int {
 
 android {
     namespace = "com.kwasow.musekit"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.kwasow.musekit"
         minSdk = 23
-        targetSdk = 34
+        targetSdk = 35
         versionCode = versionCode()
         versionName = "1.4.0"
 
