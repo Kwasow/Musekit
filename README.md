@@ -12,6 +12,6 @@ disturbing ads and unnecessary features.
 The main features are a tuning fork and a metronome, with more possibly
 being added later on.
 
-[<img src="assets/GooglePlay.png" width="170">](https://play.google.com/store/apps/details?id=com.kwasow.musekit)
+[<img src="assets/GooglePlay.png" width="172">](https://play.google.com/store/apps/details?id=com.kwasow.musekit)
 [<img src="assets/IzzyOnDroid.png" width="170">](https://apt.izzysoft.de/fdroid/index/apk/com.kwasow.musekit)
 
