@@ -21,6 +21,6 @@ being added later on.
 
 <a href="https://apt.izzysoft.de/fdroid/index/apk/com.kwasow.musekit">
   <center>
-    <img src="assets/IzzyOnDroid.png" height="55">
+    <img src="assets/IzzyOnDroid.png" height="95">
   </center>
 </a>
