@@ -64,7 +64,7 @@ class SettingsFragment : Fragment() {
         binding.itemWebsite.setOnClickListener {
             val browserIntent = Intent(
                 Intent.ACTION_VIEW,
-                Uri.parse("https://kwasow.github.io/#/")
+                Uri.parse("https://kwasow.pl")
             )
             startActivity(browserIntent)
         }
