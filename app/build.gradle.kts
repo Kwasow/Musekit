@@ -4,21 +4,15 @@ plugins {
     id("org.jlleitschuh.gradle.ktlint") version "11.5.1"
 }
 
-fun versionCode(): Int {
-    val secondsSinceEpoch = System.currentTimeMillis() / 1000
-    // This will fail eventually, but well… It's the best we have
-    return secondsSinceEpoch.toInt()
-}
-
 android {
     namespace = "com.kwasow.musekit"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.kwasow.musekit"
         minSdk = 23
-        targetSdk = 34
-        versionCode = versionCode()
+        targetSdk = 35
+        versionCode = 1721768328
         versionName = "1.4.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -81,8 +75,8 @@ dependencies {
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.5")
     implementation("com.google.android.material:material:1.12.0")
 
     // Testing
