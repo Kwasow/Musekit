@@ -11,3 +11,9 @@ disturbing ads and unnecessary features.
 
 The main features are a tuning fork and a metronome, with more possibly
 being added later on.
+
+<a href="https://apt.izzysoft.de/fdroid/index/apk/com.kwasow.musekit">
+  <center>
+    <img src="assets/IzzyOnDroid.png" width="170">
+  </center>
+</a>
