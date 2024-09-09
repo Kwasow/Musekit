@@ -14,10 +14,10 @@ being added later on.
 
 <center>
     <a href="https://play.google.com/store/apps/details?id=com.kwasow.musekit">
-        <img src="assets/GooglePlay.png" height="55">
+        <img src="assets/GooglePlay.png" height="55" />
     </a>
 
     <a href="https://apt.izzysoft.de/fdroid/index/apk/com.kwasow.musekit">
-        <img src="assets/IzzyOnDroid.png" height="85">
+        <img src="assets/IzzyOnDroid.png" height="85" />
     </a>
 </center>
