@@ -5,17 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.kwasow.musekit.databinding.FragmentNoteForkBinding
+import com.kwasow.musekit.databinding.FragmentNoteForkAutoBinding
 
-class NoteForkFragment : Fragment() {
-    private lateinit var binding: FragmentNoteForkBinding
+class NoteForkAutoFragment : Fragment() {
+    private lateinit var binding: FragmentNoteForkAutoBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentNoteForkBinding.inflate(inflater)
+        binding = FragmentNoteForkAutoBinding.inflate(inflater)
         return binding.root
     }
 }
