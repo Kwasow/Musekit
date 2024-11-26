@@ -7,8 +7,10 @@ import com.kwasow.musekit.adapters.MainPagerAdapter
 import com.kwasow.musekit.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+    // ====== Fields
     private lateinit var binding: ActivityMainBinding
 
+    // ====== Interface methods
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -19,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
     }
 
+    // ====== Private methods
     private fun setupViewPager() {
         val pager = binding.mainPager
         val pagerAdapter = MainPagerAdapter(this)

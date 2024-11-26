@@ -9,11 +9,12 @@ import android.widget.TextView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kwasow.musekit.R
-import com.kwasow.musekit.data.PresetsManager
+import com.kwasow.musekit.utils.PresetsManager
 
 class PresetsAdapter(context: Context, names: List<String>) :
     ArrayAdapter<String>(context, 0, names) {
 
+    // ====== Interface methods
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val presetName = getItem(position)
         val root =
@@ -38,6 +39,7 @@ class PresetsAdapter(context: Context, names: List<String>) :
         return root
     }
 
+    // ====== Private methods
     private fun showDeleteDialog(presetName: String) {
         MaterialAlertDialogBuilder(context)
             .setTitle(R.string.delete_preset)

@@ -8,8 +8,10 @@ import androidx.fragment.app.Fragment
 import com.kwasow.musekit.databinding.FragmentNoteForkAutoBinding
 
 class NoteForkAutoFragment : Fragment() {
+    // ====== Fields
     private lateinit var binding: FragmentNoteForkAutoBinding
 
+    // ====== Interface methods
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

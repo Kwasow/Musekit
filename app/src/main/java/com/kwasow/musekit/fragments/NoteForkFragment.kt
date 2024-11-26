@@ -12,10 +12,12 @@ import com.kwasow.musekit.databinding.FragmentNoteForkBinding
 import com.kwasow.musekit.utils.MusekitPreferences
 
 class NoteForkFragment : Fragment() {
+    // ====== Fields
     private lateinit var binding: FragmentNoteForkBinding
     private lateinit var tabLayout: TabLayout
     private lateinit var viewPager: ViewPager2
 
+    // ====== Interface methods
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,6 +36,7 @@ class NoteForkFragment : Fragment() {
         setupTabs()
     }
 
+    // ====== Private methods
     private fun setupTabs() {
         // Setup viewPager
         val adapter = NoteForkAdapter(requireActivity())
@@ -41,7 +44,7 @@ class NoteForkFragment : Fragment() {
         viewPager.adapter = adapter
         viewPager.isUserInputEnabled = false
 
-        tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 tab?.let {

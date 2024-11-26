@@ -9,8 +9,10 @@ import com.kwasow.musekit.databinding.FragmentErrorBinding
 import kotlin.system.exitProcess
 
 class ErrorFragment : Fragment() {
+    // ====== Fields
     private lateinit var binding: FragmentErrorBinding
 
+    // ====== Interface methods
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

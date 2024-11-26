@@ -19,9 +19,9 @@ import com.kwasow.musekit.R
 import com.kwasow.musekit.adapters.PresetsAdapter
 import com.kwasow.musekit.data.Note
 import com.kwasow.musekit.data.Notes
-import com.kwasow.musekit.data.PresetsManager
 import com.kwasow.musekit.databinding.DialogSavePresetBinding
 import com.kwasow.musekit.databinding.FragmentNoteForkManualBinding
+import com.kwasow.musekit.utils.PresetsManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -29,6 +29,7 @@ import kotlin.math.sin
 import kotlin.properties.Delegates
 
 class NoteForkManualFragment : Fragment() {
+    // ====== Fields
     private lateinit var binding: FragmentNoteForkManualBinding
     private var note: Note = Note()
 
@@ -36,6 +37,7 @@ class NoteForkManualFragment : Fragment() {
     private var playing = false
     private var sampleRate by Delegates.notNull<Int>()
 
+    // ====== Interface methods
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -63,6 +65,7 @@ class NoteForkManualFragment : Fragment() {
         }
     }
 
+    // ====== Private methods
     private fun refreshTextViews() {
         binding.textPitch.text = getString(R.string.pitch_placeholder, note.pitch)
         binding.textNote.text =

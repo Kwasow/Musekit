@@ -4,10 +4,12 @@ import kotlin.math.pow
 import kotlin.properties.Delegates
 
 class Note {
+    // ====== Fields
     var pitch by Delegates.notNull<Int>()
     var note: Notes
     var octave: Int
 
+    // ====== Constructors
     constructor() : this(440, Notes.A, 4)
 
     constructor(pitch: Int) : this(pitch, Notes.A, 4)
@@ -20,6 +22,7 @@ class Note {
         this.octave = octave
     }
 
+    // ====== Public methods
     fun getFrequency(): Double {
         val semitones = note.semitones
         val octavePower =

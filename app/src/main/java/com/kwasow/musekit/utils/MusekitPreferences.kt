@@ -44,5 +44,4 @@ object MusekitPreferences {
         get() {
             return sharedPreferences.getInt(KEY_NOTE_FORK_MODE, 0)
         }
-
 }

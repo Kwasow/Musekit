@@ -17,6 +17,7 @@ import com.kwasow.musekit.databinding.FragmentMetronomeBinding
 import com.kwasow.musekit.services.MetronomeService
 
 class MetronomeFragment : Fragment() {
+    // ====== Fields
     private lateinit var binding: FragmentMetronomeBinding
 
     private lateinit var metronomeService: MetronomeService
@@ -38,6 +39,7 @@ class MetronomeFragment : Fragment() {
         }
     }
 
+    // ====== Interface methods
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -61,6 +63,7 @@ class MetronomeFragment : Fragment() {
         isBound = false
     }
 
+    // ====== Private methods
     private fun bindService() {
         Intent(requireContext(), MetronomeService::class.java).also { intent ->
             requireContext().bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)

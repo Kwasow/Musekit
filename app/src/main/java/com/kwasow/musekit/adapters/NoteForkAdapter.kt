@@ -9,8 +9,10 @@ import com.kwasow.musekit.fragments.NoteForkManualFragment
 
 class NoteForkAdapter(fragmentActivity: FragmentActivity) :
     FragmentStateAdapter(fragmentActivity) {
+    // ====== Fields
     private val pageCount = 2
 
+    // ====== Interface methods
     override fun getItemCount(): Int = pageCount
 
     override fun createFragment(position: Int): Fragment {

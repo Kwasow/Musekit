@@ -5,6 +5,7 @@ import com.kwasow.musekit.utils.MusekitPreferences
 import com.kwasow.musekit.utils.ThemeUtils
 
 class MainApplication : Application() {
+    // ====== Interface methods
     override fun onCreate() {
         super.onCreate()
 

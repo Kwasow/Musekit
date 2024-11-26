@@ -21,8 +21,10 @@ import com.kwasow.musekit.databinding.FragmentSettingsBinding
 import com.kwasow.musekit.utils.ThemeUtils
 
 class SettingsFragment : Fragment() {
+    // ====== Fields
     private lateinit var binding: FragmentSettingsBinding
 
+    // ====== Interface methods
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,6 +42,7 @@ class SettingsFragment : Fragment() {
         setupSettingsSection()
     }
 
+    // ====== Private methods
     private fun setupSettingsSection() {
         binding.itemThemeSettings.setOnClickListener {
             showThemeSettingsDialog()
