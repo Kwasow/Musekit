@@ -1,12 +1,16 @@
 package com.kwasow.musekit.fragments
 
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.color.MaterialColors
 import com.google.android.material.tabs.TabLayout
+import com.kwasow.musekit.R
 import com.kwasow.musekit.adapters.NoteForkAdapter
 import com.kwasow.musekit.databinding.FragmentNoteForkBinding
 
@@ -34,6 +38,7 @@ class NoteForkFragment : Fragment() {
     }
 
     private fun setupTabs() {
+        // Setup viewPager
         val adapter = NoteForkAdapter(requireActivity())
 
         viewPager.adapter = adapter

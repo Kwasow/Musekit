@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/noteForkTabs"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="24dp"
+        android:background="@drawable/custom_tabs_bg"
+        app:tabIndicator="@drawable/custom_tabs_indicator"
+        app:tabIndicatorColor="?colorSecondaryContainer"
+        app:tabIndicatorFullWidth="true"
+        app:tabIndicatorHeight="32dp"
+        app:tabTextColor="?colorOnSecondaryContainer">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
@@ -24,7 +32,7 @@
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/noteForkPager"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </LinearLayout>
