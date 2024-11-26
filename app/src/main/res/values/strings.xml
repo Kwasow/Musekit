@@ -19,6 +19,7 @@
     <string name="pitch_placeholder" translatable="false">%1$dHz</string>
     <string name="note_fork_automatic">Automatic</string>
     <string name="note_fork_manual">Manual</string>
+    <string name="record_permission_not_granted">Microphone access was not granted</string>
 
     <!-- Note fork presets -->
     <string name="presets">Presets</string>
