@@ -19,6 +19,7 @@ import com.kwasow.musekit.R
 import com.kwasow.musekit.adapters.PresetsAdapter
 import com.kwasow.musekit.data.Note
 import com.kwasow.musekit.data.Notes
+import com.kwasow.musekit.data.Preset
 import com.kwasow.musekit.databinding.DialogSavePresetBinding
 import com.kwasow.musekit.databinding.FragmentNoteForkManualBinding
 import com.kwasow.musekit.utils.PresetsManager
@@ -233,7 +234,7 @@ class NoteForkManualFragment : Fragment() {
             .setNeutralButton(R.string.cancel) { _, _ -> }
             .setPositiveButton(R.string.save) { _, _ ->
                 // Get preset details
-                val preset = PresetsManager.Companion.Preset(
+                val preset = Preset(
                     name = dialogBinding.presetName.text.toString(),
                     semitones = note.note.semitones,
                     octave = note.octave,
