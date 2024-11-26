@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import be.tarsos.dsp.pitch.PitchDetectionHandler
@@ -12,16 +11,17 @@ import com.kwasow.musekit.R
 import com.kwasow.musekit.databinding.FragmentNoteForkAutoBinding
 import com.kwasow.musekit.utils.MusekitPitchDetector
 import com.kwasow.musekit.utils.PermissionManager
+import com.kwasow.musekit.views.TunerView
 
 class NoteForkAutoFragment : Fragment() {
     // ====== Fields
     private lateinit var binding: FragmentNoteForkAutoBinding
-    private lateinit var pitchText: TextView
+    private lateinit var tunerView: TunerView
 
     private val pitchDetector = MusekitPitchDetector()
 
     private val pitchDetectionHandler = PitchDetectionHandler { result, event ->
-        pitchText.text = "${result.pitch}"
+        println(result.pitch)
     }
 
     // ====== Interface methods
@@ -31,7 +31,7 @@ class NoteForkAutoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentNoteForkAutoBinding.inflate(inflater)
-        pitchText = binding.currentPitchText
+        tunerView = binding.tunerView
 
         PermissionManager.requestMicrophonePermission(this)
 
@@ -50,7 +50,6 @@ class NoteForkAutoFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-
         pitchDetector.stopListening()
     }
 
