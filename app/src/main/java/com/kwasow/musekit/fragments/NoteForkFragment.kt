@@ -1,18 +1,15 @@
 package com.kwasow.musekit.fragments
 
-import android.graphics.Color
-import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.color.MaterialColors
 import com.google.android.material.tabs.TabLayout
-import com.kwasow.musekit.R
 import com.kwasow.musekit.adapters.NoteForkAdapter
 import com.kwasow.musekit.databinding.FragmentNoteForkBinding
+import com.kwasow.musekit.utils.MusekitPreferences
 
 class NoteForkFragment : Fragment() {
     private lateinit var binding: FragmentNoteForkBinding
@@ -49,6 +46,7 @@ class NoteForkFragment : Fragment() {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 tab?.let {
                     viewPager.currentItem = tab.position
+                    MusekitPreferences.noteForkMode = tab.position
                 }
             }
 
@@ -56,5 +54,9 @@ class NoteForkFragment : Fragment() {
 
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
+
+        // Read default view from preferences
+        val defaultTab = tabLayout.getTabAt(MusekitPreferences.noteForkMode)
+        tabLayout.selectTab(defaultTab)
     }
 }

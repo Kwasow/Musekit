@@ -87,7 +87,4 @@
     <string name="contentDescription_right_arrow">Right arrow</string>
     <string name="special_thanks_shape_shifter">Special thanks to Alex Lockwood for creating the amazing ShapeShifter tool.</string>
 
-    <!-- Shared preferences -->
-    <string name="preferences_file_key" translatable="false">com.kwasow.musekit.ApplicationSharedPreferences</string>
-    <string name="preferences_night_mode" translatable="false">DarkTheme</string>
 </resources>
