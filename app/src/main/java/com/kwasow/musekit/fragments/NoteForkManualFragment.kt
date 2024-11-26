@@ -30,7 +30,7 @@ import kotlin.properties.Delegates
 
 class NoteForkManualFragment : Fragment() {
     private lateinit var binding: FragmentNoteForkManualBinding
-    private lateinit var note: Note
+    private var note: Note = Note()
 
     private lateinit var player: AudioTrack
     private var playing = false
@@ -47,8 +47,6 @@ class NoteForkManualFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-
-        note = Note()
 
         refreshTextViews()
         setupPlayer()

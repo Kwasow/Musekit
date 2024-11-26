@@ -11,6 +11,7 @@
     <string name="contentDescription_metronome_ticker">Wslaźnik metronomu</string>
     <string name="note">Dźwięk</string>
     <string name="pitch">Częstotliwość</string>
+    <string name="note_fork_manual">Ręczny</string>
     <string name="presets">Zapisane</string>
     <string name="default_preset">Domyślna</string>
     <string name="save_preset">Zapisz konfigurację</string>
@@ -57,4 +58,5 @@
     <string name="red">Czerwony</string>
     <string name="blue">Niebieski</string>
     <string name="yellow">Żółty</string>
+    <string name="note_fork_automatic">Automatyczny</string>
 </resources>

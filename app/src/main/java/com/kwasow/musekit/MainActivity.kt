@@ -8,7 +8,6 @@ import com.kwasow.musekit.data.Note
 import com.kwasow.musekit.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var note: Note
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
