@@ -9,6 +9,7 @@ import be.tarsos.dsp.io.android.AndroidAudioInputStream
 import be.tarsos.dsp.pitch.PitchDetectionHandler
 import be.tarsos.dsp.pitch.PitchProcessor
 import be.tarsos.dsp.pitch.PitchProcessor.PitchEstimationAlgorithm
+import com.kwasow.musekit.data.Note
 
 class MusekitPitchDetector {
     // ====== Fields
@@ -62,6 +63,45 @@ class MusekitPitchDetector {
         audioInputStream?.release()
         audioInputStream = null
         dispatcher = null
+    }
+
+    fun findNoteDetails(frequency: Double): Pair<Note, Double> {
+        val note = Note()
+        var closeness = 0.0
+
+        if (note.getFrequency() < frequency) {
+            while (note.getFrequency() < frequency) {
+                note.up()
+            }
+
+            val previousNote = Note(note)
+            previousNote.down()
+
+            val middle = (previousNote.getFrequency() + note.getFrequency()) / 2.0
+            if (frequency >= middle) {
+                closeness = -1 + ((frequency - middle) / (note.getFrequency() - middle))
+            } else {
+                note.down()
+                closeness = (frequency - note.getFrequency()) / (middle - note.getFrequency())
+            }
+        } else {
+            while (note.getFrequency() > frequency) {
+                note.down()
+            }
+
+            val previousNote = Note(note)
+            previousNote.up()
+
+            val middle = (previousNote.getFrequency() + note.getFrequency()) / 2.0
+            if (frequency >= middle) {
+                note.up()
+                closeness = -1 + ((frequency - middle) / (note.getFrequency() - middle))
+            } else {
+                closeness = (frequency - note.getFrequency()) / (middle - note.getFrequency())
+            }
+        }
+
+        return Pair(note, closeness)
     }
 
     // ====== Private methods

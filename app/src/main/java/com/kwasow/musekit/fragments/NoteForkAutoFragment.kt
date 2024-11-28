@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import be.tarsos.dsp.pitch.PitchDetectionHandler
 import com.kwasow.musekit.R
+import com.kwasow.musekit.data.Note
 import com.kwasow.musekit.databinding.FragmentNoteForkAutoBinding
 import com.kwasow.musekit.utils.MusekitPitchDetector
 import com.kwasow.musekit.utils.PermissionManager
@@ -20,8 +21,20 @@ class NoteForkAutoFragment : Fragment() {
 
     private val pitchDetector = MusekitPitchDetector()
 
-    private val pitchDetectionHandler = PitchDetectionHandler { result, event ->
-        println(result.pitch)
+    private val pitchDetectionHandler = PitchDetectionHandler { result, _ ->
+        val frequency = result.pitch.toDouble()
+
+        var note: Note? = null
+        var completeness: Double? = null
+
+        if (frequency > 0) {
+            val estimationResult = pitchDetector.findNoteDetails(frequency)
+
+            note = estimationResult.first
+            completeness = estimationResult.second
+        }
+
+        tunerView.updateState(note, completeness)
     }
 
     // ====== Interface methods

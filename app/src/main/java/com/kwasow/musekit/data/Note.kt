@@ -27,6 +27,9 @@ class Note {
         this.octave = octave
     }
 
+    // Copy constructor
+    constructor(note: Note) : this(note.pitch, note.note, note.octave)
+
     // ====== Public methods
     fun getFrequency(): Double {
         val semitones = note.semitones

@@ -47,7 +47,7 @@ class TunerView : LinearLayout {
         super(context, attrs, defStyleAttr, defStyleRes)
 
     // ====== Public methods
-    private fun updateState(note: Note?, completeness: Float?) {
+    fun updateState(note: Note?, completeness: Double?) {
         unmarkAll()
         setNote(note)
 
@@ -56,17 +56,17 @@ class TunerView : LinearLayout {
         }
 
         when (completeness) {
-            in -2.0f..-0.81f -> markPitchBar(-5)
-            in -0.81f..0.62f -> markPitchBar(-4)
-            in -0.62f..0.43f -> markPitchBar(-3)
-            in -0.43f..0.24f -> markPitchBar(-2)
-            in -0.24f..0.05f -> markPitchBar(-1)
-            in -0.05f..0.05f -> markPitchBar(0)
-            in 0.05f..0.24f -> markPitchBar(1)
-            in 0.24f..0.43f -> markPitchBar(2)
-            in 0.43f..0.62f -> markPitchBar(3)
-            in 0.62f..0.81f -> markPitchBar(4)
-            in 0.81f..2.0f -> markPitchBar(5)
+            in -2.0..-0.81 -> markPitchBar(-5)
+            in -0.81..0.62 -> markPitchBar(-4)
+            in -0.62..0.43 -> markPitchBar(-3)
+            in -0.43..0.24 -> markPitchBar(-2)
+            in -0.24..0.05 -> markPitchBar(-1)
+            in -0.05..0.05 -> markPitchBar(0)
+            in 0.05..0.24 -> markPitchBar(1)
+            in 0.24..0.43 -> markPitchBar(2)
+            in 0.43..0.62 -> markPitchBar(3)
+            in 0.62..0.81 -> markPitchBar(4)
+            in 0.81..2.0 -> markPitchBar(5)
             else -> throw IllegalArgumentException("completeness has to be in -1f..1f")
         }
     }

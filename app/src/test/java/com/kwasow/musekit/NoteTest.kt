@@ -24,6 +24,16 @@ class NoteTest {
     }
 
     @Test
+    fun testCopyConstructor() {
+        val ogNote = Note(435, Notes.GisAs, 6)
+        val copiedNote = Note(ogNote)
+
+        assert(ogNote.pitch == copiedNote.pitch)
+        assert(ogNote.note == copiedNote.note)
+        assert(ogNote.octave == copiedNote.octave)
+    }
+
+    @Test
     fun testNoteName() {
         val note = Note()
         assert(note.getNoteName() == "A")
