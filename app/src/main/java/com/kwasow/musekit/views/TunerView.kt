@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.widget.LinearLayout
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.color.MaterialColors
-import com.kwasow.musekit.R
 import com.kwasow.musekit.data.Note
 import com.kwasow.musekit.databinding.ViewTunerBinding
 
@@ -17,8 +16,12 @@ class TunerView : LinearLayout {
         this,
         true
     )
-    private val inactiveColor = MaterialColors.getColor(this, R.attr.colorSurfaceContainerHighest)
-    private val activeColor = MaterialColors.getColor(this, R.attr.colorSecondaryContainer)
+    private val inactiveColor = MaterialColors.getColor(
+        this, com.google.android.material.R.attr.colorSurfaceContainerHighest
+    )
+    private val activeColor = MaterialColors.getColor(
+        this, com.google.android.material.R.attr.colorPrimary
+    )
 
     private val bars: Map<Int, MaterialCardView> = mapOf(
         -5 to binding.pitchUnder5,

@@ -34,7 +34,9 @@ class NoteForkAutoFragment : Fragment() {
             completeness = estimationResult.second
         }
 
-        tunerView.updateState(note, completeness)
+        requireActivity().runOnUiThread {
+            tunerView.updateState(note, completeness)
+        }
     }
 
     // ====== Interface methods

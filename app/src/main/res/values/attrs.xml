@@ -10,7 +10,4 @@
     <declare-styleable name="MenuSection">
         <attr name="sectionTitle" format="string"/>
     </declare-styleable>
-
-    <attr name="colorSecondaryContainer" format="reference" />
-    <attr name="colorSurfaceContainerHighest" format="reference" />
 </resources>
