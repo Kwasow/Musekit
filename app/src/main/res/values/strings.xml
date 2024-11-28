@@ -20,6 +20,8 @@
     <string name="note_fork_automatic">Automatic</string>
     <string name="note_fork_manual">Manual</string>
     <string name="record_permission_not_granted">Microphone access was not granted</string>
+    <string name="play_sound_to_tune">Play to start tuning</string>
+    <string name="contentDescription_tuner_check">Note in tune checkmark</string>
 
     <!-- Note fork presets -->
     <string name="presets">Presets</string>

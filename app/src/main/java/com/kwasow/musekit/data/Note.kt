@@ -1,5 +1,10 @@
 package com.kwasow.musekit.data
 
+import android.content.Context
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.SuperscriptSpan
+import com.kwasow.musekit.R
 import kotlin.math.pow
 import kotlin.properties.Delegates
 
@@ -46,7 +51,7 @@ class Note {
                 note = Notes.C
                 octave += 1
             }
-            else -> note = Notes.values().first { it.semitones == note.semitones + 1 }
+            else -> note = Notes.entries.first { it.semitones == note.semitones + 1 }
         }
     }
 
@@ -59,7 +64,29 @@ class Note {
                     octave -= 1
                 }
             }
-            else -> note = Notes.values().first { it.semitones == note.semitones - 1 }
+            else -> note = Notes.entries.first { it.semitones == note.semitones - 1 }
         }
+    }
+
+    fun getSuperscripted(context: Context): SpannableStringBuilder {
+        val text = context.getString(R.string.note_placeholder, this.getNoteName(), this.octave)
+        val spannableStringBuilder = SpannableStringBuilder(text)
+
+        if (text.length == 6) {
+            spannableStringBuilder.setSpan(
+                SuperscriptSpan(),
+                1,
+                2,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            spannableStringBuilder.setSpan(
+                SuperscriptSpan(),
+                4,
+                5,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
+
+        return spannableStringBuilder
     }
 }

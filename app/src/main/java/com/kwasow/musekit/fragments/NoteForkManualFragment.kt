@@ -69,29 +69,7 @@ class NoteForkManualFragment : Fragment() {
     // ====== Private methods
     private fun refreshTextViews() {
         binding.textPitch.text = getString(R.string.pitch_placeholder, note.pitch)
-        binding.textNote.text =
-            toSuperscript(getString(R.string.note_placeholder, note.getNoteName(), note.octave))
-    }
-
-    private fun toSuperscript(note: String): SpannableStringBuilder {
-        val spannableStringBuilder = SpannableStringBuilder(note)
-
-        if (note.length == 6) {
-            spannableStringBuilder.setSpan(
-                SuperscriptSpan(),
-                1,
-                2,
-                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-            spannableStringBuilder.setSpan(
-                SuperscriptSpan(),
-                4,
-                5,
-                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-        }
-
-        return spannableStringBuilder
+        binding.textNote.text = note.getSuperscripted(requireContext())
     }
 
     private fun setupPresets() {
