@@ -17,7 +17,7 @@ class TunerView : LinearLayout {
         this,
         true
     )
-    private val inactiveColor = MaterialColors.getColor(this, R.attr.colorSurfaceContainer)
+    private val inactiveColor = MaterialColors.getColor(this, R.attr.colorSurfaceContainerHighest)
     private val activeColor = MaterialColors.getColor(this, R.attr.colorSecondaryContainer)
 
     private val bars: Map<Int, MaterialCardView> = mapOf(

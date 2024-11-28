@@ -12,5 +12,5 @@
     </declare-styleable>
 
     <attr name="colorSecondaryContainer" format="reference" />
-    <attr name="colorSurfaceContainer" format="reference" />
+    <attr name="colorSurfaceContainerHighest" format="reference" />
 </resources>
