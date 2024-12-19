@@ -101,5 +101,4 @@ class MusekitPitchDetector {
     fun stopListening() {
         dispatcher.stop()
     }
-
 }
