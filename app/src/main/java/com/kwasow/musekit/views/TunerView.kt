@@ -62,10 +62,10 @@ class TunerView : LinearLayout {
 
         when (completeness) {
             in -2.0..-0.81 -> markPitchBar(-5)
-            in -0.81..0.62 -> markPitchBar(-4)
-            in -0.62..0.43 -> markPitchBar(-3)
-            in -0.43..0.24 -> markPitchBar(-2)
-            in -0.24..0.05 -> markPitchBar(-1)
+            in -0.81..-0.62 -> markPitchBar(-4)
+            in -0.62..-0.43 -> markPitchBar(-3)
+            in -0.43..-0.24 -> markPitchBar(-2)
+            in -0.24..-0.05 -> markPitchBar(-1)
             in -0.05..0.05 -> markPitchBar(0)
             in 0.05..0.24 -> markPitchBar(1)
             in 0.24..0.43 -> markPitchBar(2)

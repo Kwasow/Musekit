@@ -20,12 +20,10 @@ class NoteForkAutoFragment : Fragment() {
 
     private val pitchDetector = MusekitPitchDetector()
     private val pitchObserver: Observer<Double> = Observer { pitch ->
-        println(pitch)
         val res = MusekitPitchDetector.findNoteDetails(pitch)
 
         res?.let {
             tunerView.updateState(it.first, it.second)
-            println(it)
         }
     }
 
