@@ -5,16 +5,14 @@ import com.kwasow.musekit.utils.MusekitPitchDetector
 import org.junit.Test
 
 class PitchDetectorTest {
-    companion object {
-        val pitchDetector = MusekitPitchDetector()
-    }
 
     @Test
     fun testEstimationCloseUnderFrequencyUnderMiddle() {
         // G4     - 392Hz
         // middle - 403.65Hz
         // Gis4   - 415.3Hz
-        val result = pitchDetector.findNoteDetails(403.0)
+        val result = MusekitPitchDetector.findNoteDetails(403.0)
+        require(result != null)
 
         val note = result.first
         assert(note.note == Notes.G)
@@ -29,7 +27,8 @@ class PitchDetectorTest {
         // G4     - 392Hz
         // middle - 403.65Hz
         // Gis4   - 415.3Hz
-        val result = pitchDetector.findNoteDetails(404.0)
+        val result = MusekitPitchDetector.findNoteDetails(404.0)
+        require(result != null)
 
         val note = result.first
         assert(note.note == Notes.GisAs)
@@ -44,7 +43,8 @@ class PitchDetectorTest {
         // G2     - 98Hz
         // middle - 100.92Hz
         // Gis2   - 103.83Hz
-        val result = pitchDetector.findNoteDetails(100.0)
+        val result = MusekitPitchDetector.findNoteDetails(100.0)
+        require(result != null)
 
         val note = result.first
         assert(note.note == Notes.G)
@@ -59,7 +59,8 @@ class PitchDetectorTest {
         // G2     - 98Hz
         // middle - 100.92Hz
         // Gis2   - 103.83Hz
-        val result = pitchDetector.findNoteDetails(101.0)
+        val result = MusekitPitchDetector.findNoteDetails(101.0)
+        require(result != null)
 
         val note = result.first
         assert(note.note == Notes.GisAs)
@@ -74,7 +75,8 @@ class PitchDetectorTest {
         // Ais4   - 466.16Hz
         // middle - 480.02Hz
         // H4     - 493.88Hz
-        val result = pitchDetector.findNoteDetails(479.0)
+        val result = MusekitPitchDetector.findNoteDetails(479.0)
+        require(result != null)
 
         val note = result.first
         assert(note.note == Notes.AisB)
@@ -89,7 +91,8 @@ class PitchDetectorTest {
         // Ais4   - 466.16Hz
         // middle - 480.02Hz
         // H4     - 493.88Hz
-        val result = pitchDetector.findNoteDetails(481.0)
+        val result = MusekitPitchDetector.findNoteDetails(481.0)
+        require(result != null)
 
         val note = result.first
         assert(note.note == Notes.H)
@@ -104,7 +107,8 @@ class PitchDetectorTest {
         // Ais6   - 1864.66Hz
         // middle - 1920.1Hz
         // H6     - 1975.53Hz
-        val result = pitchDetector.findNoteDetails(1919.0)
+        val result = MusekitPitchDetector.findNoteDetails(1919.0)
+        require(result != null)
 
         val note = result.first
         assert(note.note == Notes.AisB)
@@ -119,7 +123,8 @@ class PitchDetectorTest {
         // Ais6   - 1864.66Hz
         // middle - 1920.1Hz
         // H6     - 1975.53Hz
-        val result = pitchDetector.findNoteDetails(1921.0)
+        val result = MusekitPitchDetector.findNoteDetails(1921.0)
+        require(result != null)
 
         val note = result.first
         assert(note.note == Notes.H)
