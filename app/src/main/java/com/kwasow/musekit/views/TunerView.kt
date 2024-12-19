@@ -89,7 +89,7 @@ class TunerView : LinearLayout {
         if (id == 0) {
             binding.tunerCheckMark.drawable.setTint(activeColor)
         } else {
-            val bar = bars.getOrDefault(id, null)
+            val bar = bars[id]
                 ?: throw IllegalArgumentException("Bar IDs can only be in -5..5")
 
             bar.background.setTint(activeColor)
