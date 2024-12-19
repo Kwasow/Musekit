@@ -57,7 +57,7 @@ class TunerView : LinearLayout {
         setNote(note)
 
         if (completeness == null) {
-            return
+            throw IllegalArgumentException("completeness must be set if note is not null")
         }
 
         when (completeness) {

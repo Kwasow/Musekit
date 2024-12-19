@@ -92,4 +92,8 @@ class Note {
 
         return spannableStringBuilder
     }
+
+    override fun toString(): String {
+        return note.name + octave
+    }
 }

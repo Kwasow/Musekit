@@ -12,9 +12,10 @@ class MusekitPitchDetector {
     // ====== Fields
     companion object {
         private const val MINIMUM_FREQ = 55f
+        private const val MIN_ITEM_COUNT = 15
         private const val SAMPLING_RATE = 44100
         private const val BUFFER_SIZE = 1024 * 4
-        private const val OVERLAP = 0
+        private const val OVERLAP = 768 * 4
 
         private val ALGORITHM = PitchEstimationAlgorithm.FFT_YIN
 
@@ -68,8 +69,20 @@ class MusekitPitchDetector {
         OVERLAP
     )
 
+    private val history = mutableListOf<Double>()
     private val pitchDetectionHandler = PitchDetectionHandler { res, _ ->
-        currentPitch.postValue(res.pitch.toDouble())
+        val pitch = res.pitch
+
+        if (pitch == -1f) {
+            return@PitchDetectionHandler
+        }
+
+        history.add(res.pitch.toDouble())
+
+        if (history.size >= MIN_ITEM_COUNT) {
+            currentPitch.postValue(history.average())
+            history.clear()
+        }
     }
 
     val currentPitch: MutableLiveData<Double> by lazy {
