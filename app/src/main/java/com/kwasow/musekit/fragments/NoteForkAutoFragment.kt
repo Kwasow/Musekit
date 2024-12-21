@@ -18,7 +18,7 @@ class NoteForkAutoFragment : Fragment() {
     private lateinit var binding: FragmentNoteForkAutoBinding
     private lateinit var tunerView: TunerView
 
-    private val pitchDetector = MusekitPitchDetector()
+    private var pitchDetector: MusekitPitchDetector? = null
     private val pitchObserver: Observer<Double> = Observer { pitch ->
         val res = MusekitPitchDetector.findNoteDetails(pitch)
 
@@ -36,9 +36,15 @@ class NoteForkAutoFragment : Fragment() {
         binding = FragmentNoteForkAutoBinding.inflate(inflater)
         tunerView = binding.tunerView
 
-        PermissionManager.requestMicrophonePermission(this)
-
-        pitchDetector.currentPitch.observe(viewLifecycleOwner, pitchObserver)
+        PermissionManager.requestMicrophonePermission(this) { granted ->
+            if (granted) {
+                val dispatcher = MusekitPitchDetector.buildDefaultDispatcher()
+                pitchDetector = MusekitPitchDetector(dispatcher)
+                pitchDetector?.currentPitch?.observe(viewLifecycleOwner, pitchObserver)
+            } else {
+                permissionNotGranted()
+            }
+        }
 
         return binding.root
     }
@@ -46,16 +52,13 @@ class NoteForkAutoFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        if (PermissionManager.checkMicrophonePermission(requireContext())) {
-            pitchDetector.startListening()
-        } else {
-            permissionNotGranted()
-        }
+        pitchDetector?.startListening()
     }
 
     override fun onPause() {
         super.onPause()
-        pitchDetector.stopListening()
+
+        pitchDetector?.stopListening()
     }
 
     // ====== Private methods

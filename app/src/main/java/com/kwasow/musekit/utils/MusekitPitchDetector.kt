@@ -1,6 +1,7 @@
 package com.kwasow.musekit.utils
 
 import androidx.lifecycle.MutableLiveData
+import be.tarsos.dsp.AudioDispatcher
 import be.tarsos.dsp.filters.HighPass
 import be.tarsos.dsp.io.android.AudioDispatcherFactory
 import be.tarsos.dsp.pitch.PitchDetectionHandler
@@ -8,7 +9,9 @@ import be.tarsos.dsp.pitch.PitchProcessor
 import be.tarsos.dsp.pitch.PitchProcessor.PitchEstimationAlgorithm
 import com.kwasow.musekit.data.Note
 
-class MusekitPitchDetector {
+class MusekitPitchDetector(
+    private val dispatcher: AudioDispatcher
+) {
     // ====== Fields
     companion object {
         private const val MINIMUM_FREQ = 55f
@@ -61,13 +64,14 @@ class MusekitPitchDetector {
 
             return Pair(note, closeness)
         }
-    }
 
-    private val dispatcher = AudioDispatcherFactory.fromDefaultMicrophone(
-        SAMPLING_RATE,
-        BUFFER_SIZE,
-        OVERLAP
-    )
+        fun buildDefaultDispatcher(): AudioDispatcher =
+            AudioDispatcherFactory.fromDefaultMicrophone(
+                SAMPLING_RATE,
+                BUFFER_SIZE,
+                OVERLAP
+            )
+    }
 
     private val history = mutableListOf<Double>()
     private val pitchDetectionHandler = PitchDetectionHandler { res, _ ->

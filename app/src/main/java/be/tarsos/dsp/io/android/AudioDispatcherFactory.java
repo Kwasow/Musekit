@@ -53,7 +53,7 @@ public class AudioDispatcherFactory {
 	 * @return A new AudioDispatcher
 	 */
 	public static AudioDispatcher fromDefaultMicrophone(final int sampleRate,
-			final int audioBufferSize, final int bufferOverlap) {
+			final int audioBufferSize, final int bufferOverlap) throws SecurityException {
 		int minAudioBufferSize = AudioRecord.getMinBufferSize(sampleRate,
 				android.media.AudioFormat.CHANNEL_IN_MONO,
 				android.media.AudioFormat.ENCODING_PCM_16BIT);
