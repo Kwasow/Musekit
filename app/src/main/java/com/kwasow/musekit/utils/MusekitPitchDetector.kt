@@ -8,6 +8,9 @@ import be.tarsos.dsp.pitch.PitchDetectionHandler
 import be.tarsos.dsp.pitch.PitchProcessor
 import be.tarsos.dsp.pitch.PitchProcessor.PitchEstimationAlgorithm
 import com.kwasow.musekit.data.Note
+import com.kwasow.musekit.data.Notes
+import kotlin.math.abs
+import kotlin.math.log2
 
 class MusekitPitchDetector(
     private val dispatcher: AudioDispatcher
@@ -27,42 +30,20 @@ class MusekitPitchDetector(
                 return null
             }
 
-            val note = Note()
-            val closeness: Double
+            var note: Note = Notes.all[0]
+            var minCentDiff: Double = Double.MAX_VALUE
 
-            if (note.getFrequency() < frequency) {
-                while (note.getFrequency() < frequency) {
-                    note.up()
-                }
+            Notes.all.forEach {
+                val noteFrequency = it.getFrequency()
+                val centDiff = 1200.0 * log2(frequency / noteFrequency)
 
-                val previousNote = Note(note)
-                previousNote.down()
-
-                val middle = (previousNote.getFrequency() + note.getFrequency()) / 2.0
-                if (frequency >= middle) {
-                    closeness = -1 + ((frequency - middle) / (note.getFrequency() - middle))
-                } else {
-                    note.down()
-                    closeness = (frequency - note.getFrequency()) / (middle - note.getFrequency())
-                }
-            } else {
-                while (note.getFrequency() > frequency) {
-                    note.down()
-                }
-
-                val previousNote = Note(note)
-                previousNote.up()
-
-                val middle = (previousNote.getFrequency() + note.getFrequency()) / 2.0
-                if (frequency >= middle) {
-                    note.up()
-                    closeness = -1 + ((frequency - middle) / (note.getFrequency() - middle))
-                } else {
-                    closeness = (frequency - note.getFrequency()) / (middle - note.getFrequency())
+                if (abs(centDiff) < abs(minCentDiff)) {
+                    minCentDiff = centDiff
+                    note = it
                 }
             }
 
-            return Pair(note, closeness)
+            return Pair(note, minCentDiff)
         }
 
         fun buildDefaultDispatcher(): AudioDispatcher =
@@ -118,4 +99,5 @@ class MusekitPitchDetector(
     fun stopListening() {
         dispatcher.stop()
     }
+
 }

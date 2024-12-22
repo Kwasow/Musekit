@@ -10,7 +10,7 @@ import kotlin.properties.Delegates
 
 class Note {
     // ====== Fields
-    var pitch by Delegates.notNull<Int>()
+    var pitch: Int
     var note: Notes
     var octave: Int
 
@@ -18,6 +18,8 @@ class Note {
     constructor() : this(440, Notes.A, 4)
 
     constructor(pitch: Int) : this(pitch, Notes.A, 4)
+
+    constructor(note: Notes) : this(440, note, 4)
 
     constructor(note: Notes, octave: Int) : this(440, note, octave)
 

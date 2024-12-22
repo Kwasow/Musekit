@@ -25,6 +25,11 @@ class TunerView : LinearLayout {
         com.google.android.material.R.attr.colorPrimary
     )
 
+    private val centBoundaries = listOf(
+        -50.0, -42.0, -34.0, -26.0, -18.0, -10.0,
+        10.0, 18.0, 26.0, 34.0, 42.0, 50.0
+    )
+
     private val bars: Map<Int, MaterialCardView> = mapOf(
         -5 to binding.pitchUnder5,
         -4 to binding.pitchUnder4,
@@ -52,27 +57,23 @@ class TunerView : LinearLayout {
         super(context, attrs, defStyleAttr, defStyleRes)
 
     // ====== Public methods
-    fun updateState(note: Note?, completeness: Double?) {
+    fun updateState(note: Note?, cents: Double?) {
         unmarkAll()
         setNote(note)
 
-        if (completeness == null) {
-            throw IllegalArgumentException("completeness must be set if note is not null")
+        if (note == null || cents == null) {
+            return
         }
 
-        when (completeness) {
-            in -2.0..-0.81 -> markPitchBar(-5)
-            in -0.81..-0.62 -> markPitchBar(-4)
-            in -0.62..-0.43 -> markPitchBar(-3)
-            in -0.43..-0.24 -> markPitchBar(-2)
-            in -0.24..-0.05 -> markPitchBar(-1)
-            in -0.05..0.05 -> markPitchBar(0)
-            in 0.05..0.24 -> markPitchBar(1)
-            in 0.24..0.43 -> markPitchBar(2)
-            in 0.43..0.62 -> markPitchBar(3)
-            in 0.62..0.81 -> markPitchBar(4)
-            in 0.81..2.0 -> markPitchBar(5)
-            else -> throw IllegalArgumentException("completeness has to be in -1f..1f")
+        if (cents < centBoundaries.first() || cents > centBoundaries.last()) {
+            throw IllegalArgumentException("cents must be in range -50, 50")
+        }
+
+        for (i in 0 until (centBoundaries.size - 1)) {
+            if (centBoundaries[i] <= cents && cents <= centBoundaries[i + 1]) {
+                markPitchBar(i - 5)
+                break
+            }
         }
     }
 
