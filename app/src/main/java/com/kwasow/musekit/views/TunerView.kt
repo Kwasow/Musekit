@@ -1,6 +1,7 @@
 package com.kwasow.musekit.views
 
 import android.content.Context
+import android.os.CountDownTimer
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
@@ -43,6 +44,15 @@ class TunerView : LinearLayout {
         5 to binding.pitchOver5
     )
 
+    private val timer = object : CountDownTimer(3000, 1000) {
+        override fun onTick(millisUntilFinished: Long) = Unit
+
+        override fun onFinish() {
+            unmarkAll()
+            setNote(null)
+        }
+    }
+
     // ====== Constructors
     constructor(context: Context) :
         super(context)
@@ -58,6 +68,9 @@ class TunerView : LinearLayout {
 
     // ====== Public methods
     fun updateState(note: Note?, cents: Double?) {
+        timer.cancel()
+        timer.start()
+
         unmarkAll()
         setNote(note)
 
