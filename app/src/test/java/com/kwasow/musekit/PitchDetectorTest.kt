@@ -18,8 +18,8 @@ class PitchDetectorTest {
         assert(note.note == Notes.G)
         assert(note.octave == 4)
 
-        val closeness = result.second
-        assert(closeness > 0)
+        val cents = result.second
+        assert(cents > 0)
     }
 
     @Test
@@ -34,8 +34,8 @@ class PitchDetectorTest {
         assert(note.note == Notes.GisAs)
         assert(note.octave == 4)
 
-        val closeness = result.second
-        assert(closeness < 0)
+        val cents = result.second
+        assert(cents < 0)
     }
 
     @Test
@@ -50,8 +50,8 @@ class PitchDetectorTest {
         assert(note.note == Notes.G)
         assert(note.octave == 2)
 
-        val closeness = result.second
-        assert(closeness > 0)
+        val cents = result.second
+        assert(cents > 0)
     }
 
     @Test
@@ -66,8 +66,8 @@ class PitchDetectorTest {
         assert(note.note == Notes.GisAs)
         assert(note.octave == 2)
 
-        val closeness = result.second
-        assert(closeness < 0)
+        val cents = result.second
+        assert(cents < 0)
     }
 
     @Test
@@ -82,8 +82,8 @@ class PitchDetectorTest {
         assert(note.note == Notes.AisB)
         assert(note.octave == 4)
 
-        val closeness = result.second
-        assert(closeness > 0)
+        val cents = result.second
+        assert(cents > 0)
     }
 
     @Test
@@ -98,8 +98,8 @@ class PitchDetectorTest {
         assert(note.note == Notes.H)
         assert(note.octave == 4)
 
-        val closeness = result.second
-        assert(closeness < 0)
+        val cents = result.second
+        assert(cents < 0)
     }
 
     @Test
@@ -114,8 +114,8 @@ class PitchDetectorTest {
         assert(note.note == Notes.AisB)
         assert(note.octave == 6)
 
-        val closeness = result.second
-        assert(closeness > 0)
+        val cents = result.second
+        assert(cents > 0)
     }
 
     @Test
@@ -130,7 +130,7 @@ class PitchDetectorTest {
         assert(note.note == Notes.H)
         assert(note.octave == 6)
 
-        val closeness = result.second
-        assert(closeness < 0)
+        val cents = result.second
+        assert(cents < 0)
     }
 }

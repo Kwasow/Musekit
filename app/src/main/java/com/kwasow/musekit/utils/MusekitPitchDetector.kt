@@ -30,20 +30,18 @@ class MusekitPitchDetector(
                 return null
             }
 
-            var note: Note = Notes.all[0]
-            var minCentDiff: Double = Double.MAX_VALUE
+            val baseFrequency = Note().getFrequency()
+            val centDiff: Double = 1200.0 * log2(frequency / baseFrequency)
 
-            Notes.all.forEach {
-                val noteFrequency = it.getFrequency()
-                val centDiff = 1200.0 * log2(frequency / noteFrequency)
-
-                if (abs(centDiff) < abs(minCentDiff)) {
-                    minCentDiff = centDiff
-                    note = it
-                }
+            val note = Note.fromCentDiff(centDiff)
+            var cents = centDiff % 100
+            if (cents > 50) {
+                cents -= 100
+            } else if (cents < -50) {
+                cents += 100
             }
 
-            return Pair(note, minCentDiff)
+            return Pair(note, cents)
         }
 
         fun buildDefaultDispatcher(): AudioDispatcher =

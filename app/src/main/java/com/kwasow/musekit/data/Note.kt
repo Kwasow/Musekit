@@ -6,6 +6,8 @@ import android.text.Spanned
 import android.text.style.SuperscriptSpan
 import com.kwasow.musekit.R
 import kotlin.math.pow
+import kotlin.math.round
+import kotlin.math.roundToInt
 import kotlin.properties.Delegates
 
 class Note {
@@ -13,6 +15,21 @@ class Note {
     var pitch: Int
     var note: Notes
     var octave: Int
+
+    companion object {
+        fun fromCentDiff(centDiff: Double): Note {
+            val semitones = (centDiff / 100).roundToInt()
+
+            val note = Note()
+            if (semitones < 0) {
+                repeat(-semitones) { note.down() }
+            } else {
+                repeat(semitones) { note.up() }
+            }
+
+            return note
+        }
+    }
 
     // ====== Constructors
     constructor() : this(440, Notes.A, 4)
