@@ -8,8 +8,6 @@ import be.tarsos.dsp.pitch.PitchDetectionHandler
 import be.tarsos.dsp.pitch.PitchProcessor
 import be.tarsos.dsp.pitch.PitchProcessor.PitchEstimationAlgorithm
 import com.kwasow.musekit.data.Note
-import com.kwasow.musekit.data.Notes
-import kotlin.math.abs
 import kotlin.math.log2
 
 class MusekitPitchDetector(
@@ -97,5 +95,4 @@ class MusekitPitchDetector(
     fun stopListening() {
         dispatcher.stop()
     }
-
 }

@@ -6,9 +6,7 @@ import android.text.Spanned
 import android.text.style.SuperscriptSpan
 import com.kwasow.musekit.R
 import kotlin.math.pow
-import kotlin.math.round
 import kotlin.math.roundToInt
-import kotlin.properties.Delegates
 
 class Note {
     // ====== Fields
