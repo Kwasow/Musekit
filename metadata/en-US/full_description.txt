@@ -1,0 +1,4 @@
+Features:
+- Tuner (Automatic & Note fork)
+- Metronome
+
