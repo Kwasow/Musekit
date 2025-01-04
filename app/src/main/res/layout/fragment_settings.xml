@@ -104,7 +104,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/special_thanks_shape_shifter"
+            android:text="@string/special_thanks"
             android:textStyle="italic"
             android:textSize="12sp"
             android:gravity="center"

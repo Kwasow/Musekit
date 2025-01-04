@@ -88,7 +88,8 @@
     <string name="gpl_3_0" translatable="false">GPLv3.0</string>
     <string name="icons">Icons by css.gg</string>
     <string name="mit">MIT License</string>
+    <string name="tarsos">TarsosDSP</string>
     <string name="contentDescription_right_arrow">Right arrow</string>
-    <string name="special_thanks_shape_shifter">Special thanks to Alex Lockwood for creating the amazing ShapeShifter tool.</string>
+    <string name="special_thanks">Special thanks to TarsosDSP for building the pitch recognition library.</string>
 
 </resources>

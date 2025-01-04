@@ -110,6 +110,15 @@ class SettingsFragment : Fragment() {
             licenceDialogBuilder.show()
         }
 
+        dialogBinding.buttonLicenseTarsos.setOnClickListener {
+            val license = readRawFileAsString(R.raw.gpl3)
+
+            dialog.dismiss()
+            licenceDialogBuilder.setTitle(dialogBinding.textTarsos.text)
+            licenceDialogBuilder.setMessage(license)
+            licenceDialogBuilder.show()
+        }
+
         dialog.show()
     }
 
