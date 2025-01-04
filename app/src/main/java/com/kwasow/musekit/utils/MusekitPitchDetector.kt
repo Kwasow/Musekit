@@ -8,6 +8,7 @@ import be.tarsos.dsp.pitch.PitchDetectionHandler
 import be.tarsos.dsp.pitch.PitchProcessor
 import be.tarsos.dsp.pitch.PitchProcessor.PitchEstimationAlgorithm
 import com.kwasow.musekit.data.Note
+import com.kwasow.musekit.extensions.mostCommon
 import kotlin.math.log2
 
 class MusekitPitchDetector(
@@ -50,23 +51,22 @@ class MusekitPitchDetector(
             )
     }
 
-    private val history = mutableListOf<Double>()
+    private val history = mutableListOf<Pair<Note, Double>>()
     private val pitchDetectionHandler = PitchDetectionHandler { res, _ ->
         val pitch = res.pitch
 
-        if (pitch == -1f) {
-            return@PitchDetectionHandler
+        val recognized = findNoteDetails(pitch.toDouble())
+        if (recognized != null) {
+            history.add(recognized)
         }
 
-        history.add(res.pitch.toDouble())
-
         if (history.size >= MIN_ITEM_COUNT) {
-            currentPitch.postValue(history.average())
+            currentPitch.postValue(calculateAverage())
             history.clear()
         }
     }
 
-    val currentPitch: MutableLiveData<Double> by lazy {
+    val currentPitch: MutableLiveData<Pair<Note, Double>?> by lazy {
         MutableLiveData()
     }
 
@@ -94,5 +94,14 @@ class MusekitPitchDetector(
 
     fun stopListening() {
         dispatcher.stop()
+    }
+
+    // ====== Private methods
+    private fun calculateAverage(): Pair<Note, Double> {
+        val mostCommon = history.map { it.first }.mostCommon()
+        val filtered = history.filter { it.first == mostCommon }
+
+        val avgCents = filtered.map { it.second }.average()
+        return Pair(mostCommon, avgCents)
     }
 }
