@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="note_fork">Kamerton</string>
+    <string name="tuning">Strojenie</string>
     <string name="metronome">Metronom</string>
     <string name="settings">Ustawienia</string>
     <string name="contentDescription_note_up">Dźwięk w górę</string>
@@ -41,8 +41,8 @@
     <string name="this_app">Ta aplikacja</string>
     <string name="mit">Licencja MIT</string>
     <string name="icons">Ikonki od css.gg</string>
+    <string name="tarsos">TarsosDSP</string>
     <string name="contentDescription_right_arrow">Strzałka w prawo</string>
-    <string name="special_thanks_shape_shifter">Specjalne podziękowania dla Alexa Lockwooda za stworzenie narzędzia ShapeShifter.</string>
     <string name="sound">Dźwięk metronomu</string>
     <string name="metronome_sound_default">Domyślny</string>
     <string name="metronome_sound_beep">Beep</string>
@@ -63,4 +63,5 @@
     <string name="yellow">Żółty</string>
     <string name="note_fork_automatic">Automatyczny</string>
     <string name="record_permission_not_granted">Dostęp do mikrofonu nie został przyznany</string>
+    <string name="special_thanks">Specjalne podziękowania dla TarsosDSP za zbudowanie biblioteki do rozpoznawania tonów.</string>
 </resources>
