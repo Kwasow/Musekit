@@ -16,7 +16,8 @@
         app:tabIndicatorColor="?colorSecondaryContainer"
         app:tabIndicatorFullWidth="true"
         app:tabIndicatorHeight="32dp"
-        app:tabTextColor="?colorOnSecondaryContainer">
+        app:tabTextColor="?colorOnBackground"
+        app:tabSelectedTextColor="?colorOnSecondaryContainer">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
