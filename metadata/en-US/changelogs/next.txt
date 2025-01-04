@@ -1,0 +1,4 @@
+- Automatic tuner
+- Minor UI tweaks
+- Support for Android 15
+
