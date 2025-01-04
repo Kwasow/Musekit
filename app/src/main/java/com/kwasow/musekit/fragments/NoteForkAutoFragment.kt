@@ -41,6 +41,8 @@ class NoteForkAutoFragment : Fragment() {
                 val dispatcher = MusekitPitchDetector.buildDefaultDispatcher()
                 pitchDetector = MusekitPitchDetector(dispatcher)
                 pitchDetector?.currentPitch?.observe(viewLifecycleOwner, pitchObserver)
+
+                pitchDetector?.startListening()
             } else {
                 permissionNotGranted()
             }
@@ -49,14 +51,8 @@ class NoteForkAutoFragment : Fragment() {
         return binding.root
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        pitchDetector?.startListening()
-    }
-
-    override fun onPause() {
-        super.onPause()
+    override fun onDestroy() {
+        super.onDestroy()
 
         pitchDetector?.stopListening()
     }

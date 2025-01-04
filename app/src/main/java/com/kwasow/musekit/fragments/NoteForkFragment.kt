@@ -27,19 +27,15 @@ class NoteForkFragment : Fragment() {
         tabLayout = binding.noteForkTabs
         viewPager = binding.noteForkPager
 
-        return binding.root
-    }
-
-    override fun onStart() {
-        super.onStart()
-
         setupTabs()
+
+        return binding.root
     }
 
     // ====== Private methods
     private fun setupTabs() {
         // Setup viewPager
-        val adapter = NoteForkAdapter(requireActivity())
+        val adapter = NoteForkAdapter(childFragmentManager, viewLifecycleOwner.lifecycle)
 
         viewPager.adapter = adapter
         viewPager.isUserInputEnabled = false
