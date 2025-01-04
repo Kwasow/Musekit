@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="note_fork">Kamerton</string>
+    <string name="tuning">Strojenie</string>
     <string name="metronome">Metronom</string>
     <string name="settings">Ustawienia</string>
     <string name="contentDescription_note_up">Dźwięk w górę</string>

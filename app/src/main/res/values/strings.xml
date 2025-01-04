@@ -2,7 +2,7 @@
     <string name="app_name" translatable="false">Musekit</string>
 
     <!-- Bottom navigation bar labels -->
-    <string name="note_fork">Note fork</string>
+    <string name="tuning">Tuning</string>
     <string name="metronome">Metronome</string>
     <string name="settings">Settings</string>
     <string name="contentDescription_note_up">Note up</string>
