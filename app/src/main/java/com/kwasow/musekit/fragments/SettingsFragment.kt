@@ -57,13 +57,15 @@ class SettingsFragment : Fragment() {
             )
             startActivity(browserIntent)
         }
-        binding.itemTwitter.setOnClickListener {
+
+        binding.itemMastodon.setOnClickListener {
             val browserIntent = Intent(
                 Intent.ACTION_VIEW,
-                Uri.parse("https://twitter.com/KarolWasowski")
+                Uri.parse("https://mstdn.social/@kwasow")
             )
             startActivity(browserIntent)
         }
+
         binding.itemWebsite.setOnClickListener {
             val browserIntent = Intent(
                 Intent.ACTION_VIEW,
@@ -71,6 +73,7 @@ class SettingsFragment : Fragment() {
             )
             startActivity(browserIntent)
         }
+
         binding.itemLicenses.setOnClickListener {
             showLicensesDialog()
         }

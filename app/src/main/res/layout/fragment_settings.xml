@@ -76,11 +76,11 @@
                 app:leadingIconContentDescription="@string/contentDescription_github_logo"/>
 
             <com.kwasow.musekit.views.MenuItem
-                android:id="@+id/itemTwitter"
+                android:id="@+id/itemMastodon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:itemTitle="@string/developer"
-                app:leadingIcon="@drawable/ic_twitter"
+                app:leadingIcon="@drawable/ic_mastodon"
                 app:leadingIconContentDescription="@string/contentDescription_twitter_logo"/>
 
             <com.kwasow.musekit.views.MenuItem
