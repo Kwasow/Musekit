@@ -1,2 +1,2 @@
-A simple app providing all the tools a musician may need, without disturbing ads and without collecting any data
+A simple tuner and metronome, no distractions
 
