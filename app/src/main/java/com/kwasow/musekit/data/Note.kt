@@ -1,16 +1,40 @@
 package com.kwasow.musekit.data
 
+import android.content.Context
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.SuperscriptSpan
+import com.kwasow.musekit.R
 import kotlin.math.pow
-import kotlin.properties.Delegates
+import kotlin.math.roundToInt
 
 class Note {
-    var pitch by Delegates.notNull<Int>()
+    // ====== Fields
+    var pitch: Int
     var note: Notes
     var octave: Int
 
+    companion object {
+        fun fromCentDiff(centDiff: Double): Note {
+            val semitones = (centDiff / 100).roundToInt()
+
+            val note = Note()
+            if (semitones < 0) {
+                repeat(-semitones) { note.down() }
+            } else {
+                repeat(semitones) { note.up() }
+            }
+
+            return note
+        }
+    }
+
+    // ====== Constructors
     constructor() : this(440, Notes.A, 4)
 
     constructor(pitch: Int) : this(pitch, Notes.A, 4)
+
+    constructor(note: Notes) : this(440, note, 4)
 
     constructor(note: Notes, octave: Int) : this(440, note, octave)
 
@@ -20,6 +44,10 @@ class Note {
         this.octave = octave
     }
 
+    // Copy constructor
+    constructor(note: Note) : this(note.pitch, note.note, note.octave)
+
+    // ====== Public methods
     fun getFrequency(): Double {
         val semitones = note.semitones
         val octavePower =
@@ -43,7 +71,7 @@ class Note {
                 note = Notes.C
                 octave += 1
             }
-            else -> note = Notes.values().first { it.semitones == note.semitones + 1 }
+            else -> note = Notes.entries.first { it.semitones == note.semitones + 1 }
         }
     }
 
@@ -56,7 +84,33 @@ class Note {
                     octave -= 1
                 }
             }
-            else -> note = Notes.values().first { it.semitones == note.semitones - 1 }
+            else -> note = Notes.entries.first { it.semitones == note.semitones - 1 }
         }
+    }
+
+    fun getSuperscripted(context: Context): SpannableStringBuilder {
+        val text = context.getString(R.string.note_placeholder, this.getNoteName(), this.octave)
+        val spannableStringBuilder = SpannableStringBuilder(text)
+
+        if (text.length == 6) {
+            spannableStringBuilder.setSpan(
+                SuperscriptSpan(),
+                1,
+                2,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            spannableStringBuilder.setSpan(
+                SuperscriptSpan(),
+                4,
+                5,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
+
+        return spannableStringBuilder
+    }
+
+    override fun toString(): String {
+        return note.name + octave
     }
 }

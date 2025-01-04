@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/play_sound_to_tune"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/tunerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" >
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/pitchUnder5"
+            style="@style/Widget.Material3.CardView.Filled"
+            android:layout_width="8dp"
+            android:layout_height="30dp"
+            android:layout_margin="4dp" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/pitchUnder4"
+            style="@style/Widget.Material3.CardView.Filled"
+            android:layout_width="8dp"
+            android:layout_height="45dp"
+            android:layout_margin="4dp" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/pitchUnder3"
+            style="@style/Widget.Material3.CardView.Filled"
+            android:layout_width="8dp"
+            android:layout_height="60dp"
+            android:layout_margin="4dp" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/pitchUnder2"
+            style="@style/Widget.Material3.CardView.Filled"
+            android:layout_width="8dp"
+            android:layout_height="75dp"
+            android:layout_margin="4dp" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/pitchUnder1"
+            style="@style/Widget.Material3.CardView.Filled"
+            android:layout_width="8dp"
+            android:layout_height="90dp"
+            android:layout_margin="4dp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/currentNoteText"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:text="—"
+            android:maxLines="1"
+            android:gravity="center"
+            android:layout_margin="12dp"
+            app:autoSizeTextType="uniform"
+            tools:ignore="HardcodedText"/>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/pitchOver1"
+            style="@style/Widget.Material3.CardView.Filled"
+            android:layout_width="8dp"
+            android:layout_height="90dp"
+            android:layout_margin="4dp" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/pitchOver2"
+            style="@style/Widget.Material3.CardView.Filled"
+            android:layout_width="8dp"
+            android:layout_height="75dp"
+            android:layout_margin="4dp" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/pitchOver3"
+            style="@style/Widget.Material3.CardView.Filled"
+            android:layout_width="8dp"
+            android:layout_height="60dp"
+            android:layout_margin="4dp" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/pitchOver4"
+            style="@style/Widget.Material3.CardView.Filled"
+            android:layout_width="8dp"
+            android:layout_height="45dp"
+            android:layout_margin="4dp" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/pitchOver5"
+            style="@style/Widget.Material3.CardView.Filled"
+            android:layout_width="8dp"
+            android:layout_height="30dp"
+            android:layout_margin="4dp" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/tunerCheckMark"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_check_circle"
+        android:contentDescription="@string/contentDescription_tuner_check"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tunerLayout"
+        app:tint="?attr/colorSurfaceContainerHighest" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

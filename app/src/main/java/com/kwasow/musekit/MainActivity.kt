@@ -4,13 +4,13 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.navigation.NavigationBarView
 import com.kwasow.musekit.adapters.MainPagerAdapter
-import com.kwasow.musekit.data.Note
 import com.kwasow.musekit.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var note: Note
+    // ====== Fields
     private lateinit var binding: ActivityMainBinding
 
+    // ====== Interface methods
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
     }
 
+    // ====== Private methods
     private fun setupViewPager() {
         val pager = binding.mainPager
         val pagerAdapter = MainPagerAdapter(this)

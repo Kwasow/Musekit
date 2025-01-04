@@ -15,6 +15,7 @@ import kotlin.properties.Delegates
 
 class MetronomeService : Service(), Runnable {
 
+    // ====== Fields
     enum class Sounds(val resourceId: Int, val resourceNameId: Int) {
         Default(R.raw.metronome_click, R.string.metronome_sound_default),
         Beep(R.raw.metronome_beep, R.string.metronome_sound_beep),
@@ -49,6 +50,7 @@ class MetronomeService : Service(), Runnable {
     private var ticker: Slider? = null
     private var right = true
 
+    // ====== Interface methods
     override fun onCreate() {
         super.onCreate()
 
@@ -84,6 +86,17 @@ class MetronomeService : Service(), Runnable {
         }
     }
 
+    override fun run() {
+        if (isPlaying) {
+            val tickerAnimation = buildAnimation(bpm)
+            soundPool.play(soundId, 1F, 1F, 0, 0, 1F)
+            tickerAnimation.start()
+
+            handler.postDelayed(this, (1000L * 60) / bpm)
+        }
+    }
+
+    // ====== Public methods
     fun connectTicker(slider: Slider) {
         ticker = slider
     }
@@ -96,6 +109,9 @@ class MetronomeService : Service(), Runnable {
         }
     }
 
+    fun getAvailableSounds() = soundsList
+
+    // ====== Private methods
     private fun startMetronome() {
         isPlaying = true
         ticker?.isEnabled = true
@@ -105,16 +121,6 @@ class MetronomeService : Service(), Runnable {
     private fun stopMetronome() {
         ticker?.isEnabled = false
         isPlaying = false
-    }
-
-    override fun run() {
-        if (isPlaying) {
-            val tickerAnimation = buildAnimation(bpm)
-            soundPool.play(soundId, 1F, 1F, 0, 0, 1F)
-            tickerAnimation.start()
-
-            handler.postDelayed(this, (1000L * 60) / bpm)
-        }
     }
 
     private fun buildAnimation(bpm: Int): ValueAnimator {
@@ -132,6 +138,4 @@ class MetronomeService : Service(), Runnable {
 
         return tickerAnimation
     }
-
-    fun getAvailableSounds() = soundsList
 }
