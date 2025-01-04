@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import com.kwasow.musekit.R
+import com.google.android.material.button.MaterialButton
 import com.kwasow.musekit.databinding.FragmentNoteForkAutoBinding
 import com.kwasow.musekit.utils.MusekitPitchDetector
 import com.kwasow.musekit.utils.PermissionManager
@@ -17,6 +17,8 @@ class NoteForkAutoFragment : Fragment() {
     // ====== Fields
     private lateinit var binding: FragmentNoteForkAutoBinding
     private lateinit var tunerView: TunerView
+    private lateinit var noPermissionView: LinearLayout
+    private lateinit var openSettingsButton: MaterialButton
 
     private var pitchDetector: MusekitPitchDetector? = null
     private val pitchObserver: Observer<Double> = Observer { pitch ->
@@ -35,14 +37,16 @@ class NoteForkAutoFragment : Fragment() {
     ): View {
         binding = FragmentNoteForkAutoBinding.inflate(inflater)
         tunerView = binding.tunerView
+        noPermissionView = binding.noAudioPermissionView
+        openSettingsButton = binding.openPermissionSettingButton
+
+        openSettingsButton.setOnClickListener {
+            PermissionManager.openPermissionSettings(requireContext())
+        }
 
         PermissionManager.requestMicrophonePermission(this) { granted ->
             if (granted) {
-                val dispatcher = MusekitPitchDetector.buildDefaultDispatcher()
-                pitchDetector = MusekitPitchDetector(dispatcher)
-                pitchDetector?.currentPitch?.observe(viewLifecycleOwner, pitchObserver)
-
-                pitchDetector?.startListening()
+                permissionGranted()
             } else {
                 permissionNotGranted()
             }
@@ -58,11 +62,17 @@ class NoteForkAutoFragment : Fragment() {
     }
 
     // ====== Private methods
+    private fun permissionGranted() {
+        tunerView.visibility = View.VISIBLE
+
+        val dispatcher = MusekitPitchDetector.buildDefaultDispatcher()
+        pitchDetector = MusekitPitchDetector(dispatcher)
+        pitchDetector?.currentPitch?.observe(viewLifecycleOwner, pitchObserver)
+
+        pitchDetector?.startListening()
+    }
+
     private fun permissionNotGranted() {
-        Toast.makeText(
-            requireContext(),
-            R.string.record_permission_not_granted,
-            Toast.LENGTH_SHORT
-        ).show()
+        noPermissionView.visibility = View.VISIBLE
     }
 }

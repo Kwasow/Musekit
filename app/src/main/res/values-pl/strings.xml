@@ -13,6 +13,7 @@
     <string name="pitch">Częstotliwość</string>
     <string name="note_fork_manual">Ręczny</string>
     <string name="play_sound_to_tune">Zagraj by rozpocząć strojenie</string>
+    <string name="open_settings">Otwórz ustawienia</string>
     <string name="contentDescription_tuner_check">Strój dźwięku poprawny</string>
     <string name="presets">Zapisane</string>
     <string name="default_preset">Domyślna</string>
