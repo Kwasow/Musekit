@@ -16,7 +16,8 @@
             android:id="@+id/mainPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="80dp"/>
+            android:paddingBottom="80dp"
+            android:fitsSystemWindows="true"/>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigation"
