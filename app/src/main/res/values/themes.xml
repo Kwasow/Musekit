@@ -19,6 +19,7 @@
         <!-- Custom theme attributes -->
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Material3.MaterialAlertDialog.Centered</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">?attr/colorSurfaceContainer</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>
 </resources>
