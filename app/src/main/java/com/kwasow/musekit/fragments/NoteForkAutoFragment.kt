@@ -8,6 +8,7 @@ import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.google.android.material.button.MaterialButton
+import com.kwasow.musekit.data.Note
 import com.kwasow.musekit.databinding.FragmentNoteForkAutoBinding
 import com.kwasow.musekit.utils.MusekitPitchDetector
 import com.kwasow.musekit.utils.PermissionManager
@@ -21,10 +22,8 @@ class NoteForkAutoFragment : Fragment() {
     private lateinit var openSettingsButton: MaterialButton
 
     private var pitchDetector: MusekitPitchDetector? = null
-    private val pitchObserver: Observer<Double> = Observer { pitch ->
-        val res = MusekitPitchDetector.findNoteDetails(pitch)
-
-        res?.let {
+    private val pitchObserver: Observer<Pair<Note, Double>?> = Observer {
+        it?.let {
             tunerView.updateState(it.first, it.second)
         }
     }

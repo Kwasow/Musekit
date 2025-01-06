@@ -27,8 +27,8 @@ class TunerView : LinearLayout {
     )
 
     private val centBoundaries = listOf(
-        -50.0, -42.0, -34.0, -26.0, -18.0, -10.0,
-        10.0, 18.0, 26.0, 34.0, 42.0, 50.0
+        -50.0, -41.0, -32.0, -23.0, -14.0, -5.0,
+        5.0, 14.0, 23.0, 32.0, 41.0, 50.0
     )
 
     private val bars: Map<Int, MaterialCardView> = mapOf(
