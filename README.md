@@ -16,7 +16,7 @@ being added later on.
 [<img 
     src="assets/GooglePlay.png"
     alt="Get it on Google Play"
-    height="80">](https://play.google.com/store/apps/details?id=com.kwasow.musekit)
+    height="55">](https://play.google.com/store/apps/details?id=com.kwasow.musekit)
 [<img
     src="https://f-droid.org/badge/get-it-on.png"
     alt="Get it on F-Droid"
