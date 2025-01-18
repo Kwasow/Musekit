@@ -27,6 +27,8 @@ class NoteForkFragment : Fragment() {
         tabLayout = binding.noteForkTabs
         viewPager = binding.noteForkPager
 
+        // Prevent sleep while tuning
+        binding.root.keepScreenOn = true
         setupTabs()
 
         return binding.root
