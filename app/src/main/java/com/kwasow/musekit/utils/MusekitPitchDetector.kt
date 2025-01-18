@@ -24,15 +24,14 @@ class MusekitPitchDetector(
 
         private val ALGORITHM = PitchEstimationAlgorithm.FFT_YIN
 
-        fun findNoteDetails(frequency: Double): Pair<Note, Double>? {
+        fun findNoteDetails(frequency: Double, pitch: Int = 440): Pair<Note, Double>? {
             if (frequency < MINIMUM_FREQ) {
                 return null
             }
 
-            val baseFrequency = Note().getFrequency()
-            val centDiff: Double = 1200.0 * log2(frequency / baseFrequency)
+            val centDiff: Double = 1200.0 * log2(frequency / pitch)
 
-            val note = Note.fromCentDiff(centDiff)
+            val note = Note.fromCentDiff(centDiff, pitch)
             var cents = centDiff % 100
             if (cents > 50) {
                 cents -= 100
@@ -54,8 +53,9 @@ class MusekitPitchDetector(
     private val history = mutableListOf<Pair<Note, Double>>()
     private val pitchDetectionHandler = PitchDetectionHandler { res, _ ->
         val pitch = res.pitch
+        val basePitch = MusekitPreferences.automaticTunerPitch
 
-        val recognized = findNoteDetails(pitch.toDouble())
+        val recognized = findNoteDetails(pitch.toDouble(), basePitch)
         if (recognized != null) {
             history.add(recognized)
         }

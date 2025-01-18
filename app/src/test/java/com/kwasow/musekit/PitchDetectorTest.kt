@@ -133,4 +133,22 @@ class PitchDetectorTest {
         val cents = result.second
         assert(cents < 0)
     }
+
+    @Test
+    fun testCustomBasePitch() {
+        // 440Hz - perfect A4 in 440Hz
+        // 440Hz - almost half a tone over A4 in 430Hz
+        val resultNormal = MusekitPitchDetector.findNoteDetails(440.0)
+        val resultCustom = MusekitPitchDetector.findNoteDetails(440.0, 430)
+
+        require(resultNormal != null)
+        require(resultCustom != null)
+
+        println(resultNormal)
+        println(resultCustom)
+
+        assert(resultNormal.first.note == resultCustom.first.note)
+        assert(resultNormal.second == 0.0)
+        assert(resultCustom.second >= 35.0)
+    }
 }

@@ -13,6 +13,7 @@ object MusekitPreferences {
 
     private const val KEY_NIGHT_MODE = "DarkTheme"
     private const val KEY_NOTE_FORK_MODE = "NoteForkMode"
+    private const val KEY_AUTO_TUNER_PITCH = "AutoTunerPitch"
 
     // ====== Constructors
     fun init(context: Context) {
@@ -41,7 +42,14 @@ object MusekitPreferences {
                 apply()
             }
         }
-        get() {
-            return sharedPreferences.getInt(KEY_NOTE_FORK_MODE, 0)
+        get() = sharedPreferences.getInt(KEY_NOTE_FORK_MODE, 0)
+
+    var automaticTunerPitch: Int
+        set(value) {
+            sharedPreferences.edit {
+                putInt(KEY_AUTO_TUNER_PITCH, value)
+                apply()
+            }
         }
+        get() = sharedPreferences.getInt(KEY_AUTO_TUNER_PITCH, 440)
 }
