@@ -46,6 +46,10 @@ class MetronomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMetronomeBinding.inflate(inflater)
+
+        // Prevent sleep while metronome is active
+        binding.root.keepScreenOn = true
+
         return binding.root
     }
 

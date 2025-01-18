@@ -54,11 +54,6 @@ class TunerView : LinearLayout {
     }
 
     // ====== Constructors
-    init {
-        // Prevent sleep if someone is tuning
-        keepScreenOn = true
-    }
-
     constructor(context: Context) :
         super(context)
 
