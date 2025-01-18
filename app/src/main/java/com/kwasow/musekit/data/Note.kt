@@ -15,10 +15,10 @@ class Note {
     var octave: Int
 
     companion object {
-        fun fromCentDiff(centDiff: Double): Note {
+        fun fromCentDiff(centDiff: Double, pitch: Int = 440): Note {
             val semitones = (centDiff / 100).roundToInt()
 
-            val note = Note()
+            val note = Note(pitch)
             if (semitones < 0) {
                 repeat(-semitones) { note.down() }
             } else {
