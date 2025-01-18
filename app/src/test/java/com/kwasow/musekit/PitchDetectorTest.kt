@@ -144,9 +144,6 @@ class PitchDetectorTest {
         require(resultNormal != null)
         require(resultCustom != null)
 
-        println(resultNormal)
-        println(resultCustom)
-
         assert(resultNormal.first.note == resultCustom.first.note)
         assert(resultNormal.second == 0.0)
         assert(resultCustom.second >= 35.0)
