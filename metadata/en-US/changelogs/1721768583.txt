@@ -1,0 +1,3 @@
+- Added pitch selection to automatic tuner
+- Updated pitch detection library
+
