@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.annotation.RawRes
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
@@ -19,10 +20,16 @@ import com.kwasow.musekit.databinding.DialogLicensesBinding
 import com.kwasow.musekit.databinding.DialogThemeSettingsBinding
 import com.kwasow.musekit.databinding.FragmentSettingsBinding
 import com.kwasow.musekit.utils.ThemeUtils
+import com.kwasow.musekit.views.MenuItem
 
 class SettingsFragment : Fragment() {
     // ====== Fields
-    private lateinit var binding: FragmentSettingsBinding
+    private lateinit var appVersion: TextView
+    private lateinit var itemThemeSettings: MenuItem
+    private lateinit var itemSourceCode: MenuItem
+    private lateinit var itemMastodon: MenuItem
+    private lateinit var itemWebsite: MenuItem
+    private lateinit var itemLicenses: MenuItem
 
     // ====== Interface methods
     override fun onCreateView(
@@ -30,27 +37,35 @@ class SettingsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentSettingsBinding.inflate(inflater)
+        val binding = FragmentSettingsBinding.inflate(inflater)
+
+        appVersion = binding.appVersion
+        itemThemeSettings = binding.itemThemeSettings
+        itemSourceCode = binding.itemSourceCode
+        itemMastodon = binding.itemMastodon
+        itemWebsite = binding.itemWebsite
+        itemLicenses = binding.itemLicenses
+
         return binding.root
     }
 
     override fun onStart() {
         super.onStart()
 
-        binding.appVersion.text = getString(R.string.version, BuildConfig.VERSION_NAME)
+        appVersion.text = getString(R.string.version, BuildConfig.VERSION_NAME)
         setupAboutSection()
         setupSettingsSection()
     }
 
     // ====== Private methods
     private fun setupSettingsSection() {
-        binding.itemThemeSettings.setOnClickListener {
+        itemThemeSettings.setOnClickListener {
             showThemeSettingsDialog()
         }
     }
 
     private fun setupAboutSection() {
-        binding.itemSourceCode.setOnClickListener {
+        itemSourceCode.setOnClickListener {
             val browserIntent = Intent(
                 Intent.ACTION_VIEW,
                 Uri.parse("https://github.com/Kwasow/Musekit")
@@ -58,7 +73,7 @@ class SettingsFragment : Fragment() {
             startActivity(browserIntent)
         }
 
-        binding.itemMastodon.setOnClickListener {
+        itemMastodon.setOnClickListener {
             val browserIntent = Intent(
                 Intent.ACTION_VIEW,
                 Uri.parse("https://mstdn.social/@kwasow")
@@ -66,7 +81,7 @@ class SettingsFragment : Fragment() {
             startActivity(browserIntent)
         }
 
-        binding.itemWebsite.setOnClickListener {
+        itemWebsite.setOnClickListener {
             val browserIntent = Intent(
                 Intent.ACTION_VIEW,
                 Uri.parse("https://kwasow.pl")
@@ -74,7 +89,7 @@ class SettingsFragment : Fragment() {
             startActivity(browserIntent)
         }
 
-        binding.itemLicenses.setOnClickListener {
+        itemLicenses.setOnClickListener {
             showLicensesDialog()
         }
     }
