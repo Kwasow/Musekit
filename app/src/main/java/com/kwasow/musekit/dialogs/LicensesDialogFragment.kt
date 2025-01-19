@@ -8,7 +8,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kwasow.musekit.R
 import com.kwasow.musekit.databinding.DialogLicensesBinding
 
-class LicensesDialogFragment: DialogFragment() {
+class LicensesDialogFragment : DialogFragment() {
 
     // ====== Fields
     companion object {
@@ -26,40 +26,37 @@ class LicensesDialogFragment: DialogFragment() {
             .setView(binding.root)
             .create()
 
-        val licenseDialogBuilder = MaterialAlertDialogBuilder(requireContext())
-            .setNeutralButton(R.string.close) { _, _ -> }
-
         binding.buttonLicenseThisApp.setOnClickListener {
-            val license = readRawFileAsString(R.raw.gpl3)
-
-            dialog.dismiss()
-            licenseDialogBuilder.setTitle(binding.textThisApp.text)
-            licenseDialogBuilder.setMessage(license)
-            licenseDialogBuilder.show()
+            showSubDialog(R.raw.gpl3, binding.textThisApp.text)
         }
 
         binding.buttonLicenseIcons.setOnClickListener {
-            val license = readRawFileAsString(R.raw.mit)
-
-            dialog.dismiss()
-            licenseDialogBuilder.setTitle(binding.textIcons.text)
-            licenseDialogBuilder.setMessage(license)
-            licenseDialogBuilder.show()
+            showSubDialog(R.raw.mit, binding.textIcons.text)
         }
 
         binding.buttonLicenseTarsos.setOnClickListener {
-            val license = readRawFileAsString(R.raw.gpl3)
-
-            dialog.dismiss()
-            licenseDialogBuilder.setTitle(binding.textTarsos.text)
-            licenseDialogBuilder.setMessage(license)
-            licenseDialogBuilder.show()
+            showSubDialog(R.raw.gpl3, binding.textTarsos.text)
         }
 
         return dialog
     }
 
     // ====== Private methods
+    private fun showSubDialog(
+        @RawRes licenseId: Int,
+        title: CharSequence
+    ) {
+        val licenseDialogBuilder = MaterialAlertDialogBuilder(requireContext())
+            .setNeutralButton(R.string.close) { _, _ -> }
+
+        val license = readRawFileAsString(licenseId)
+
+        dismiss()
+        licenseDialogBuilder.setTitle(title)
+        licenseDialogBuilder.setMessage(license)
+        licenseDialogBuilder.show()
+    }
+
     private fun readRawFileAsString(@RawRes id: Int): String {
         val inputStream = resources.openRawResource(id)
         val byteArray = ByteArray(inputStream.available())
