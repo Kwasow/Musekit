@@ -5,12 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.google.android.material.button.MaterialButton
 import com.kwasow.musekit.databinding.FragmentErrorBinding
 import kotlin.system.exitProcess
 
 class ErrorFragment : Fragment() {
     // ====== Fields
-    private lateinit var binding: FragmentErrorBinding
+    private lateinit var buttonCloseApp: MaterialButton
 
     // ====== Interface methods
     override fun onCreateView(
@@ -18,14 +19,17 @@ class ErrorFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentErrorBinding.inflate(inflater)
+        val binding = FragmentErrorBinding.inflate(inflater)
+
+        buttonCloseApp = binding.buttonCloseApp
+
         return binding.root
     }
 
     override fun onStart() {
         super.onStart()
 
-        binding.buttonGoBack.setOnClickListener {
+        buttonCloseApp.setOnClickListener {
             exitProcess(0)
         }
     }

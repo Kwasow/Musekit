@@ -10,7 +10,11 @@ import android.os.IBinder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AutoCompleteTextView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.slider.Slider
 import com.kwasow.musekit.R
 import com.kwasow.musekit.adapters.SoundsAdapter
 import com.kwasow.musekit.databinding.FragmentMetronomeBinding
@@ -18,7 +22,17 @@ import com.kwasow.musekit.services.MetronomeService
 
 class MetronomeFragment : Fragment() {
     // ====== Fields
-    private lateinit var binding: FragmentMetronomeBinding
+    private lateinit var buttonStartStop: MaterialButton
+    private lateinit var buttonMinus5: MaterialButton
+    private lateinit var buttonMinus2: MaterialButton
+    private lateinit var buttonMinus1: MaterialButton
+    private lateinit var buttonPlus1: MaterialButton
+    private lateinit var buttonPlus2: MaterialButton
+    private lateinit var buttonPlus5: MaterialButton
+
+    private lateinit var textBpm: AppCompatTextView
+    private lateinit var sliderBeat: Slider
+    private lateinit var metronomeSoundPicker: AutoCompleteTextView
 
     private lateinit var metronomeService: MetronomeService
     private var isBound = false
@@ -28,7 +42,7 @@ class MetronomeFragment : Fragment() {
             val binder = service as MetronomeService.LocalBinder
             metronomeService = binder.getService()
             isBound = true
-            metronomeService.connectTicker(binding.sliderBeat)
+            metronomeService.connectTicker(sliderBeat)
 
             updateBpm()
             setupSoundPicker()
@@ -45,7 +59,19 @@ class MetronomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentMetronomeBinding.inflate(inflater)
+        val binding = FragmentMetronomeBinding.inflate(inflater)
+
+        buttonStartStop = binding.buttonStartStop
+        buttonMinus5 = binding.buttonMinus5
+        buttonMinus2 = binding.buttonMinus2
+        buttonMinus1 = binding.buttonMinus1
+        buttonPlus1 = binding.buttonPlus1
+        buttonPlus2 = binding.buttonPlus2
+        buttonPlus5 = binding.buttonPlus5
+
+        textBpm = binding.textBpm
+        sliderBeat = binding.sliderBeat
+        metronomeSoundPicker = binding.metronomeSoundPicker
 
         // Prevent sleep while metronome is active
         binding.root.keepScreenOn = true
@@ -75,15 +101,15 @@ class MetronomeFragment : Fragment() {
     }
 
     private fun setupButtons() {
-        binding.buttonStartStop.setOnClickListener {
+        buttonStartStop.setOnClickListener {
             if (isBound) {
                 if (metronomeService.isPlaying) {
-                    binding.buttonStartStop.apply {
+                    buttonStartStop.apply {
                         setIconResource(R.drawable.anim_pause_to_play)
                         (icon as AnimatedVectorDrawable).start()
                     }
                 } else {
-                    binding.buttonStartStop.apply {
+                    buttonStartStop.apply {
                         setIconResource(R.drawable.anim_play_to_pause)
                         (icon as AnimatedVectorDrawable).start()
                     }
@@ -92,19 +118,19 @@ class MetronomeFragment : Fragment() {
             }
         }
 
-        binding.buttonPlus5.setOnClickListener { updateBpm(5) }
-        binding.buttonPlus2.setOnClickListener { updateBpm(2) }
-        binding.buttonPlus1.setOnClickListener { updateBpm(1) }
+        buttonPlus5.setOnClickListener { updateBpm(5) }
+        buttonPlus2.setOnClickListener { updateBpm(2) }
+        buttonPlus1.setOnClickListener { updateBpm(1) }
 
-        binding.buttonMinus5.setOnClickListener { updateBpm(-5) }
-        binding.buttonMinus2.setOnClickListener { updateBpm(-2) }
-        binding.buttonMinus1.setOnClickListener { updateBpm(-1) }
+        buttonMinus5.setOnClickListener { updateBpm(-5) }
+        buttonMinus2.setOnClickListener { updateBpm(-2) }
+        buttonMinus1.setOnClickListener { updateBpm(-1) }
     }
 
     private fun updateBpm(by: Int = 0) {
         if (isBound) {
             metronomeService.bpm += by
-            binding.textBpm.text = metronomeService.bpm.toString()
+            textBpm.text = metronomeService.bpm.toString()
         }
     }
 
@@ -114,12 +140,12 @@ class MetronomeFragment : Fragment() {
             val soundNames = sounds.map { getString(it.resourceNameId) }
             val soundsAdapter = SoundsAdapter(requireContext(), soundNames)
 
-            binding.metronomeSoundPicker.setAdapter(soundsAdapter)
-            binding.metronomeSoundPicker.setText(
+            metronomeSoundPicker.setAdapter(soundsAdapter)
+            metronomeSoundPicker.setText(
                 getString(metronomeService.sound.resourceNameId),
                 false
             )
-            binding.metronomeSoundPicker.setOnItemClickListener { _, _, i, _ ->
+            metronomeSoundPicker.setOnItemClickListener { _, _, i, _ ->
                 if (isBound) metronomeService.sound = sounds[i]
             }
         }

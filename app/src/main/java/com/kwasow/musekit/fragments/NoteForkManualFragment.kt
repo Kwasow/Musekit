@@ -9,8 +9,11 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AutoCompleteTextView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kwasow.musekit.R
 import com.kwasow.musekit.adapters.PresetsAdapter
@@ -28,7 +31,16 @@ import kotlin.properties.Delegates
 
 class NoteForkManualFragment : Fragment() {
     // ====== Fields
-    private lateinit var binding: FragmentNoteForkManualBinding
+    private lateinit var buttonNoteDown: MaterialButton
+    private lateinit var buttonNoteUp: MaterialButton
+    private lateinit var buttonPitchDown: MaterialButton
+    private lateinit var buttonPitchUp: MaterialButton
+    private lateinit var buttonStartStop: MaterialButton
+    private lateinit var textPitch: AppCompatTextView
+    private lateinit var textNote: AppCompatTextView
+    private lateinit var buttonSavePreset: MaterialButton
+    private lateinit var presetsPicker: AutoCompleteTextView
+
     private var note: Note = Note()
 
     private lateinit var player: AudioTrack
@@ -41,7 +53,17 @@ class NoteForkManualFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentNoteForkManualBinding.inflate(inflater)
+        val binding = FragmentNoteForkManualBinding.inflate(inflater)
+
+        buttonNoteDown = binding.buttonNoteDown
+        buttonNoteUp = binding.buttonNoteUp
+        buttonPitchDown = binding.buttonPitchDown
+        buttonPitchUp = binding.buttonPitchUp
+        buttonStartStop = binding.buttonStartStop
+        textPitch = binding.textPitch
+        textNote = binding.textNote
+        presetsPicker = binding.presetsPicker
+
         return binding.root
     }
 
@@ -65,8 +87,8 @@ class NoteForkManualFragment : Fragment() {
 
     // ====== Private methods
     private fun refreshTextViews() {
-        binding.textPitch.text = getString(R.string.pitch_placeholder, note.pitch)
-        binding.textNote.text = note.getSuperscripted(requireContext())
+        textPitch.text = getString(R.string.pitch_placeholder, note.pitch)
+        textNote.text = note.getSuperscripted(requireContext())
     }
 
     private fun setupPresets() {
@@ -88,9 +110,9 @@ class NoteForkManualFragment : Fragment() {
         val presetsAdapter = PresetsAdapter(requireContext(), presetsNames)
 
         // Attach adapter to view
-        binding.presetsPicker.setAdapter(presetsAdapter)
-        binding.presetsPicker.setText(getString(R.string.default_preset), false)
-        binding.presetsPicker.setOnItemClickListener { _, _, i, _ ->
+        presetsPicker.setAdapter(presetsAdapter)
+        presetsPicker.setText(getString(R.string.default_preset), false)
+        presetsPicker.setOnItemClickListener { _, _, i, _ ->
             note.octave = presetsDetails[i].octave
             note.pitch = presetsDetails[i].pitch
             note.note = presetsDetails[i].note
@@ -110,13 +132,13 @@ class NoteForkManualFragment : Fragment() {
     }
 
     private fun setupButtons() {
-        binding.buttonNoteUp.setOnClickListener {
+        buttonNoteUp.setOnClickListener {
             note.up()
             refreshTextViews()
             restartPlayer()
         }
 
-        binding.buttonNoteDown.setOnClickListener {
+        buttonNoteDown.setOnClickListener {
             val oldNoteFrequency = note.getFrequency()
             note.down()
             if (oldNoteFrequency != note.getFrequency()) {
@@ -125,30 +147,30 @@ class NoteForkManualFragment : Fragment() {
             }
         }
 
-        binding.buttonPitchUp.setOnClickListener {
+        buttonPitchUp.setOnClickListener {
             note.pitch += 1
             refreshTextViews()
             restartPlayer()
         }
 
-        binding.buttonPitchDown.setOnClickListener {
+        buttonPitchDown.setOnClickListener {
             note.pitch -= 1
             refreshTextViews()
             restartPlayer()
         }
 
-        binding.buttonStartStop.setOnClickListener {
+        buttonStartStop.setOnClickListener {
             if (!playing) {
                 playing = true
                 playSound()
-                binding.buttonStartStop.apply {
+                buttonStartStop.apply {
                     setIconResource(R.drawable.anim_play_to_pause)
                     (icon as AnimatedVectorDrawable).start()
                 }
             } else {
                 playing = false
                 stopSound()
-                binding.buttonStartStop.apply {
+                buttonStartStop.apply {
                     setIconResource(R.drawable.anim_pause_to_play)
                     (icon as AnimatedVectorDrawable).start()
                 }
@@ -197,7 +219,7 @@ class NoteForkManualFragment : Fragment() {
     }
 
     private fun setupSavePresetDialog() {
-        binding.buttonSavePreset.setOnClickListener { showSavePresetDialog() }
+        buttonSavePreset.setOnClickListener { showSavePresetDialog() }
     }
 
     private fun showSavePresetDialog() {

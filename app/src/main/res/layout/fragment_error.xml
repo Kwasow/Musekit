@@ -27,7 +27,7 @@
             android:layout_marginBottom="16dp"/>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonGoBack"
+            android:id="@+id/buttonCloseApp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/close_app"/>

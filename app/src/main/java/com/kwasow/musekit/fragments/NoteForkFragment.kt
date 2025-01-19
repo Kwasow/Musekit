@@ -13,7 +13,6 @@ import com.kwasow.musekit.utils.MusekitPreferences
 
 class NoteForkFragment : Fragment() {
     // ====== Fields
-    private lateinit var binding: FragmentNoteForkBinding
     private lateinit var tabLayout: TabLayout
     private lateinit var viewPager: ViewPager2
 
@@ -23,7 +22,7 @@ class NoteForkFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentNoteForkBinding.inflate(inflater)
+        val binding = FragmentNoteForkBinding.inflate(inflater)
         tabLayout = binding.noteForkTabs
         viewPager = binding.noteForkPager
 

@@ -20,7 +20,6 @@ import com.kwasow.musekit.views.TunerView
 
 class NoteForkAutoFragment : Fragment() {
     // ====== Fields
-    private lateinit var binding: FragmentNoteForkAutoBinding
     private lateinit var tunerView: TunerView
     private lateinit var noPermissionView: LinearLayout
     private lateinit var openSettingsButton: MaterialButton
@@ -42,7 +41,8 @@ class NoteForkAutoFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentNoteForkAutoBinding.inflate(inflater)
+        val binding = FragmentNoteForkAutoBinding.inflate(inflater)
+
         tunerView = binding.tunerView
         noPermissionView = binding.noAudioPermissionView
         openSettingsButton = binding.openPermissionSettingButton
