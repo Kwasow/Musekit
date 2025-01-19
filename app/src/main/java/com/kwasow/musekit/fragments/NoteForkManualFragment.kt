@@ -16,6 +16,7 @@ import com.kwasow.musekit.adapters.PresetsAdapter
 import com.kwasow.musekit.data.Note
 import com.kwasow.musekit.data.Notes
 import com.kwasow.musekit.databinding.FragmentNoteForkManualBinding
+import com.kwasow.musekit.dialogs.PresetDeleteDialog
 import com.kwasow.musekit.dialogs.PresetSaveDialogFragment
 import com.kwasow.musekit.utils.PresetsManager
 import kotlinx.coroutines.Dispatchers
@@ -101,7 +102,10 @@ class NoteForkManualFragment : Fragment() {
         }
 
         // Attach adapter to view
-        val presetsAdapter = PresetsAdapter(requireContext(), presets.map { it.first })
+        val presetsAdapter = PresetsAdapter(
+            requireContext(),
+            presets.map { it.first }
+        ) { presetName -> showDeletePresetDialog(presetName) }
 
         presetsPicker.setAdapter(presetsAdapter)
         presetsPicker.setText(getString(R.string.default_preset), false)
@@ -222,6 +226,12 @@ class NoteForkManualFragment : Fragment() {
         PresetSaveDialogFragment(note) { setupPresets() }.show(
             childFragmentManager,
             PresetSaveDialogFragment.TAG
+        )
+
+    private fun showDeletePresetDialog(presetName: String) =
+        PresetDeleteDialog(presetName) { setupPresets() }.show(
+            childFragmentManager,
+            PresetDeleteDialog.TAG
         )
 
     private fun selectPreset(presets: List<Pair<String, Note>>) {
