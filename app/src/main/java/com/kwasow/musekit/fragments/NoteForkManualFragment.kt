@@ -21,6 +21,7 @@ import com.kwasow.musekit.utils.PresetsManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlin.math.max
 import kotlin.math.sin
 import kotlin.properties.Delegates
 
@@ -120,7 +121,7 @@ class NoteForkManualFragment : Fragment() {
         }
 
         // Check if we can select a preset
-        selectPreset(presetsDetails)
+        selectPreset(presetsNames, presetsDetails)
     }
 
     private fun setupPlayer() {
@@ -228,11 +229,8 @@ class NoteForkManualFragment : Fragment() {
             PresetSaveDialogFragment.TAG
         )
 
-    private fun selectPreset(presetsDetails: List<Note>) {
+    private fun selectPreset(presetNames: List<String>, presetsDetails: List<Note>) {
         val selectedIndex = presetsDetails.indexOf(note)
-
-        if (selectedIndex >= 0) {
-            presetsPicker.listSelection = selectedIndex
-        }
+        presetsPicker.setText(presetNames[selectedIndex], false)
     }
 }
