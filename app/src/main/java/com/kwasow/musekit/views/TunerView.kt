@@ -11,6 +11,7 @@ import com.kwasow.musekit.data.Note
 import com.kwasow.musekit.databinding.ViewTunerBinding
 
 class TunerView : LinearLayout {
+
     // ====== Fields
     private val binding: ViewTunerBinding = ViewTunerBinding.inflate(
         LayoutInflater.from(context),

@@ -12,6 +12,7 @@ import com.kwasow.musekit.databinding.FragmentNoteForkBinding
 import com.kwasow.musekit.utils.MusekitPreferences
 
 class NoteForkFragment : Fragment() {
+
     // ====== Fields
     private lateinit var tabLayout: TabLayout
     private lateinit var viewPager: ViewPager2

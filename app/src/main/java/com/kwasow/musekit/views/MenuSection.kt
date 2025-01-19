@@ -12,13 +12,15 @@ import java.lang.Exception
 import java.lang.RuntimeException
 
 class MenuSection(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
+
+    // ====== Fields
     private var sectionTitle: String
 
-    private val binding: ViewMenuSectionBinding
+    private val binding: ViewMenuSectionBinding =
+        ViewMenuSectionBinding.inflate(LayoutInflater.from(context), this)
 
+    // ====== Constructors
     init {
-        binding = ViewMenuSectionBinding.inflate(LayoutInflater.from(context), this)
-
         context.theme.obtainStyledAttributes(attrs, R.styleable.MenuSection, 0, 0)
             .apply {
                 sectionTitle = getString(R.styleable.MenuSection_sectionTitle)
@@ -31,19 +33,21 @@ class MenuSection(context: Context, attrs: AttributeSet) : LinearLayout(context,
         setChildrenProps()
     }
 
-    private fun setRootProps() {
-        orientation = VERTICAL
-    }
-
-    private fun setChildrenProps() {
-        binding.menuSectionTitle.text = sectionTitle
-    }
-
+    // ====== Interface methods
     override fun addView(child: View?, index: Int, params: ViewGroup.LayoutParams?) {
         try {
             binding.menuSectionItemList.addView(child, index, params)
         } catch (e: Exception) {
             super.addView(child, index, params)
         }
+    }
+
+    // ======= Private methods
+    private fun setRootProps() {
+        orientation = VERTICAL
+    }
+
+    private fun setChildrenProps() {
+        binding.menuSectionTitle.text = sectionTitle
     }
 }

@@ -13,16 +13,18 @@ import com.kwasow.musekit.databinding.ViewMenuItemBinding
 import java.lang.RuntimeException
 
 class MenuItem(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs) {
+
+    // ====== Fields
     private val itemTitle: String
     private val leadingIcon: Int
     private val leadingIconContentDescription: String
     private val useTint: Boolean
 
-    private val binding: ViewMenuItemBinding
+    private val binding: ViewMenuItemBinding =
+        ViewMenuItemBinding.inflate(LayoutInflater.from(context), this)
 
+    // ====== Constructors
     init {
-        binding = ViewMenuItemBinding.inflate(LayoutInflater.from(context), this)
-
         context.theme.obtainStyledAttributes(attrs, R.styleable.MenuItem, 0, 0)
             .apply {
                 itemTitle = getString(R.styleable.MenuItem_itemTitle)
@@ -43,6 +45,16 @@ class MenuItem(context: Context, attrs: AttributeSet) : ConstraintLayout(context
         setChildrenProps()
     }
 
+    // ====== Public methods
+    fun getTrailingImageView(): ImageView {
+        return binding.menuItemTrailingIcon
+    }
+
+    fun getLeadingImageView(): ImageView {
+        return binding.menuItemLeadingIcon
+    }
+
+    // ====== Private methods
     private fun setRootProps() {
         isClickable = true
         isFocusable = true
@@ -66,13 +78,5 @@ class MenuItem(context: Context, attrs: AttributeSet) : ConstraintLayout(context
                 ContextCompat.getColor(context, value.resourceId)
             )
         }
-    }
-
-    fun getTrailingImageView(): ImageView {
-        return binding.menuItemTrailingIcon
-    }
-
-    fun getLeadingImageView(): ImageView {
-        return binding.menuItemLeadingIcon
     }
 }

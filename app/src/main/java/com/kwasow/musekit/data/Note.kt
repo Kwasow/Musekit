@@ -9,6 +9,7 @@ import kotlin.math.pow
 import kotlin.math.roundToInt
 
 class Note {
+
     // ====== Fields
     var pitch: Int
     var note: Notes

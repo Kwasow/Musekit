@@ -1,11 +1,8 @@
 package com.kwasow.musekit.fragments
 
-import android.content.DialogInterface
 import android.graphics.drawable.AnimatedVectorDrawable
 import android.media.AudioTrack
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,14 +11,12 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kwasow.musekit.R
 import com.kwasow.musekit.adapters.PresetsAdapter
 import com.kwasow.musekit.data.Note
 import com.kwasow.musekit.data.Notes
-import com.kwasow.musekit.data.Preset
-import com.kwasow.musekit.databinding.DialogSavePresetBinding
 import com.kwasow.musekit.databinding.FragmentNoteForkManualBinding
+import com.kwasow.musekit.dialogs.PresetSaveDialogFragment
 import com.kwasow.musekit.utils.PresetsManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -30,6 +25,7 @@ import kotlin.math.sin
 import kotlin.properties.Delegates
 
 class NoteForkManualFragment : Fragment() {
+
     // ====== Fields
     private lateinit var buttonNoteDown: MaterialButton
     private lateinit var buttonNoteUp: MaterialButton
@@ -62,6 +58,7 @@ class NoteForkManualFragment : Fragment() {
         buttonStartStop = binding.buttonStartStop
         textPitch = binding.textPitch
         textNote = binding.textNote
+        buttonSavePreset = binding.buttonSavePreset
         presetsPicker = binding.presetsPicker
 
         return binding.root
@@ -222,42 +219,9 @@ class NoteForkManualFragment : Fragment() {
         buttonSavePreset.setOnClickListener { showSavePresetDialog() }
     }
 
-    private fun showSavePresetDialog() {
-        val dialogBinding = DialogSavePresetBinding.inflate(layoutInflater)
-
-        val dialog = MaterialAlertDialogBuilder(requireContext())
-            .setTitle(R.string.save_preset)
-            .setView(dialogBinding.root)
-            .setNeutralButton(R.string.cancel) { _, _ -> }
-            .setPositiveButton(R.string.save) { _, _ ->
-                // Get preset details
-                val preset = Preset(
-                    name = dialogBinding.presetName.text.toString(),
-                    semitones = note.note.semitones,
-                    octave = note.octave,
-                    pitch = note.pitch
-                )
-
-                // Save preset
-                PresetsManager.savePreset(preset, requireContext())
-
-                // Refresh presets list
-                setupPresets()
-            }
-            .create()
-
-        dialog.show()
-        dialog.getButton(DialogInterface.BUTTON_POSITIVE)?.isEnabled = false
-
-        // Disable "Save" button if text field is empty
-        dialogBinding.presetName.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
-            override fun afterTextChanged(p0: Editable?) {
-                dialog.getButton(DialogInterface.BUTTON_POSITIVE)?.isEnabled =
-                    p0?.isBlank() != true
-            }
-        })
-    }
+    private fun showSavePresetDialog() =
+        PresetSaveDialogFragment(note) { setupPresets() }.show(
+            childFragmentManager,
+            PresetSaveDialogFragment.TAG
+        )
 }

@@ -14,6 +14,7 @@ import kotlin.math.log2
 class MusekitPitchDetector(
     private val dispatcher: AudioDispatcher
 ) {
+
     // ====== Fields
     companion object {
         private const val MINIMUM_FREQ = 55f
