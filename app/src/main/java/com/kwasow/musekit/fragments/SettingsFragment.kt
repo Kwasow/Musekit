@@ -7,13 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.annotation.RawRes
 import androidx.fragment.app.Fragment
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kwasow.musekit.BuildConfig
 import com.kwasow.musekit.R
-import com.kwasow.musekit.databinding.DialogLicensesBinding
 import com.kwasow.musekit.databinding.FragmentSettingsBinding
+import com.kwasow.musekit.dialogs.LicensesDialogFragment
 import com.kwasow.musekit.dialogs.ThemeSettingsDialogFragment
 import com.kwasow.musekit.views.MenuItem
 
@@ -89,56 +87,11 @@ class SettingsFragment : Fragment() {
         }
     }
 
-    private fun showLicensesDialog() {
-        val dialogBinding = DialogLicensesBinding.inflate(layoutInflater)
-
-        val dialog = MaterialAlertDialogBuilder(requireContext())
-            .setTitle(R.string.licenses)
-            .setIcon(R.drawable.ic_file)
-            .setNeutralButton(R.string.close) { _, _ -> }
-            .setView(dialogBinding.root)
-            .create()
-
-        val licenceDialogBuilder = MaterialAlertDialogBuilder(requireContext())
-            .setNeutralButton(R.string.close) { _, _ -> }
-
-        dialogBinding.buttonLicenseThisApp.setOnClickListener {
-            val license = readRawFileAsString(R.raw.gpl3)
-
-            dialog.dismiss()
-            licenceDialogBuilder.setTitle(dialogBinding.textThisApp.text)
-            licenceDialogBuilder.setMessage(license)
-            licenceDialogBuilder.show()
-        }
-
-        dialogBinding.buttonLicenseIcons.setOnClickListener {
-            val license = readRawFileAsString(R.raw.mit)
-
-            dialog.dismiss()
-            licenceDialogBuilder.setTitle(dialogBinding.textIcons.text)
-            licenceDialogBuilder.setMessage(license)
-            licenceDialogBuilder.show()
-        }
-
-        dialogBinding.buttonLicenseTarsos.setOnClickListener {
-            val license = readRawFileAsString(R.raw.gpl3)
-
-            dialog.dismiss()
-            licenceDialogBuilder.setTitle(dialogBinding.textTarsos.text)
-            licenceDialogBuilder.setMessage(license)
-            licenceDialogBuilder.show()
-        }
-
-        dialog.show()
-    }
-
-    private fun readRawFileAsString(@RawRes id: Int): String {
-        val inputStream = resources.openRawResource(id)
-        val byteArray = ByteArray(inputStream.available())
-        inputStream.read(byteArray)
-
-        return String(byteArray)
-    }
+    private fun showLicensesDialog() =
+        LicensesDialogFragment().show(
+            childFragmentManager,
+            LicensesDialogFragment.TAG
+        )
 
     private fun showThemeSettingsDialog() =
         ThemeSettingsDialogFragment().show(

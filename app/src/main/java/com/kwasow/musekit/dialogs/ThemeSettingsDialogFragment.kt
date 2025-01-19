@@ -21,55 +21,55 @@ class ThemeSettingsDialogFragment : DialogFragment() {
 
     // ====== Interface methods
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialogBinding = DialogThemeSettingsBinding.inflate(layoutInflater)
+        val binding = DialogThemeSettingsBinding.inflate(layoutInflater)
 
         val dialog = MaterialAlertDialogBuilder(requireContext())
             .setNeutralButton(R.string.close) { _, _ -> }
-            .setView(dialogBinding.root)
+            .setView(binding.root)
             .create()
 
         // Theme settings
         when (ThemeUtils.getNightMode()) {
             AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> {
-                dialogBinding.itemThemeFollowSystem.getTrailingImageView()
+                binding.itemThemeFollowSystem.getTrailingImageView()
                     .setImageResource(R.drawable.ic_check)
             }
 
             AppCompatDelegate.MODE_NIGHT_NO -> {
-                dialogBinding.itemThemeLight.getTrailingImageView()
+                binding.itemThemeLight.getTrailingImageView()
                     .setImageResource(R.drawable.ic_check)
             }
 
             AppCompatDelegate.MODE_NIGHT_YES -> {
-                dialogBinding.itemThemeDark.getTrailingImageView()
+                binding.itemThemeDark.getTrailingImageView()
                     .setImageResource(R.drawable.ic_check)
             }
         }
 
         if (Build.VERSION.SDK_INT >= 29) {
-            dialogBinding.itemThemeFollowSystem.setOnClickListener {
-                setNightMode(dialog, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+            binding.itemThemeFollowSystem.setOnClickListener {
+                setNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
             }
         } else {
-            dialogBinding.itemThemeFollowSystem.visibility = View.GONE
+            binding.itemThemeFollowSystem.visibility = View.GONE
         }
 
-        dialogBinding.itemThemeLight.getLeadingImageView().setColorFilter(Color.WHITE)
-        dialogBinding.itemThemeLight.setOnClickListener {
-            setNightMode(dialog, AppCompatDelegate.MODE_NIGHT_NO)
+        binding.itemThemeLight.getLeadingImageView().setColorFilter(Color.WHITE)
+        binding.itemThemeLight.setOnClickListener {
+            setNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
 
-        dialogBinding.itemThemeDark.getLeadingImageView().setColorFilter(Color.BLACK)
-        dialogBinding.itemThemeDark.setOnClickListener {
-            setNightMode(dialog, AppCompatDelegate.MODE_NIGHT_YES)
+        binding.itemThemeDark.getLeadingImageView().setColorFilter(Color.BLACK)
+        binding.itemThemeDark.setOnClickListener {
+            setNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         }
 
         return dialog
     }
 
     // ====== Private methods
-    private fun setNightMode(dialog: Dialog, nightMode: Int) {
+    private fun setNightMode(nightMode: Int) {
         ThemeUtils.setNightMode(nightMode)
-        dialog.dismiss()
+        dismiss()
     }
 }
