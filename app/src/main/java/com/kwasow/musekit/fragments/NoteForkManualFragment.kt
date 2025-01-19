@@ -118,6 +118,9 @@ class NoteForkManualFragment : Fragment() {
                 restartPlayer()
             }
         }
+
+        // Check if we can select a preset
+        selectPreset(presetsDetails)
     }
 
     private fun setupPlayer() {
@@ -224,4 +227,12 @@ class NoteForkManualFragment : Fragment() {
             childFragmentManager,
             PresetSaveDialogFragment.TAG
         )
+
+    private fun selectPreset(presetsDetails: List<Note>) {
+        val selectedIndex = presetsDetails.indexOf(note)
+
+        if (selectedIndex >= 0) {
+            presetsPicker.listSelection = selectedIndex
+        }
+    }
 }
