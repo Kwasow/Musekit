@@ -11,7 +11,7 @@ import kotlin.system.exitProcess
 
 class ErrorFragment : Fragment() {
     // ====== Fields
-    private lateinit var closeAppButton: MaterialButton
+    private lateinit var buttonCloseApp: MaterialButton
 
     // ====== Interface methods
     override fun onCreateView(
@@ -21,7 +21,7 @@ class ErrorFragment : Fragment() {
     ): View {
         val binding = FragmentErrorBinding.inflate(inflater)
 
-        closeAppButton = binding.closeAppButton
+        buttonCloseApp = binding.buttonCloseApp
 
         return binding.root
     }
@@ -29,7 +29,7 @@ class ErrorFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        closeAppButton.setOnClickListener {
+        buttonCloseApp.setOnClickListener {
             exitProcess(0)
         }
     }
