@@ -16,6 +16,7 @@ import com.kwasow.musekit.dialogs.ThemeSettingsDialogFragment
 import com.kwasow.musekit.views.MenuItem
 
 class SettingsFragment : Fragment() {
+
     // ====== Fields
     private lateinit var appVersion: TextView
     private lateinit var itemThemeSettings: MenuItem

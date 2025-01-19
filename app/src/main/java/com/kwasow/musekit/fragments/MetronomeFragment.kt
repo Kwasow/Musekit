@@ -21,6 +21,7 @@ import com.kwasow.musekit.databinding.FragmentMetronomeBinding
 import com.kwasow.musekit.services.MetronomeService
 
 class MetronomeFragment : Fragment() {
+
     // ====== Fields
     private lateinit var buttonStartStop: MaterialButton
     private lateinit var buttonMinus5: MaterialButton
@@ -130,7 +131,7 @@ class MetronomeFragment : Fragment() {
     private fun updateBpm(by: Int = 0) {
         if (isBound) {
             metronomeService.bpm += by
-            textBpm.text = metronomeService.bpm.toString()
+            textBpm.text = String.format(metronomeService.bpm.toString())
         }
     }
 

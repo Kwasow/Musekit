@@ -10,6 +10,7 @@ import com.kwasow.musekit.databinding.FragmentErrorBinding
 import kotlin.system.exitProcess
 
 class ErrorFragment : Fragment() {
+
     // ====== Fields
     private lateinit var buttonCloseApp: MaterialButton
 

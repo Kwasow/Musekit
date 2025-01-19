@@ -25,6 +25,7 @@ import kotlin.math.sin
 import kotlin.properties.Delegates
 
 class NoteForkManualFragment : Fragment() {
+
     // ====== Fields
     private lateinit var buttonNoteDown: MaterialButton
     private lateinit var buttonNoteUp: MaterialButton
@@ -220,6 +221,7 @@ class NoteForkManualFragment : Fragment() {
 
     private fun showSavePresetDialog() =
         PresetSaveDialogFragment(note) { setupPresets() }.show(
-            childFragmentManager, PresetSaveDialogFragment.TAG
+            childFragmentManager,
+            PresetSaveDialogFragment.TAG
         )
 }

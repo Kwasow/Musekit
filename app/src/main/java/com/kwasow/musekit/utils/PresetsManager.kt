@@ -5,6 +5,7 @@ import com.kwasow.musekit.data.Preset
 import java.io.File
 
 object PresetsManager {
+
     // ====== Fields
     private const val PRESET_DIR = "/presets/"
     private const val VER_1 = "<version1>"

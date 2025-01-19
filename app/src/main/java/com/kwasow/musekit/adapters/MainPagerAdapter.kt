@@ -10,6 +10,7 @@ import com.kwasow.musekit.fragments.SettingsFragment
 
 class MainPagerAdapter(fragmentActivity: FragmentActivity) :
     FragmentStateAdapter(fragmentActivity) {
+
     // ====== Fields
     private val pageCount = 3
 

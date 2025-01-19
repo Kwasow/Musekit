@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.material.color.DynamicColors
 
 object ThemeUtils {
+
     // ====== Constructors
     fun init(application: Application) {
         DynamicColors.applyToActivitiesIfAvailable(application)

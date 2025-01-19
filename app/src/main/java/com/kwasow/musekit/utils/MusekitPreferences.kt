@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 
 object MusekitPreferences {
+
     // ====== Fields
     private lateinit var sharedPreferences: SharedPreferences
 

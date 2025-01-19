@@ -19,6 +19,7 @@ import com.kwasow.musekit.utils.PermissionManager
 import com.kwasow.musekit.views.TunerView
 
 class NoteForkAutoFragment : Fragment() {
+
     // ====== Fields
     private lateinit var tunerView: TunerView
     private lateinit var noPermissionView: LinearLayout
