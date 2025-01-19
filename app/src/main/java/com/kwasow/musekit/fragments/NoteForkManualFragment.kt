@@ -62,6 +62,7 @@ class NoteForkManualFragment : Fragment() {
         buttonStartStop = binding.buttonStartStop
         textPitch = binding.textPitch
         textNote = binding.textNote
+        buttonSavePreset = binding.buttonSavePreset
         presetsPicker = binding.presetsPicker
 
         return binding.root
