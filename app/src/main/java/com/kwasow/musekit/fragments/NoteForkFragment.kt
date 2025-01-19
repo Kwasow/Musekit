@@ -24,6 +24,7 @@ class NoteForkFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentNoteForkBinding.inflate(inflater)
+
         tabLayout = binding.noteForkTabs
         viewPager = binding.noteForkPager
 
