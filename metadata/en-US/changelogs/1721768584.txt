@@ -1,0 +1,2 @@
+- Prevent sleeping while tuner/metronome is active
+
