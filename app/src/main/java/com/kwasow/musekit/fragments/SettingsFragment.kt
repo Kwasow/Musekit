@@ -1,25 +1,20 @@
 package com.kwasow.musekit.fragments
 
-import android.app.Dialog
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.RawRes
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kwasow.musekit.BuildConfig
 import com.kwasow.musekit.R
 import com.kwasow.musekit.databinding.DialogLicensesBinding
-import com.kwasow.musekit.databinding.DialogThemeSettingsBinding
 import com.kwasow.musekit.databinding.FragmentSettingsBinding
-import com.kwasow.musekit.utils.ThemeUtils
+import com.kwasow.musekit.dialogs.ThemeSettingsDialogFragment
 import com.kwasow.musekit.views.MenuItem
 
 class SettingsFragment : Fragment() {
@@ -145,55 +140,9 @@ class SettingsFragment : Fragment() {
         return String(byteArray)
     }
 
-    private fun showThemeSettingsDialog() {
-        val dialogBinding = DialogThemeSettingsBinding.inflate(layoutInflater)
-
-        val dialog = MaterialAlertDialogBuilder(requireContext())
-            .setNeutralButton(R.string.close) { _, _ -> }
-            .setView(dialogBinding.root)
-            .create()
-
-        // Theme settings
-        when (ThemeUtils.getNightMode()) {
-            AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> {
-                dialogBinding.itemThemeFollowSystem.getTrailingImageView()
-                    .setImageResource(R.drawable.ic_check)
-            }
-
-            AppCompatDelegate.MODE_NIGHT_NO -> {
-                dialogBinding.itemThemeLight.getTrailingImageView()
-                    .setImageResource(R.drawable.ic_check)
-            }
-
-            AppCompatDelegate.MODE_NIGHT_YES -> {
-                dialogBinding.itemThemeDark.getTrailingImageView()
-                    .setImageResource(R.drawable.ic_check)
-            }
-        }
-
-        if (Build.VERSION.SDK_INT >= 29) {
-            dialogBinding.itemThemeFollowSystem.setOnClickListener {
-                setNightMode(dialog, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-            }
-        } else {
-            dialogBinding.itemThemeFollowSystem.visibility = View.GONE
-        }
-
-        dialogBinding.itemThemeLight.getLeadingImageView().setColorFilter(Color.WHITE)
-        dialogBinding.itemThemeLight.setOnClickListener {
-            setNightMode(dialog, AppCompatDelegate.MODE_NIGHT_NO)
-        }
-
-        dialogBinding.itemThemeDark.getLeadingImageView().setColorFilter(Color.BLACK)
-        dialogBinding.itemThemeDark.setOnClickListener {
-            setNightMode(dialog, AppCompatDelegate.MODE_NIGHT_YES)
-        }
-
-        dialog.show()
-    }
-
-    private fun setNightMode(dialog: Dialog, nightMode: Int) {
-        ThemeUtils.setNightMode(nightMode)
-        dialog.dismiss()
-    }
+    private fun showThemeSettingsDialog() =
+        ThemeSettingsDialogFragment().show(
+            childFragmentManager,
+            ThemeSettingsDialogFragment.TAG
+        )
 }
