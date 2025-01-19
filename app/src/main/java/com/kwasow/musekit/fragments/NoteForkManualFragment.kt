@@ -16,6 +16,7 @@ import com.kwasow.musekit.adapters.PresetsAdapter
 import com.kwasow.musekit.data.Note
 import com.kwasow.musekit.data.Notes
 import com.kwasow.musekit.databinding.FragmentNoteForkManualBinding
+import com.kwasow.musekit.dialogs.PresetDeleteDialog
 import com.kwasow.musekit.dialogs.PresetSaveDialogFragment
 import com.kwasow.musekit.utils.PresetsManager
 import kotlinx.coroutines.Dispatchers
@@ -90,34 +91,36 @@ class NoteForkManualFragment : Fragment() {
 
     private fun setupPresets() {
         // Setup lists and adapter
-        val presetsNames = mutableListOf(
-            getString(R.string.default_preset)
+        val presets = mutableListOf(
+            getString(R.string.default_preset) to Note(440, Notes.A, 4)
         )
-        val presetsDetails = mutableListOf(
-            Note(440, Notes.A, 4)
-        )
-        val savedPresets = PresetsManager.getPresets(requireContext())
-        savedPresets.forEach {
+        PresetsManager.getPresets(requireContext()).forEach {
             val name = it.name
             val note = Note(it.pitch, Notes.fromSemitones(it.semitones), it.octave)
 
-            presetsNames.add(name)
-            presetsDetails.add(note)
+            presets.add(name to note)
         }
-        val presetsAdapter = PresetsAdapter(requireContext(), presetsNames)
 
         // Attach adapter to view
+        val presetsAdapter = PresetsAdapter(
+            requireContext(),
+            presets.map { it.first }
+        ) { presetName -> showDeletePresetDialog(presetName) }
+
         presetsPicker.setAdapter(presetsAdapter)
         presetsPicker.setText(getString(R.string.default_preset), false)
         presetsPicker.setOnItemClickListener { _, _, i, _ ->
-            note.octave = presetsDetails[i].octave
-            note.pitch = presetsDetails[i].pitch
-            note.note = presetsDetails[i].note
+            note.octave = presets[i].second.octave
+            note.pitch = presets[i].second.pitch
+            note.note = presets[i].second.note
             refreshTextViews()
             if (playing) {
                 restartPlayer()
             }
         }
+
+        // Check if we can select a preset
+        selectPreset(presets)
     }
 
     private fun setupPlayer() {
@@ -224,4 +227,17 @@ class NoteForkManualFragment : Fragment() {
             childFragmentManager,
             PresetSaveDialogFragment.TAG
         )
+
+    private fun showDeletePresetDialog(presetName: String) =
+        PresetDeleteDialog(presetName) { setupPresets() }.show(
+            childFragmentManager,
+            PresetDeleteDialog.TAG
+        )
+
+    private fun selectPreset(presets: List<Pair<String, Note>>) {
+        val selected = presets.find { it.second == note }
+        val name = selected?.first ?: presets[0].first
+
+        presetsPicker.setText(name, false)
+    }
 }

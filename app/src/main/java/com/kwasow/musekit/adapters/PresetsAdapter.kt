@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kwasow.musekit.R
-import com.kwasow.musekit.utils.PresetsManager
 
-class PresetsAdapter(context: Context, names: List<String>) :
+class PresetsAdapter(
+    context: Context,
+    names: List<String>,
+    val onDelete: (String) -> Unit
+) :
     ArrayAdapter<String>(context, 0, names) {
 
     // ====== Interface methods
@@ -28,7 +30,7 @@ class PresetsAdapter(context: Context, names: List<String>) :
         } else {
             button.setOnClickListener {
                 if (presetName != null) {
-                    showDeleteDialog(presetName)
+                    onDelete(presetName)
                 }
             }
         }
@@ -37,19 +39,5 @@ class PresetsAdapter(context: Context, names: List<String>) :
         presetTextView.text = presetName
 
         return root
-    }
-
-    // ====== Private methods
-    private fun showDeleteDialog(presetName: String) {
-        MaterialAlertDialogBuilder(context)
-            .setTitle(R.string.delete_preset)
-            .setMessage(context.getString(R.string.warning_preset_deletion, presetName))
-            .setIcon(R.drawable.ic_delete)
-            .setNeutralButton(R.string.cancel) { _, _ -> }
-            .setPositiveButton(R.string.delete) { _, _ ->
-                PresetsManager.removePreset(presetName, context)
-                this.remove(presetName)
-            }
-            .show()
     }
 }

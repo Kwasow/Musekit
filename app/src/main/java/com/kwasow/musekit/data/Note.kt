@@ -5,6 +5,7 @@ import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.SuperscriptSpan
 import com.kwasow.musekit.R
+import java.util.Objects
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
@@ -47,6 +48,24 @@ class Note {
 
     // Copy constructor
     constructor(note: Note) : this(note.pitch, note.note, note.octave)
+
+    // ====== Interface methods
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is Note) return false
+
+        return this.pitch == other.pitch &&
+            this.note == other.note &&
+            this.octave == other.octave
+    }
+
+    override fun hashCode(): Int {
+        return Objects.hash(pitch, note, octave)
+    }
+
+    override fun toString(): String {
+        return note.name + octave
+    }
 
     // ====== Public methods
     fun getFrequency(): Double {
@@ -109,9 +128,5 @@ class Note {
         }
 
         return spannableStringBuilder
-    }
-
-    override fun toString(): String {
-        return note.name + octave
     }
 }
