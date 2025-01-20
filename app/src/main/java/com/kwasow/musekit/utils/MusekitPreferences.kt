@@ -15,6 +15,7 @@ object MusekitPreferences {
     private const val KEY_NIGHT_MODE = "DarkTheme"
     private const val KEY_NOTE_FORK_MODE = "NoteForkMode"
     private const val KEY_AUTO_TUNER_PITCH = "AutoTunerPitch"
+    private const val KEY_METRONOME_BPM = "MetronomeBPM"
 
     // ====== Constructors
     fun init(context: Context) {
@@ -53,4 +54,13 @@ object MusekitPreferences {
             }
         }
         get() = sharedPreferences.getInt(KEY_AUTO_TUNER_PITCH, 440)
+
+    var metronomeBPM: Int
+        set(value) {
+            sharedPreferences.edit {
+                putInt(KEY_METRONOME_BPM, value)
+                apply()
+            }
+        }
+        get() = sharedPreferences.getInt(KEY_METRONOME_BPM, 60)
 }
