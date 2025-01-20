@@ -11,6 +11,7 @@ import android.os.IBinder
 import android.os.Looper
 import com.google.android.material.slider.Slider
 import com.kwasow.musekit.R
+import com.kwasow.musekit.utils.MusekitPreferences
 import kotlin.properties.Delegates
 
 class MetronomeService : Service(), Runnable {
@@ -35,9 +36,10 @@ class MetronomeService : Service(), Runnable {
             field = value
             soundId = soundPool.load(this, value.resourceId, 1)
         }
-    var bpm = 60
+    var bpm = MusekitPreferences.metronomeBPM
         set(value) {
             field = value.coerceIn(30..300)
+            MusekitPreferences.metronomeBPM = field
         }
 
     private var soundId by Delegates.notNull<Int>()
