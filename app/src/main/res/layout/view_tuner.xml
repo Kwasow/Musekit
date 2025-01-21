@@ -14,7 +14,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/tunerLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,35 +28,50 @@
             style="@style/Widget.Material3.CardView.Filled"
             android:layout_width="8dp"
             android:layout_height="30dp"
-            android:layout_margin="4dp" />
+            android:layout_margin="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/pitchUnder4"/>
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/pitchUnder4"
             style="@style/Widget.Material3.CardView.Filled"
             android:layout_width="8dp"
             android:layout_height="45dp"
-            android:layout_margin="4dp" />
+            android:layout_margin="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/pitchUnder3" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/pitchUnder3"
             style="@style/Widget.Material3.CardView.Filled"
             android:layout_width="8dp"
             android:layout_height="60dp"
-            android:layout_margin="4dp" />
+            android:layout_margin="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/pitchUnder2" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/pitchUnder2"
             style="@style/Widget.Material3.CardView.Filled"
             android:layout_width="8dp"
             android:layout_height="75dp"
-            android:layout_margin="4dp" />
+            android:layout_margin="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/pitchUnder1" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/pitchUnder1"
             style="@style/Widget.Material3.CardView.Filled"
             android:layout_width="8dp"
             android:layout_height="90dp"
-            android:layout_margin="4dp" />
+            android:layout_margin="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/currentNoteText" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/currentNoteText"
@@ -67,44 +82,63 @@
             android:gravity="center"
             android:layout_margin="12dp"
             app:autoSizeTextType="uniform"
-            tools:ignore="HardcodedText"/>
+            tools:ignore="HardcodedText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/pitchOver1"
             style="@style/Widget.Material3.CardView.Filled"
             android:layout_width="8dp"
             android:layout_height="90dp"
-            android:layout_margin="4dp" />
+            android:layout_margin="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/currentNoteText" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/pitchOver2"
             style="@style/Widget.Material3.CardView.Filled"
             android:layout_width="8dp"
             android:layout_height="75dp"
-            android:layout_margin="4dp" />
+            android:layout_margin="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/pitchOver1" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/pitchOver3"
             style="@style/Widget.Material3.CardView.Filled"
             android:layout_width="8dp"
             android:layout_height="60dp"
-            android:layout_margin="4dp" />
+            android:layout_margin="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/pitchOver2" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/pitchOver4"
             style="@style/Widget.Material3.CardView.Filled"
             android:layout_width="8dp"
             android:layout_height="45dp"
-            android:layout_margin="4dp" />
+            android:layout_margin="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/pitchOver3" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/pitchOver5"
             style="@style/Widget.Material3.CardView.Filled"
             android:layout_width="8dp"
             android:layout_height="30dp"
-            android:layout_margin="4dp" />
+            android:layout_margin="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/pitchOver4" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
         android:id="@+id/tunerCheckMark"

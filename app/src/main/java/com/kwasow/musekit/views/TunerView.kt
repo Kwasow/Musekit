@@ -28,8 +28,8 @@ class TunerView : LinearLayout {
     )
 
     private val centBoundaries = listOf(
-        -50.0, -41.0, -32.0, -23.0, -14.0, -5.0,
-        5.0, 14.0, 23.0, 32.0, 41.0, 50.0
+        -50.0, -45.0, -35.0, -25.0, -15.0, -5.0,
+        5.0, 15.0, 25.0, 35.0, 45.0, 50.0
     )
 
     private val bars: Map<Int, MaterialCardView> = mapOf(
@@ -42,7 +42,7 @@ class TunerView : LinearLayout {
         2 to binding.pitchOver2,
         3 to binding.pitchOver3,
         4 to binding.pitchOver4,
-        5 to binding.pitchOver5
+        5 to binding.pitchOver5,
     )
 
     private val timer = object : CountDownTimer(3000, 1000) {
