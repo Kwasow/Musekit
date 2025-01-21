@@ -18,7 +18,10 @@ import com.google.android.material.slider.Slider
 import com.kwasow.musekit.R
 import com.kwasow.musekit.adapters.SoundsAdapter
 import com.kwasow.musekit.databinding.FragmentMetronomeBinding
+import com.kwasow.musekit.dialogs.SetBeatDialog
 import com.kwasow.musekit.services.MetronomeService
+import com.kwasow.musekit.utils.MusekitBeatDetector
+import com.kwasow.musekit.utils.MusekitPreferences
 
 class MetronomeFragment : Fragment() {
 
@@ -34,9 +37,12 @@ class MetronomeFragment : Fragment() {
     private lateinit var textBpm: AppCompatTextView
     private lateinit var sliderBeat: Slider
     private lateinit var metronomeSoundPicker: AutoCompleteTextView
+    private lateinit var setBeatButton: MaterialButton
+    private lateinit var tapBeatButton: MaterialButton
 
     private lateinit var metronomeService: MetronomeService
     private var isBound = false
+    private val beatDetector = MusekitBeatDetector()
 
     private val serviceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
@@ -73,6 +79,12 @@ class MetronomeFragment : Fragment() {
         textBpm = binding.textBpm
         sliderBeat = binding.sliderBeat
         metronomeSoundPicker = binding.metronomeSoundPicker
+        setBeatButton = binding.buttonSetCustomBeat
+        tapBeatButton = binding.buttonTapCustomBeat
+
+        // Set starting value for BPM (service connection takes some time and it causes the
+        // view to show a different value for a split second
+        textBpm.text = MusekitPreferences.metronomeBPM.toString()
 
         // Prevent sleep while metronome is active
         binding.root.keepScreenOn = true
@@ -126,12 +138,26 @@ class MetronomeFragment : Fragment() {
         buttonMinus5.setOnClickListener { updateBpm(-5) }
         buttonMinus2.setOnClickListener { updateBpm(-2) }
         buttonMinus1.setOnClickListener { updateBpm(-1) }
+
+        setBeatButton.setOnClickListener {
+            SetBeatDialog { result -> setBpm(result) }.show(childFragmentManager, SetBeatDialog.TAG)
+        }
+
+        tapBeatButton.setOnClickListener {
+            val res = beatDetector.beatEvent()
+            if (res != null) {
+                setBpm(res)
+            }
+        }
     }
 
-    private fun updateBpm(by: Int = 0) {
+    private fun updateBpm(by: Int = 0) =
+        setBpm(metronomeService.bpm + by)
+
+    private fun setBpm(value: Int) {
         if (isBound) {
-            metronomeService.bpm += by
-            textBpm.text = String.format(metronomeService.bpm.toString())
+            metronomeService.bpm = value
+            textBpm.text = metronomeService.bpm.toString()
         }
     }
 

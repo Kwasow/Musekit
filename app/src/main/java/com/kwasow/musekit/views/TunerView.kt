@@ -83,7 +83,7 @@ class TunerView : LinearLayout {
             throw IllegalArgumentException("cents must be in range -50, 50")
         }
 
-        for (i in 0 until (centBoundaries.size - 1)) {
+        for (i in 0 until centBoundaries.lastIndex) {
             if (centBoundaries[i] <= cents && cents <= centBoundaries[i + 1]) {
                 markPitchBar(i - 5)
                 break
