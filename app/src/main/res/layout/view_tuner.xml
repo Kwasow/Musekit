@@ -33,6 +33,16 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/pitchUnder4"/>
 
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:text="-45"-->
+<!--            android:rotation="50"-->
+<!--            app:layout_constraintStart_toStartOf="@id/pitchUnder5"-->
+<!--            app:layout_constraintEnd_toEndOf="@id/pitchUnder5"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/pitchUnder5"/>-->
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/pitchUnder4"
             style="@style/Widget.Material3.CardView.Filled"
@@ -52,6 +62,16 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/pitchUnder2" />
+
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:text="-25"-->
+<!--            android:rotation="50"-->
+<!--            app:layout_constraintStart_toStartOf="@id/pitchUnder3"-->
+<!--            app:layout_constraintEnd_toEndOf="@id/pitchUnder3"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/pitchUnder3"/>-->
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/pitchUnder2"
@@ -73,6 +93,16 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/currentNoteText" />
 
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:text="-5"-->
+<!--            android:rotation="50"-->
+<!--            app:layout_constraintStart_toStartOf="@id/pitchUnder1"-->
+<!--            app:layout_constraintEnd_toEndOf="@id/pitchUnder1"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/pitchUnder1"/>-->
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/currentNoteText"
             android:layout_width="90dp"
@@ -88,6 +118,14 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
 
+        <TextView
+            android:id="@+id/currentCentsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/currentNoteText"
+            app:layout_constraintEnd_toEndOf="@id/currentNoteText"
+            app:layout_constraintTop_toBottomOf="@id/currentNoteText"/>
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/pitchOver1"
             style="@style/Widget.Material3.CardView.Filled"
@@ -97,6 +135,16 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/currentNoteText" />
+
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:text="+5"-->
+<!--            android:rotation="-50"-->
+<!--            app:layout_constraintStart_toStartOf="@id/pitchOver1"-->
+<!--            app:layout_constraintEnd_toEndOf="@id/pitchOver1"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/pitchOver1"/>-->
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/pitchOver2"
@@ -118,6 +166,16 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/pitchOver2" />
 
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:text="+25"-->
+<!--            android:rotation="-50"-->
+<!--            app:layout_constraintStart_toStartOf="@id/pitchOver3"-->
+<!--            app:layout_constraintEnd_toEndOf="@id/pitchOver3"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/pitchOver3"/>-->
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/pitchOver4"
             style="@style/Widget.Material3.CardView.Filled"
@@ -137,6 +195,16 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/pitchOver4" />
+
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:text="+45"-->
+<!--            android:rotation="-50"-->
+<!--            app:layout_constraintStart_toStartOf="@id/pitchOver5"-->
+<!--            app:layout_constraintEnd_toEndOf="@id/pitchOver5"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/pitchOver5"/>-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

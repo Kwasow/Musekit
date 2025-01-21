@@ -4,11 +4,15 @@ import android.content.Context
 import android.os.CountDownTimer
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.appcompat.widget.AppCompatTextView
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.color.MaterialColors
 import com.kwasow.musekit.data.Note
 import com.kwasow.musekit.databinding.ViewTunerBinding
+import kotlin.math.roundToInt
 
 class TunerView : LinearLayout {
 
@@ -18,6 +22,10 @@ class TunerView : LinearLayout {
         this,
         true
     )
+    private val checkMark: ImageView = binding.tunerCheckMark
+    private val currentNote: AppCompatTextView = binding.currentNoteText
+    private val currentCents: TextView = binding.currentCentsText
+
     private val inactiveColor = MaterialColors.getColor(
         this,
         com.google.android.material.R.attr.colorSurfaceContainerHighest
@@ -42,7 +50,7 @@ class TunerView : LinearLayout {
         2 to binding.pitchOver2,
         3 to binding.pitchOver3,
         4 to binding.pitchOver4,
-        5 to binding.pitchOver5,
+        5 to binding.pitchOver5
     )
 
     private val timer = object : CountDownTimer(3000, 1000) {
@@ -73,7 +81,7 @@ class TunerView : LinearLayout {
         timer.start()
 
         unmarkAll()
-        setNote(note)
+        setNote(note, cents)
 
         if (note == null || cents == null) {
             return
@@ -92,17 +100,21 @@ class TunerView : LinearLayout {
     }
 
     // ====== Private methods
-    private fun setNote(note: Note?) {
-        if (note == null) {
-            binding.currentNoteText.text = "—"
+    private fun setNote(note: Note?, cents: Double? = null) {
+        if (note == null || cents == null) {
+            currentNote.text = "—"
+            currentCents.text = ""
         } else {
-            binding.currentNoteText.text = note.getSuperscripted(context)
+            val roundedCents = (cents * 100).roundToInt() / 100.0
+
+            currentNote.text = note.getSuperscripted(context)
+            currentCents.text = roundedCents.toString()
         }
     }
 
     private fun markPitchBar(id: Int) {
         if (id == 0) {
-            binding.tunerCheckMark.drawable.setTint(activeColor)
+            checkMark.drawable.setTint(activeColor)
         } else {
             val bar = bars[id]
                 ?: throw IllegalArgumentException("Bar IDs can only be in -5..5")
@@ -116,6 +128,6 @@ class TunerView : LinearLayout {
             it.value.background.setTint(inactiveColor)
         }
 
-        binding.tunerCheckMark.drawable.setTint(inactiveColor)
+        checkMark.drawable.setTint(inactiveColor)
     }
 }
