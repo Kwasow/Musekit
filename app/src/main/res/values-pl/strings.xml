@@ -31,7 +31,7 @@
     <string name="licenses">Licencje</string>
     <string name="version">Wersja %1$s</string>
     <string name="contentDescription_github_logo">Logo Githuba</string>
-    <string name="contentDescription_twitter_logo">Logo Twittera</string>
+    <string name="contentDescription_mastodon_logo">Logo Mastodona</string>
     <string name="contentDescription_internet_globe">Globus reprezentujący świat</string>
     <string name="contentDescription_file_icon">Ikonka pliku</string>
     <string name="close">Zamknij</string>

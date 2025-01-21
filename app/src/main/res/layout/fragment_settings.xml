@@ -81,7 +81,7 @@
                 android:layout_height="wrap_content"
                 app:itemTitle="@string/developer"
                 app:leadingIcon="@drawable/ic_mastodon"
-                app:leadingIconContentDescription="@string/contentDescription_twitter_logo"/>
+                app:leadingIconContentDescription="@string/contentDescription_mastodon_logo"/>
 
             <com.kwasow.musekit.views.MenuItem
                 android:id="@+id/itemWebsite"
