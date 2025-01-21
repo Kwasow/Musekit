@@ -45,6 +45,7 @@
     <string name="contentDescription_right_arrow">Strzałka w prawo</string>
     <string name="sound">Dźwięk metronomu</string>
     <string name="tap_beat">Wybij tempo</string>
+    <string name="beat">Tempo</string>
     <string name="metronome_sound_default">Domyślny</string>
     <string name="metronome_sound_beep">Beep</string>
     <string name="metronome_sound_ding">Ding</string>

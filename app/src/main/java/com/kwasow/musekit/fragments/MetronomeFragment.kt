@@ -18,6 +18,7 @@ import com.google.android.material.slider.Slider
 import com.kwasow.musekit.R
 import com.kwasow.musekit.adapters.SoundsAdapter
 import com.kwasow.musekit.databinding.FragmentMetronomeBinding
+import com.kwasow.musekit.dialogs.SetBeatDialog
 import com.kwasow.musekit.services.MetronomeService
 
 class MetronomeFragment : Fragment() {
@@ -34,6 +35,7 @@ class MetronomeFragment : Fragment() {
     private lateinit var textBpm: AppCompatTextView
     private lateinit var sliderBeat: Slider
     private lateinit var metronomeSoundPicker: AutoCompleteTextView
+    private lateinit var setBeatButton: MaterialButton
 
     private lateinit var metronomeService: MetronomeService
     private var isBound = false
@@ -73,6 +75,7 @@ class MetronomeFragment : Fragment() {
         textBpm = binding.textBpm
         sliderBeat = binding.sliderBeat
         metronomeSoundPicker = binding.metronomeSoundPicker
+        setBeatButton = binding.buttonSetCustomBeat
 
         // Prevent sleep while metronome is active
         binding.root.keepScreenOn = true
@@ -126,12 +129,16 @@ class MetronomeFragment : Fragment() {
         buttonMinus5.setOnClickListener { updateBpm(-5) }
         buttonMinus2.setOnClickListener { updateBpm(-2) }
         buttonMinus1.setOnClickListener { updateBpm(-1) }
+
+        setBeatButton.setOnClickListener {
+            SetBeatDialog().show(childFragmentManager, SetBeatDialog.TAG)
+        }
     }
 
     private fun updateBpm(by: Int = 0) {
         if (isBound) {
             metronomeService.bpm += by
-            textBpm.text = String.format(metronomeService.bpm.toString())
+            textBpm.text = metronomeService.bpm.toString()
         }
     }
 
