@@ -131,33 +131,28 @@
         app:layout_constraintTop_toBottomOf="@id/sliderBeat"
         style="@style/Widget.Material3.Button.IconButton"/>
 
-    <LinearLayout
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonSetCustomBeat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" >
+        android:text="@string/set_beat"
+        app:iconPadding="8dp"
+        app:icon="@drawable/ic_edit"
+        style="@style/Widget.Material3.Button.IconButton.Filled"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonSetCustomBeat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="@string/set_beat"
-            app:iconPadding="8dp"
-            app:icon="@drawable/ic_edit"
-            style="@style/Widget.Material3.Button.IconButton.Filled"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonTapCustomBeat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tap_beat"
-            app:iconPadding="8dp"
-            app:icon="@drawable/ic_tap"
-            style="@style/Widget.Material3.Button.IconButton.Filled"/>
-
-    </LinearLayout>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonTapCustomBeat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="@string/tap_beat"
+        app:iconPadding="8dp"
+        app:icon="@drawable/ic_tap"
+        style="@style/Widget.Material3.Button.IconButton.Filled"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

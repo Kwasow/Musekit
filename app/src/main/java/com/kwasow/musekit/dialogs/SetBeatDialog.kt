@@ -54,5 +54,4 @@ class SetBeatDialog(val onSave: (Int) -> Unit) : DialogFragment() {
 
         return dialog
     }
-
 }

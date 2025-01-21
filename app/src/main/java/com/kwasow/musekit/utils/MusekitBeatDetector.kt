@@ -24,5 +24,4 @@ class MusekitBeatDetector {
 
         return res
     }
-
 }
