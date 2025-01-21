@@ -44,6 +44,7 @@
     <string name="tarsos">TarsosDSP</string>
     <string name="contentDescription_right_arrow">Strzałka w prawo</string>
     <string name="sound">Dźwięk metronomu</string>
+    <string name="tap_beat">Wybij tempo</string>
     <string name="metronome_sound_default">Domyślny</string>
     <string name="metronome_sound_beep">Beep</string>
     <string name="metronome_sound_ding">Ding</string>
@@ -64,4 +65,5 @@
     <string name="note_fork_automatic">Automatyczny</string>
     <string name="record_permission_not_granted">Dostęp do mikrofonu nie został przyznany</string>
     <string name="special_thanks">Specjalne podziękowania dla TarsosDSP za zbudowanie biblioteki do rozpoznawania tonów.</string>
+    <string name="set_beat">Ustaw tempo</string>
 </resources>

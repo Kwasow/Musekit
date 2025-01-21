@@ -43,6 +43,8 @@
     <string name="minus5" translatable="false">-5</string>
     <string name="minus2" translatable="false">-2</string>
     <string name="minus1" translatable="false">-1</string>
+    <string name="set_beat">Set beat</string>
+    <string name="tap_beat">Tap beat</string>
     
     <!-- Metronome sound names -->
     <string name="metronome_sound_default">Default</string>
