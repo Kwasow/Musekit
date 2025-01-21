@@ -20,6 +20,7 @@ import com.kwasow.musekit.adapters.SoundsAdapter
 import com.kwasow.musekit.databinding.FragmentMetronomeBinding
 import com.kwasow.musekit.dialogs.SetBeatDialog
 import com.kwasow.musekit.services.MetronomeService
+import com.kwasow.musekit.utils.MusekitPreferences
 
 class MetronomeFragment : Fragment() {
 
@@ -77,6 +78,10 @@ class MetronomeFragment : Fragment() {
         metronomeSoundPicker = binding.metronomeSoundPicker
         setBeatButton = binding.buttonSetCustomBeat
 
+        // Set starting value for BPM (service connection takes some time and it causes the
+        // view to show a different value for a split second
+        textBpm.text = MusekitPreferences.metronomeBPM.toString()
+
         // Prevent sleep while metronome is active
         binding.root.keepScreenOn = true
 
@@ -131,13 +136,16 @@ class MetronomeFragment : Fragment() {
         buttonMinus1.setOnClickListener { updateBpm(-1) }
 
         setBeatButton.setOnClickListener {
-            SetBeatDialog().show(childFragmentManager, SetBeatDialog.TAG)
+            SetBeatDialog { result -> setBpm(result) }.show(childFragmentManager, SetBeatDialog.TAG)
         }
     }
 
-    private fun updateBpm(by: Int = 0) {
+    private fun updateBpm(by: Int = 0) =
+        setBpm(metronomeService.bpm + by)
+
+    private fun setBpm(value: Int) {
         if (isBound) {
-            metronomeService.bpm += by
+            metronomeService.bpm = value
             textBpm.text = metronomeService.bpm.toString()
         }
     }

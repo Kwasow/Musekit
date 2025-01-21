@@ -14,7 +14,7 @@ import com.kwasow.musekit.R
 import com.kwasow.musekit.databinding.DialogSetBeatBinding
 import com.kwasow.musekit.utils.MusekitPreferences
 
-class SetBeatDialog: DialogFragment() {
+class SetBeatDialog(val onSave: (Int) -> Unit) : DialogFragment() {
 
     // ====== Fields
     companion object {
@@ -34,7 +34,7 @@ class SetBeatDialog: DialogFragment() {
             .setView(binding.root)
             .setNeutralButton(R.string.cancel) { _, _ -> }
             .setPositiveButton(R.string.save) { _, _ ->
-                MusekitPreferences.metronomeBPM = beatText.text.toString().toInt()
+                onSave(beatText.text.toString().toInt())
             }
             .create()
 
