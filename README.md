@@ -28,4 +28,3 @@ This project wouldn't be possible without the work of others:
 
 - TarsosDSP - https://github.com/JorenSix/TarsosDSP
 - ShapeShifter - https://github.com/alexjlockwood/ShapeShifter
-
