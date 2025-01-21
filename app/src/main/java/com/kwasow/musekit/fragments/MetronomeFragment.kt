@@ -20,6 +20,7 @@ import com.kwasow.musekit.adapters.SoundsAdapter
 import com.kwasow.musekit.databinding.FragmentMetronomeBinding
 import com.kwasow.musekit.dialogs.SetBeatDialog
 import com.kwasow.musekit.services.MetronomeService
+import com.kwasow.musekit.utils.MusekitBeatDetector
 import com.kwasow.musekit.utils.MusekitPreferences
 
 class MetronomeFragment : Fragment() {
@@ -37,9 +38,11 @@ class MetronomeFragment : Fragment() {
     private lateinit var sliderBeat: Slider
     private lateinit var metronomeSoundPicker: AutoCompleteTextView
     private lateinit var setBeatButton: MaterialButton
+    private lateinit var tapBeatButton: MaterialButton
 
     private lateinit var metronomeService: MetronomeService
     private var isBound = false
+    private val beatDetector = MusekitBeatDetector()
 
     private val serviceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
@@ -77,6 +80,7 @@ class MetronomeFragment : Fragment() {
         sliderBeat = binding.sliderBeat
         metronomeSoundPicker = binding.metronomeSoundPicker
         setBeatButton = binding.buttonSetCustomBeat
+        tapBeatButton = binding.buttonTapCustomBeat
 
         // Set starting value for BPM (service connection takes some time and it causes the
         // view to show a different value for a split second
@@ -137,6 +141,13 @@ class MetronomeFragment : Fragment() {
 
         setBeatButton.setOnClickListener {
             SetBeatDialog { result -> setBpm(result) }.show(childFragmentManager, SetBeatDialog.TAG)
+        }
+
+        tapBeatButton.setOnClickListener {
+            val res = beatDetector.beatEvent()
+            if (res != null) {
+                setBpm(res)
+            }
         }
     }
 
