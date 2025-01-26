@@ -186,7 +186,9 @@ class NoteForkManualFragment : Fragment() {
         if (player.playState != AudioTrack.PLAYSTATE_PLAYING && playing) {
             lifecycleScope.launch {
                 reloadTone()
+                player.setVolume(0f)
                 player.play()
+                player.setVolume(1f)
             }
         }
     }
@@ -208,7 +210,6 @@ class NoteForkManualFragment : Fragment() {
     private fun stopSound() {
         if (player.state == AudioTrack.STATE_INITIALIZED) {
             player.stop()
-            player.flush()
         }
     }
 
