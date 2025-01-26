@@ -68,7 +68,7 @@ class NoteForkManualFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        refreshTextViews()
+        refreshState()
         setupPlayer()
         setupPresets()
         setupButtons()
@@ -84,9 +84,15 @@ class NoteForkManualFragment : Fragment() {
     }
 
     // ====== Private methods
-    private fun refreshTextViews() {
+    private fun refreshState() {
         textPitch.text = getString(R.string.pitch_placeholder, note.pitch)
         textNote.text = note.getSuperscripted(requireContext())
+
+        if (playing) {
+            lifecycleScope.launch {
+                reloadTone()
+            }
+        }
     }
 
     private fun setupPresets() {
@@ -113,10 +119,7 @@ class NoteForkManualFragment : Fragment() {
             note.octave = presets[i].second.octave
             note.pitch = presets[i].second.pitch
             note.note = presets[i].second.note
-            refreshTextViews()
-            if (playing) {
-                restartPlayer()
-            }
+            refreshState()
         }
 
         // Check if we can select a preset
@@ -134,29 +137,22 @@ class NoteForkManualFragment : Fragment() {
     private fun setupButtons() {
         buttonNoteUp.setOnClickListener {
             note.up()
-            refreshTextViews()
-            restartPlayer()
+            refreshState()
         }
 
         buttonNoteDown.setOnClickListener {
-            val oldNoteFrequency = note.getFrequency()
             note.down()
-            if (oldNoteFrequency != note.getFrequency()) {
-                refreshTextViews()
-                restartPlayer()
-            }
+            refreshState()
         }
 
         buttonPitchUp.setOnClickListener {
             note.pitch += 1
-            refreshTextViews()
-            restartPlayer()
+            refreshState()
         }
 
         buttonPitchDown.setOnClickListener {
             note.pitch -= 1
-            refreshTextViews()
-            restartPlayer()
+            refreshState()
         }
 
         buttonStartStop.setOnClickListener {
@@ -178,21 +174,21 @@ class NoteForkManualFragment : Fragment() {
         }
     }
 
-    private fun restartPlayer() {
-        stopSound()
-        playSound()
+    private suspend fun reloadTone() {
+        val tone = createSineWave(note.getFrequency())
+
+        player.write(tone, 0, tone.size)
+        val loopEnd = player.bufferSizeInFrames
+        player.setLoopPoints(0, loopEnd, -1)
     }
 
     private fun playSound() {
         if (player.playState != AudioTrack.PLAYSTATE_PLAYING && playing) {
             lifecycleScope.launch {
-                val tone = createSineWave(note.getFrequency())
-
-                player.write(tone, 0, tone.size)
-                val loopEnd = player.bufferSizeInFrames
-                player.setLoopPoints(0, loopEnd, -1)
-
+                reloadTone()
+                player.setVolume(0f)
                 player.play()
+                player.setVolume(1f)
             }
         }
     }
@@ -214,7 +210,6 @@ class NoteForkManualFragment : Fragment() {
     private fun stopSound() {
         if (player.state == AudioTrack.STATE_INITIALIZED) {
             player.stop()
-            player.flush()
         }
     }
 
