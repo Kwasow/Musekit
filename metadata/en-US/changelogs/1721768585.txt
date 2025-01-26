@@ -1,0 +1,5 @@
+- Remember last used BPM in metronome
+- Set custom BPM value in metronome
+- Tap tempo in metronome
+- Minor improvement to manual tuner audio
+
