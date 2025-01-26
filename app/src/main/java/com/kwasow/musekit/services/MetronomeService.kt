@@ -9,6 +9,8 @@ import android.os.Binder
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
+import androidx.annotation.RawRes
+import androidx.annotation.StringRes
 import com.google.android.material.slider.Slider
 import com.kwasow.musekit.R
 import com.kwasow.musekit.utils.MusekitPreferences
@@ -17,7 +19,7 @@ import kotlin.properties.Delegates
 class MetronomeService : Service(), Runnable {
 
     // ====== Fields
-    enum class Sounds(val resourceId: Int, val resourceNameId: Int) {
+    enum class Sounds(@RawRes val resourceId: Int, @StringRes val resourceNameId: Int) {
         Default(R.raw.metronome_click, R.string.metronome_sound_default),
         Beep(R.raw.metronome_beep, R.string.metronome_sound_beep),
         Ding(R.raw.metronome_ding, R.string.metronome_sound_ding),
@@ -131,10 +133,12 @@ class MetronomeService : Service(), Runnable {
         } else {
             ValueAnimator.ofFloat(1F, 0F)
         }
+
         tickerAnimation.addUpdateListener {
             val animatedValue = it.animatedValue as Float
             ticker?.value = animatedValue
         }
+
         tickerAnimation.duration = 1000L * 60 / bpm
         right = !right
 
