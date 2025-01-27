@@ -12,8 +12,8 @@ android {
         applicationId = "com.kwasow.musekit"
         minSdk = 23
         targetSdk = 35
-        versionCode = 1721768585
-        versionName = "2.2.0"
+        versionCode = 1721768586
+        versionName = "2.2.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
