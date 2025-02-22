@@ -3,6 +3,8 @@ package com.kwasow.musekit.data
 import android.content.Context
 import android.text.SpannableStringBuilder
 import android.text.Spanned
+import android.text.style.RelativeSizeSpan
+import android.text.style.SubscriptSpan
 import android.text.style.SuperscriptSpan
 import com.kwasow.musekit.R
 import java.util.Objects
@@ -112,19 +114,28 @@ class Note {
         val text = context.getString(R.string.note_placeholder, this.getNoteName(), this.octave)
         val spannableStringBuilder = SpannableStringBuilder(text)
 
-        if (text.length == 6) {
-            spannableStringBuilder.setSpan(
-                SuperscriptSpan(),
-                1,
-                2,
-                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-            spannableStringBuilder.setSpan(
-                SuperscriptSpan(),
-                4,
-                5,
-                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
+        text.forEachIndexed { index, c ->
+            if (c == '♯' || c == '♭') {
+                spannableStringBuilder.setSpan(
+                    SuperscriptSpan(),
+                    index,
+                    index + 1,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            } else if (c.isDigit()) {
+                spannableStringBuilder.setSpan(
+                    RelativeSizeSpan(0.5f),
+                    index,
+                    index + 1,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                spannableStringBuilder.setSpan(
+                    SubscriptSpan(),
+                    index,
+                    index + 1,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            }
         }
 
         return spannableStringBuilder

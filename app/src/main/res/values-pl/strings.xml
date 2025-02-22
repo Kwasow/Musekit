@@ -25,14 +25,19 @@
     <string name="warning_preset_deletion">Konfiguracja \"%1$s\" zostanie bezpowrotnie usunięta</string>
     <string name="delete">Usuń</string>
     <string name="contentDescription_app_icon">Ikona aplikacji</string>
+    <string name="notation_style_fixed_do">Solmizacja</string>
     <string name="source_code">Kod źródłowy</string>
+    <string name="source_code_subtitle">Zgłoś błędy i zaproponuj nowe funkcje</string>
     <string name="developer">Konto twórcy</string>
+    <string name="developer_subtitle">Znajdź mnie na Mastodonie</string>
     <string name="developer_website">Strona twórcy</string>
+    <string name="developer_website_subtitle">Zobacz moje inne projekty</string>
     <string name="licenses">Licencje</string>
+    <string name="licenses_subtitle">Rozpoznawanie tonu, grafiki i inne</string>
     <string name="version">Wersja %1$s</string>
     <string name="contentDescription_github_logo">Logo Githuba</string>
     <string name="contentDescription_mastodon_logo">Logo Mastodona</string>
-    <string name="contentDescription_internet_globe">Globus reprezentujący świat</string>
+    <string name="contentDescription_localization">Globus</string>
     <string name="contentDescription_file_icon">Ikonka pliku</string>
     <string name="close">Zamknij</string>
     <string name="whoopsie">Ups, nie powinno Cię tu być</string>
@@ -52,6 +57,7 @@
     <string name="metronome_sound_wood">Drewno</string>
     <string name="metronome_sound_none">(bez dźwięku)</string>
     <string name="about">O aplikacji</string>
+    <string name="theme_subtitle">Wybierz wygląd aplikacji</string>
     <string name="theme_dark">Ciemny</string>
     <string name="theme_light">Jasny</string>
     <string name="theme_follow_system">Systemowy</string>
@@ -68,4 +74,9 @@
     <string name="record_permission_not_granted">Dostęp do mikrofonu nie został przyznany</string>
     <string name="special_thanks">Specjalne podziękowania dla TarsosDSP za zbudowanie biblioteki do rozpoznawania tonów.</string>
     <string name="set_beat">Ustaw tempo</string>
+    <string name="contentDescription_internet_website">Strona internetowa</string>
+    <string name="notation_style">Nazwy dźwięków</string>
+    <string name="notation_style_subtitle">Wybierz konwencję nazwenictwa dźwięków</string>
+    <string name="notation_style_english">Angielska</string>
+    <string name="notation_style_german">Niemicka</string>
 </resources>

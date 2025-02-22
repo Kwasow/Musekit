@@ -16,19 +16,41 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/menuItemTitle"
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Placeholder title"
-        android:layout_margin="12dp"
-        android:ellipsize="end"
-        android:maxLines="1"
+        android:orientation="vertical"
         app:layout_constraintStart_toEndOf="@id/menuItemLeadingIcon"
         app:layout_constraintEnd_toStartOf="@id/menuItemTrailingIcon"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:ignore="HardcodedText"/>
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/menuItemTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Placeholder title"
+            android:paddingHorizontal="12dp"
+            android:paddingTop="12dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            style="@style/TextAppearance.Material3.BodyLarge"
+            tools:ignore="HardcodedText"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/menuItemSubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="12dp"
+            android:paddingBottom="12dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Placeholder subtitle"
+            style="@style/TextAppearance.Material3.BodySmall"
+            android:alpha="0.6"
+            tools:ignore="HardcodedText" />
+
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/menuItemTrailingIcon"
