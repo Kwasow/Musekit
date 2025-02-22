@@ -87,21 +87,26 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:paddingHorizontal="16dp"
-                android:paddingBottom="12dp">
+                android:paddingBottom="12dp"
+                app:singleSelection="true"
+                app:selectionRequired="true">
 
                 <Button
+                    android:id="@+id/buttonNotationStyleEnglish"
                     style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/notation_style_english" />
 
                 <Button
+                    android:id="@+id/buttonNotationStyleGerman"
                     style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/notation_style_german" />
 
                 <Button
+                    android:id="@+id/buttonNotationStyleFixedDo"
                     style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

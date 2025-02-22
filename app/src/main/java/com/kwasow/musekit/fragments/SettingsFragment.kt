@@ -6,13 +6,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.google.android.material.button.MaterialButtonToggleGroup
 import com.kwasow.musekit.BuildConfig
 import com.kwasow.musekit.R
+import com.kwasow.musekit.data.NotationStyle
 import com.kwasow.musekit.databinding.FragmentSettingsBinding
 import com.kwasow.musekit.dialogs.LicensesDialogFragment
 import com.kwasow.musekit.dialogs.ThemeSettingsDialogFragment
+import com.kwasow.musekit.utils.MusekitPreferences
 import com.kwasow.musekit.views.MenuItem
 
 class SettingsFragment : Fragment() {
@@ -24,6 +28,11 @@ class SettingsFragment : Fragment() {
     private lateinit var itemMastodon: MenuItem
     private lateinit var itemWebsite: MenuItem
     private lateinit var itemLicenses: MenuItem
+
+    private lateinit var itemNotationStylePicker: MaterialButtonToggleGroup
+    private lateinit var buttonNotationStyleEnglish: Button
+    private lateinit var buttonNotationStyleGerman: Button
+    private lateinit var buttonNotationStyleFixedDo: Button
 
     // ====== Interface methods
     override fun onCreateView(
@@ -40,6 +49,11 @@ class SettingsFragment : Fragment() {
         itemWebsite = binding.itemWebsite
         itemLicenses = binding.itemLicenses
 
+        itemNotationStylePicker = binding.notationStylePicker
+        buttonNotationStyleEnglish = binding.buttonNotationStyleEnglish
+        buttonNotationStyleGerman = binding.buttonNotationStyleGerman
+        buttonNotationStyleFixedDo = binding.buttonNotationStyleFixedDo
+
         return binding.root
     }
 
@@ -55,6 +69,19 @@ class SettingsFragment : Fragment() {
     private fun setupSettingsSection() {
         itemThemeSettings.setOnClickListener {
             showThemeSettingsDialog()
+        }
+
+        itemNotationStylePicker.addOnButtonCheckedListener { _, checkedId, isChecked ->
+            val style = when (checkedId) {
+                buttonNotationStyleEnglish.id -> NotationStyle.English
+                buttonNotationStyleGerman.id -> NotationStyle.German
+                buttonNotationStyleFixedDo.id -> NotationStyle.FixedDo
+                else -> NotationStyle.English
+            }
+
+            if (isChecked) {
+                MusekitPreferences.notationStyle = style
+            }
         }
     }
 
