@@ -1,0 +1,3 @@
+- Added different notations (English, German, Fixed Do)
+- Added option to use metronome with no sound
+
