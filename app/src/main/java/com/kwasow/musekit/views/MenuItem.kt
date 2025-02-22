@@ -16,6 +16,7 @@ class MenuItem(context: Context, attrs: AttributeSet) : ConstraintLayout(context
 
     // ====== Fields
     private val itemTitle: String
+    private val itemSubtitle: String?
     private val leadingIcon: Int
     private val leadingIconContentDescription: String
     private val useTint: Boolean
@@ -29,6 +30,7 @@ class MenuItem(context: Context, attrs: AttributeSet) : ConstraintLayout(context
             .apply {
                 itemTitle = getString(R.styleable.MenuItem_itemTitle)
                     ?: throw RuntimeException("The 'itemTitle' attribute on MenuItem is required")
+                itemSubtitle = getString(R.styleable.MenuItem_itemSubtitle)
                 leadingIcon = getResourceId(R.styleable.MenuItem_leadingIcon, -1)
                 leadingIconContentDescription =
                     getString(R.styleable.MenuItem_leadingIconContentDescription) ?: ""
@@ -65,6 +67,7 @@ class MenuItem(context: Context, attrs: AttributeSet) : ConstraintLayout(context
 
     private fun setChildrenProps() {
         binding.menuItemTitle.text = itemTitle
+        binding.menuItemSubtitle.text = itemSubtitle ?: ""
         binding.menuItemLeadingIcon.apply {
             setImageResource(leadingIcon)
             contentDescription = leadingIconContentDescription

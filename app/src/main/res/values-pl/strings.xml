@@ -26,9 +26,13 @@
     <string name="delete">Usuń</string>
     <string name="contentDescription_app_icon">Ikona aplikacji</string>
     <string name="source_code">Kod źródłowy</string>
+    <string name="source_code_subtitle">Zgłoś błędy i zaproponuj nowe funkcje</string>
     <string name="developer">Konto twórcy</string>
+    <string name="developer_subtitle">Znajdź mnie na Mastodonie</string>
     <string name="developer_website">Strona twórcy</string>
+    <string name="developer_website_subtitle">Zobacz moje inne projekty</string>
     <string name="licenses">Licencje</string>
+    <string name="licenses_subtitle">Rozpoznawanie tonu, grafiki i inne</string>
     <string name="version">Wersja %1$s</string>
     <string name="contentDescription_github_logo">Logo Githuba</string>
     <string name="contentDescription_mastodon_logo">Logo Mastodona</string>
@@ -52,6 +56,7 @@
     <string name="metronome_sound_wood">Drewno</string>
     <string name="metronome_sound_none">(bez dźwięku)</string>
     <string name="about">O aplikacji</string>
+    <string name="theme_subtitle">Wybierz wygląd aplikacji</string>
     <string name="theme_dark">Ciemny</string>
     <string name="theme_light">Jasny</string>
     <string name="theme_follow_system">Systemowy</string>

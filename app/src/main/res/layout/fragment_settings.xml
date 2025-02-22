@@ -55,6 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:itemTitle="@string/theme"
+                app:itemSubtitle="@string/theme_subtitle"
                 app:leadingIcon="@drawable/ic_moon"
                 app:leadingIconContentDescription="@string/contentDescription_moon_icon"/>
 
@@ -72,30 +73,46 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:itemTitle="@string/source_code"
+                app:itemSubtitle="@string/source_code_subtitle"
                 app:leadingIcon="@drawable/ic_github"
                 app:leadingIconContentDescription="@string/contentDescription_github_logo"/>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <com.kwasow.musekit.views.MenuItem
                 android:id="@+id/itemMastodon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:itemTitle="@string/developer"
+                app:itemSubtitle="@string/developer_subtitle"
                 app:leadingIcon="@drawable/ic_mastodon"
                 app:leadingIconContentDescription="@string/contentDescription_mastodon_logo"/>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <com.kwasow.musekit.views.MenuItem
                 android:id="@+id/itemWebsite"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:itemTitle="@string/developer_website"
+                app:itemSubtitle="@string/developer_website_subtitle"
                 app:leadingIcon="@drawable/ic_globe"
                 app:leadingIconContentDescription="@string/contentDescription_internet_globe"/>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <com.kwasow.musekit.views.MenuItem
                 android:id="@+id/itemLicenses"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:itemTitle="@string/licenses"
+                app:itemSubtitle="@string/licenses_subtitle"
                 app:leadingIcon="@drawable/ic_file"
                 app:leadingIconContentDescription="@string/contentDescription_file_icon"/>
 
