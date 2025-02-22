@@ -68,11 +68,16 @@ class NoteForkManualFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        refreshState()
         setupPlayer()
         setupPresets()
         setupButtons()
         setupSavePresetDialog()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        refreshState()
     }
 
     override fun onDestroy() {
