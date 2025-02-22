@@ -83,6 +83,12 @@ class SettingsFragment : Fragment() {
                 MusekitPreferences.notationStyle = style
             }
         }
+
+        when (MusekitPreferences.notationStyle) {
+            NotationStyle.English -> itemNotationStylePicker.check(buttonNotationStyleEnglish.id)
+            NotationStyle.German -> itemNotationStylePicker.check(buttonNotationStyleGerman.id)
+            NotationStyle.FixedDo -> itemNotationStylePicker.check(buttonNotationStyleFixedDo.id)
+        }
     }
 
     private fun setupAboutSection() {
