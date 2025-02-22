@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.kwasow.musekit.BuildConfig
 import com.kwasow.musekit.R
@@ -30,9 +30,9 @@ class SettingsFragment : Fragment() {
     private lateinit var itemLicenses: MenuItem
 
     private lateinit var itemNotationStylePicker: MaterialButtonToggleGroup
-    private lateinit var buttonNotationStyleEnglish: Button
-    private lateinit var buttonNotationStyleGerman: Button
-    private lateinit var buttonNotationStyleFixedDo: Button
+    private lateinit var buttonNotationStyleEnglish: MaterialButton
+    private lateinit var buttonNotationStyleGerman: MaterialButton
+    private lateinit var buttonNotationStyleFixedDo: MaterialButton
 
     // ====== Interface methods
     override fun onCreateView(

@@ -58,11 +58,11 @@ class MenuItem(context: Context, attrs: AttributeSet) : ConstraintLayout(context
 
     // ====== Private methods
     private fun setRootProps() {
-        isClickable = true
-        isFocusable = true
-        val value = TypedValue()
-        context.theme.resolveAttribute(android.R.attr.selectableItemBackground, value, true)
-        background = AppCompatResources.getDrawable(context, value.resourceId)
+        if (isClickable) {
+            val value = TypedValue()
+            context.theme.resolveAttribute(android.R.attr.selectableItemBackground, value, true)
+            background = AppCompatResources.getDrawable(context, value.resourceId)
+        }
     }
 
     private fun setChildrenProps() {

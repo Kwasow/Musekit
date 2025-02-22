@@ -66,7 +66,9 @@
                 app:itemTitle="@string/theme"
                 app:itemSubtitle="@string/theme_subtitle"
                 app:leadingIcon="@drawable/ic_moon"
-                app:leadingIconContentDescription="@string/contentDescription_moon_icon"/>
+                app:leadingIconContentDescription="@string/contentDescription_moon_icon"
+                android:clickable="true"
+                android:focusable="true"/>
 
             <com.google.android.material.divider.MaterialDivider
                 android:layout_width="match_parent"
@@ -75,7 +77,6 @@
             <com.kwasow.musekit.views.MenuItem
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clickable="false"
                 app:itemTitle="@string/notation_style"
                 app:itemSubtitle="@string/notation_style_subtitle"
                 app:leadingIcon="@drawable/ic_globe"
@@ -86,31 +87,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:paddingHorizontal="16dp"
+                android:paddingHorizontal="12dp"
                 android:paddingBottom="12dp"
                 app:singleSelection="true"
                 app:selectionRequired="true">
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/buttonNotationStyleEnglish"
                     style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/notation_style_english" />
+                    android:text="@string/notation_style_english"/>
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/buttonNotationStyleGerman"
                     style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/notation_style_german" />
+                    android:text="@string/notation_style_german"/>
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/buttonNotationStyleFixedDo"
                     style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/notation_style_fixed_do" />
+                    android:text="@string/notation_style_fixed_do"/>
 
             </com.google.android.material.button.MaterialButtonToggleGroup>
 
@@ -130,7 +131,9 @@
                 app:itemTitle="@string/source_code"
                 app:itemSubtitle="@string/source_code_subtitle"
                 app:leadingIcon="@drawable/ic_github"
-                app:leadingIconContentDescription="@string/contentDescription_github_logo"/>
+                app:leadingIconContentDescription="@string/contentDescription_github_logo"
+                android:clickable="true"
+                android:focusable="true"/>
 
             <com.google.android.material.divider.MaterialDivider
                 android:layout_width="match_parent"
@@ -143,7 +146,9 @@
                 app:itemTitle="@string/developer"
                 app:itemSubtitle="@string/developer_subtitle"
                 app:leadingIcon="@drawable/ic_mastodon"
-                app:leadingIconContentDescription="@string/contentDescription_mastodon_logo"/>
+                app:leadingIconContentDescription="@string/contentDescription_mastodon_logo"
+                android:clickable="true"
+                android:focusable="true"/>
 
             <com.google.android.material.divider.MaterialDivider
                 android:layout_width="match_parent"
@@ -156,7 +161,9 @@
                 app:itemTitle="@string/developer_website"
                 app:itemSubtitle="@string/developer_website_subtitle"
                 app:leadingIcon="@drawable/ic_web"
-                app:leadingIconContentDescription="@string/contentDescription_internet_website"/>
+                app:leadingIconContentDescription="@string/contentDescription_internet_website"
+                android:clickable="true"
+                android:focusable="true"/>
 
             <com.google.android.material.divider.MaterialDivider
                 android:layout_width="match_parent"
@@ -169,7 +176,9 @@
                 app:itemTitle="@string/licenses"
                 app:itemSubtitle="@string/licenses_subtitle"
                 app:leadingIcon="@drawable/ic_file"
-                app:leadingIconContentDescription="@string/contentDescription_file_icon"/>
+                app:leadingIconContentDescription="@string/contentDescription_file_icon"
+                android:clickable="true"
+                android:focusable="true"/>
 
         </com.kwasow.musekit.views.MenuSection>
 
