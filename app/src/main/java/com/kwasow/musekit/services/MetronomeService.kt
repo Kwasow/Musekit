@@ -23,7 +23,8 @@ class MetronomeService : Service(), Runnable {
         Default(R.raw.metronome_click, R.string.metronome_sound_default),
         Beep(R.raw.metronome_beep, R.string.metronome_sound_beep),
         Ding(R.raw.metronome_ding, R.string.metronome_sound_ding),
-        Wood(R.raw.metronome_wood, R.string.metronome_sound_wood)
+        Wood(R.raw.metronome_wood, R.string.metronome_sound_wood),
+        None(-1, R.string.metronome_sound_none)
     }
 
     inner class LocalBinder : Binder() {
@@ -32,11 +33,14 @@ class MetronomeService : Service(), Runnable {
 
     private var binder = LocalBinder()
 
-    private val soundsList = listOf(Sounds.Default, Sounds.Beep, Sounds.Ding, Sounds.Wood)
+    private val soundsList = Sounds.entries.toTypedArray()
     var sound = Sounds.Default
         set(value) {
             field = value
-            soundId = soundPool.load(this, value.resourceId, 1)
+
+            if (value.resourceId != -1) {
+                soundId = soundPool.load(this, value.resourceId, 1)
+            }
         }
     var bpm = MusekitPreferences.metronomeBPM
         set(value) {
@@ -93,7 +97,9 @@ class MetronomeService : Service(), Runnable {
     override fun run() {
         if (isPlaying) {
             val tickerAnimation = buildAnimation(bpm)
-            soundPool.play(soundId, 1F, 1F, 0, 0, 1F)
+            if (sound != Sounds.None) {
+                soundPool.play(soundId, 1F, 1F, 0, 0, 1F)
+            }
             tickerAnimation.start()
 
             handler.postDelayed(this, (1000L * 60) / bpm)
