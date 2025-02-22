@@ -58,6 +58,11 @@
     <!-- Settings strings -->
     <string name="about">About</string>
     <string name="contentDescription_app_icon">App icon</string>
+    <string name="notation_style">Notation style</string>
+    <string name="notation_style_subtitle">Choose how notes are named</string>
+    <string name="notation_style_english">English</string>
+    <string name="notation_style_german">German</string>
+    <string name="notation_style_fixed_do">Fixed Do</string>
     <string name="source_code">Source code</string>
     <string name="source_code_subtitle">Report issues and request features</string>
     <string name="developer">Developer account</string>
@@ -70,10 +75,11 @@
     <string name="close">Close</string>
     <string name="contentDescription_github_logo">Github logo</string>
     <string name="contentDescription_mastodon_logo">Mastodon logo</string>
-    <string name="contentDescription_internet_globe">A globe representing the internet</string>
-    <string name="contentDescription_file_icon">File icon</string>
-    <string name="contentDescription_moon_icon">A moon icon</string>
-    <string name="contentDescription_current_theme_symbol">An icon showing the current theme</string>
+    <string name="contentDescription_internet_website">Website</string>
+    <string name="contentDescription_localization">Localization</string>
+    <string name="contentDescription_file_icon">File</string>
+    <string name="contentDescription_moon_icon">Moon</string>
+    <string name="contentDescription_current_theme_symbol">Current theme</string>
 
     <!-- Night mode dialog -->
     <string name="theme">Theme</string>

@@ -68,6 +68,47 @@
                 app:leadingIcon="@drawable/ic_moon"
                 app:leadingIconContentDescription="@string/contentDescription_moon_icon"/>
 
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.kwasow.musekit.views.MenuItem
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                app:itemTitle="@string/notation_style"
+                app:itemSubtitle="@string/notation_style_subtitle"
+                app:leadingIcon="@drawable/ic_globe"
+                app:leadingIconContentDescription="@string/contentDescription_localization"/>
+
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/notationStylePicker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:paddingHorizontal="16dp"
+                android:paddingBottom="12dp">
+
+                <Button
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/notation_style_english" />
+
+                <Button
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/notation_style_german" />
+
+                <Button
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/notation_style_fixed_do" />
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
         </com.kwasow.musekit.views.MenuSection>
 
         <com.kwasow.musekit.views.MenuSection
@@ -109,8 +150,8 @@
                 android:layout_height="wrap_content"
                 app:itemTitle="@string/developer_website"
                 app:itemSubtitle="@string/developer_website_subtitle"
-                app:leadingIcon="@drawable/ic_globe"
-                app:leadingIconContentDescription="@string/contentDescription_internet_globe"/>
+                app:leadingIcon="@drawable/ic_web"
+                app:leadingIconContentDescription="@string/contentDescription_internet_website"/>
 
             <com.google.android.material.divider.MaterialDivider
                 android:layout_width="match_parent"
