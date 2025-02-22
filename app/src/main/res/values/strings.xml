@@ -53,6 +53,7 @@
     <string name="metronome_sound_beep">Beep</string>
     <string name="metronome_sound_ding">Ding</string>
     <string name="metronome_sound_wood">Wood</string>
+    <string name="metronome_sound_none">(none)</string>
 
     <!-- Settings strings -->
     <string name="about">About</string>
