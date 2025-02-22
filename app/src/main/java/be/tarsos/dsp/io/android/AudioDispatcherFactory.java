@@ -31,11 +31,12 @@ import be.tarsos.dsp.io.TarsosDSPAudioFormat;
 import be.tarsos.dsp.io.TarsosDSPAudioInputStream;
 
 /**
- * The Factory creates AudioDispatcher objects from the
+ * The Factory creates {@link AudioDispatcher} objects from the
  * configured default microphone of an Android device. 
  * It depends on the android runtime and does not work on the standard Java runtime.
  * 
  * @author Joren Six
+ * @see AudioDispatcher
  */
 public class AudioDispatcherFactory {
 
@@ -78,7 +79,7 @@ public class AudioDispatcherFactory {
 
 	/**
 	 * Create a stream from a piped sub process and use that to create a new
-	 * AudioDispatcher. The sub-process writes a WAV-header and
+	 * {@link AudioDispatcher} The sub-process writes a WAV-header and
 	 * PCM-samples to standard out. The header is ignored and the PCM samples
 	 * are are captured and interpreted. Examples of executables that can
 	 * convert audio in any format and write to stdout are ffmpeg and avconv.
