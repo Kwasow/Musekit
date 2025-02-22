@@ -122,12 +122,6 @@ class Note {
                     index + 1,
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
-//                spannableStringBuilder.setSpan(
-//                    RelativeSizeSpan(0.5f),
-//                    index,
-//                    index + 1,
-//                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-//                )
             } else if (c.isDigit()) {
                 spannableStringBuilder.setSpan(
                     RelativeSizeSpan(0.5f),
