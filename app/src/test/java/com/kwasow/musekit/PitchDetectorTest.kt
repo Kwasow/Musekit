@@ -5,7 +5,6 @@ import com.kwasow.musekit.utils.MusekitPitchDetector
 import org.junit.Test
 
 class PitchDetectorTest {
-
     @Test
     fun testEstimationCloseUnderFrequencyUnderMiddle() {
         // G4     - 392Hz

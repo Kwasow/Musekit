@@ -12,7 +12,6 @@ import com.kwasow.musekit.databinding.FragmentNoteForkBinding
 import com.kwasow.musekit.utils.MusekitPreferences
 
 class NoteForkFragment : Fragment() {
-
     // ====== Fields
     private lateinit var tabLayout: TabLayout
     private lateinit var viewPager: ViewPager2
@@ -21,7 +20,7 @@ class NoteForkFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         val binding = FragmentNoteForkBinding.inflate(inflater)
         tabLayout = binding.noteForkTabs
@@ -42,19 +41,20 @@ class NoteForkFragment : Fragment() {
         viewPager.adapter = adapter
         viewPager.isUserInputEnabled = false
 
-        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                tab?.let {
-                    viewPager.currentItem = tab.position
-                    MusekitPreferences.noteForkMode = tab.position
+        tabLayout.addOnTabSelectedListener(
+            object : TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab?) {
+                    tab?.let {
+                        viewPager.currentItem = tab.position
+                        MusekitPreferences.noteForkMode = tab.position
+                    }
                 }
-            }
 
-            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+                override fun onTabUnselected(tab: TabLayout.Tab?) {}
 
-            override fun onTabReselected(tab: TabLayout.Tab?) {}
-        })
+                override fun onTabReselected(tab: TabLayout.Tab?) {}
+            },
+        )
 
         // Read default view from preferences
         val defaultTab = tabLayout.getTabAt(MusekitPreferences.noteForkMode)

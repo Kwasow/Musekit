@@ -5,13 +5,15 @@ import com.kwasow.musekit.data.Preset
 import java.io.File
 
 object PresetsManager {
-
     // ====== Fields
     private const val PRESET_DIR = "/presets/"
     private const val VER_1 = "<version1>"
 
     // ====== Public methods
-    fun savePreset(preset: Preset, context: Context) {
+    fun savePreset(
+        preset: Preset,
+        context: Context,
+    ) {
         if (preset.name.isNotBlank()) {
             var filename = toFileName(preset.name) + 0
             val directory = File(context.filesDir, PRESET_DIR)
@@ -27,13 +29,14 @@ object PresetsManager {
             }
 
             val file = File(directory, filename)
-            val contents = """
-            $VER_1
-            ${preset.name}${if (i == 1) "" else " - (${i - 1})"}
-            ${preset.semitones}
-            ${preset.octave}
-            ${preset.pitch}
-            """.trimIndent()
+            val contents =
+                """
+                $VER_1
+                ${preset.name}${if (i == 1) "" else " - (${i - 1})"}
+                ${preset.semitones}
+                ${preset.octave}
+                ${preset.pitch}
+                """.trimIndent()
 
             file.writeText(contents)
         }
@@ -46,12 +49,13 @@ object PresetsManager {
             val lines = it.readLines()
             if (lines.size == 5) {
                 if (lines[0] == VER_1) {
-                    val preset = Preset(
-                        name = lines[1],
-                        semitones = lines[2].toInt(),
-                        octave = lines[3].toInt(),
-                        pitch = lines[4].toInt()
-                    )
+                    val preset =
+                        Preset(
+                            name = lines[1],
+                            semitones = lines[2].toInt(),
+                            octave = lines[3].toInt(),
+                            pitch = lines[4].toInt(),
+                        )
                     presets.add(preset)
                 }
             }
@@ -60,7 +64,10 @@ object PresetsManager {
         return presets
     }
 
-    fun removePreset(name: String, context: Context) {
+    fun removePreset(
+        name: String,
+        context: Context,
+    ) {
         if (name.isNotBlank()) {
             val directory = File(context.filesDir, PRESET_DIR)
 

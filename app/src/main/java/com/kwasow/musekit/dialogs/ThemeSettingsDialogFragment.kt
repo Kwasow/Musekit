@@ -13,7 +13,6 @@ import com.kwasow.musekit.databinding.DialogThemeSettingsBinding
 import com.kwasow.musekit.utils.ThemeUtils
 
 class ThemeSettingsDialogFragment : DialogFragment() {
-
     // ====== Fields
     companion object {
         const val TAG = "ThemeSettingsDialogFragment"
@@ -23,10 +22,11 @@ class ThemeSettingsDialogFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val binding = DialogThemeSettingsBinding.inflate(layoutInflater)
 
-        val dialog = MaterialAlertDialogBuilder(requireContext())
-            .setNeutralButton(R.string.close) { _, _ -> }
-            .setView(binding.root)
-            .create()
+        val dialog =
+            MaterialAlertDialogBuilder(requireContext())
+                .setNeutralButton(R.string.close) { _, _ -> }
+                .setView(binding.root)
+                .create()
 
         // Theme settings
         when (ThemeUtils.getNightMode()) {

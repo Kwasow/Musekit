@@ -15,7 +15,6 @@ import com.kwasow.musekit.databinding.DialogSetBeatBinding
 import com.kwasow.musekit.utils.MusekitPreferences
 
 class SetBeatDialog(val onSave: (Int) -> Unit) : DialogFragment() {
-
     // ====== Fields
     companion object {
         const val TAG = "SetBeatDialog"
@@ -29,28 +28,42 @@ class SetBeatDialog(val onSave: (Int) -> Unit) : DialogFragment() {
         val binding = DialogSetBeatBinding.inflate(layoutInflater)
         beatText = binding.beatValue
 
-        dialog = MaterialAlertDialogBuilder(requireContext())
-            .setTitle(R.string.set_beat)
-            .setView(binding.root)
-            .setNeutralButton(R.string.cancel) { _, _ -> }
-            .setPositiveButton(R.string.save) { _, _ ->
-                onSave(beatText.text.toString().toInt())
-            }
-            .create()
+        dialog =
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.set_beat)
+                .setView(binding.root)
+                .setNeutralButton(R.string.cancel) { _, _ -> }
+                .setPositiveButton(R.string.save) { _, _ ->
+                    onSave(beatText.text.toString().toInt())
+                }
+                .create()
 
         // Set starting value
         beatText.text = MusekitPreferences.metronomeBPM.toString()
 
         // Disable "Save" button if text field is empty
-        beatText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+        beatText.addTextChangedListener(
+            object : TextWatcher {
+                override fun beforeTextChanged(
+                    p0: CharSequence?,
+                    p1: Int,
+                    p2: Int,
+                    p3: Int,
+                ) {}
 
-            override fun afterTextChanged(p0: Editable?) {
-                dialog.getButton(DialogInterface.BUTTON_POSITIVE)?.isEnabled =
-                    !p0.isNullOrBlank() && p0.isDigitsOnly()
-            }
-        })
+                override fun onTextChanged(
+                    p0: CharSequence?,
+                    p1: Int,
+                    p2: Int,
+                    p3: Int,
+                ) {}
+
+                override fun afterTextChanged(p0: Editable?) {
+                    dialog.getButton(DialogInterface.BUTTON_POSITIVE)?.isEnabled =
+                        !p0.isNullOrBlank() && p0.isDigitsOnly()
+                }
+            },
+        )
 
         return dialog
     }

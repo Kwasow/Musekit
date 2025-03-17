@@ -12,12 +12,15 @@ import com.kwasow.musekit.R
 class PresetsAdapter(
     context: Context,
     names: List<String>,
-    val onDelete: (String) -> Unit
+    val onDelete: (String) -> Unit,
 ) :
     ArrayAdapter<String>(context, 0, names) {
-
     // ====== Interface methods
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+    override fun getView(
+        position: Int,
+        convertView: View?,
+        parent: ViewGroup,
+    ): View {
         val presetName = getItem(position)
         val root =
             convertView ?: LayoutInflater.from(context).inflate(R.layout.preset_list_item, parent, false)

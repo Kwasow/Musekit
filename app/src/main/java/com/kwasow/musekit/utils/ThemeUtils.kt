@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.material.color.DynamicColors
 
 object ThemeUtils {
-
     // ====== Constructors
     fun init(application: Application) {
         DynamicColors.applyToActivitiesIfAvailable(application)
@@ -22,8 +21,7 @@ object ThemeUtils {
         }
     }
 
-    fun getNightMode(): Int =
-        MusekitPreferences.nightMode
+    fun getNightMode(): Int = MusekitPreferences.nightMode
 
     fun setNightMode(nightMode: Int) {
         MusekitPreferences.nightMode = nightMode

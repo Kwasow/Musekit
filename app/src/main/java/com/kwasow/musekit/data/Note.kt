@@ -12,14 +12,16 @@ import kotlin.math.pow
 import kotlin.math.roundToInt
 
 class Note {
-
     // ====== Fields
     var pitch: Int
     var note: Notes
     var octave: Int
 
     companion object {
-        fun fromCentDiff(centDiff: Double, pitch: Int = 440): Note {
+        fun fromCentDiff(
+            centDiff: Double,
+            pitch: Int = 440,
+        ): Note {
             val semitones = (centDiff / 100).roundToInt()
 
             val note = Note(pitch)
@@ -120,20 +122,20 @@ class Note {
                     SuperscriptSpan(),
                     index,
                     index + 1,
-                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
                 )
             } else if (c.isDigit()) {
                 spannableStringBuilder.setSpan(
                     RelativeSizeSpan(0.5f),
                     index,
                     index + 1,
-                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
                 )
                 spannableStringBuilder.setSpan(
                     SubscriptSpan(),
                     index,
                     index + 1,
-                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
                 )
             }
         }

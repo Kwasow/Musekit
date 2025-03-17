@@ -19,7 +19,6 @@ import com.kwasow.musekit.utils.PermissionManager
 import com.kwasow.musekit.views.TunerView
 
 class NoteForkAutoFragment : Fragment() {
-
     // ====== Fields
     private lateinit var tunerView: TunerView
     private lateinit var noPermissionView: LinearLayout
@@ -30,17 +29,18 @@ class NoteForkAutoFragment : Fragment() {
     private lateinit var pitchSelectorView: MaterialCardView
 
     private var pitchDetector: MusekitPitchDetector? = null
-    private val pitchObserver: Observer<Pair<Note, Double>?> = Observer {
-        it?.let {
-            tunerView.updateState(it.first, it.second)
+    private val pitchObserver: Observer<Pair<Note, Double>?> =
+        Observer {
+            it?.let {
+                tunerView.updateState(it.first, it.second)
+            }
         }
-    }
 
     // ====== Interface methods
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         val binding = FragmentNoteForkAutoBinding.inflate(inflater)
 
@@ -100,10 +100,11 @@ class NoteForkAutoFragment : Fragment() {
     }
 
     private fun refreshPitch() {
-        pitchText.text = getString(
-            R.string.pitch_placeholder,
-            MusekitPreferences.automaticTunerPitch
-        )
+        pitchText.text =
+            getString(
+                R.string.pitch_placeholder,
+                MusekitPreferences.automaticTunerPitch,
+            )
     }
 
     private fun setupButtons() {

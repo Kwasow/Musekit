@@ -26,7 +26,6 @@ import kotlin.math.sin
 import kotlin.properties.Delegates
 
 class NoteForkManualFragment : Fragment() {
-
     // ====== Fields
     private lateinit var buttonNoteDown: MaterialButton
     private lateinit var buttonNoteUp: MaterialButton
@@ -48,7 +47,7 @@ class NoteForkManualFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         val binding = FragmentNoteForkManualBinding.inflate(inflater)
 
@@ -102,9 +101,10 @@ class NoteForkManualFragment : Fragment() {
 
     private fun setupPresets() {
         // Setup lists and adapter
-        val presets = mutableListOf(
-            getString(R.string.default_preset) to Note(440, Notes.A, 4)
-        )
+        val presets =
+            mutableListOf(
+                getString(R.string.default_preset) to Note(440, Notes.A, 4),
+            )
         PresetsManager.getPresets(requireContext()).forEach {
             val name = it.name
             val note = Note(it.pitch, Notes.fromSemitones(it.semitones), it.octave)
@@ -113,10 +113,11 @@ class NoteForkManualFragment : Fragment() {
         }
 
         // Attach adapter to view
-        val presetsAdapter = PresetsAdapter(
-            requireContext(),
-            presets.map { it.first }
-        ) { presetName -> showDeletePresetDialog(presetName) }
+        val presetsAdapter =
+            PresetsAdapter(
+                requireContext(),
+                presets.map { it.first },
+            ) { presetName -> showDeletePresetDialog(presetName) }
 
         presetsPicker.setAdapter(presetsAdapter)
         presetsPicker.setText(getString(R.string.default_preset), false)
@@ -133,10 +134,11 @@ class NoteForkManualFragment : Fragment() {
 
     private fun setupPlayer() {
         sampleRate = AudioTrack.getNativeOutputSampleRate(AudioTrack.MODE_STATIC)
-        player = AudioTrack.Builder()
-            .setTransferMode(AudioTrack.MODE_STATIC)
-            .setBufferSizeInBytes(sampleRate * 2)
-            .build()
+        player =
+            AudioTrack.Builder()
+                .setTransferMode(AudioTrack.MODE_STATIC)
+                .setBufferSizeInBytes(sampleRate * 2)
+                .build()
     }
 
     private fun setupButtons() {
@@ -225,13 +227,13 @@ class NoteForkManualFragment : Fragment() {
     private fun showSavePresetDialog() =
         PresetSaveDialogFragment(note) { setupPresets() }.show(
             childFragmentManager,
-            PresetSaveDialogFragment.TAG
+            PresetSaveDialogFragment.TAG,
         )
 
     private fun showDeletePresetDialog(presetName: String) =
         PresetDeleteDialog(presetName) { setupPresets() }.show(
             childFragmentManager,
-            PresetDeleteDialog.TAG
+            PresetDeleteDialog.TAG,
         )
 
     private fun selectPreset(presets: List<Pair<String, Note>>) {

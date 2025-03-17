@@ -17,14 +17,16 @@ import com.kwasow.musekit.utils.MusekitPreferences
 import kotlin.properties.Delegates
 
 class MetronomeService : Service(), Runnable {
-
     // ====== Fields
-    enum class Sounds(@RawRes val resourceId: Int, @StringRes val resourceNameId: Int) {
+    enum class Sounds(
+        @RawRes val resourceId: Int,
+        @StringRes val resourceNameId: Int,
+    ) {
         Default(R.raw.metronome_click, R.string.metronome_sound_default),
         Beep(R.raw.metronome_beep, R.string.metronome_sound_beep),
         Ding(R.raw.metronome_ding, R.string.metronome_sound_ding),
         Wood(R.raw.metronome_wood, R.string.metronome_sound_wood),
-        None(-1, R.string.metronome_sound_none)
+        None(-1, R.string.metronome_sound_none),
     }
 
     inner class LocalBinder : Binder() {
@@ -62,15 +64,17 @@ class MetronomeService : Service(), Runnable {
     override fun onCreate() {
         super.onCreate()
 
-        val audioAttributes = AudioAttributes.Builder()
-            .setUsage(AudioAttributes.USAGE_UNKNOWN)
-            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-            .build()
+        val audioAttributes =
+            AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_UNKNOWN)
+                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                .build()
 
-        soundPool = SoundPool.Builder()
-            .setAudioAttributes(audioAttributes)
-            .setMaxStreams(10)
-            .build()
+        soundPool =
+            SoundPool.Builder()
+                .setAudioAttributes(audioAttributes)
+                .setMaxStreams(10)
+                .build()
 
         soundId = soundPool.load(this, Sounds.Default.resourceId, 1)
         handler = Handler(Looper.getMainLooper())
@@ -134,11 +138,12 @@ class MetronomeService : Service(), Runnable {
     }
 
     private fun buildAnimation(bpm: Int): ValueAnimator {
-        val tickerAnimation = if (right) {
-            ValueAnimator.ofFloat(0F, 1F)
-        } else {
-            ValueAnimator.ofFloat(1F, 0F)
-        }
+        val tickerAnimation =
+            if (right) {
+                ValueAnimator.ofFloat(0F, 1F)
+            } else {
+                ValueAnimator.ofFloat(1F, 0F)
+            }
 
         tickerAnimation.addUpdateListener {
             val animatedValue = it.animatedValue as Float

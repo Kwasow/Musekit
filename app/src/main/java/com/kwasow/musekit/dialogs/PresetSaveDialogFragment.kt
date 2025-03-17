@@ -17,9 +17,8 @@ import com.kwasow.musekit.utils.PresetsManager
 
 class PresetSaveDialogFragment(
     val note: Note,
-    val onSave: () -> Unit = {}
+    val onSave: () -> Unit = {},
 ) : DialogFragment() {
-
     // ====== Fields
     companion object {
         const val TAG = "PresetSaveDialogFragment"
@@ -33,35 +32,50 @@ class PresetSaveDialogFragment(
         val binding = DialogSavePresetBinding.inflate(layoutInflater)
         presetNameText = binding.presetName
 
-        dialog = MaterialAlertDialogBuilder(requireContext())
-            .setTitle(R.string.save_preset)
-            .setView(binding.root)
-            .setNeutralButton(R.string.cancel) { _, _ -> }
-            .setPositiveButton(R.string.save) { _, _ ->
-                // Get preset details
-                val preset = Preset(
-                    name = binding.presetName.text.toString(),
-                    semitones = note.note.semitones,
-                    octave = note.octave,
-                    pitch = note.pitch
-                )
+        dialog =
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.save_preset)
+                .setView(binding.root)
+                .setNeutralButton(R.string.cancel) { _, _ -> }
+                .setPositiveButton(R.string.save) { _, _ ->
+                    // Get preset details
+                    val preset =
+                        Preset(
+                            name = binding.presetName.text.toString(),
+                            semitones = note.note.semitones,
+                            octave = note.octave,
+                            pitch = note.pitch,
+                        )
 
-                // Save preset
-                PresetsManager.savePreset(preset, requireContext())
-                onSave()
-            }
-            .create()
+                    // Save preset
+                    PresetsManager.savePreset(preset, requireContext())
+                    onSave()
+                }
+                .create()
 
         // Disable "Save" button if text field is empty
-        presetNameText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+        presetNameText.addTextChangedListener(
+            object : TextWatcher {
+                override fun beforeTextChanged(
+                    p0: CharSequence?,
+                    p1: Int,
+                    p2: Int,
+                    p3: Int,
+                ) {}
 
-            override fun afterTextChanged(p0: Editable?) {
-                dialog.getButton(DialogInterface.BUTTON_POSITIVE)?.isEnabled =
-                    !p0.isNullOrBlank()
-            }
-        })
+                override fun onTextChanged(
+                    p0: CharSequence?,
+                    p1: Int,
+                    p2: Int,
+                    p3: Int,
+                ) {}
+
+                override fun afterTextChanged(p0: Editable?) {
+                    dialog.getButton(DialogInterface.BUTTON_POSITIVE)?.isEnabled =
+                        !p0.isNullOrBlank()
+                }
+            },
+        )
 
         return dialog
     }

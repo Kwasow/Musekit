@@ -10,9 +10,12 @@ import com.kwasow.musekit.R
 
 class SoundsAdapter(context: Context, names: List<String>) :
     ArrayAdapter<String>(context, 0, names) {
-
     // ====== Interface methods
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+    override fun getView(
+        position: Int,
+        convertView: View?,
+        parent: ViewGroup,
+    ): View {
         val soundName = getItem(position)
         val root =
             convertView ?: LayoutInflater.from(context).inflate(R.layout.sound_list_item, parent, false)
