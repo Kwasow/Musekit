@@ -10,7 +10,7 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kwasow.musekit.R
 import com.kwasow.musekit.databinding.DialogThemeSettingsBinding
-import com.kwasow.musekit.utils.ThemeUtils
+import com.kwasow.musekit.managers.ThemeManager
 
 class ThemeSettingsDialogFragment : DialogFragment() {
     // ====== Fields
@@ -29,7 +29,7 @@ class ThemeSettingsDialogFragment : DialogFragment() {
                 .create()
 
         // Theme settings
-        when (ThemeUtils.getNightMode()) {
+        when (ThemeManager.getNightMode()) {
             AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> {
                 binding.itemThemeFollowSystem.getTrailingImageView()
                     .setImageResource(R.drawable.ic_check)
@@ -69,7 +69,7 @@ class ThemeSettingsDialogFragment : DialogFragment() {
 
     // ====== Private methods
     private fun setNightMode(nightMode: Int) {
-        ThemeUtils.setNightMode(nightMode)
+        ThemeManager.setNightMode(nightMode)
         dismiss()
     }
 }

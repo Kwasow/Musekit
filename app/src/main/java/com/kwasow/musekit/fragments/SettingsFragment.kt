@@ -16,7 +16,7 @@ import com.kwasow.musekit.data.NotationStyle
 import com.kwasow.musekit.databinding.FragmentSettingsBinding
 import com.kwasow.musekit.dialogs.LicensesDialogFragment
 import com.kwasow.musekit.dialogs.ThemeSettingsDialogFragment
-import com.kwasow.musekit.utils.MusekitPreferences
+import com.kwasow.musekit.managers.PreferencesManager
 import com.kwasow.musekit.views.MenuItem
 
 class SettingsFragment : Fragment() {
@@ -80,11 +80,11 @@ class SettingsFragment : Fragment() {
                 }
 
             if (isChecked) {
-                MusekitPreferences.notationStyle = style
+                PreferencesManager.notationStyle = style
             }
         }
 
-        when (MusekitPreferences.notationStyle) {
+        when (PreferencesManager.notationStyle) {
             NotationStyle.English -> itemNotationStylePicker.check(buttonNotationStyleEnglish.id)
             NotationStyle.German -> itemNotationStylePicker.check(buttonNotationStyleGerman.id)
             NotationStyle.FixedDo -> itemNotationStylePicker.check(buttonNotationStyleFixedDo.id)

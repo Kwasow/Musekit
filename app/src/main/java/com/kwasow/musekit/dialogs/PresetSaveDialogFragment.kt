@@ -13,7 +13,7 @@ import com.kwasow.musekit.R
 import com.kwasow.musekit.data.Note
 import com.kwasow.musekit.data.Preset
 import com.kwasow.musekit.databinding.DialogSavePresetBinding
-import com.kwasow.musekit.utils.PresetsManager
+import com.kwasow.musekit.managers.PresetsManager
 
 class PresetSaveDialogFragment(
     val note: Note,

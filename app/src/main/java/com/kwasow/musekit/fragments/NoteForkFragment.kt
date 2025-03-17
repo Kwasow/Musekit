@@ -9,7 +9,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.kwasow.musekit.adapters.NoteForkAdapter
 import com.kwasow.musekit.databinding.FragmentNoteForkBinding
-import com.kwasow.musekit.utils.MusekitPreferences
+import com.kwasow.musekit.managers.PreferencesManager
 
 class NoteForkFragment : Fragment() {
     // ====== Fields
@@ -46,7 +46,7 @@ class NoteForkFragment : Fragment() {
                 override fun onTabSelected(tab: TabLayout.Tab?) {
                     tab?.let {
                         viewPager.currentItem = tab.position
-                        MusekitPreferences.noteForkMode = tab.position
+                        PreferencesManager.noteForkMode = tab.position
                     }
                 }
 
@@ -57,7 +57,7 @@ class NoteForkFragment : Fragment() {
         )
 
         // Read default view from preferences
-        val defaultTab = tabLayout.getTabAt(MusekitPreferences.noteForkMode)
+        val defaultTab = tabLayout.getTabAt(PreferencesManager.noteForkMode)
         tabLayout.selectTab(defaultTab)
     }
 }

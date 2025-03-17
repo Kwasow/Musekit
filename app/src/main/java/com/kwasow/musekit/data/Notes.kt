@@ -1,6 +1,6 @@
 package com.kwasow.musekit.data
 
-import com.kwasow.musekit.utils.MusekitPreferences
+import com.kwasow.musekit.managers.PreferencesManager
 
 // Enum classes named using a polish convention where
 //  - the "is" suffix is added to a note with a sharp
@@ -41,5 +41,5 @@ enum class Notes(val semitones: Int) {
     }
 
     val noteName: String
-        get() = MusekitPreferences.notationStyle.noteNames[semitones]
+        get() = PreferencesManager.notationStyle.noteNames[semitones]
 }

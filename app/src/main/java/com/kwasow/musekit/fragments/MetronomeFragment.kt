@@ -21,7 +21,7 @@ import com.kwasow.musekit.databinding.FragmentMetronomeBinding
 import com.kwasow.musekit.dialogs.SetBeatDialog
 import com.kwasow.musekit.services.MetronomeService
 import com.kwasow.musekit.utils.MusekitBeatDetector
-import com.kwasow.musekit.utils.MusekitPreferences
+import com.kwasow.musekit.managers.PreferencesManager
 
 class MetronomeFragment : Fragment() {
     // ====== Fields
@@ -87,7 +87,7 @@ class MetronomeFragment : Fragment() {
 
         // Set starting value for BPM (service connection takes some time and it causes the
         // view to show a different value for a split second
-        textBpm.text = MusekitPreferences.metronomeBPM.toString()
+        textBpm.text = PreferencesManager.metronomeBPM.toString()
 
         // Prevent sleep while metronome is active
         binding.root.keepScreenOn = true

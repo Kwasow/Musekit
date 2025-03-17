@@ -13,7 +13,7 @@ import androidx.annotation.RawRes
 import androidx.annotation.StringRes
 import com.google.android.material.slider.Slider
 import com.kwasow.musekit.R
-import com.kwasow.musekit.utils.MusekitPreferences
+import com.kwasow.musekit.managers.PreferencesManager
 import kotlin.properties.Delegates
 
 class MetronomeService : Service(), Runnable {
@@ -44,10 +44,10 @@ class MetronomeService : Service(), Runnable {
                 soundId = soundPool.load(this, value.resourceId, 1)
             }
         }
-    var bpm = MusekitPreferences.metronomeBPM
+    var bpm = PreferencesManager.metronomeBPM
         set(value) {
             field = value.coerceIn(30..300)
-            MusekitPreferences.metronomeBPM = field
+            PreferencesManager.metronomeBPM = field
         }
 
     private var soundId by Delegates.notNull<Int>()

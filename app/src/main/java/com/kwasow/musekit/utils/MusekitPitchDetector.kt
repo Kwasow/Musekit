@@ -9,10 +9,12 @@ import be.tarsos.dsp.pitch.PitchProcessor
 import be.tarsos.dsp.pitch.PitchProcessor.PitchEstimationAlgorithm
 import com.kwasow.musekit.data.Note
 import com.kwasow.musekit.extensions.mostCommon
+import com.kwasow.musekit.managers.PreferencesManager
 import kotlin.math.log2
 
 class MusekitPitchDetector(
     private val dispatcher: AudioDispatcher,
+    private val preferencesManager: PreferencesManager,
 ) {
     // ====== Fields
     companion object {
@@ -57,7 +59,7 @@ class MusekitPitchDetector(
     private val pitchDetectionHandler =
         PitchDetectionHandler { res, _ ->
             val pitch = res.pitch
-            val basePitch = MusekitPreferences.automaticTunerPitch
+            val basePitch = preferencesManager.getAutomaticTunerPitch()
 
             val recognized = findNoteDetails(pitch.toDouble(), basePitch)
             if (recognized != null) {

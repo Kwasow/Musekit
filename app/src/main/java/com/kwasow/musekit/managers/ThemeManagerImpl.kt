@@ -1,19 +1,23 @@
-package com.kwasow.musekit.utils
+package com.kwasow.musekit.managers
 
 import android.app.Application
+import android.content.Context
 import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.material.color.DynamicColors
 
-object ThemeUtils {
+class ThemeManagerImpl(
+    applicationContext: Context,
+    private val preferencesManager: PreferencesManager,
+): ThemeManager {
     // ====== Constructors
-    fun init(application: Application) {
-        DynamicColors.applyToActivitiesIfAvailable(application)
+    init {
+        DynamicColors.applyToActivitiesIfAvailable(applicationContext as Application)
         AppCompatDelegate.setDefaultNightMode(getNightMode())
     }
 
     // ====== Public methods
-    fun getDefaultNightMode(): Int {
+    override fun getDefaultNightMode(): Int {
         return if (Build.VERSION.SDK_INT >= 29) {
             AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
         } else {
@@ -21,10 +25,10 @@ object ThemeUtils {
         }
     }
 
-    fun getNightMode(): Int = MusekitPreferences.nightMode
+    override fun getNightMode(): Int = preferencesManager.getNightMode(getDefaultNightMode())
 
-    fun setNightMode(nightMode: Int) {
-        MusekitPreferences.nightMode = nightMode
+    override fun setNightMode(nightMode: Int) {
+        preferencesManager.setNightMode(nightMode)
         AppCompatDelegate.setDefaultNightMode(nightMode)
     }
 }

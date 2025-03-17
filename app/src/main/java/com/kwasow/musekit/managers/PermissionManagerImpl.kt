@@ -1,4 +1,4 @@
-package com.kwasow.musekit.utils
+package com.kwasow.musekit.managers
 
 import android.Manifest
 import android.content.Context
@@ -11,13 +11,15 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 
-object PermissionManager {
+class PermissionManagerImpl(
+    private val context: Context
+): PermissionManager {
     // ====== Public methods
-    fun requestMicrophonePermission(
+    override fun requestMicrophonePermission(
         fragment: Fragment,
         callback: ActivityResultCallback<Boolean>,
     ) {
-        if (checkMicrophonePermission(fragment.requireContext())) {
+        if (checkMicrophonePermission()) {
             callback.onActivityResult(true)
             return
         }
@@ -31,7 +33,7 @@ object PermissionManager {
         requestPermissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
     }
 
-    fun openPermissionSettings(context: Context) {
+    override fun openPermissionSettings() {
         val intent =
             Intent(
                 Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
@@ -43,7 +45,7 @@ object PermissionManager {
     }
 
     // ====== Private methods
-    private fun checkMicrophonePermission(context: Context): Boolean {
+    private fun checkMicrophonePermission(): Boolean {
         val permissionStatus =
             ContextCompat.checkSelfPermission(
                 context,

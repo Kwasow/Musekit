@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kwasow.musekit.R
-import com.kwasow.musekit.utils.PresetsManager
+import com.kwasow.musekit.managers.PresetsManager
 
 class PresetDeleteDialog(
     val presetName: String,

@@ -6,6 +6,9 @@ minSdk = "23"
 versionCode = "1721768587"
 versionName = "2.3.0"
 
+# BoM
+koinBom = "4.0.2"
+
 # Libraries
 androidLifecycle = "2.8.7"
 androidTestEspresso = "3.6.1"
@@ -28,6 +31,9 @@ android-lifecycle = { group = "androidx.lifecycle", name = "lifecycle-runtime-kt
 android-test-espresso = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidTestEspresso" }
 android-test-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidTestJunit" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
+koin-bom = { group = "io.insert-koin", name = "koin-bom", version.ref = "koinBom" }
+koin-android = { group = "io.insert-koin", name = "koin-android" }
+koin-core = { group = "io.insert-koin", name = "koin-core" }
 kotlin-core = { group = "androidx.core", name = "core-ktx", version.ref = "kotlinCore" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 

@@ -14,8 +14,8 @@ import com.kwasow.musekit.R
 import com.kwasow.musekit.data.Note
 import com.kwasow.musekit.databinding.FragmentNoteForkAutoBinding
 import com.kwasow.musekit.utils.MusekitPitchDetector
-import com.kwasow.musekit.utils.MusekitPreferences
-import com.kwasow.musekit.utils.PermissionManager
+import com.kwasow.musekit.managers.PreferencesManager
+import com.kwasow.musekit.managers.PermissionManager
 import com.kwasow.musekit.views.TunerView
 
 class NoteForkAutoFragment : Fragment() {
@@ -103,18 +103,18 @@ class NoteForkAutoFragment : Fragment() {
         pitchText.text =
             getString(
                 R.string.pitch_placeholder,
-                MusekitPreferences.automaticTunerPitch,
+                PreferencesManager.automaticTunerPitch,
             )
     }
 
     private fun setupButtons() {
         pitchDownButton.setOnClickListener {
-            MusekitPreferences.automaticTunerPitch -= 1
+            PreferencesManager.automaticTunerPitch -= 1
             refreshPitch()
         }
 
         pitchUpButton.setOnClickListener {
-            MusekitPreferences.automaticTunerPitch += 1
+            PreferencesManager.automaticTunerPitch += 1
             refreshPitch()
         }
     }
