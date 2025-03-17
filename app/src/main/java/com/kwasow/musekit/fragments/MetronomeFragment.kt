@@ -24,7 +24,6 @@ import com.kwasow.musekit.utils.MusekitBeatDetector
 import com.kwasow.musekit.utils.MusekitPreferences
 
 class MetronomeFragment : Fragment() {
-
     // ====== Fields
     private lateinit var buttonStartStop: MaterialButton
     private lateinit var buttonMinus5: MaterialButton
@@ -44,27 +43,31 @@ class MetronomeFragment : Fragment() {
     private var isBound = false
     private val beatDetector = MusekitBeatDetector()
 
-    private val serviceConnection = object : ServiceConnection {
-        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-            val binder = service as MetronomeService.LocalBinder
-            metronomeService = binder.getService()
-            isBound = true
-            metronomeService.connectTicker(sliderBeat)
+    private val serviceConnection =
+        object : ServiceConnection {
+            override fun onServiceConnected(
+                name: ComponentName?,
+                service: IBinder?,
+            ) {
+                val binder = service as MetronomeService.LocalBinder
+                metronomeService = binder.getService()
+                isBound = true
+                metronomeService.connectTicker(sliderBeat)
 
-            updateBpm()
-            setupSoundPicker()
-        }
+                updateBpm()
+                setupSoundPicker()
+            }
 
-        override fun onServiceDisconnected(name: ComponentName?) {
-            isBound = false
+            override fun onServiceDisconnected(name: ComponentName?) {
+                isBound = false
+            }
         }
-    }
 
     // ====== Interface methods
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         val binding = FragmentMetronomeBinding.inflate(inflater)
 
@@ -151,8 +154,7 @@ class MetronomeFragment : Fragment() {
         }
     }
 
-    private fun updateBpm(by: Int = 0) =
-        setBpm(metronomeService.bpm + by)
+    private fun updateBpm(by: Int = 0) = setBpm(metronomeService.bpm + by)
 
     private fun setBpm(value: Int) {
         if (isBound) {
@@ -170,7 +172,7 @@ class MetronomeFragment : Fragment() {
             metronomeSoundPicker.setAdapter(soundsAdapter)
             metronomeSoundPicker.setText(
                 getString(metronomeService.sound.resourceNameId),
-                false
+                false,
             )
             metronomeSoundPicker.setOnItemClickListener { _, _, i, _ ->
                 if (isBound) metronomeService.sound = sounds[i]

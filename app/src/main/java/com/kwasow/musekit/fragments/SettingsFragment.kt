@@ -20,7 +20,6 @@ import com.kwasow.musekit.utils.MusekitPreferences
 import com.kwasow.musekit.views.MenuItem
 
 class SettingsFragment : Fragment() {
-
     // ====== Fields
     private lateinit var appVersion: TextView
     private lateinit var itemThemeSettings: MenuItem
@@ -38,7 +37,7 @@ class SettingsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         val binding = FragmentSettingsBinding.inflate(inflater)
 
@@ -72,12 +71,13 @@ class SettingsFragment : Fragment() {
         }
 
         itemNotationStylePicker.addOnButtonCheckedListener { _, checkedId, isChecked ->
-            val style = when (checkedId) {
-                buttonNotationStyleEnglish.id -> NotationStyle.English
-                buttonNotationStyleGerman.id -> NotationStyle.German
-                buttonNotationStyleFixedDo.id -> NotationStyle.FixedDo
-                else -> NotationStyle.English
-            }
+            val style =
+                when (checkedId) {
+                    buttonNotationStyleEnglish.id -> NotationStyle.English
+                    buttonNotationStyleGerman.id -> NotationStyle.German
+                    buttonNotationStyleFixedDo.id -> NotationStyle.FixedDo
+                    else -> NotationStyle.English
+                }
 
             if (isChecked) {
                 MusekitPreferences.notationStyle = style
@@ -93,26 +93,29 @@ class SettingsFragment : Fragment() {
 
     private fun setupAboutSection() {
         itemSourceCode.setOnClickListener {
-            val browserIntent = Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse("https://github.com/Kwasow/Musekit")
-            )
+            val browserIntent =
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://github.com/Kwasow/Musekit"),
+                )
             startActivity(browserIntent)
         }
 
         itemMastodon.setOnClickListener {
-            val browserIntent = Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse("https://mstdn.social/@kwasow")
-            )
+            val browserIntent =
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://mstdn.social/@kwasow"),
+                )
             startActivity(browserIntent)
         }
 
         itemWebsite.setOnClickListener {
-            val browserIntent = Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse("https://kwasow.pl")
-            )
+            val browserIntent =
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://kwasow.pl"),
+                )
             startActivity(browserIntent)
         }
 
@@ -124,12 +127,12 @@ class SettingsFragment : Fragment() {
     private fun showLicensesDialog() =
         LicensesDialogFragment().show(
             childFragmentManager,
-            LicensesDialogFragment.TAG
+            LicensesDialogFragment.TAG,
         )
 
     private fun showThemeSettingsDialog() =
         ThemeSettingsDialogFragment().show(
             childFragmentManager,
-            ThemeSettingsDialogFragment.TAG
+            ThemeSettingsDialogFragment.TAG,
         )
 }

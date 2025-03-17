@@ -9,7 +9,6 @@ import com.kwasow.musekit.R
 import com.kwasow.musekit.databinding.DialogLicensesBinding
 
 class LicensesDialogFragment : DialogFragment() {
-
     // ====== Fields
     companion object {
         const val TAG = "LicensesDialogFragment"
@@ -19,12 +18,13 @@ class LicensesDialogFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val binding = DialogLicensesBinding.inflate(layoutInflater)
 
-        val dialog = MaterialAlertDialogBuilder(requireContext())
-            .setTitle(R.string.licenses)
-            .setIcon(R.drawable.ic_file)
-            .setNeutralButton(R.string.close) { _, _ -> }
-            .setView(binding.root)
-            .create()
+        val dialog =
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.licenses)
+                .setIcon(R.drawable.ic_file)
+                .setNeutralButton(R.string.close) { _, _ -> }
+                .setView(binding.root)
+                .create()
 
         binding.buttonLicenseThisApp.setOnClickListener {
             showSubDialog(R.raw.gpl3, binding.textThisApp.text)
@@ -44,10 +44,11 @@ class LicensesDialogFragment : DialogFragment() {
     // ====== Private methods
     private fun showSubDialog(
         @RawRes licenseId: Int,
-        title: CharSequence
+        title: CharSequence,
     ) {
-        val licenseDialogBuilder = MaterialAlertDialogBuilder(requireContext())
-            .setNeutralButton(R.string.close) { _, _ -> }
+        val licenseDialogBuilder =
+            MaterialAlertDialogBuilder(requireContext())
+                .setNeutralButton(R.string.close) { _, _ -> }
 
         val license = readRawFileAsString(licenseId)
 
@@ -57,7 +58,9 @@ class LicensesDialogFragment : DialogFragment() {
         licenseDialogBuilder.show()
     }
 
-    private fun readRawFileAsString(@RawRes id: Int): String {
+    private fun readRawFileAsString(
+        @RawRes id: Int,
+    ): String {
         val inputStream = resources.openRawResource(id)
         val byteArray = ByteArray(inputStream.available())
         inputStream.read(byteArray)

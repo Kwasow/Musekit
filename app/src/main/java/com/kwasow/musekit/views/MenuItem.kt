@@ -13,7 +13,6 @@ import com.kwasow.musekit.databinding.ViewMenuItemBinding
 import java.lang.RuntimeException
 
 class MenuItem(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs) {
-
     // ====== Fields
     private val itemTitle: String
     private val itemSubtitle: String?
@@ -78,7 +77,7 @@ class MenuItem(context: Context, attrs: AttributeSet) : ConstraintLayout(context
             context.theme.resolveAttribute(android.R.attr.textColorTertiary, value, true)
 
             binding.menuItemLeadingIcon.setColorFilter(
-                ContextCompat.getColor(context, value.resourceId)
+                ContextCompat.getColor(context, value.resourceId),
             )
         }
     }

@@ -10,7 +10,6 @@ import com.kwasow.musekit.fragments.NoteForkManualFragment
 
 class NoteForkAdapter(fragmentActivity: FragmentManager, lifecycle: Lifecycle) :
     FragmentStateAdapter(fragmentActivity, lifecycle) {
-
     // ====== Fields
     private val pageCount = 2
 

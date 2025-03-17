@@ -18,7 +18,8 @@ enum class Notes(val semitones: Int) {
     F(8),
     FisGes(9),
     G(10),
-    GisAs(11);
+    GisAs(11),
+    ;
 
     companion object {
         fun fromSemitones(semitones: Int): Notes {

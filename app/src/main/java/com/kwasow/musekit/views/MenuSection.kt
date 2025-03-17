@@ -12,7 +12,6 @@ import java.lang.Exception
 import java.lang.RuntimeException
 
 class MenuSection(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
-
     // ====== Fields
     private var sectionTitle: String
 
@@ -34,7 +33,11 @@ class MenuSection(context: Context, attrs: AttributeSet) : LinearLayout(context,
     }
 
     // ====== Interface methods
-    override fun addView(child: View?, index: Int, params: ViewGroup.LayoutParams?) {
+    override fun addView(
+        child: View?,
+        index: Int,
+        params: ViewGroup.LayoutParams?,
+    ) {
         try {
             binding.menuSectionItemList.addView(child, index, params)
         } catch (e: Exception) {

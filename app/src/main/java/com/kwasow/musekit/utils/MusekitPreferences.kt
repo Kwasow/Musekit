@@ -6,7 +6,6 @@ import androidx.core.content.edit
 import com.kwasow.musekit.data.NotationStyle
 
 object MusekitPreferences {
-
     // ====== Fields
     private lateinit var sharedPreferences: SharedPreferences
 
@@ -21,10 +20,11 @@ object MusekitPreferences {
 
     // ====== Constructors
     fun init(context: Context) {
-        sharedPreferences = context.getSharedPreferences(
-            PREFERENCES_FILE,
-            Context.MODE_PRIVATE
-        )
+        sharedPreferences =
+            context.getSharedPreferences(
+                PREFERENCES_FILE,
+                Context.MODE_PRIVATE,
+            )
     }
 
     // ====== Public methods

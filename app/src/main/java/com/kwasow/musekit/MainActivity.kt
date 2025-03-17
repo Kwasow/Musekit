@@ -7,7 +7,6 @@ import com.kwasow.musekit.adapters.MainPagerAdapter
 import com.kwasow.musekit.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-
     // ====== Fields
     private lateinit var binding: ActivityMainBinding
 
@@ -38,7 +37,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 return@OnItemSelectedListener true
-            }
+            },
         )
     }
 }

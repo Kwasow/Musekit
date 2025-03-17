@@ -12,9 +12,8 @@ import com.kwasow.musekit.extensions.mostCommon
 import kotlin.math.log2
 
 class MusekitPitchDetector(
-    private val dispatcher: AudioDispatcher
+    private val dispatcher: AudioDispatcher,
 ) {
-
     // ====== Fields
     companion object {
         private const val MINIMUM_FREQ = 55f
@@ -25,7 +24,10 @@ class MusekitPitchDetector(
 
         private val ALGORITHM = PitchEstimationAlgorithm.FFT_YIN
 
-        fun findNoteDetails(frequency: Double, pitch: Int = 440): Pair<Note, Double>? {
+        fun findNoteDetails(
+            frequency: Double,
+            pitch: Int = 440,
+        ): Pair<Note, Double>? {
             if (frequency < MINIMUM_FREQ) {
                 return null
             }
@@ -47,25 +49,26 @@ class MusekitPitchDetector(
             AudioDispatcherFactory.fromDefaultMicrophone(
                 SAMPLING_RATE,
                 BUFFER_SIZE,
-                OVERLAP
+                OVERLAP,
             )
     }
 
     private val history = mutableListOf<Pair<Note, Double>>()
-    private val pitchDetectionHandler = PitchDetectionHandler { res, _ ->
-        val pitch = res.pitch
-        val basePitch = MusekitPreferences.automaticTunerPitch
+    private val pitchDetectionHandler =
+        PitchDetectionHandler { res, _ ->
+            val pitch = res.pitch
+            val basePitch = MusekitPreferences.automaticTunerPitch
 
-        val recognized = findNoteDetails(pitch.toDouble(), basePitch)
-        if (recognized != null) {
-            history.add(recognized)
-        }
+            val recognized = findNoteDetails(pitch.toDouble(), basePitch)
+            if (recognized != null) {
+                history.add(recognized)
+            }
 
-        if (history.size >= MIN_ITEM_COUNT) {
-            currentPitch.postValue(calculateAverage())
-            history.clear()
+            if (history.size >= MIN_ITEM_COUNT) {
+                currentPitch.postValue(calculateAverage())
+                history.clear()
+            }
         }
-    }
 
     val currentPitch: MutableLiveData<Pair<Note, Double>?> by lazy {
         MutableLiveData()
@@ -75,12 +78,13 @@ class MusekitPitchDetector(
     init {
         val highPassProcessor = HighPass(MINIMUM_FREQ, 0f)
 
-        val pitchProcessor = PitchProcessor(
-            ALGORITHM,
-            SAMPLING_RATE.toFloat(),
-            BUFFER_SIZE,
-            this.pitchDetectionHandler
-        )
+        val pitchProcessor =
+            PitchProcessor(
+                ALGORITHM,
+                SAMPLING_RATE.toFloat(),
+                BUFFER_SIZE,
+                this.pitchDetectionHandler,
+            )
 
         dispatcher.addAudioProcessor(highPassProcessor)
         dispatcher.addAudioProcessor(pitchProcessor)

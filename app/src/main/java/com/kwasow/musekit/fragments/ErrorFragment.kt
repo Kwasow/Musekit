@@ -10,7 +10,6 @@ import com.kwasow.musekit.databinding.FragmentErrorBinding
 import kotlin.system.exitProcess
 
 class ErrorFragment : Fragment() {
-
     // ====== Fields
     private lateinit var buttonCloseApp: MaterialButton
 
@@ -18,7 +17,7 @@ class ErrorFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         val binding = FragmentErrorBinding.inflate(inflater)
 
