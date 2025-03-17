@@ -1,0 +1,30 @@
+[versions]
+# Build details
+compileSdk = "35"
+targetSdk = "35"
+minSdk = "23"
+versionCode = "1721768587"
+versionName = "2.3.0"
+
+androidMedia = "1.5.1"
+androidTestEspresso = "3.6.1"
+androidTestJunit = "1.2.1"
+junit = "4.13.2"
+
+# Plugins
+androidGradlePlugin = "8.8.2"
+kotlinPlugins = "2.1.10"
+ktlintPlugin = "12.2.0"
+
+[libraries]
+android-media-common = { group = "androidx.media3", name = "media3-common", version.ref = "androidMedia" }
+android-media-exoplayer = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "androidMedia" }
+android-media-session = { group = "androidx.media3", name = "media3-session", version.ref = "androidMedia" }
+android-test-espresso = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidTestEspresso" }
+android-test-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidTestJunit" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinPlugins" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintPlugin" }

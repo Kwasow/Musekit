@@ -1,19 +1,20 @@
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
-    id("org.jlleitschuh.gradle.ktlint") version "11.5.1"
+    alias(libs.plugins.kotlin.android)
+
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.ktlint)
 }
 
 android {
     namespace = "com.kwasow.musekit"
-    compileSdk = 35
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         applicationId = "com.kwasow.musekit"
-        minSdk = 23
-        targetSdk = 35
-        versionCode = 1721768587
-        versionName = "2.3.0"
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
+        versionCode = libs.versions.versionCode.get().toInt()
+        versionName = libs.versions.versionName.get()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
