@@ -9,7 +9,7 @@ import com.google.android.material.color.DynamicColors
 class ThemeManagerImpl(
     applicationContext: Context,
     private val preferencesManager: PreferencesManager,
-): ThemeManager {
+) : ThemeManager {
     // ====== Constructors
     init {
         DynamicColors.applyToActivitiesIfAvailable(applicationContext as Application)

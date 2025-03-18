@@ -13,7 +13,8 @@ import com.kwasow.musekit.R
 import com.kwasow.musekit.data.Note
 import com.kwasow.musekit.data.Preset
 import com.kwasow.musekit.databinding.DialogSavePresetBinding
-import com.kwasow.musekit.managers.PresetsManager
+import com.kwasow.musekit.models.PresetDialogViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PresetSaveDialogFragment(
     val note: Note,
@@ -26,6 +27,8 @@ class PresetSaveDialogFragment(
 
     private lateinit var dialog: AlertDialog
     private lateinit var presetNameText: TextView
+
+    private val viewModel by viewModel<PresetDialogViewModel>()
 
     // ====== Interface methods
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -48,7 +51,7 @@ class PresetSaveDialogFragment(
                         )
 
                     // Save preset
-                    PresetsManager.savePreset(preset, requireContext())
+                    viewModel.addPreset(preset)
                     onSave()
                 }
                 .create()

@@ -16,8 +16,9 @@ import com.kwasow.musekit.data.NotationStyle
 import com.kwasow.musekit.databinding.FragmentSettingsBinding
 import com.kwasow.musekit.dialogs.LicensesDialogFragment
 import com.kwasow.musekit.dialogs.ThemeSettingsDialogFragment
-import com.kwasow.musekit.managers.PreferencesManager
+import com.kwasow.musekit.models.SettingsFragmentViewModel
 import com.kwasow.musekit.views.MenuItem
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingsFragment : Fragment() {
     // ====== Fields
@@ -32,6 +33,8 @@ class SettingsFragment : Fragment() {
     private lateinit var buttonNotationStyleEnglish: MaterialButton
     private lateinit var buttonNotationStyleGerman: MaterialButton
     private lateinit var buttonNotationStyleFixedDo: MaterialButton
+
+    private val viewModel by viewModel<SettingsFragmentViewModel>()
 
     // ====== Interface methods
     override fun onCreateView(
@@ -80,11 +83,11 @@ class SettingsFragment : Fragment() {
                 }
 
             if (isChecked) {
-                PreferencesManager.notationStyle = style
+                viewModel.setNotationStyle(style)
             }
         }
 
-        when (PreferencesManager.notationStyle) {
+        when (viewModel.getNotationStyle()) {
             NotationStyle.English -> itemNotationStylePicker.check(buttonNotationStyleEnglish.id)
             NotationStyle.German -> itemNotationStylePicker.check(buttonNotationStyleGerman.id)
             NotationStyle.FixedDo -> itemNotationStylePicker.check(buttonNotationStyleFixedDo.id)

@@ -12,9 +12,11 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kwasow.musekit.R
 import com.kwasow.musekit.databinding.DialogSetBeatBinding
-import com.kwasow.musekit.managers.PreferencesManager
 
-class SetBeatDialog(val onSave: (Int) -> Unit) : DialogFragment() {
+class SetBeatDialog(
+    private val initialBpm: Int,
+    private val onSave: (Int) -> Unit,
+) : DialogFragment() {
     // ====== Fields
     companion object {
         const val TAG = "SetBeatDialog"
@@ -39,7 +41,7 @@ class SetBeatDialog(val onSave: (Int) -> Unit) : DialogFragment() {
                 .create()
 
         // Set starting value
-        beatText.text = PreferencesManager.metronomeBPM.toString()
+        beatText.text = String.format("%i", initialBpm)
 
         // Disable "Save" button if text field is empty
         beatText.addTextChangedListener(

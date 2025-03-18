@@ -5,7 +5,7 @@ import com.kwasow.musekit.data.Preset
 import java.io.File
 
 class PresetsManagerImpl(
-    private val context: Context
+    private val context: Context,
 ) : PresetsManager {
     // ====== Fields
     companion object {

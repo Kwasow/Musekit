@@ -1,6 +1,5 @@
 package com.kwasow.musekit.managers
 
-import android.content.Context
 import com.kwasow.musekit.data.Preset
 
 interface PresetsManager {

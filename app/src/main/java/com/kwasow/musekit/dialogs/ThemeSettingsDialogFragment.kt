@@ -7,16 +7,19 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kwasow.musekit.R
 import com.kwasow.musekit.databinding.DialogThemeSettingsBinding
-import com.kwasow.musekit.managers.ThemeManager
+import com.kwasow.musekit.models.ThemeDialogViewModel
 
 class ThemeSettingsDialogFragment : DialogFragment() {
     // ====== Fields
     companion object {
         const val TAG = "ThemeSettingsDialogFragment"
     }
+
+    private val viewModel by viewModels<ThemeDialogViewModel>()
 
     // ====== Interface methods
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -29,7 +32,7 @@ class ThemeSettingsDialogFragment : DialogFragment() {
                 .create()
 
         // Theme settings
-        when (ThemeManager.getNightMode()) {
+        when (viewModel.getNightMode()) {
             AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> {
                 binding.itemThemeFollowSystem.getTrailingImageView()
                     .setImageResource(R.drawable.ic_check)
@@ -69,7 +72,7 @@ class ThemeSettingsDialogFragment : DialogFragment() {
 
     // ====== Private methods
     private fun setNightMode(nightMode: Int) {
-        ThemeManager.setNightMode(nightMode)
+        viewModel.setNightMode(nightMode)
         dismiss()
     }
 }

@@ -12,8 +12,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 
 class PermissionManagerImpl(
-    private val context: Context
-): PermissionManager {
+    private val context: Context,
+) : PermissionManager {
     // ====== Public methods
     override fun requestMicrophonePermission(
         fragment: Fragment,

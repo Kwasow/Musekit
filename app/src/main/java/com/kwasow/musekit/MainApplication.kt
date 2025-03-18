@@ -2,7 +2,7 @@ package com.kwasow.musekit
 
 import android.app.Application
 import com.kwasow.musekit.koin.managersModule
-import com.kwasow.musekit.managers.ThemeManager
+import com.kwasow.musekit.koin.viewModelsModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -13,7 +13,7 @@ class MainApplication : Application() {
 
         startKoin {
             androidContext(this@MainApplication)
-            modules(managersModule)
+            modules(managersModule, viewModelsModule)
         }
     }
 }

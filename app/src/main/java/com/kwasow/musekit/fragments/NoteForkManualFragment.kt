@@ -12,16 +12,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.button.MaterialButton
 import com.kwasow.musekit.R
-import com.kwasow.musekit.adapters.PresetsAdapter
 import com.kwasow.musekit.data.Note
-import com.kwasow.musekit.data.Notes
 import com.kwasow.musekit.databinding.FragmentNoteForkManualBinding
 import com.kwasow.musekit.dialogs.PresetDeleteDialog
 import com.kwasow.musekit.dialogs.PresetSaveDialogFragment
-import com.kwasow.musekit.managers.PresetsManager
+import com.kwasow.musekit.models.NoteForkFragmentViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.sin
 import kotlin.properties.Delegates
 
@@ -36,6 +35,8 @@ class NoteForkManualFragment : Fragment() {
     private lateinit var textNote: AppCompatTextView
     private lateinit var buttonSavePreset: MaterialButton
     private lateinit var presetsPicker: AutoCompleteTextView
+
+    private val viewModel by viewModel<NoteForkFragmentViewModel>()
 
     private var note: Note = Note()
 
@@ -90,7 +91,7 @@ class NoteForkManualFragment : Fragment() {
     // ====== Private methods
     private fun refreshState() {
         textPitch.text = getString(R.string.pitch_placeholder, note.pitch)
-        textNote.text = note.getSuperscripted(requireContext())
+        textNote.text = viewModel.getSuperscriptedNote(note)
 
         if (playing) {
             lifecycleScope.launch {
@@ -100,26 +101,10 @@ class NoteForkManualFragment : Fragment() {
     }
 
     private fun setupPresets() {
-        // Setup lists and adapter
-        val presets =
-            mutableListOf(
-                getString(R.string.default_preset) to Note(440, Notes.A, 4),
-            )
-        PresetsManager.getPresets(requireContext()).forEach {
-            val name = it.name
-            val note = Note(it.pitch, Notes.fromSemitones(it.semitones), it.octave)
+        val presets = viewModel.getPresets()
+        val adapter = viewModel.buildPresetsAdapter(presets) { showDeletePresetDialog(it) }
 
-            presets.add(name to note)
-        }
-
-        // Attach adapter to view
-        val presetsAdapter =
-            PresetsAdapter(
-                requireContext(),
-                presets.map { it.first },
-            ) { presetName -> showDeletePresetDialog(presetName) }
-
-        presetsPicker.setAdapter(presetsAdapter)
+        presetsPicker.setAdapter(adapter)
         presetsPicker.setText(getString(R.string.default_preset), false)
         presetsPicker.setOnItemClickListener { _, _, i, _ ->
             note.octave = presets[i].second.octave
