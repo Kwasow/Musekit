@@ -78,9 +78,15 @@ tasks.withType<Test> {
 }
 
 dependencies {
+    // BoM
+    implementation(platform(libs.koin.bom))
+
+    // Koin
+    implementation(libs.koin.android)
+    implementation(libs.koin.core)
+
     implementation(libs.android.appcompat)
     implementation(libs.android.constraintLayout)
-//    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.1")
     implementation(libs.android.lifecycle)
     implementation(libs.kotlin.core)
     implementation(libs.material)

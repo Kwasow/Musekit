@@ -13,6 +13,7 @@ import kotlin.math.log2
 
 class MusekitPitchDetector(
     private val dispatcher: AudioDispatcher,
+    private val getPitch: () -> Int,
 ) {
     // ====== Fields
     companion object {
@@ -57,7 +58,7 @@ class MusekitPitchDetector(
     private val pitchDetectionHandler =
         PitchDetectionHandler { res, _ ->
             val pitch = res.pitch
-            val basePitch = MusekitPreferences.automaticTunerPitch
+            val basePitch = getPitch()
 
             val recognized = findNoteDetails(pitch.toDouble(), basePitch)
             if (recognized != null) {

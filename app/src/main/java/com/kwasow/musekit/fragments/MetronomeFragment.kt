@@ -13,15 +13,16 @@ import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.slider.Slider
 import com.kwasow.musekit.R
 import com.kwasow.musekit.adapters.SoundsAdapter
 import com.kwasow.musekit.databinding.FragmentMetronomeBinding
 import com.kwasow.musekit.dialogs.SetBeatDialog
+import com.kwasow.musekit.models.MetronomeFragmentViewModel
 import com.kwasow.musekit.services.MetronomeService
 import com.kwasow.musekit.utils.MusekitBeatDetector
-import com.kwasow.musekit.utils.MusekitPreferences
 
 class MetronomeFragment : Fragment() {
     // ====== Fields
@@ -38,6 +39,8 @@ class MetronomeFragment : Fragment() {
     private lateinit var metronomeSoundPicker: AutoCompleteTextView
     private lateinit var setBeatButton: MaterialButton
     private lateinit var tapBeatButton: MaterialButton
+
+    private val viewModel by viewModels<MetronomeFragmentViewModel>()
 
     private lateinit var metronomeService: MetronomeService
     private var isBound = false
@@ -87,7 +90,7 @@ class MetronomeFragment : Fragment() {
 
         // Set starting value for BPM (service connection takes some time and it causes the
         // view to show a different value for a split second
-        textBpm.text = MusekitPreferences.metronomeBPM.toString()
+        textBpm.text = String.format("%i", viewModel.getBpm())
 
         // Prevent sleep while metronome is active
         binding.root.keepScreenOn = true
@@ -143,7 +146,9 @@ class MetronomeFragment : Fragment() {
         buttonMinus1.setOnClickListener { updateBpm(-1) }
 
         setBeatButton.setOnClickListener {
-            SetBeatDialog { result -> setBpm(result) }.show(childFragmentManager, SetBeatDialog.TAG)
+            SetBeatDialog(viewModel.getBpm()) { result ->
+                setBpm(result)
+            }.show(childFragmentManager, SetBeatDialog.TAG)
         }
 
         tapBeatButton.setOnClickListener {
@@ -159,7 +164,7 @@ class MetronomeFragment : Fragment() {
     private fun setBpm(value: Int) {
         if (isBound) {
             metronomeService.bpm = value
-            textBpm.text = metronomeService.bpm.toString()
+            textBpm.text = String.format("%i", metronomeService.bpm)
         }
     }
 

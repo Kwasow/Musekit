@@ -5,13 +5,20 @@ import android.os.CountDownTimer
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.color.MaterialColors
 import com.kwasow.musekit.data.Note
 import com.kwasow.musekit.databinding.ViewTunerBinding
+import com.kwasow.musekit.models.TunerViewViewModel
 
 class TunerView : LinearLayout {
     // ====== Fields
+    private lateinit var viewModelStoreOwner: ViewModelStoreOwner
+    private lateinit var viewModel: TunerViewViewModel
+
     private val binding: ViewTunerBinding =
         ViewTunerBinding.inflate(
             LayoutInflater.from(context),
@@ -72,6 +79,15 @@ class TunerView : LinearLayout {
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int, defStyleRes: Int) :
         super(context, attrs, defStyleAttr, defStyleRes)
 
+    // ====== Interface methods
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+
+        viewModelStoreOwner = findViewTreeViewModelStoreOwner()
+            ?: throw IllegalStateException("Couldn't find viewModelStoreOwner")
+        viewModel = ViewModelProvider(viewModelStoreOwner)[TunerViewViewModel::class.java]
+    }
+
     // ====== Public methods
     fun updateState(
         note: Note?,
@@ -104,7 +120,7 @@ class TunerView : LinearLayout {
         if (note == null) {
             binding.currentNoteText.text = "—"
         } else {
-            binding.currentNoteText.text = note.getSuperscripted(context)
+            binding.currentNoteText.text = viewModel.getSuperscriptedNote(note)
         }
     }
 

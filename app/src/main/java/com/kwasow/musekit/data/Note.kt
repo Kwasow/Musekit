@@ -86,8 +86,6 @@ class Note {
             2.0.pow(semitones / 12.0)
     }
 
-    fun getNoteName(): String = note.noteName
-
     fun up() {
         when (note) {
             Notes.GisAs -> note = Notes.A
@@ -112,8 +110,16 @@ class Note {
         }
     }
 
-    fun getSuperscripted(context: Context): SpannableStringBuilder {
-        val text = context.getString(R.string.note_placeholder, this.getNoteName(), this.octave)
+    fun getSuperscripted(
+        context: Context,
+        style: NotationStyle,
+    ): SpannableStringBuilder {
+        val text =
+            context.getString(
+                R.string.note_placeholder,
+                this.getNoteName(style),
+                this.octave,
+            )
         val spannableStringBuilder = SpannableStringBuilder(text)
 
         text.forEachIndexed { index, c ->
@@ -142,4 +148,7 @@ class Note {
 
         return spannableStringBuilder
     }
+
+    // ======= Private methods
+    private fun getNoteName(style: NotationStyle): String = note.getName(style)
 }

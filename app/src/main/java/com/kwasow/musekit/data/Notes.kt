@@ -1,8 +1,6 @@
 package com.kwasow.musekit.data
 
-import com.kwasow.musekit.utils.MusekitPreferences
-
-// Enum classes named using a polish convention where
+// Enum classes named using the German notation where
 //  - the "is" suffix is added to a note with a sharp
 //  - the "as" suffix is added to a note with a flat
 //  - the note one half step below C is known as H; H flat is B
@@ -40,6 +38,5 @@ enum class Notes(val semitones: Int) {
         }
     }
 
-    val noteName: String
-        get() = MusekitPreferences.notationStyle.noteNames[semitones]
+    fun getName(style: NotationStyle): String = style.noteNames[semitones]
 }

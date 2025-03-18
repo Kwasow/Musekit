@@ -1,19 +1,20 @@
-package com.kwasow.musekit.utils
+package com.kwasow.musekit.managers
 
 import android.content.Context
 import com.kwasow.musekit.data.Preset
 import java.io.File
 
-object PresetsManager {
+class PresetsManagerImpl(
+    private val context: Context,
+) : PresetsManager {
     // ====== Fields
-    private const val PRESET_DIR = "/presets/"
-    private const val VER_1 = "<version1>"
+    companion object {
+        private const val PRESET_DIR = "/presets/"
+        private const val VER_1 = "<version1>"
+    }
 
     // ====== Public methods
-    fun savePreset(
-        preset: Preset,
-        context: Context,
-    ) {
+    override fun savePreset(preset: Preset) {
         if (preset.name.isNotBlank()) {
             var filename = toFileName(preset.name) + 0
             val directory = File(context.filesDir, PRESET_DIR)
@@ -42,7 +43,7 @@ object PresetsManager {
         }
     }
 
-    fun getPresets(context: Context): List<Preset> {
+    override fun getPresets(): List<Preset> {
         val directory = File(context.filesDir, PRESET_DIR)
         val presets = mutableListOf<Preset>()
         directory.listFiles()?.forEach {
@@ -64,10 +65,7 @@ object PresetsManager {
         return presets
     }
 
-    fun removePreset(
-        name: String,
-        context: Context,
-    ) {
+    override fun removePreset(name: String) {
         if (name.isNotBlank()) {
             val directory = File(context.filesDir, PRESET_DIR)
 

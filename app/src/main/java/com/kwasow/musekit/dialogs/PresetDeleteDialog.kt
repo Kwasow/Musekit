@@ -5,7 +5,8 @@ import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kwasow.musekit.R
-import com.kwasow.musekit.utils.PresetsManager
+import com.kwasow.musekit.models.PresetDialogViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PresetDeleteDialog(
     val presetName: String,
@@ -15,6 +16,8 @@ class PresetDeleteDialog(
     companion object {
         const val TAG = "PresetDeleteDialog"
     }
+
+    private val viewModel by viewModel<PresetDialogViewModel>()
 
     // ====== Interface methods
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -27,7 +30,7 @@ class PresetDeleteDialog(
                 .setIcon(R.drawable.ic_delete)
                 .setNeutralButton(R.string.cancel) { _, _ -> }
                 .setPositiveButton(R.string.delete) { _, _ ->
-                    PresetsManager.removePreset(presetName, requireContext())
+                    viewModel.removePreset(presetName)
                     onDelete()
                 }
                 .create()

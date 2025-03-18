@@ -13,10 +13,10 @@ import com.google.android.material.card.MaterialCardView
 import com.kwasow.musekit.R
 import com.kwasow.musekit.data.Note
 import com.kwasow.musekit.databinding.FragmentNoteForkAutoBinding
+import com.kwasow.musekit.models.NoteForkFragmentViewModel
 import com.kwasow.musekit.utils.MusekitPitchDetector
-import com.kwasow.musekit.utils.MusekitPreferences
-import com.kwasow.musekit.utils.PermissionManager
 import com.kwasow.musekit.views.TunerView
+import org.koin.android.ext.android.inject
 
 class NoteForkAutoFragment : Fragment() {
     // ====== Fields
@@ -27,6 +27,8 @@ class NoteForkAutoFragment : Fragment() {
     private lateinit var pitchUpButton: MaterialButton
     private lateinit var pitchText: AppCompatTextView
     private lateinit var pitchSelectorView: MaterialCardView
+
+    private val viewModel by inject<NoteForkFragmentViewModel>()
 
     private var pitchDetector: MusekitPitchDetector? = null
     private val pitchObserver: Observer<Pair<Note, Double>?> =
@@ -53,10 +55,10 @@ class NoteForkAutoFragment : Fragment() {
         pitchSelectorView = binding.pitchSelectorView
 
         openSettingsButton.setOnClickListener {
-            PermissionManager.openPermissionSettings(requireContext())
+            viewModel.launchPermissionSettings()
         }
 
-        PermissionManager.requestMicrophonePermission(this) { granted ->
+        viewModel.requestMicrophonePermission(this) { granted ->
             if (granted) {
                 permissionGranted()
             } else {
@@ -86,7 +88,7 @@ class NoteForkAutoFragment : Fragment() {
 
         // Start pitch detection
         val dispatcher = MusekitPitchDetector.buildDefaultDispatcher()
-        pitchDetector = MusekitPitchDetector(dispatcher)
+        pitchDetector = MusekitPitchDetector(dispatcher) { viewModel.getPitch() }
         pitchDetector?.currentPitch?.observe(viewLifecycleOwner, pitchObserver)
 
         pitchDetector?.startListening()
@@ -103,18 +105,18 @@ class NoteForkAutoFragment : Fragment() {
         pitchText.text =
             getString(
                 R.string.pitch_placeholder,
-                MusekitPreferences.automaticTunerPitch,
+                viewModel.getPitch(),
             )
     }
 
     private fun setupButtons() {
         pitchDownButton.setOnClickListener {
-            MusekitPreferences.automaticTunerPitch -= 1
+            viewModel.setPitch(viewModel.getPitch() - 1)
             refreshPitch()
         }
 
         pitchUpButton.setOnClickListener {
-            MusekitPreferences.automaticTunerPitch += 1
+            viewModel.setPitch(viewModel.getPitch() + 1)
             refreshPitch()
         }
     }
