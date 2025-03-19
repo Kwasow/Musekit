@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Bottom navigation bar labels -->
+    <string name="tuning">Tuning</string>
+    <string name="metronome">Metronome</string>
+    <string name="settings">Settings</string>
+    <string name="contentDescription_note_up">Note up</string>
+    <string name="contentDescription_note_down">Note down</string>
+    <string name="contentDescription_pitch_up">Pitch up</string>
+    <string name="contentDescription_pitch_down">Pitch down</string>
+    <string name="contentDescription_start_stop">Start/stop</string>
+    <string name="contentDescription_metronome_ticker">Metronome ticker</string>
+    <!-- Note fork strings -->
+    <string name="note">Note</string>
+    <string name="pitch">Pitch</string>
+    <string name="note_fork_automatic">Automatic</string>
+    <string name="note_fork_manual">Manual</string>
+    <string name="record_permission_not_granted">Microphone access was not granted</string>
+    <string name="play_sound_to_tune">Play to start tuning</string>
+    <string name="open_settings">Open settings</string>
+    <string name="contentDescription_tuner_check">Note in tune checkmark</string>
+    <!-- Note fork presets -->
+    <string name="presets">Presets</string>
+    <string name="default_preset">Default</string>
+    <string name="save_preset">Save preset</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="preset_name">Preset name (required)</string>
+    <string name="delete_preset">Delete preset</string>
+    <string name="warning_preset_deletion">The preset \"%1$s\" will be permanently deleted.</string>
+    <string name="delete">Delete</string>
+    <!-- Metronome strings -->
+    <string name="sound">Sound</string>
+    <string name="set_beat">Set beat</string>
+    <string name="tap_beat">Tap beat</string>
+    <string name="beat">Beat</string>
+    <!-- Metronome sound names -->
+    <string name="metronome_sound_default">Default</string>
+    <string name="metronome_sound_beep">Beep</string>
+    <string name="metronome_sound_ding">Ding</string>
+    <string name="metronome_sound_wood">Wood</string>
+    <string name="metronome_sound_none">(none)</string>
+    <!-- Settings strings -->
+    <string name="about">About</string>
+    <string name="contentDescription_app_icon">App icon</string>
+    <string name="notation_style">Notation style</string>
+    <string name="notation_style_subtitle">Choose how notes are named</string>
+    <string name="notation_style_english">English</string>
+    <string name="notation_style_german">German</string>
+    <string name="notation_style_fixed_do">Fixed Do</string>
+    <string name="source_code">Source code</string>
+    <string name="source_code_subtitle">Report issues and request features</string>
+    <string name="developer">Developer account</string>
+    <string name="developer_subtitle">Find me on Mastodon</string>
+    <string name="developer_website">Developer website</string>
+    <string name="developer_website_subtitle">Take a look at my other projects</string>
+    <string name="licenses">Licenses</string>
+    <string name="licenses_subtitle">Pitch recognition, icons and others</string>
+    <string name="version">Version %1$s</string>
+    <string name="close">Close</string>
+    <string name="contentDescription_github_logo">Github logo</string>
+    <string name="contentDescription_mastodon_logo">Mastodon logo</string>
+    <string name="contentDescription_internet_website">Website</string>
+    <string name="contentDescription_localization">Localization</string>
+    <string name="contentDescription_file_icon">File</string>
+    <string name="contentDescription_moon_icon">Moon</string>
+    <string name="contentDescription_current_theme_symbol">Current theme</string>
+    <!-- Night mode dialog -->
+    <string name="theme">Theme</string>
+    <string name="theme_subtitle">Choose the app style</string>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_follow_system">Follow system</string>
+    <string name="accent_colour">Accent colour</string>
+    <string name="green">Green</string>
+    <string name="red">Red</string>
+    <string name="blue">Blue</string>
+    <string name="yellow">Yellow</string>
+    <string name="contentDescription_check_icon">A check mark</string>
+    <!-- Error string -->
+    <string name="whoopsie">Whoopsie, you shouldn\'t be here!</string>
+    <string name="close_app">Close app</string>
+    <string name="contentDescription_ghost_icon">Ghost icon</string>
+    <!-- Licenses dialog -->
+    <string name="this_app">This app</string>
+    <string name="icons">Icons by css.gg</string>
+    <string name="mit">MIT License</string>
+    <string name="tarsos">TarsosDSP</string>
+    <string name="contentDescription_right_arrow">Right arrow</string>
+    <string name="special_thanks">Special thanks to TarsosDSP for building the pitch recognition library.</string>
+</resources>
