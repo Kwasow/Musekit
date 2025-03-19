@@ -7,16 +7,16 @@
     <string name="contentDescription_note_up">Dźwięk w górę</string>
     <string name="contentDescription_note_down">Dźwięk w dół</string>
     <string name="contentDescription_pitch_up">Zwiększ częstotliwość podstawową</string>
-    <string name="contentDescription_pitch_down">Zmniejsz częstotliowść podstawową</string>
+    <string name="contentDescription_pitch_down">Zmniejsz częstotliwość podstawową</string>
     <string name="contentDescription_start_stop">Start/stop</string>
-    <string name="contentDescription_metronome_ticker">Wslaźnik metronomu</string>
+    <string name="contentDescription_metronome_ticker">Wskaźnik metronomu</string>
     <!-- Note fork strings -->
     <string name="note">Dźwięk</string>
     <string name="pitch">Częstotliwość</string>
     <string name="note_fork_automatic">Automatyczny</string>
     <string name="note_fork_manual">Ręczny</string>
     <string name="record_permission_not_granted">Dostęp do mikrofonu nie został przyznany</string>
-    <string name="play_sound_to_tune">Zagraj by rozpocząć strojenie</string>
+    <string name="play_sound_to_tune">Zagraj, by rozpocząć strojenie</string>
     <string name="open_settings">Otwórz ustawienia</string>
     <string name="contentDescription_tuner_check">Strój dźwięku poprawny</string>
     <!-- Note fork presets -->
@@ -36,17 +36,17 @@
     <string name="beat">Tempo</string>
     <!-- Metronome sound names -->
     <string name="metronome_sound_default">Domyślny</string>
-    <string name="metronome_sound_beep">Beep</string>
-    <string name="metronome_sound_ding">Ding</string>
+    <string name="metronome_sound_beep">Elektroniczny</string>
+    <string name="metronome_sound_ding">Dzwonek</string>
     <string name="metronome_sound_wood">Drewno</string>
     <string name="metronome_sound_none">(bez dźwięku)</string>
     <!-- Settings strings -->
     <string name="about">O aplikacji</string>
     <string name="contentDescription_app_icon">Ikona aplikacji</string>
     <string name="notation_style">Nazwy dźwięków</string>
-    <string name="notation_style_subtitle">Wybierz konwencję nazwenictwa dźwięków</string>
+    <string name="notation_style_subtitle">Wybierz konwencję nazewnictwa dźwięków</string>
     <string name="notation_style_english">Angielska</string>
-    <string name="notation_style_german">Niemicka</string>
+    <string name="notation_style_german">Niemiecka</string>
     <string name="notation_style_fixed_do">Solmizacja</string>
     <string name="source_code">Kod źródłowy</string>
     <string name="source_code_subtitle">Zgłoś błędy i zaproponuj nowe funkcje</string>
@@ -58,7 +58,7 @@
     <string name="licenses_subtitle">Rozpoznawanie tonu, grafiki i inne</string>
     <string name="version">Wersja %1$s</string>
     <string name="close">Zamknij</string>
-    <string name="contentDescription_github_logo">Logo Githuba</string>
+    <string name="contentDescription_github_logo">Logo GitHub</string>
     <string name="contentDescription_mastodon_logo">Logo Mastodona</string>
     <string name="contentDescription_internet_website">Strona internetowa</string>
     <string name="contentDescription_localization">Globus</string>
@@ -78,7 +78,7 @@
     <string name="yellow">Żółty</string>
     <string name="contentDescription_check_icon">Haczyk oznaczający aktualny wybór</string>
     <!-- Error string -->
-    <string name="whoopsie">Ups, nie powinno Cię tu być</string>
+    <string name="whoopsie">Ups, nie powinno Cię tu być!</string>
     <string name="close_app">Zamknij aplikację</string>
     <string name="contentDescription_ghost_icon">Ikonka ducha</string>
     <!-- Licenses dialog -->
