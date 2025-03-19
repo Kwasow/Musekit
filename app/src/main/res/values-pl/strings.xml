@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Bottom navigation bar labels -->
     <string name="tuning">Strojenie</string>
     <string name="metronome">Metronom</string>
     <string name="settings">Ustawienia</string>
@@ -9,12 +10,16 @@
     <string name="contentDescription_pitch_down">Zmniejsz częstotliowść podstawową</string>
     <string name="contentDescription_start_stop">Start/stop</string>
     <string name="contentDescription_metronome_ticker">Wslaźnik metronomu</string>
+    <!-- Note fork strings -->
     <string name="note">Dźwięk</string>
     <string name="pitch">Częstotliwość</string>
+    <string name="note_fork_automatic">Automatyczny</string>
     <string name="note_fork_manual">Ręczny</string>
+    <string name="record_permission_not_granted">Dostęp do mikrofonu nie został przyznany</string>
     <string name="play_sound_to_tune">Zagraj by rozpocząć strojenie</string>
     <string name="open_settings">Otwórz ustawienia</string>
     <string name="contentDescription_tuner_check">Strój dźwięku poprawny</string>
+    <!-- Note fork presets -->
     <string name="presets">Zapisane</string>
     <string name="default_preset">Domyślna</string>
     <string name="save_preset">Zapisz konfigurację</string>
@@ -24,7 +29,24 @@
     <string name="delete_preset">Usuń konfigurację</string>
     <string name="warning_preset_deletion">Konfiguracja \"%1$s\" zostanie bezpowrotnie usunięta</string>
     <string name="delete">Usuń</string>
+    <!-- Metronome strings -->
+    <string name="sound">Dźwięk metronomu</string>
+    <string name="set_beat">Ustaw tempo</string>
+    <string name="tap_beat">Wybij tempo</string>
+    <string name="beat">Tempo</string>
+    <!-- Metronome sound names -->
+    <string name="metronome_sound_default">Domyślny</string>
+    <string name="metronome_sound_beep">Beep</string>
+    <string name="metronome_sound_ding">Ding</string>
+    <string name="metronome_sound_wood">Drewno</string>
+    <string name="metronome_sound_none">(bez dźwięku)</string>
+    <!-- Settings strings -->
+    <string name="about">O aplikacji</string>
     <string name="contentDescription_app_icon">Ikona aplikacji</string>
+    <string name="notation_style">Nazwy dźwięków</string>
+    <string name="notation_style_subtitle">Wybierz konwencję nazwenictwa dźwięków</string>
+    <string name="notation_style_english">Angielska</string>
+    <string name="notation_style_german">Niemicka</string>
     <string name="notation_style_fixed_do">Solmizacja</string>
     <string name="source_code">Kod źródłowy</string>
     <string name="source_code_subtitle">Zgłoś błędy i zaproponuj nowe funkcje</string>
@@ -35,48 +57,35 @@
     <string name="licenses">Licencje</string>
     <string name="licenses_subtitle">Rozpoznawanie tonu, grafiki i inne</string>
     <string name="version">Wersja %1$s</string>
+    <string name="close">Zamknij</string>
     <string name="contentDescription_github_logo">Logo Githuba</string>
     <string name="contentDescription_mastodon_logo">Logo Mastodona</string>
+    <string name="contentDescription_internet_website">Strona internetowa</string>
     <string name="contentDescription_localization">Globus</string>
     <string name="contentDescription_file_icon">Ikonka pliku</string>
-    <string name="close">Zamknij</string>
-    <string name="whoopsie">Ups, nie powinno Cię tu być</string>
-    <string name="close_app">Zamknij aplikację</string>
-    <string name="contentDescription_ghost_icon">Ikonka ducha</string>
-    <string name="this_app">Ta aplikacja</string>
-    <string name="mit">Licencja MIT</string>
-    <string name="icons">Ikonki od css.gg</string>
-    <string name="tarsos">TarsosDSP</string>
-    <string name="contentDescription_right_arrow">Strzałka w prawo</string>
-    <string name="sound">Dźwięk metronomu</string>
-    <string name="tap_beat">Wybij tempo</string>
-    <string name="beat">Tempo</string>
-    <string name="metronome_sound_default">Domyślny</string>
-    <string name="metronome_sound_beep">Beep</string>
-    <string name="metronome_sound_ding">Ding</string>
-    <string name="metronome_sound_wood">Drewno</string>
-    <string name="metronome_sound_none">(bez dźwięku)</string>
-    <string name="about">O aplikacji</string>
+    <string name="contentDescription_moon_icon">Ikonka księżyca</string>
+    <string name="contentDescription_current_theme_symbol">Ikonka przedstawiająca aktualny motyw</string>
+    <!-- Night mode dialog -->
+    <string name="theme">Motyw</string>
     <string name="theme_subtitle">Wybierz wygląd aplikacji</string>
     <string name="theme_dark">Ciemny</string>
     <string name="theme_light">Jasny</string>
     <string name="theme_follow_system">Systemowy</string>
-    <string name="contentDescription_moon_icon">Ikonka księżyca</string>
-    <string name="contentDescription_current_theme_symbol">Ikonka przedstawiająca aktualny motyw</string>
-    <string name="contentDescription_check_icon">Haczyk oznaczający aktualny wybór</string>
-    <string name="theme">Motyw</string>
     <string name="accent_colour">Akcent kolorystyczny</string>
     <string name="green">Zielony</string>
     <string name="red">Czerwony</string>
     <string name="blue">Niebieski</string>
     <string name="yellow">Żółty</string>
-    <string name="note_fork_automatic">Automatyczny</string>
-    <string name="record_permission_not_granted">Dostęp do mikrofonu nie został przyznany</string>
+    <string name="contentDescription_check_icon">Haczyk oznaczający aktualny wybór</string>
+    <!-- Error string -->
+    <string name="whoopsie">Ups, nie powinno Cię tu być</string>
+    <string name="close_app">Zamknij aplikację</string>
+    <string name="contentDescription_ghost_icon">Ikonka ducha</string>
+    <!-- Licenses dialog -->
+    <string name="this_app">Ta aplikacja</string>
+    <string name="icons">Ikonki od css.gg</string>
+    <string name="mit">Licencja MIT</string>
+    <string name="tarsos">TarsosDSP</string>
+    <string name="contentDescription_right_arrow">Strzałka w prawo</string>
     <string name="special_thanks">Specjalne podziękowania dla TarsosDSP za zbudowanie biblioteki do rozpoznawania tonów.</string>
-    <string name="set_beat">Ustaw tempo</string>
-    <string name="contentDescription_internet_website">Strona internetowa</string>
-    <string name="notation_style">Nazwy dźwięków</string>
-    <string name="notation_style_subtitle">Wybierz konwencję nazwenictwa dźwięków</string>
-    <string name="notation_style_english">Angielska</string>
-    <string name="notation_style_german">Niemicka</string>
 </resources>
