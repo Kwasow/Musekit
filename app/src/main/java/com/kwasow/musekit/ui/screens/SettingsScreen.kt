@@ -101,6 +101,8 @@ private fun AppDetails() {
 
 @Composable
 private fun AppSettingsSection() {
+    val viewModel = koinViewModel<SettingsScreenViewModel>()
+
     SettingsSection(title = stringResource(id = R.string.settings)) {
         SettingsEntry(
             icon = painterResource(id = R.drawable.ic_moon),
@@ -133,8 +135,8 @@ private fun AppSettingsSection() {
                             index = index,
                             count = NotationStyle.entries.size,
                         ),
-                    onClick = {},
-                    selected = false,
+                    onClick = { viewModel.updateNotationStyle(style) },
+                    selected = viewModel.notationStyle.id == style.id,
                     label = { Text(stringResource(id = style.nameId)) },
                 )
             }

@@ -20,10 +20,13 @@ class SettingsScreenViewModel(
     var currentLicenseName by mutableStateOf<String?>(null)
     var currentLicenseText by mutableStateOf<String?>(null)
 
-    // ====== Public methods
-    fun setNotationStyle(style: NotationStyle) = preferencesManager.setNotationStyle(style)
+    var notationStyle by mutableStateOf(preferencesManager.getNotationStyle())
 
-    fun getNotationStyle(): NotationStyle = preferencesManager.getNotationStyle()
+    // ====== Public methods
+    fun updateNotationStyle(style: NotationStyle) {
+        preferencesManager.setNotationStyle(style)
+        notationStyle = preferencesManager.getNotationStyle()
+    }
 
     fun openGithub() = openUrl("https://github.com/Kwasow/Musekit")
 
