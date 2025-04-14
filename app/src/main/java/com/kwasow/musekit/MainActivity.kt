@@ -13,8 +13,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            KoinContext {
-                MusekitTheme {
+            MusekitTheme {
+                KoinContext {
                     App()
                 }
             }

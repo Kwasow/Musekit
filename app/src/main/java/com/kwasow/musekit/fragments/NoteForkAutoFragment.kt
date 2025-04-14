@@ -67,6 +67,7 @@ class NoteForkAutoFragment : Fragment() {
         }
 
         setupButtons()
+        setupTunerView()
         refreshPitch()
 
         return binding.root
@@ -119,5 +120,9 @@ class NoteForkAutoFragment : Fragment() {
             viewModel.setPitch(viewModel.getPitch() + 1)
             refreshPitch()
         }
+    }
+
+    private fun setupTunerView() {
+        tunerView.notationStyle = viewModel.getNotationStyle()
     }
 }

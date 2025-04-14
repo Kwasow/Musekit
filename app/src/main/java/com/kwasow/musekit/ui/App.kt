@@ -63,8 +63,11 @@ fun App() {
     ) { paddingValues ->
         HorizontalPager(
             state = pagerState,
-            modifier = Modifier.padding(paddingValues)
+            modifier = Modifier.padding(paddingValues),
+            userScrollEnabled = false
         ) { page ->
+            println(page)
+
             when (page) {
                 0 -> NoteForkPage()
                 1 -> MetronomePage()

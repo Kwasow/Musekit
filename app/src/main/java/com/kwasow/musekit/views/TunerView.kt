@@ -2,23 +2,18 @@ package com.kwasow.musekit.views
 
 import android.content.Context
 import android.os.CountDownTimer
+import android.text.SpannableStringBuilder
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStoreOwner
-import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.color.MaterialColors
+import com.kwasow.musekit.data.NotationStyle
 import com.kwasow.musekit.data.Note
 import com.kwasow.musekit.databinding.ViewTunerBinding
-import com.kwasow.musekit.models.TunerViewViewModel
 
 class TunerView : LinearLayout {
     // ====== Fields
-    private lateinit var viewModelStoreOwner: ViewModelStoreOwner
-    private lateinit var viewModel: TunerViewViewModel
-
     private val binding: ViewTunerBinding =
         ViewTunerBinding.inflate(
             LayoutInflater.from(context),
@@ -66,6 +61,8 @@ class TunerView : LinearLayout {
             }
         }
 
+    var notationStyle = NotationStyle.English
+
     // ====== Constructors
     constructor(context: Context) :
         super(context)
@@ -78,15 +75,6 @@ class TunerView : LinearLayout {
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int, defStyleRes: Int) :
         super(context, attrs, defStyleAttr, defStyleRes)
-
-    // ====== Interface methods
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-
-        viewModelStoreOwner = findViewTreeViewModelStoreOwner()
-            ?: throw IllegalStateException("Couldn't find viewModelStoreOwner")
-        viewModel = ViewModelProvider(viewModelStoreOwner)[TunerViewViewModel::class.java]
-    }
 
     // ====== Public methods
     fun updateState(
@@ -120,7 +108,7 @@ class TunerView : LinearLayout {
         if (note == null) {
             binding.currentNoteText.text = "—"
         } else {
-            binding.currentNoteText.text = viewModel.getSuperscriptedNote(note)
+            binding.currentNoteText.text = getSuperscriptedNote(note)
         }
     }
 
@@ -143,4 +131,7 @@ class TunerView : LinearLayout {
 
         binding.tunerCheckMark.drawable.setTint(inactiveColor)
     }
+
+    fun getSuperscriptedNote(note: Note): SpannableStringBuilder =
+        note.getSuperscripted(context, notationStyle)
 }
