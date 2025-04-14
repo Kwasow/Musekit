@@ -4,16 +4,19 @@ import android.content.Context
 import android.content.Intent
 import androidx.annotation.RawRes
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import com.kwasow.musekit.data.NotationStyle
 import com.kwasow.musekit.managers.PreferencesManager
+import com.kwasow.musekit.managers.ThemeManager
 
 class SettingsScreenViewModel(
     private val applicationContext: Context,
     private val preferencesManager: PreferencesManager,
+    private val themeManager: ThemeManager,
 ) : ViewModel() {
     // ====== Fields
     var showLicensesDialog by mutableStateOf(false)
@@ -21,11 +24,19 @@ class SettingsScreenViewModel(
     var currentLicenseText by mutableStateOf<String?>(null)
 
     var notationStyle by mutableStateOf(preferencesManager.getNotationStyle())
+    var themeMode by mutableIntStateOf(
+        preferencesManager.getNightMode(themeManager.getDefaultNightMode())
+    )
 
     // ====== Public methods
     fun updateNotationStyle(style: NotationStyle) {
         preferencesManager.setNotationStyle(style)
         notationStyle = preferencesManager.getNotationStyle()
+    }
+
+    fun updateThemeMode(mode: Int) {
+        preferencesManager.setNightMode(mode)
+        themeMode = preferencesManager.getNightMode(themeManager.getDefaultNightMode())
     }
 
     fun openGithub() = openUrl("https://github.com/Kwasow/Musekit")

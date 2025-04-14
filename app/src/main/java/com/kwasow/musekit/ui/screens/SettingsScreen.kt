@@ -1,5 +1,8 @@
 package com.kwasow.musekit.ui.screens
 
+import android.content.res.Resources.Theme
+import android.os.Build
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,6 +30,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.kwasow.musekit.BuildConfig
 import com.kwasow.musekit.R
+import com.kwasow.musekit.data.NightMode
 import com.kwasow.musekit.data.NotationStyle
 import com.kwasow.musekit.models.SettingsScreenViewModel
 import com.kwasow.musekit.ui.dialogs.LicenseDialog
@@ -101,45 +105,101 @@ private fun AppDetails() {
 
 @Composable
 private fun AppSettingsSection() {
-    val viewModel = koinViewModel<SettingsScreenViewModel>()
-
     SettingsSection(title = stringResource(id = R.string.settings)) {
-        SettingsEntry(
-            icon = painterResource(id = R.drawable.ic_moon),
-            iconDescription = stringResource(id = R.string.contentDescription_moon_icon),
-            name = stringResource(id = R.string.theme),
-            description = stringResource(id = R.string.theme_subtitle),
-            onClick = {},
-        )
+        ThemeSetting()
 
         HorizontalDivider()
 
-        SettingsEntry(
-            icon = painterResource(id = R.drawable.ic_globe),
-            iconDescription = stringResource(id = R.string.contentDescription_localization),
-            name = stringResource(id = R.string.notation_style),
-            description = stringResource(id = R.string.notation_style_subtitle),
-            onClick = null,
+        NotationStyleSetting()
+    }
+}
+
+@Composable
+private fun ThemeSetting() {
+    val viewModel = koinViewModel<SettingsScreenViewModel>()
+
+    val count = if (Build.VERSION.SDK_INT >= 29) 3 else 2
+
+    SettingsEntry(
+        icon = painterResource(id = R.drawable.ic_moon),
+        iconDescription = stringResource(id = R.string.contentDescription_moon_icon),
+        name = stringResource(id = R.string.theme),
+        description = stringResource(id = R.string.theme_subtitle),
+        onClick = null,
+    )
+
+    SingleChoiceSegmentedButtonRow(
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(start = 12.dp, end = 12.dp, bottom = 12.dp),
+    ) {
+        SegmentedButton(
+            shape =
+                SegmentedButtonDefaults.itemShape(
+                    index = NightMode.DARK.id,
+                    count = count,
+                ),
+            onClick = { viewModel.updateThemeMode(NightMode.DARK.value) },
+            selected = viewModel.themeMode == NightMode.DARK.value,
+            label = { Text(stringResource(id = NightMode.DARK.nameId)) },
         )
 
-        SingleChoiceSegmentedButtonRow(
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(start = 12.dp, end = 12.dp, bottom = 12.dp),
-        ) {
-            NotationStyle.entries.forEachIndexed { index, style ->
-                SegmentedButton(
-                    shape =
-                        SegmentedButtonDefaults.itemShape(
-                            index = index,
-                            count = NotationStyle.entries.size,
-                        ),
-                    onClick = { viewModel.updateNotationStyle(style) },
-                    selected = viewModel.notationStyle.id == style.id,
-                    label = { Text(stringResource(id = style.nameId)) },
-                )
-            }
+        if (Build.VERSION.SDK_INT >= 29) {
+            SegmentedButton(
+                shape =
+                    SegmentedButtonDefaults.itemShape(
+                        index = NightMode.SYSTEM.id,
+                        count = count,
+                    ),
+                onClick = { viewModel.updateThemeMode(nightSystem) },
+                selected = viewModel.themeMode == nightSystem,
+                label = { Text(stringResource(id = R.string.theme_follow_system)) },
+            )
+        }
+
+        SegmentedButton(
+            shape =
+                SegmentedButtonDefaults.itemShape(
+                    index = nightNo,
+                    count = count,
+                ),
+            onClick = { viewModel.updateThemeMode(nightNo) },
+            selected = viewModel.themeMode == nightNo,
+            label = { Text(stringResource(id = R.string.theme_light)) },
+        )
+    }
+}
+
+@Composable
+private fun NotationStyleSetting() {
+    val viewModel = koinViewModel<SettingsScreenViewModel>()
+
+    SettingsEntry(
+        icon = painterResource(id = R.drawable.ic_globe),
+        iconDescription = stringResource(id = R.string.contentDescription_localization),
+        name = stringResource(id = R.string.notation_style),
+        description = stringResource(id = R.string.notation_style_subtitle),
+        onClick = null,
+    )
+
+    SingleChoiceSegmentedButtonRow(
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(start = 12.dp, end = 12.dp, bottom = 12.dp),
+    ) {
+        NotationStyle.entries.forEachIndexed { index, style ->
+            SegmentedButton(
+                shape =
+                    SegmentedButtonDefaults.itemShape(
+                        index = index,
+                        count = NotationStyle.entries.size,
+                    ),
+                onClick = { viewModel.updateNotationStyle(style) },
+                selected = viewModel.notationStyle.id == style.id,
+                label = { Text(stringResource(id = style.nameId)) },
+            )
         }
     }
 }
