@@ -39,9 +39,10 @@ fun SettingsEntry(
         modifier = modifier.clickable { onClick() }
     }
 
-    modifier = modifier
-        .height(64.dp)
-        .padding(8.dp)
+    modifier =
+        modifier
+            .height(64.dp)
+            .padding(8.dp)
 
     Row(
         modifier = modifier,

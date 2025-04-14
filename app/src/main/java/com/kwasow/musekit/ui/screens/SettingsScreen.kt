@@ -1,17 +1,12 @@
-package pl.kwasow.ui.screens.settings
+package com.kwasow.musekit.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
@@ -33,13 +28,18 @@ import androidx.compose.ui.unit.dp
 import com.kwasow.musekit.BuildConfig
 import com.kwasow.musekit.R
 import com.kwasow.musekit.data.NotationStyle
-import com.kwasow.musekit.models.SettingsFragmentViewModel
+import com.kwasow.musekit.models.SettingsScreenViewModel
+import com.kwasow.musekit.ui.dialogs.LicenseDialog
+import com.kwasow.musekit.ui.dialogs.LicensesDialog
 import org.koin.androidx.compose.koinViewModel
+import pl.kwasow.ui.screens.settings.SettingsEntry
+import pl.kwasow.ui.screens.settings.SettingsSection
 
 // ====== Public composables
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen() {
+    val viewModel = koinViewModel<SettingsScreenViewModel>()
+
     Column(
         modifier = Modifier.verticalScroll(rememberScrollState()),
     ) {
@@ -47,6 +47,23 @@ fun SettingsScreen() {
         AppSettingsSection()
         AboutSection()
         Footer()
+    }
+
+    if (viewModel.showLicensesDialog) {
+        LicensesDialog(
+            onDismissRequest = { viewModel.closeDialogs() },
+            openSubDialog = { name, file -> viewModel.openLicenseDialog(name, file) },
+        )
+    }
+
+    val licenseName = viewModel.currentLicenseName
+    val licenseText = viewModel.currentLicenseText
+    if (licenseName != null && licenseText != null) {
+        LicenseDialog(
+            name = licenseName,
+            content = licenseText,
+            onDismissRequest = { viewModel.closeDialogs() },
+        )
     }
 }
 
@@ -84,13 +101,6 @@ private fun AppDetails() {
 
 @Composable
 private fun AppSettingsSection() {
-    val viewModel = koinViewModel<SettingsFragmentViewModel>()
-    val notationOptions = listOf(
-        R.string.notation_style_english,
-        R.string.notation_style_german,
-        R.string.notation_style_fixed_do
-    )
-
     SettingsSection(title = stringResource(id = R.string.settings)) {
         SettingsEntry(
             icon = painterResource(id = R.drawable.ic_moon),
@@ -111,19 +121,21 @@ private fun AppSettingsSection() {
         )
 
         SingleChoiceSegmentedButtonRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 12.dp, end = 12.dp, bottom = 12.dp)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(start = 12.dp, end = 12.dp, bottom = 12.dp),
         ) {
-            notationOptions.forEachIndexed { index, labelId ->
+            NotationStyle.entries.forEachIndexed { index, style ->
                 SegmentedButton(
-                    shape = SegmentedButtonDefaults.itemShape(
-                        index = index,
-                        count = notationOptions.size
-                    ),
+                    shape =
+                        SegmentedButtonDefaults.itemShape(
+                            index = index,
+                            count = NotationStyle.entries.size,
+                        ),
                     onClick = {},
                     selected = false,
-                    label = { Text(stringResource(id = labelId)) }
+                    label = { Text(stringResource(id = style.nameId)) },
                 )
             }
         }
@@ -132,13 +144,15 @@ private fun AppSettingsSection() {
 
 @Composable
 private fun AboutSection() {
+    val viewModel = koinViewModel<SettingsScreenViewModel>()
+
     SettingsSection(title = stringResource(id = R.string.about)) {
         SettingsEntry(
             icon = painterResource(id = R.drawable.ic_github),
             iconDescription = stringResource(id = R.string.contentDescription_github_logo),
             name = stringResource(id = R.string.source_code),
             description = stringResource(id = R.string.source_code_subtitle),
-            onClick = {},
+            onClick = { viewModel.openGithub() },
         )
 
         HorizontalDivider()
@@ -148,7 +162,7 @@ private fun AboutSection() {
             iconDescription = stringResource(id = R.string.contentDescription_mastodon_logo),
             name = stringResource(id = R.string.developer),
             description = stringResource(id = R.string.developer_subtitle),
-            onClick = {},
+            onClick = { viewModel.openMastodon() },
         )
 
         HorizontalDivider()
@@ -158,7 +172,7 @@ private fun AboutSection() {
             iconDescription = stringResource(id = R.string.contentDescription_internet_website),
             name = stringResource(id = R.string.developer_website),
             description = stringResource(id = R.string.developer_website_subtitle),
-            onClick = {},
+            onClick = { viewModel.openWebsite() },
         )
 
         HorizontalDivider()
@@ -168,7 +182,7 @@ private fun AboutSection() {
             iconDescription = stringResource(id = R.string.contentDescription_file_icon),
             name = stringResource(id = R.string.licenses),
             description = stringResource(id = R.string.licenses_subtitle),
-            onClick = {},
+            onClick = { viewModel.showLicensesDialog = true },
         )
     }
 }
@@ -180,8 +194,9 @@ private fun Footer() {
         style = MaterialTheme.typography.bodySmall,
         textAlign = TextAlign.Center,
         fontStyle = FontStyle.Italic,
-        modifier = Modifier
-            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
-            .fillMaxWidth(),
+        modifier =
+            Modifier
+                .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+                .fillMaxWidth(),
     )
 }

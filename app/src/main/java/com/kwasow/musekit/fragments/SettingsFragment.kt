@@ -16,7 +16,7 @@ import com.kwasow.musekit.data.NotationStyle
 import com.kwasow.musekit.databinding.FragmentSettingsBinding
 import com.kwasow.musekit.dialogs.LicensesDialogFragment
 import com.kwasow.musekit.dialogs.ThemeSettingsDialogFragment
-import com.kwasow.musekit.models.SettingsFragmentViewModel
+import com.kwasow.musekit.models.SettingsScreenViewModel
 import com.kwasow.musekit.views.MenuItem
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -34,7 +34,7 @@ class SettingsFragment : Fragment() {
     private lateinit var buttonNotationStyleGerman: MaterialButton
     private lateinit var buttonNotationStyleFixedDo: MaterialButton
 
-    private val viewModel by viewModel<SettingsFragmentViewModel>()
+    private val viewModel by viewModel<SettingsScreenViewModel>()
 
     // ====== Interface methods
     override fun onCreateView(

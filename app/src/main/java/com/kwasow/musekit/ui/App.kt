@@ -18,8 +18,8 @@ import com.kwasow.musekit.R
 import com.kwasow.musekit.databinding.ComposeErrorFragmentBinding
 import com.kwasow.musekit.databinding.ComposeMetronomeFragmentBinding
 import com.kwasow.musekit.databinding.ComposeNoteForkFragmentBinding
+import com.kwasow.musekit.ui.screens.SettingsScreen
 import kotlinx.coroutines.launch
-import pl.kwasow.ui.screens.settings.SettingsScreen
 
 // ====== Public composables
 @Composable
