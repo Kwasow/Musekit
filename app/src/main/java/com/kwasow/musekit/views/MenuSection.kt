@@ -23,7 +23,9 @@ class MenuSection(context: Context, attrs: AttributeSet) : LinearLayout(context,
         context.theme.obtainStyledAttributes(attrs, R.styleable.MenuSection, 0, 0)
             .apply {
                 sectionTitle = getString(R.styleable.MenuSection_sectionTitle)
-                    ?: throw RuntimeException("The 'sectionTitle' attribute on MenuSection is required")
+                    ?: throw RuntimeException(
+                        "The 'sectionTitle' attribute on MenuSection is required",
+                    )
 
                 recycle()
             }
