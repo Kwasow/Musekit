@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
 
     alias(libs.plugins.android.application)
     alias(libs.plugins.ktlint)
@@ -54,6 +55,7 @@ android {
     buildFeatures {
         viewBinding = true
         buildConfig = true
+        compose = true
     }
 
     androidResources {
@@ -79,11 +81,19 @@ tasks.withType<Test> {
 
 dependencies {
     // BoM
+    implementation(platform(libs.compose.bom))
     implementation(platform(libs.koin.bom))
+
+    // Compose
+    implementation(libs.compose.material3)
+    implementation(libs.compose.navigation)
+    implementation(libs.compose.ui.tooling.preview)
+    implementation(libs.compose.ui.viewbinding)
 
     // Koin
     implementation(libs.koin.android)
     implementation(libs.koin.core)
+    implementation(libs.koin.compose.base)
 
     implementation(libs.android.appcompat)
     implementation(libs.android.constraintLayout)
@@ -95,4 +105,8 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.android.test.espresso)
     androidTestImplementation(libs.android.test.junit)
+    androidTestImplementation(platform(libs.compose.bom))
+    androidTestImplementation(libs.compose.ui.test.junit4)
+    debugImplementation(libs.compose.ui.tooling.base)
+    debugImplementation(libs.compose.ui.test.manifest)
 }
