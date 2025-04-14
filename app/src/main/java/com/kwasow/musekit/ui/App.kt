@@ -1,11 +1,8 @@
 package com.kwasow.musekit.ui
 
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -30,11 +27,12 @@ fun App() {
     val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState(pageCount = { 3 })
 
-    val items = listOf(
-        Pair(R.string.tuning, R.drawable.ic_note_fork),
-        Pair(R.string.metronome, R.drawable.ic_metronome),
-        Pair(R.string.settings, R.drawable.ic_settings)
-    )
+    val items =
+        listOf(
+            Pair(R.string.tuning, R.drawable.ic_note_fork),
+            Pair(R.string.metronome, R.drawable.ic_metronome),
+            Pair(R.string.settings, R.drawable.ic_settings),
+        )
 
     Scaffold(
         bottomBar = {
@@ -46,7 +44,7 @@ fun App() {
                         icon = {
                             Icon(
                                 painterResource(id = iconId),
-                                contentDescription = name
+                                contentDescription = name,
                             )
                         },
                         label = { Text(name) },
@@ -55,16 +53,16 @@ fun App() {
                             coroutineScope.launch {
                                 pagerState.animateScrollToPage(index)
                             }
-                        }
+                        },
                     )
                 }
             }
-        }
+        },
     ) { paddingValues ->
         HorizontalPager(
             state = pagerState,
             modifier = Modifier.padding(paddingValues),
-            userScrollEnabled = false
+            userScrollEnabled = false,
         ) { page ->
             println(page)
 

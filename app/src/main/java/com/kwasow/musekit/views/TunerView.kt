@@ -133,5 +133,8 @@ class TunerView : LinearLayout {
     }
 
     fun getSuperscriptedNote(note: Note): SpannableStringBuilder =
-        note.getSuperscripted(context, notationStyle)
+        note.getSuperscripted(
+            context,
+            notationStyle,
+        )
 }

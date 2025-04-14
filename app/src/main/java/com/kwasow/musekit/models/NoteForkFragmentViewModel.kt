@@ -61,5 +61,8 @@ class NoteForkFragmentViewModel(
     fun getNotationStyle() = preferencesManager.getNotationStyle()
 
     fun getSuperscriptedNote(note: Note): SpannableStringBuilder =
-        note.getSuperscripted(applicationContext, getNotationStyle())
+        note.getSuperscripted(
+            applicationContext,
+            getNotationStyle(),
+        )
 }
