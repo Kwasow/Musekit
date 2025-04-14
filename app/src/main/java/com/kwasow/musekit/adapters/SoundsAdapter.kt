@@ -18,7 +18,10 @@ class SoundsAdapter(context: Context, names: List<String>) :
     ): View {
         val soundName = getItem(position)
         val root =
-            convertView ?: LayoutInflater.from(context).inflate(R.layout.sound_list_item, parent, false)
+            convertView
+                ?: LayoutInflater
+                    .from(context)
+                    .inflate(R.layout.sound_list_item, parent, false)
 
         val soundTextView = root.findViewById<TextView>(R.id.textSoundName)
         soundTextView.text = soundName

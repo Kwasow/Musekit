@@ -23,7 +23,9 @@ class PresetsAdapter(
     ): View {
         val presetName = getItem(position)
         val root =
-            convertView ?: LayoutInflater.from(context).inflate(R.layout.preset_list_item, parent, false)
+            convertView ?: LayoutInflater
+                .from(context)
+                .inflate(R.layout.preset_list_item, parent, false)
 
         val button = root.findViewById<MaterialButton>(R.id.buttonDeletePreset)
         button.tag = position

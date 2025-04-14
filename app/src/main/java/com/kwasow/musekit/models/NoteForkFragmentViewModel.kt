@@ -58,6 +58,11 @@ class NoteForkFragmentViewModel(
             presets.map { it.first },
         ) { presetName -> onDelete(presetName) }
 
+    fun getNotationStyle() = preferencesManager.getNotationStyle()
+
     fun getSuperscriptedNote(note: Note): SpannableStringBuilder =
-        note.getSuperscripted(applicationContext, preferencesManager.getNotationStyle())
+        note.getSuperscripted(
+            applicationContext,
+            getNotationStyle(),
+        )
 }
