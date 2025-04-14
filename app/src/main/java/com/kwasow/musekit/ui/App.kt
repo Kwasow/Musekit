@@ -18,8 +18,8 @@ import com.kwasow.musekit.R
 import com.kwasow.musekit.databinding.ComposeErrorFragmentBinding
 import com.kwasow.musekit.databinding.ComposeMetronomeFragmentBinding
 import com.kwasow.musekit.databinding.ComposeNoteForkFragmentBinding
-import com.kwasow.musekit.databinding.ComposeSettingsFragmentBinding
 import kotlinx.coroutines.launch
+import pl.kwasow.ui.screens.settings.SettingsScreen
 
 // ====== Public composables
 @Composable
@@ -69,7 +69,7 @@ fun App() {
             when (page) {
                 0 -> NoteForkPage()
                 1 -> MetronomePage()
-                2 -> SettingsPage()
+                2 -> SettingsScreen()
                 else -> ErrorPage()
             }
         }
@@ -85,11 +85,6 @@ private fun NoteForkPage() {
 @Composable
 private fun MetronomePage() {
     AndroidViewBinding(ComposeMetronomeFragmentBinding::inflate)
-}
-
-@Composable
-private fun SettingsPage() {
-    AndroidViewBinding(ComposeSettingsFragmentBinding::inflate)
 }
 
 @Composable
