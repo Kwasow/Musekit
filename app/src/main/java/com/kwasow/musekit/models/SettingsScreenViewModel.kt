@@ -24,9 +24,7 @@ class SettingsScreenViewModel(
     var currentLicenseText by mutableStateOf<String?>(null)
 
     var notationStyle by mutableStateOf(preferencesManager.getNotationStyle())
-    var themeMode by mutableIntStateOf(
-        preferencesManager.getNightMode(themeManager.getDefaultNightMode())
-    )
+    var themeMode by mutableIntStateOf(themeManager.getNightMode())
 
     // ====== Public methods
     fun updateNotationStyle(style: NotationStyle) {
@@ -35,8 +33,8 @@ class SettingsScreenViewModel(
     }
 
     fun updateThemeMode(mode: Int) {
-        preferencesManager.setNightMode(mode)
-        themeMode = preferencesManager.getNightMode(themeManager.getDefaultNightMode())
+        themeManager.setNightMode(mode)
+        themeMode = themeManager.getNightMode()
     }
 
     fun openGithub() = openUrl("https://github.com/Kwasow/Musekit")

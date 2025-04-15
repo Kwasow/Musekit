@@ -1,15 +1,37 @@
 package com.kwasow.musekit.ui.theme
 
+import android.os.Build
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 
 // ====== Public composables
 @Composable
-fun MusekitTheme(content: @Composable () -> Unit) {
-    val colorScheme = lightScheme
+fun MusekitTheme(
+    nightMode: Int,
+    content: @Composable () -> Unit
+) {
+    val dynamicColor = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+    val darkTheme =
+        if (nightMode == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) {
+            isSystemInDarkTheme()
+        } else {
+            nightMode == AppCompatDelegate.MODE_NIGHT_YES
+        }
+
+    val colorScheme = when {
+        dynamicColor && darkTheme -> dynamicDarkColorScheme(LocalContext.current)
+        dynamicColor && !darkTheme -> dynamicLightColorScheme(LocalContext.current)
+        darkTheme -> darkScheme
+        else -> lightScheme
+    }
 
     MaterialTheme(
         colorScheme = colorScheme,

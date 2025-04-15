@@ -167,7 +167,7 @@ private fun ThemeSetting() {
                 ),
             onClick = { viewModel.updateThemeMode(nightYes) },
             selected = viewModel.themeMode == nightYes,
-            label = { Text(stringResource(id = R.string.theme_light)) },
+            label = { Text(stringResource(id = R.string.theme_dark)) },
         )
     }
 }
