@@ -85,6 +85,7 @@ dependencies {
     implementation(platform(libs.koin.bom))
 
     // Compose
+    implementation(libs.compose.material)
     implementation(libs.compose.material3)
     implementation(libs.compose.navigation)
     implementation(libs.compose.ui.tooling.preview)
