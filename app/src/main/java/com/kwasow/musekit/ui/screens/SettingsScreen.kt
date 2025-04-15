@@ -1,6 +1,5 @@
 package com.kwasow.musekit.ui.screens
 
-import android.content.res.Resources.Theme
 import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.Image
@@ -30,7 +29,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.kwasow.musekit.BuildConfig
 import com.kwasow.musekit.R
-import com.kwasow.musekit.data.NightMode
 import com.kwasow.musekit.data.NotationStyle
 import com.kwasow.musekit.models.SettingsScreenViewModel
 import com.kwasow.musekit.ui.dialogs.LicenseDialog
@@ -118,6 +116,9 @@ private fun AppSettingsSection() {
 private fun ThemeSetting() {
     val viewModel = koinViewModel<SettingsScreenViewModel>()
 
+    val nightYes = AppCompatDelegate.MODE_NIGHT_YES
+    val nightNo = AppCompatDelegate.MODE_NIGHT_NO
+    val nightSystem = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
     val count = if (Build.VERSION.SDK_INT >= 29) 3 else 2
 
     SettingsEntry(
@@ -137,35 +138,35 @@ private fun ThemeSetting() {
         SegmentedButton(
             shape =
                 SegmentedButtonDefaults.itemShape(
-                    index = NightMode.DARK.id,
+                    index = 0,
                     count = count,
                 ),
-            onClick = { viewModel.updateThemeMode(NightMode.DARK.value) },
-            selected = viewModel.themeMode == NightMode.DARK.value,
-            label = { Text(stringResource(id = NightMode.DARK.nameId)) },
+            onClick = { viewModel.updateThemeMode(nightNo) },
+            selected = viewModel.themeMode == nightNo,
+            label = { Text(stringResource(id = R.string.theme_light)) },
         )
 
         if (Build.VERSION.SDK_INT >= 29) {
             SegmentedButton(
                 shape =
                     SegmentedButtonDefaults.itemShape(
-                        index = NightMode.SYSTEM.id,
+                        index = 1,
                         count = count,
                     ),
                 onClick = { viewModel.updateThemeMode(nightSystem) },
                 selected = viewModel.themeMode == nightSystem,
-                label = { Text(stringResource(id = R.string.theme_follow_system)) },
+                label = { Text(stringResource(id = R.string.theme_auto)) },
             )
         }
 
         SegmentedButton(
             shape =
                 SegmentedButtonDefaults.itemShape(
-                    index = nightNo,
+                    index = count - 1,
                     count = count,
                 ),
-            onClick = { viewModel.updateThemeMode(nightNo) },
-            selected = viewModel.themeMode == nightNo,
+            onClick = { viewModel.updateThemeMode(nightYes) },
+            selected = viewModel.themeMode == nightYes,
             label = { Text(stringResource(id = R.string.theme_light)) },
         )
     }
