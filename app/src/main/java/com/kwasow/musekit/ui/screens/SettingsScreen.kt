@@ -1,7 +1,9 @@
 package com.kwasow.musekit.ui.screens
 
 import android.os.Build
-import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES as NIGHT_YES
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO as NIGHT_NO
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM as NIGHT_SYSTEM
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -84,6 +87,7 @@ private fun AppDetails() {
                 contentDescription = stringResource(id = R.string.contentDescription_app_icon),
                 modifier = Modifier.size(150.dp),
                 contentScale = ContentScale.FillBounds,
+                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground)
             )
         }
 
@@ -116,9 +120,6 @@ private fun AppSettingsSection() {
 private fun ThemeSetting() {
     val viewModel = koinViewModel<SettingsScreenViewModel>()
 
-    val nightYes = AppCompatDelegate.MODE_NIGHT_YES
-    val nightNo = AppCompatDelegate.MODE_NIGHT_NO
-    val nightSystem = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
     val count = if (Build.VERSION.SDK_INT >= 29) 3 else 2
 
     SettingsEntry(
@@ -141,8 +142,8 @@ private fun ThemeSetting() {
                     index = 0,
                     count = count,
                 ),
-            onClick = { viewModel.updateThemeMode(nightNo) },
-            selected = viewModel.themeMode == nightNo,
+            onClick = { viewModel.updateThemeMode(NIGHT_NO) },
+            selected = viewModel.themeMode == NIGHT_NO,
             label = { Text(stringResource(id = R.string.theme_light)) },
         )
 
@@ -153,8 +154,8 @@ private fun ThemeSetting() {
                         index = 1,
                         count = count,
                     ),
-                onClick = { viewModel.updateThemeMode(nightSystem) },
-                selected = viewModel.themeMode == nightSystem,
+                onClick = { viewModel.updateThemeMode(NIGHT_SYSTEM) },
+                selected = viewModel.themeMode == NIGHT_SYSTEM,
                 label = { Text(stringResource(id = R.string.theme_auto)) },
             )
         }
@@ -165,8 +166,8 @@ private fun ThemeSetting() {
                     index = count - 1,
                     count = count,
                 ),
-            onClick = { viewModel.updateThemeMode(nightYes) },
-            selected = viewModel.themeMode == nightYes,
+            onClick = { viewModel.updateThemeMode(NIGHT_YES) },
+            selected = viewModel.themeMode == NIGHT_YES,
             label = { Text(stringResource(id = R.string.theme_dark)) },
         )
     }
