@@ -9,27 +9,14 @@ import android.os.Binder
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
-import androidx.annotation.RawRes
-import androidx.annotation.StringRes
 import com.google.android.material.slider.Slider
-import com.kwasow.musekit.R
+import com.kwasow.musekit.data.MetronomeSounds
 import com.kwasow.musekit.managers.PreferencesManager
 import org.koin.android.ext.android.inject
 import kotlin.properties.Delegates
 
 class MetronomeService : Service(), Runnable {
     // ====== Fields
-    enum class Sounds(
-        @RawRes val resourceId: Int,
-        @StringRes val resourceNameId: Int,
-    ) {
-        Default(R.raw.metronome_click, R.string.metronome_sound_default),
-        Beep(R.raw.metronome_beep, R.string.metronome_sound_beep),
-        Ding(R.raw.metronome_ding, R.string.metronome_sound_ding),
-        Wood(R.raw.metronome_wood, R.string.metronome_sound_wood),
-        None(-1, R.string.metronome_sound_none),
-    }
-
     inner class LocalBinder : Binder() {
         fun getService(): MetronomeService = this@MetronomeService
     }
@@ -38,8 +25,8 @@ class MetronomeService : Service(), Runnable {
 
     private val preferencesManager by inject<PreferencesManager>()
 
-    private val soundsList = Sounds.entries.toTypedArray()
-    var sound = Sounds.Default
+    private val soundsList = MetronomeSounds.entries.toTypedArray()
+    var sound = MetronomeSounds.Default
         set(value) {
             field = value
 
@@ -79,7 +66,7 @@ class MetronomeService : Service(), Runnable {
                 .setMaxStreams(10)
                 .build()
 
-        soundId = soundPool.load(this, Sounds.Default.resourceId, 1)
+        soundId = soundPool.load(this, sound.resourceId, 1)
         handler = Handler(Looper.getMainLooper())
     }
 
@@ -104,7 +91,7 @@ class MetronomeService : Service(), Runnable {
     override fun run() {
         if (isPlaying) {
             val tickerAnimation = buildAnimation(bpm)
-            if (sound != Sounds.None) {
+            if (sound != MetronomeSounds.None) {
                 soundPool.play(soundId, 1F, 1F, 0, 0, 1F)
             }
             tickerAnimation.start()

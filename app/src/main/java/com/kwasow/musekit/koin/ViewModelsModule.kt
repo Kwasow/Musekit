@@ -1,6 +1,6 @@
 package com.kwasow.musekit.koin
 
-import com.kwasow.musekit.ui.screens.metronome.MetronomeFragmentViewModel
+import com.kwasow.musekit.ui.screens.metronome.MetronomeScreenViewModel
 import com.kwasow.musekit.ui.screens.fork.NoteForkFragmentViewModel
 import com.kwasow.musekit.models.PresetDialogViewModel
 import com.kwasow.musekit.ui.screens.settings.SettingsScreenViewModel
@@ -10,7 +10,7 @@ import org.koin.dsl.module
 val viewModelsModule =
     module {
         viewModel {
-            MetronomeFragmentViewModel(get())
+            MetronomeScreenViewModel(get())
         }
 
         viewModel {

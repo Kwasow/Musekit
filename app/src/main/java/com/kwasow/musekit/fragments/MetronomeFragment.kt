@@ -20,7 +20,7 @@ import com.kwasow.musekit.R
 import com.kwasow.musekit.adapters.SoundsAdapter
 import com.kwasow.musekit.databinding.FragmentMetronomeBinding
 import com.kwasow.musekit.dialogs.SetBeatDialog
-import com.kwasow.musekit.ui.screens.metronome.MetronomeFragmentViewModel
+import com.kwasow.musekit.ui.screens.metronome.MetronomeScreenViewModel
 import com.kwasow.musekit.services.MetronomeService
 import com.kwasow.musekit.utils.MusekitBeatDetector
 
@@ -40,7 +40,7 @@ class MetronomeFragment : Fragment() {
     private lateinit var setBeatButton: MaterialButton
     private lateinit var tapBeatButton: MaterialButton
 
-    private val viewModel by viewModels<MetronomeFragmentViewModel>()
+    private val viewModel by viewModels<MetronomeScreenViewModel>()
 
     private lateinit var metronomeService: MetronomeService
     private var isBound = false
