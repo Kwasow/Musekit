@@ -1,4 +1,4 @@
-package com.kwasow.musekit.models
+package com.kwasow.musekit.ui.screens.metronome
 
 import androidx.lifecycle.ViewModel
 import com.kwasow.musekit.managers.PreferencesManager

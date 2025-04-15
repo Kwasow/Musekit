@@ -16,7 +16,7 @@ import com.kwasow.musekit.data.Note
 import com.kwasow.musekit.databinding.FragmentNoteForkManualBinding
 import com.kwasow.musekit.dialogs.PresetDeleteDialog
 import com.kwasow.musekit.dialogs.PresetSaveDialogFragment
-import com.kwasow.musekit.models.NoteForkFragmentViewModel
+import com.kwasow.musekit.ui.screens.fork.NoteForkFragmentViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

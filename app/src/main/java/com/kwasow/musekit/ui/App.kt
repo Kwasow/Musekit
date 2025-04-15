@@ -13,12 +13,11 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.viewinterop.AndroidViewBinding
 import com.kwasow.musekit.R
-import com.kwasow.musekit.databinding.ComposeErrorFragmentBinding
-import com.kwasow.musekit.databinding.ComposeMetronomeFragmentBinding
-import com.kwasow.musekit.databinding.ComposeNoteForkFragmentBinding
-import com.kwasow.musekit.ui.screens.SettingsScreen
+import com.kwasow.musekit.ui.screens.error.ErrorScreen
+import com.kwasow.musekit.ui.screens.fork.NoteForkScreen
+import com.kwasow.musekit.ui.screens.metronome.MetronomeScreen
+import com.kwasow.musekit.ui.screens.settings.SettingsScreen
 import kotlinx.coroutines.launch
 
 // ====== Public composables
@@ -64,30 +63,12 @@ fun App() {
             modifier = Modifier.padding(paddingValues),
             userScrollEnabled = false,
         ) { page ->
-            println(page)
-
             when (page) {
-                0 -> NoteForkPage()
-                1 -> MetronomePage()
+                0 -> NoteForkScreen()
+                1 -> MetronomeScreen()
                 2 -> SettingsScreen()
-                else -> ErrorPage()
+                else -> ErrorScreen()
             }
         }
     }
-}
-
-// ====== Private composables
-@Composable
-private fun NoteForkPage() {
-    AndroidViewBinding(ComposeNoteForkFragmentBinding::inflate)
-}
-
-@Composable
-private fun MetronomePage() {
-    AndroidViewBinding(ComposeMetronomeFragmentBinding::inflate)
-}
-
-@Composable
-private fun ErrorPage() {
-    AndroidViewBinding(ComposeErrorFragmentBinding::inflate)
 }
