@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 
         setContent {
             MusekitTheme(
-                nightMode = themeManager.getNightMode()
+                nightMode = themeManager.getNightMode(),
             ) {
                 KoinContext {
                     App()

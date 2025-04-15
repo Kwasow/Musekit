@@ -1,9 +1,6 @@
 package com.kwasow.musekit.ui.screens
 
 import android.os.Build
-import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES as NIGHT_YES
-import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO as NIGHT_NO
-import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM as NIGHT_SYSTEM
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -39,6 +36,9 @@ import com.kwasow.musekit.ui.dialogs.LicensesDialog
 import org.koin.androidx.compose.koinViewModel
 import pl.kwasow.ui.screens.settings.SettingsEntry
 import pl.kwasow.ui.screens.settings.SettingsSection
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM as NIGHT_SYSTEM
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO as NIGHT_NO
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES as NIGHT_YES
 
 // ====== Public composables
 @Composable
@@ -87,7 +87,7 @@ private fun AppDetails() {
                 contentDescription = stringResource(id = R.string.contentDescription_app_icon),
                 modifier = Modifier.size(150.dp),
                 contentScale = ContentScale.FillBounds,
-                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground)
+                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground),
             )
         }
 

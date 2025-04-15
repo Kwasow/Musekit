@@ -20,7 +20,6 @@ import com.kwasow.musekit.databinding.ComposeMetronomeFragmentBinding
 import com.kwasow.musekit.databinding.ComposeNoteForkFragmentBinding
 import com.kwasow.musekit.ui.screens.SettingsScreen
 import kotlinx.coroutines.launch
-import org.koin.androidx.compose.koinViewModel
 
 // ====== Public composables
 @Composable

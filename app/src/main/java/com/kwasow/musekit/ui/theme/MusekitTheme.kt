@@ -15,7 +15,7 @@ import androidx.compose.ui.platform.LocalContext
 @Composable
 fun MusekitTheme(
     nightMode: Int,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val dynamicColor = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
     val darkTheme =
@@ -25,12 +25,13 @@ fun MusekitTheme(
             nightMode == AppCompatDelegate.MODE_NIGHT_YES
         }
 
-    val colorScheme = when {
-        dynamicColor && darkTheme -> dynamicDarkColorScheme(LocalContext.current)
-        dynamicColor && !darkTheme -> dynamicLightColorScheme(LocalContext.current)
-        darkTheme -> darkScheme
-        else -> lightScheme
-    }
+    val colorScheme =
+        when {
+            dynamicColor && darkTheme -> dynamicDarkColorScheme(LocalContext.current)
+            dynamicColor && !darkTheme -> dynamicLightColorScheme(LocalContext.current)
+            darkTheme -> darkScheme
+            else -> lightScheme
+        }
 
     MaterialTheme(
         colorScheme = colorScheme,
