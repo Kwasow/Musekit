@@ -12,6 +12,7 @@ class MetronomeScreenViewModel(
 ) : ViewModel() {
     // ====== Fields
     var selectedSound by mutableStateOf(MetronomeSounds.Default)
+    var currentTempo by mutableStateOf(60)
 
     // ====== Public methods
     fun getBpm() = preferencesManager.getMetronomeBPM()
@@ -19,4 +20,10 @@ class MetronomeScreenViewModel(
     fun updateSound(sound: MetronomeSounds) {
         selectedSound = sound
     }
+
+    fun updateTempo(newTempo: Int) {
+        currentTempo = newTempo
+    }
+
+    fun updateTempoBy(by: Int) = updateTempo(currentTempo + by)
 }
