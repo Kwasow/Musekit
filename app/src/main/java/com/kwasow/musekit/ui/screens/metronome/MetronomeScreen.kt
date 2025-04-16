@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -44,27 +45,31 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kwasow.musekit.R
 import com.kwasow.musekit.data.MetronomeSounds
 import com.kwasow.musekit.services.MetronomeService
 import com.kwasow.musekit.ui.components.rememberBoundLocalService
+import com.kwasow.musekit.ui.dialogs.SetBeatDialog
+import org.koin.androidx.compose.koinViewModel
 
 // ======= Public composables
 @Composable
 fun MetronomeScreen() {
+    val viewModel = koinViewModel<MetronomeScreenViewModel>()
     val metronomeService =
         rememberBoundLocalService<MetronomeService, MetronomeService.LocalBinder> { service }
 
-    Column(
-        modifier =
-            Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        if (metronomeService != null) {
+    if (metronomeService != null) {
+        Column(
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
             SoundPicker(service = metronomeService)
             TempoPicker(service = metronomeService)
             BeatIndicator(service = metronomeService)
@@ -72,9 +77,21 @@ fun MetronomeScreen() {
                 service = metronomeService,
                 scope = this,
             )
-            AdditionalActions()
-        } else {
-            Text("TODO: Error/loading")
+            AdditionalActions(service = metronomeService)
+        }
+
+        if (viewModel.showSetBeatDialog) {
+            SetBeatDialog(
+                initialValue = metronomeService!!.bpm.value!!,
+                onDismiss = { viewModel.showSetBeatDialog = false },
+                onSet = { metronomeService.setTempo(it) },
+            )
+        }
+    } else {
+        Box(modifier = Modifier.fillMaxSize()) {
+            CircularProgressIndicator(
+                modifier = Modifier.align(Alignment.Center),
+            )
         }
     }
 }
@@ -113,11 +130,19 @@ private fun SoundPicker(service: MetronomeService) {
             onDismissRequest = { expanded = false },
         ) {
             MetronomeSounds.entries.forEach { sound ->
+                val fontWeight =
+                    if (sound == selectedSound.value) {
+                        FontWeight.Bold
+                    } else {
+                        FontWeight.Normal
+                    }
+
                 DropdownMenuItem(
                     text = {
                         Text(
                             text = stringResource(id = sound.resourceNameId),
                             style = MaterialTheme.typography.bodyMedium,
+                            fontWeight = fontWeight,
                         )
                     },
                     onClick = {
@@ -156,7 +181,12 @@ private fun TempoPicker(service: MetronomeService) {
         verticalAlignment = Alignment.CenterVertically,
     ) {
         ChangeButtons(
-            values = listOf(-5, -2, -1),
+            values =
+                listOf(
+                    Pair(-5, 24.sp),
+                    Pair(-2, 20.sp),
+                    Pair(-1, 16.sp),
+                ),
             onChange = onChange,
         )
 
@@ -181,7 +211,12 @@ private fun TempoPicker(service: MetronomeService) {
         )
 
         ChangeButtons(
-            values = listOf(5, 2, 1),
+            values =
+                listOf(
+                    Pair(5, 24.sp),
+                    Pair(2, 20.sp),
+                    Pair(1, 16.sp),
+                ),
             onChange = onChange,
         )
     }
@@ -189,18 +224,21 @@ private fun TempoPicker(service: MetronomeService) {
 
 @Composable
 private fun ChangeButtons(
-    values: List<Int>,
+    values: List<Pair<Int, TextUnit>>,
     onChange: (Int) -> Unit,
 ) {
     Column(modifier = Modifier.width(IntrinsicSize.Max)) {
         values.forEach { value ->
+            val change = value.first
+            val size = value.second
+
             OutlinedButton(
-                onClick = { onChange(value) },
+                onClick = { onChange(change) },
                 modifier = Modifier.fillMaxWidth(),
             ) {
                 Text(
-                    text = if (value > 0) "+$value" else value.toString(),
-                    fontSize = 24.sp,
+                    text = if (change > 0) "+$change" else change.toString(),
+                    fontSize = size,
                     modifier = Modifier.padding(horizontal = 8.dp),
                 )
             }
@@ -252,13 +290,15 @@ private fun StartStopButton(
 }
 
 @Composable
-private fun AdditionalActions() {
+private fun AdditionalActions(service: MetronomeService) {
+    val viewModel = koinViewModel<MetronomeScreenViewModel>()
+
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier.fillMaxWidth(),
     ) {
         Button(
-            onClick = {},
+            onClick = { viewModel.showSetBeatDialog = true },
             contentPadding = PaddingValues(16.dp),
         ) {
             Icon(
@@ -271,7 +311,11 @@ private fun AdditionalActions() {
         }
 
         Button(
-            onClick = {},
+            onClick = {
+                viewModel.beatEvent()?.let { res ->
+                    service.setTempo(res)
+                }
+            },
             contentPadding = PaddingValues(16.dp),
         ) {
             Icon(

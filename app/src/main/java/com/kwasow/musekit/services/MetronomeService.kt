@@ -95,6 +95,10 @@ class MetronomeService : Service(), Runnable {
 
     fun setSound(newSound: MetronomeSounds) {
         sound.postValue(newSound)
+
+        if (newSound.resourceId != -1) {
+            soundId = soundPool.load(this, newSound.resourceId, 1)
+        }
     }
 
     fun startStopMetronome() {
