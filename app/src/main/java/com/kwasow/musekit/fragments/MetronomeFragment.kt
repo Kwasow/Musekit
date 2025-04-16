@@ -20,8 +20,8 @@ import com.kwasow.musekit.R
 import com.kwasow.musekit.adapters.SoundsAdapter
 import com.kwasow.musekit.databinding.FragmentMetronomeBinding
 import com.kwasow.musekit.dialogs.SetBeatDialog
-import com.kwasow.musekit.ui.screens.metronome.MetronomeScreenViewModel
 import com.kwasow.musekit.services.MetronomeService
+import com.kwasow.musekit.ui.screens.metronome.MetronomeScreenViewModel
 import com.kwasow.musekit.utils.MusekitBeatDetector
 
 class MetronomeFragment : Fragment() {

@@ -23,12 +23,12 @@ fun ErrorScreen() {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
     ) {
         Icon(
             painter = painterResource(id = R.drawable.ic_ghost),
             contentDescription = stringResource(id = R.string.contentDescription_ghost_icon),
-            modifier = Modifier.size(240.dp)
+            modifier = Modifier.size(240.dp),
         )
 
         Text(
@@ -37,7 +37,7 @@ fun ErrorScreen() {
         )
 
         Button(
-            onClick = { exitProcess(0) }
+            onClick = { exitProcess(0) },
         ) {
             Text(text = stringResource(id = R.string.close_app))
         }
