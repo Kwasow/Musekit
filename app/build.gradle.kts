@@ -71,6 +71,12 @@ android {
     lint {
         disable.add("MissingTranslation")
     }
+
+    ktlint {
+        filter {
+            exclude("**/rememberBoundService.kt")
+        }
+    }
 }
 
 tasks.withType<Test> {

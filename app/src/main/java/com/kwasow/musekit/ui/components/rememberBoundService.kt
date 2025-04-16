@@ -22,20 +22,28 @@ inline fun <reified BoundService : Service, reified BoundServiceBinder : Binder>
 ): BoundService? {
     val context: Context = LocalContext.current
     var boundService: BoundService? by remember(context) { mutableStateOf(null) }
-    val serviceConnection: ServiceConnection = remember(context) {
-        object : ServiceConnection {
-            override fun onServiceConnected(className: ComponentName, service: IBinder) {
-                boundService = (service as BoundServiceBinder).getService()
-            }
+    val serviceConnection: ServiceConnection =
+        remember(context) {
+            object : ServiceConnection {
+                override fun onServiceConnected(
+                    className: ComponentName,
+                    service: IBinder,
+                ) {
+                    boundService = (service as BoundServiceBinder).getService()
+                }
 
-            override fun onServiceDisconnected(arg0: ComponentName) {
-                boundService = null
+                override fun onServiceDisconnected(arg0: ComponentName) {
+                    boundService = null
+                }
             }
         }
-    }
 
     DisposableEffect(context, serviceConnection) {
-        context.bindService(Intent(context, BoundService::class.java), serviceConnection, Context.BIND_AUTO_CREATE)
+        context.bindService(
+            Intent(context, BoundService::class.java),
+            serviceConnection,
+            Context.BIND_AUTO_CREATE,
+        )
         onDispose { context.unbindService(serviceConnection) }
     }
 

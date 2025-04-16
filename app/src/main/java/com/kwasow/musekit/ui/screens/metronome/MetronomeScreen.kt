@@ -33,7 +33,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -51,7 +50,6 @@ import com.kwasow.musekit.R
 import com.kwasow.musekit.data.MetronomeSounds
 import com.kwasow.musekit.services.MetronomeService
 import com.kwasow.musekit.ui.components.rememberBoundLocalService
-import org.koin.androidx.compose.koinViewModel
 
 // ======= Public composables
 @Composable
@@ -189,7 +187,7 @@ private fun TempoPicker(service: MetronomeService) {
 @Composable
 private fun ChangeButtons(
     values: List<Int>,
-    onChange: (Int) -> Unit
+    onChange: (Int) -> Unit,
 ) {
     Column(modifier = Modifier.width(IntrinsicSize.Max)) {
         values.forEach { value ->
