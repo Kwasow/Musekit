@@ -37,12 +37,6 @@
 
     <!-- Metronome strings -->
     <string name="sound">Sound</string>
-    <string name="plus5" translatable="false">+5</string>
-    <string name="plus2" translatable="false">+2</string>
-    <string name="plus1" translatable="false">+1</string>
-    <string name="minus5" translatable="false">-5</string>
-    <string name="minus2" translatable="false">-2</string>
-    <string name="minus1" translatable="false">-1</string>
     <string name="set_beat">Set beat</string>
     <string name="tap_beat">Tap beat</string>
     <string name="beat">Beat</string>

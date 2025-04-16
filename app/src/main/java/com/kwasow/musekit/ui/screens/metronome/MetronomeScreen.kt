@@ -1,5 +1,6 @@
 package com.kwasow.musekit.ui.screens.metronome
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -31,6 +32,7 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -47,11 +49,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kwasow.musekit.R
 import com.kwasow.musekit.data.MetronomeSounds
+import com.kwasow.musekit.services.MetronomeService
+import com.kwasow.musekit.ui.components.rememberBoundLocalService
 import org.koin.androidx.compose.koinViewModel
 
 // ======= Public composables
 @Composable
 fun MetronomeScreen() {
+    val metronomeService =
+        rememberBoundLocalService<MetronomeService, MetronomeService.LocalBinder> { service }
+
     Column(
         modifier =
             Modifier
@@ -59,20 +66,24 @@ fun MetronomeScreen() {
                 .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        SoundPicker()
-        TempoPicker()
-        BeatIndicator()
-        StartStopButton(this)
-        AdditionalActions()
+        if (metronomeService != null) {
+            SoundPicker(service = metronomeService)
+            TempoPicker(service = metronomeService)
+            BeatIndicator(service = metronomeService)
+            StartStopButton(this)
+            AdditionalActions()
+        } else {
+            Text("TODO: Error/loading")
+        }
     }
 }
 
 // ====== Private composables
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun SoundPicker() {
-    val viewModel = koinViewModel<MetronomeScreenViewModel>()
+private fun SoundPicker(service: MetronomeService) {
     var expanded by remember { mutableStateOf(false) }
+    val selectedSound = service.sound.observeAsState()
 
     ExposedDropdownMenuBox(
         expanded = expanded,
@@ -83,7 +94,7 @@ private fun SoundPicker() {
                 .padding(bottom = 32.dp),
     ) {
         OutlinedTextField(
-            value = stringResource(id = viewModel.selectedSound.resourceNameId),
+            value = stringResource(id = selectedSound.value!!.resourceNameId),
             onValueChange = {},
             label = { Text(text = stringResource(id = R.string.sound)) },
             trailingIcon = {
@@ -110,7 +121,7 @@ private fun SoundPicker() {
                     },
                     onClick = {
                         expanded = false
-                        viewModel.updateSound(sound)
+                        service.setSound(sound)
                     },
                 )
             }
@@ -119,8 +130,11 @@ private fun SoundPicker() {
 }
 
 @Composable
-private fun TempoPicker() {
-    val viewModel = koinViewModel<MetronomeScreenViewModel>()
+private fun TempoPicker(service: MetronomeService) {
+    val currentTempo = service.bpm.observeAsState()
+    val onChange = { by: Int ->
+        service.updateTempo(by)
+    }
 
     var textStyle by remember {
         mutableStateOf(
@@ -140,10 +154,13 @@ private fun TempoPicker() {
                 .height(IntrinsicSize.Min),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        DecreaseButtons()
+        ChangeButtons(
+            values = listOf(-5, -2, -1),
+            onChange = onChange,
+        )
 
         Text(
-            text = viewModel.currentTempo.toString(),
+            text = currentTempo.value.toString(),
             style = textStyle,
             maxLines = 1,
             modifier =
@@ -162,96 +179,40 @@ private fun TempoPicker() {
             },
         )
 
-        IncreaseButtons()
+        ChangeButtons(
+            values = listOf(5, 2, 1),
+            onChange = onChange,
+        )
     }
 }
 
 @Composable
-private fun DecreaseButtons() {
-    val viewModel = koinViewModel<MetronomeScreenViewModel>()
-
+private fun ChangeButtons(
+    values: List<Int>,
+    onChange: (Int) -> Unit
+) {
     Column(modifier = Modifier.width(IntrinsicSize.Max)) {
-        OutlinedButton(
-            onClick = { viewModel.updateTempoBy(-5) },
-            modifier = Modifier.fillMaxWidth(),
-        ) {
-            Text(
-                text = stringResource(id = R.string.minus5),
-                fontSize = 24.sp,
-                modifier = Modifier.padding(horizontal = 8.dp),
-            )
-        }
-
-        OutlinedButton(
-            onClick = { viewModel.updateTempoBy(-2) },
-            modifier = Modifier.fillMaxWidth(),
-        ) {
-            Text(
-                text = stringResource(id = R.string.minus2),
-                fontSize = 20.sp,
-                modifier = Modifier.padding(horizontal = 8.dp),
-            )
-        }
-
-        OutlinedButton(
-            onClick = { viewModel.updateTempoBy(-1) },
-            modifier = Modifier.fillMaxWidth(),
-        ) {
-            Text(
-                text = stringResource(id = R.string.minus1),
-                fontSize = 16.sp,
-                modifier = Modifier.padding(horizontal = 8.dp),
-            )
+        values.forEach { value ->
+            OutlinedButton(
+                onClick = { onChange(value) },
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Text(
+                    text = if (value > 0) "+$value" else value.toString(),
+                    fontSize = 24.sp,
+                    modifier = Modifier.padding(horizontal = 8.dp),
+                )
+            }
         }
     }
 }
 
 @Composable
-private fun IncreaseButtons() {
-    val viewModel = koinViewModel<MetronomeScreenViewModel>()
-
-    Column(modifier = Modifier.width(IntrinsicSize.Max)) {
-        OutlinedButton(
-            onClick = { viewModel.updateTempoBy(5) },
-            modifier = Modifier.fillMaxWidth(),
-        ) {
-            Text(
-                text = stringResource(id = R.string.plus5),
-                fontSize = 24.sp,
-                modifier = Modifier.padding(horizontal = 8.dp),
-            )
-        }
-
-        OutlinedButton(
-            onClick = { viewModel.updateTempoBy(2) },
-            modifier = Modifier.fillMaxWidth(),
-        ) {
-            Text(
-                text = stringResource(id = R.string.plus2),
-                fontSize = 20.sp,
-                modifier = Modifier.padding(horizontal = 8.dp),
-            )
-        }
-
-        OutlinedButton(
-            onClick = { viewModel.updateTempoBy(1) },
-            modifier = Modifier.fillMaxWidth(),
-        ) {
-            Text(
-                text = stringResource(id = R.string.plus1),
-                fontSize = 16.sp,
-                modifier = Modifier.padding(horizontal = 8.dp),
-            )
-        }
-    }
-}
-
-@Composable
-private fun BeatIndicator() {
-    var sliderPosition by remember { mutableFloatStateOf(0f) }
+private fun BeatIndicator(service: MetronomeService) {
+    val sliderPosition = service.tickerPosition.observeAsState()
 
     Slider(
-        value = sliderPosition,
+        value = sliderPosition.value!!,
         steps = 0,
         valueRange = 0f..1f,
         onValueChange = {},
@@ -265,14 +226,26 @@ private fun BeatIndicator() {
 }
 
 @Composable
-private fun StartStopButton(scope: ColumnScope) {
+private fun StartStopButton(
+    service: MetronomeService,
+    scope: ColumnScope,
+) {
+    val isPlaying = service.isPlaying.observeAsState()
+
     with(scope) {
         Box(modifier = Modifier.weight(1f)) {
             Card(
                 modifier =
                     Modifier
-                        .size(50.dp),
-            ) {}
+                        .size(50.dp)
+                        .clickable { service.startStopMetronome() },
+            ) {
+                if (isPlaying.value == true) {
+                    Text("Playing")
+                } else {
+                    Text("Paused")
+                }
+            }
         }
     }
 }

@@ -7,23 +7,5 @@ import androidx.lifecycle.ViewModel
 import com.kwasow.musekit.data.MetronomeSounds
 import com.kwasow.musekit.managers.PreferencesManager
 
-class MetronomeScreenViewModel(
-    private val preferencesManager: PreferencesManager,
-) : ViewModel() {
-    // ====== Fields
-    var selectedSound by mutableStateOf(MetronomeSounds.Default)
-    var currentTempo by mutableStateOf(60)
-
-    // ====== Public methods
-    fun getBpm() = preferencesManager.getMetronomeBPM()
-
-    fun updateSound(sound: MetronomeSounds) {
-        selectedSound = sound
-    }
-
-    fun updateTempo(newTempo: Int) {
-        currentTempo = newTempo
-    }
-
-    fun updateTempoBy(by: Int) = updateTempo(currentTempo + by)
+class MetronomeScreenViewModel() : ViewModel() {
 }

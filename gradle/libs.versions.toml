@@ -15,6 +15,7 @@ androidLifecycle = "2.8.7"
 androidTestEspresso = "3.6.1"
 androidTestJunit = "1.2.1"
 appcompat = "1.7.0"
+composeLivedata = "1.7.8"
 composeNavigation = "2.8.9"
 constraintLayout = "2.2.1"
 junit = "4.13.2"
@@ -33,6 +34,7 @@ android-lifecycle = { group = "androidx.lifecycle", name = "lifecycle-runtime-kt
 android-test-espresso = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidTestEspresso" }
 android-test-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidTestJunit" }
 compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
+compose-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "composeLivedata" }
 compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 compose-material = { group = "androidx.compose.material", name = "material" }
 compose-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "composeNavigation" }
