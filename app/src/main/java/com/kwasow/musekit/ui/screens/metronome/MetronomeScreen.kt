@@ -68,7 +68,10 @@ fun MetronomeScreen() {
             SoundPicker(service = metronomeService)
             TempoPicker(service = metronomeService)
             BeatIndicator(service = metronomeService)
-            StartStopButton(this)
+            StartStopButton(
+                service = metronomeService,
+                scope = this,
+            )
             AdditionalActions()
         } else {
             Text("TODO: Error/loading")

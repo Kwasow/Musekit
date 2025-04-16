@@ -10,7 +10,7 @@ import org.koin.dsl.module
 val viewModelsModule =
     module {
         viewModel {
-            MetronomeScreenViewModel(get())
+            MetronomeScreenViewModel()
         }
 
         viewModel {
