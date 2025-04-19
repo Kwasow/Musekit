@@ -9,7 +9,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.kwasow.musekit.adapters.NoteForkAdapter
 import com.kwasow.musekit.databinding.FragmentNoteForkBinding
-import com.kwasow.musekit.models.NoteForkFragmentViewModel
+import com.kwasow.musekit.ui.screens.fork.NoteForkFragmentViewModel
 import org.koin.android.ext.android.inject
 
 class NoteForkFragment : Fragment() {

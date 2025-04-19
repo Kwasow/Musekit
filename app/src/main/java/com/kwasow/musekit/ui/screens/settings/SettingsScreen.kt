@@ -1,4 +1,4 @@
-package com.kwasow.musekit.ui.screens
+package com.kwasow.musekit.ui.screens.settings
 
 import android.os.Build
 import androidx.compose.foundation.Image
@@ -30,7 +30,6 @@ import androidx.compose.ui.unit.dp
 import com.kwasow.musekit.BuildConfig
 import com.kwasow.musekit.R
 import com.kwasow.musekit.data.NotationStyle
-import com.kwasow.musekit.models.SettingsScreenViewModel
 import com.kwasow.musekit.ui.dialogs.LicenseDialog
 import com.kwasow.musekit.ui.dialogs.LicensesDialog
 import org.koin.androidx.compose.koinViewModel

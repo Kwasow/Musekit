@@ -71,6 +71,12 @@ android {
     lint {
         disable.add("MissingTranslation")
     }
+
+    ktlint {
+        filter {
+            exclude("**/rememberBoundService.kt")
+        }
+    }
 }
 
 tasks.withType<Test> {
@@ -85,11 +91,11 @@ dependencies {
     implementation(platform(libs.koin.bom))
 
     // Compose
+    implementation(libs.compose.livedata)
     implementation(libs.compose.material)
     implementation(libs.compose.material3)
     implementation(libs.compose.navigation)
     implementation(libs.compose.ui.tooling.preview)
-    implementation(libs.compose.ui.viewbinding)
 
     // Koin
     implementation(libs.koin.android)

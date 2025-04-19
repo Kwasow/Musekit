@@ -9,59 +9,32 @@ import android.os.Binder
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
-import androidx.annotation.RawRes
-import androidx.annotation.StringRes
-import com.google.android.material.slider.Slider
-import com.kwasow.musekit.R
+import androidx.lifecycle.MutableLiveData
+import com.kwasow.musekit.data.MetronomeSounds
 import com.kwasow.musekit.managers.PreferencesManager
 import org.koin.android.ext.android.inject
 import kotlin.properties.Delegates
 
 class MetronomeService : Service(), Runnable {
     // ====== Fields
-    enum class Sounds(
-        @RawRes val resourceId: Int,
-        @StringRes val resourceNameId: Int,
-    ) {
-        Default(R.raw.metronome_click, R.string.metronome_sound_default),
-        Beep(R.raw.metronome_beep, R.string.metronome_sound_beep),
-        Ding(R.raw.metronome_ding, R.string.metronome_sound_ding),
-        Wood(R.raw.metronome_wood, R.string.metronome_sound_wood),
-        None(-1, R.string.metronome_sound_none),
-    }
-
     inner class LocalBinder : Binder() {
-        fun getService(): MetronomeService = this@MetronomeService
+        val service: MetronomeService = this@MetronomeService
     }
 
     private var binder = LocalBinder()
 
     private val preferencesManager by inject<PreferencesManager>()
 
-    private val soundsList = Sounds.entries.toTypedArray()
-    var sound = Sounds.Default
-        set(value) {
-            field = value
-
-            if (value.resourceId != -1) {
-                soundId = soundPool.load(this, value.resourceId, 1)
-            }
-        }
-    var bpm = preferencesManager.getMetronomeBPM()
-        set(value) {
-            field = value.coerceIn(30..300)
-            preferencesManager.setMetronomeBPM(field)
-        }
-
     private var soundId by Delegates.notNull<Int>()
-
-    var isPlaying = false
-        private set
     private lateinit var soundPool: SoundPool
     private lateinit var handler: Handler
 
-    private var ticker: Slider? = null
     private var right = true
+
+    val isPlaying: MutableLiveData<Boolean> = MutableLiveData(false)
+    val sound: MutableLiveData<MetronomeSounds> = MutableLiveData(MetronomeSounds.Default)
+    val bpm: MutableLiveData<Int> = MutableLiveData(preferencesManager.getMetronomeBPM())
+    val tickerPosition: MutableLiveData<Float> = MutableLiveData(0f)
 
     // ====== Interface methods
     override fun onCreate() {
@@ -79,7 +52,7 @@ class MetronomeService : Service(), Runnable {
                 .setMaxStreams(10)
                 .build()
 
-        soundId = soundPool.load(this, Sounds.Default.resourceId, 1)
+        soundId = soundPool.load(this, sound.value!!.resourceId, 1)
         handler = Handler(Looper.getMainLooper())
     }
 
@@ -88,8 +61,6 @@ class MetronomeService : Service(), Runnable {
     }
 
     override fun onUnbind(intent: Intent?): Boolean {
-        ticker = null
-
         return super.onUnbind(intent)
     }
 
@@ -102,42 +73,50 @@ class MetronomeService : Service(), Runnable {
     }
 
     override fun run() {
-        if (isPlaying) {
-            val tickerAnimation = buildAnimation(bpm)
-            if (sound != Sounds.None) {
+        if (isPlaying.value == true) {
+            val tickerAnimation = buildAnimation(bpm.value!!)
+            if (sound.value != MetronomeSounds.None) {
                 soundPool.play(soundId, 1F, 1F, 0, 0, 1F)
             }
             tickerAnimation.start()
 
-            handler.postDelayed(this, (1000L * 60) / bpm)
+            handler.postDelayed(this, (1000L * 60) / bpm.value!!)
         }
     }
 
     // ====== Public methods
-    fun connectTicker(slider: Slider) {
-        ticker = slider
+    fun setTempo(value: Int) {
+        bpm.postValue(value)
+    }
+
+    fun updateTempo(by: Int) {
+        bpm.postValue(bpm.value!! + by)
+    }
+
+    fun setSound(newSound: MetronomeSounds) {
+        sound.postValue(newSound)
+
+        if (newSound.resourceId != -1) {
+            soundId = soundPool.load(this, newSound.resourceId, 1)
+        }
     }
 
     fun startStopMetronome() {
-        if (isPlaying) {
+        if (isPlaying.value == true) {
             stopMetronome()
         } else {
             startMetronome()
         }
     }
 
-    fun getAvailableSounds() = soundsList
-
     // ====== Private methods
     private fun startMetronome() {
-        isPlaying = true
-        ticker?.isEnabled = true
+        isPlaying.postValue(true)
         handler.post(this)
     }
 
     private fun stopMetronome() {
-        ticker?.isEnabled = false
-        isPlaying = false
+        isPlaying.postValue(false)
     }
 
     private fun buildAnimation(bpm: Int): ValueAnimator {
@@ -149,8 +128,7 @@ class MetronomeService : Service(), Runnable {
             }
 
         tickerAnimation.addUpdateListener {
-            val animatedValue = it.animatedValue as Float
-            ticker?.value = animatedValue
+            tickerPosition.postValue(it.animatedValue as Float)
         }
 
         tickerAnimation.duration = 1000L * 60 / bpm

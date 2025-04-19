@@ -1,4 +1,4 @@
-package com.kwasow.musekit.models
+package com.kwasow.musekit.ui.screens.settings
 
 import android.content.Context
 import android.content.Intent

@@ -1,4 +1,4 @@
-package com.kwasow.musekit.models
+package com.kwasow.musekit.ui.screens.fork
 
 import android.content.Context
 import android.text.SpannableStringBuilder
