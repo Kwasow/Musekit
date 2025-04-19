@@ -6,7 +6,6 @@ import android.view.Gravity
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.widget.TextViewCompat
 
@@ -15,7 +14,7 @@ import androidx.core.widget.TextViewCompat
 @Composable
 fun AutoSizeText(
     text: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     AndroidView(
         modifier = modifier,
@@ -32,6 +31,6 @@ fun AutoSizeText(
         },
         update = { view ->
             view.text = text
-        }
+        },
     )
 }
