@@ -1,6 +1,5 @@
 package com.kwasow.musekit.ui.components
 
-import android.annotation.SuppressLint
 import android.graphics.Typeface
 import android.view.Gravity
 import androidx.appcompat.widget.AppCompatTextView
@@ -10,7 +9,6 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.widget.TextViewCompat
 
 // ====== Public composables
-@SuppressLint("RestrictedApi")
 @Composable
 fun AutoSizeText(
     text: String,
@@ -26,7 +24,11 @@ fun AutoSizeText(
                 maxLines = 1
                 gravity = Gravity.CENTER
                 typeface = Typeface.DEFAULT_BOLD
-                setAutoSizeTextTypeWithDefaults(TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM)
+
+                TextViewCompat.setAutoSizeTextTypeWithDefaults(
+                    this,
+                    TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM,
+                )
             }
         },
         update = { view ->
