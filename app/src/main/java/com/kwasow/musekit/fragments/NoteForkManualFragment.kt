@@ -16,7 +16,7 @@ import com.kwasow.musekit.data.Note
 import com.kwasow.musekit.databinding.FragmentNoteForkManualBinding
 import com.kwasow.musekit.dialogs.PresetDeleteDialog
 import com.kwasow.musekit.dialogs.PresetSaveDialogFragment
-import com.kwasow.musekit.ui.screens.fork.NoteForkFragmentViewModel
+import com.kwasow.musekit.ui.screens.fork.NoteForkScreenViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -36,7 +36,7 @@ class NoteForkManualFragment : Fragment() {
     private lateinit var buttonSavePreset: MaterialButton
     private lateinit var presetsPicker: AutoCompleteTextView
 
-    private val viewModel by viewModel<NoteForkFragmentViewModel>()
+    private val viewModel by viewModel<NoteForkScreenViewModel>()
 
     private var note: Note = Note()
 

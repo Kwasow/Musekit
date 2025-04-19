@@ -12,7 +12,7 @@ import com.kwasow.musekit.managers.PermissionManager
 import com.kwasow.musekit.managers.PreferencesManager
 import com.kwasow.musekit.managers.PresetsManager
 
-class NoteForkFragmentViewModel(
+class NoteForkScreenViewModel(
     private val applicationContext: Context,
     private val permissionManager: PermissionManager,
     private val preferencesManager: PreferencesManager,

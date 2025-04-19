@@ -13,7 +13,7 @@ import com.google.android.material.card.MaterialCardView
 import com.kwasow.musekit.R
 import com.kwasow.musekit.data.Note
 import com.kwasow.musekit.databinding.FragmentNoteForkAutoBinding
-import com.kwasow.musekit.ui.screens.fork.NoteForkFragmentViewModel
+import com.kwasow.musekit.ui.screens.fork.NoteForkScreenViewModel
 import com.kwasow.musekit.utils.MusekitPitchDetector
 import com.kwasow.musekit.views.TunerView
 import org.koin.android.ext.android.inject
@@ -28,7 +28,7 @@ class NoteForkAutoFragment : Fragment() {
     private lateinit var pitchText: AppCompatTextView
     private lateinit var pitchSelectorView: MaterialCardView
 
-    private val viewModel by inject<NoteForkFragmentViewModel>()
+    private val viewModel by inject<NoteForkScreenViewModel>()
 
     private var pitchDetector: MusekitPitchDetector? = null
     private val pitchObserver: Observer<Pair<Note, Double>?> =
