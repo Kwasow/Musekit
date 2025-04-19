@@ -87,11 +87,10 @@ class MetronomeService : Service(), Runnable {
     // ====== Public methods
     fun setTempo(value: Int) {
         bpm.postValue(value)
+        preferencesManager.setMetronomeBPM(value)
     }
 
-    fun updateTempo(by: Int) {
-        bpm.postValue(bpm.value!! + by)
-    }
+    fun updateTempo(by: Int) = setTempo(bpm.value!! + by)
 
     fun setSound(newSound: MetronomeSounds) {
         sound.postValue(newSound)

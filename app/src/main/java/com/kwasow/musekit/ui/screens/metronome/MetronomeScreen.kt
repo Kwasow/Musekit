@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -39,18 +40,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kwasow.musekit.R
 import com.kwasow.musekit.data.MetronomeSounds
 import com.kwasow.musekit.services.MetronomeService
+import com.kwasow.musekit.ui.components.AutoSizeText
 import com.kwasow.musekit.ui.components.rememberBoundLocalService
 import com.kwasow.musekit.ui.dialogs.SetBeatDialog
 import org.koin.androidx.compose.koinViewModel
@@ -162,22 +161,11 @@ private fun TempoPicker(service: MetronomeService) {
         service.updateTempo(by)
     }
 
-    var textStyle by remember {
-        mutableStateOf(
-            TextStyle(
-                fontSize = 300.sp,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center,
-            ),
-        )
-    }
-    var readyToDraw by remember { mutableStateOf(false) }
-
     Row(
         modifier =
             Modifier
                 .fillMaxWidth()
-                .height(IntrinsicSize.Min),
+                .height(IntrinsicSize.Max),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         ChangeButtons(
@@ -190,24 +178,13 @@ private fun TempoPicker(service: MetronomeService) {
             onChange = onChange,
         )
 
-        Text(
+        AutoSizeText(
             text = currentTempo.value.toString(),
-            style = textStyle,
-            maxLines = 1,
             modifier =
                 Modifier
                     .padding(horizontal = 16.dp)
                     .weight(1f)
-                    .drawWithContent {
-                        if (readyToDraw) drawContent()
-                    },
-            onTextLayout = {
-                if (it.hasVisualOverflow) {
-                    textStyle = textStyle.copy(fontSize = textStyle.fontSize * 0.80)
-                } else {
-                    readyToDraw = true
-                }
-            },
+                    .fillMaxHeight(),
         )
 
         ChangeButtons(
