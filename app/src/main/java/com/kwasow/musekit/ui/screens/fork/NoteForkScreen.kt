@@ -1,27 +1,26 @@
 package com.kwasow.musekit.ui.screens.fork
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.SecondaryTabRow
-import androidx.compose.material3.Tab
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import com.kwasow.musekit.R
+import com.kwasow.musekit.ui.components.PilledTabItem
+import com.kwasow.musekit.ui.components.PilledTabRow
 import com.kwasow.musekit.ui.screens.error.ErrorScreen
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 // ====== Public composables
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NoteForkScreen() {
-    // TODO: Initial state
     val viewModel = koinViewModel<NoteForkScreenViewModel>()
     val pagerState = rememberPagerState(
         pageCount = { 2 },
@@ -34,14 +33,18 @@ fun NoteForkScreen() {
         Pair(R.string.note_fork_manual, { NoteForkManualScreen() }),
     )
 
-    Column(modifier = Modifier.fillMaxSize()) {
-        SecondaryTabRow(
-            selectedTabIndex = pagerState.currentPage,
-        ) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 16.dp)
+    ) {
+        PilledTabRow(modifier = Modifier.padding(horizontal = 24.dp)) {
             pages.forEachIndexed { index, (first) ->
-                Tab(
-                    text = { Text(text = stringResource(id = first)) },
-                    selected = pagerState.currentPage == index,
+                val selected = pagerState.currentPage == index
+
+                PilledTabItem(
+                    text = stringResource(id = first),
+                    isSelected = selected,
                     onClick = {
                         coroutineScope.launch {
                             pagerState.animateScrollToPage(index)
@@ -55,6 +58,7 @@ fun NoteForkScreen() {
         HorizontalPager(
             state = pagerState,
             userScrollEnabled = false,
+            contentPadding = PaddingValues(vertical = 12.dp),
         ) { page ->
             val content = pages.getOrNull(page)?.second ?: { ErrorScreen() }
             content()
