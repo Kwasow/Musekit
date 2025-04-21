@@ -180,6 +180,7 @@ private fun TempoPicker(service: MetronomeService) {
 
         AutoSizeText(
             text = currentTempo.value.toString(),
+            boldFont = true,
             modifier =
                 Modifier
                     .padding(horizontal = 16.dp)

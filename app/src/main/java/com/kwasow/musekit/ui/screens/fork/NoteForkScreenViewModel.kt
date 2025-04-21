@@ -2,10 +2,12 @@ package com.kwasow.musekit.ui.screens.fork
 
 import android.content.Context
 import android.text.SpannableStringBuilder
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import com.kwasow.musekit.R
-import com.kwasow.musekit.adapters.PresetsAdapter
 import com.kwasow.musekit.data.Note
 import com.kwasow.musekit.data.Notes
 import com.kwasow.musekit.managers.PermissionManager
@@ -18,6 +20,9 @@ class NoteForkScreenViewModel(
     private val preferencesManager: PreferencesManager,
     private val presetsManager: PresetsManager,
 ) : ViewModel() {
+    // ======= Fields
+    var currentNote by mutableStateOf(Note())
+
     // ======= Public methods
     fun getNoteForkMode(): Int = preferencesManager.getNoteForkMode()
 
@@ -48,15 +53,6 @@ class NoteForkScreenViewModel(
 
         return presets
     }
-
-    fun buildPresetsAdapter(
-        presets: List<Pair<String, Note>>,
-        onDelete: (String) -> Unit,
-    ): PresetsAdapter =
-        PresetsAdapter(
-            applicationContext,
-            presets.map { it.first },
-        ) { presetName -> onDelete(presetName) }
 
     fun getNotationStyle() = preferencesManager.getNotationStyle()
 
