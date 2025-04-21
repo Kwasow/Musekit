@@ -1,9 +1,6 @@
 package com.kwasow.musekit.ui.dialogs
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -15,46 +12,44 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import com.kwasow.musekit.R
 
 // ====== Public composables
 @Composable
-fun SetBeatDialog(
-    initialValue: Int,
+fun PresetSaveDialog(
+    onSave: (String) -> Unit,
     onDismiss: () -> Unit,
-    onSet: (Int) -> Unit,
 ) {
-    var beat by remember { mutableStateOf(initialValue.toString()) }
+    var name by remember { mutableStateOf("") }
 
     AlertDialog(
         title = { AlertTitle() },
         text = {
             AlertContent(
-                value = beat,
-                onValueChange = { beat = it },
+                value = name,
+                onValueChange = { name = it },
             )
         },
         onDismissRequest = onDismiss,
         confirmButton = {
             AlertConfirmButton(
-                enabled = beat.isNotBlank(),
+                enabled = name.isNotBlank(),
                 onSet = {
-                    onSet(beat.toInt())
+                    onSave(name)
                     onDismiss()
                 },
             )
         },
-        dismissButton = { AlertCancelButton(onDismiss = onDismiss) },
+        dismissButton = {
+            AlertCancelButton(onDismiss = onDismiss)
+        },
     )
 }
 
 // ====== Private composables
 @Composable
 private fun AlertTitle() {
-    Text(text = stringResource(id = R.string.set_beat))
+    Text(text = stringResource(id = R.string.save_preset))
 }
 
 @Composable
@@ -62,26 +57,14 @@ private fun AlertContent(
     value: String,
     onValueChange: (String) -> Unit,
 ) {
-    Row(
+    TextField(
+        value = value,
+        onValueChange = onValueChange,
+        placeholder = { Text(text = stringResource(id = R.string.preset_name)) },
+        isError = value.isBlank(),
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center,
-    ) {
-        TextField(
-            value = value,
-            onValueChange = onValueChange,
-            placeholder = {
-                Text(
-                    text = "60",
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth(),
-                )
-            },
-            isError = value.isBlank(),
-            modifier = Modifier.width(64.dp),
-            singleLine = true,
-            textStyle = TextStyle.Default.copy(textAlign = TextAlign.Center),
-        )
-    }
+        singleLine = true,
+    )
 }
 
 @Composable

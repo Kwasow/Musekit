@@ -24,7 +24,7 @@ fun NoteForkScreen() {
     val viewModel = koinViewModel<NoteForkScreenViewModel>()
     val pagerState = rememberPagerState(
         pageCount = { 2 },
-        initialPage = viewModel.getNoteForkMode()
+        initialPage = viewModel.noteForkMode
     )
     val coroutineScope = rememberCoroutineScope()
 
@@ -48,7 +48,7 @@ fun NoteForkScreen() {
                     onClick = {
                         coroutineScope.launch {
                             pagerState.animateScrollToPage(index)
-                            viewModel.setNoteForkMode(index)
+                            viewModel.noteForkMode = index
                         }
                     },
                 )

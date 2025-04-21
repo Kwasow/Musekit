@@ -15,6 +15,7 @@ class PresetsManagerImpl(
 
     // ====== Public methods
     override fun savePreset(preset: Preset) {
+        // TODO: Someone could name their preset "Default"
         if (preset.name.isNotBlank()) {
             var filename = toFileName(preset.name) + 0
             val directory = File(context.filesDir, PRESET_DIR)

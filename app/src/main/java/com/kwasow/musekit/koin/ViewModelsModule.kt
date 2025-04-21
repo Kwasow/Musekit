@@ -1,6 +1,5 @@
 package com.kwasow.musekit.koin
 
-import com.kwasow.musekit.models.PresetDialogViewModel
 import com.kwasow.musekit.ui.screens.fork.NoteForkScreenViewModel
 import com.kwasow.musekit.ui.screens.metronome.MetronomeScreenViewModel
 import com.kwasow.musekit.ui.screens.settings.SettingsScreenViewModel
@@ -15,10 +14,6 @@ val viewModelsModule =
 
         viewModel {
             NoteForkScreenViewModel(get(), get(), get(), get())
-        }
-
-        viewModel {
-            PresetDialogViewModel(get())
         }
 
         viewModel {

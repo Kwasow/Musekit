@@ -36,15 +36,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.utils.widget.MotionLabel
 import com.kwasow.musekit.R
-import com.kwasow.musekit.data.MetronomeSounds
 import com.kwasow.musekit.ui.components.AutoSizeText
+import com.kwasow.musekit.ui.dialogs.PresetRemoveDialog
+import com.kwasow.musekit.ui.dialogs.PresetSaveDialog
 import org.koin.androidx.compose.koinViewModel
 
 // ====== Public composables
 @Composable
 fun NoteForkManualScreen() {
+    val viewModel = koinViewModel<NoteForkScreenViewModel>()
+
     Column(
         modifier = Modifier.padding(horizontal = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -54,12 +56,26 @@ fun NoteForkManualScreen() {
         PlayPause(scope = this)
         AdditionalActions()
     }
+
+    when (viewModel.currentDialog) {
+        NoteForkScreenViewModel.Dialog.SAVE_PRESET -> PresetSaveDialog(
+            onSave = { viewModel.addPreset(it, viewModel.currentNote) },
+            onDismiss = { viewModel.currentDialog = NoteForkScreenViewModel.Dialog.NONE },
+        )
+        NoteForkScreenViewModel.Dialog.REMOVE_PRESET -> PresetRemoveDialog(
+            name = "TODO",
+            onRemove = {  },
+            onDismiss = { viewModel.currentDialog = NoteForkScreenViewModel.Dialog.NONE },
+        )
+        else -> {}
+    }
 }
 
 // ====== Private methods
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun PresetPicker() {
+    val viewModel = koinViewModel<NoteForkScreenViewModel>()
     var expanded by remember { mutableStateOf(false) }
 
     ExposedDropdownMenuBox(
@@ -68,9 +84,9 @@ private fun PresetPicker() {
         modifier = Modifier.fillMaxWidth(),
     ) {
         OutlinedTextField(
-            value = "test",
+            value = viewModel.currentPreset,
             onValueChange = {},
-            label = { Text(text = stringResource(id = R.string.sound)) },
+            label = { Text(text = stringResource(id = R.string.presets)) },
             trailingIcon = {
                 ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
             },
@@ -85,25 +101,40 @@ private fun PresetPicker() {
             expanded = expanded,
             onDismissRequest = { expanded = false },
         ) {
-            MetronomeSounds.entries.forEach { sound ->
-                val fontWeight = FontWeight.Normal
-//                    if (sound == selectedSound.value) {
-//                        FontWeight.Bold
-//                    } else {
-//                        FontWeight.Normal
-//                    }
+            viewModel.presets.forEach { (name, note) ->
+                val fontWeight =
+                    if (name == viewModel.currentPreset) {
+                        FontWeight.Bold
+                    } else {
+                        FontWeight.Normal
+                    }
 
                 DropdownMenuItem(
                     text = {
                         Text(
-                            text = stringResource(id = sound.resourceNameId),
+                            text = name,
                             style = MaterialTheme.typography.bodyMedium,
                             fontWeight = fontWeight,
                         )
                     },
                     onClick = {
                         expanded = false
+                        viewModel.currentPreset = name
+                        viewModel.setNote(note)
                     },
+                    trailingIcon = {
+                        if (name != viewModel.defaultPreset.first) {
+                            IconButton(onClick = {
+                                viewModel.currentDialog = NoteForkScreenViewModel.Dialog.REMOVE_PRESET
+                            }) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.ic_delete),
+                                    contentDescription = "",
+                                    tint = MaterialTheme.colorScheme.primary,
+                                )
+                            }
+                        }
+                    }
                 )
             }
         }
@@ -121,16 +152,24 @@ private fun PitchPicker() {
         PropertyCard(
             label = stringResource(id = R.string.note),
             value = viewModel.getSuperscriptedNote(viewModel.currentNote),
-            onIncrease = {},
-            onDecrease = {},
+            onIncrease = {
+                viewModel.currentNote = viewModel.currentNote.apply { up() }
+            },
+            onDecrease = {
+                viewModel.currentNote = viewModel.currentNote.apply { down() }
+            },
             modifier = Modifier.weight(1f)
         )
 
         PropertyCard(
             label = stringResource(id = R.string.pitch),
-            value = stringResource(id = R.string.pitch_placeholder, viewModel.getPitch()),
-            onIncrease = {},
-            onDecrease = {},
+            value = stringResource(id = R.string.pitch_placeholder, viewModel.currentNote.pitch),
+            onIncrease = {
+                viewModel.currentNote = viewModel.currentNote.apply { pitch += 1 }
+            },
+            onDecrease = {
+                viewModel.currentNote = viewModel.currentNote.apply { pitch -= 1}
+            },
             modifier = Modifier.weight(1f)
         )
     }
@@ -190,10 +229,10 @@ private fun PropertyCard(
 @Composable
 private fun PlayPause(scope: ColumnScope) {
     with(scope) {
-        Box(modifier = androidx.compose.ui.Modifier.weight(1f)) {
+        Box(modifier = Modifier.weight(1f)) {
             Card(
                 modifier =
-                    androidx.compose.ui.Modifier
+                    Modifier
                         .size(50.dp)
                         .clickable {},
             ) {
@@ -205,12 +244,16 @@ private fun PlayPause(scope: ColumnScope) {
 
 @Composable
 private fun AdditionalActions() {
+    val viewModel = koinViewModel<NoteForkScreenViewModel>()
+
     Row(
         horizontalArrangement = Arrangement.End,
         modifier = Modifier.fillMaxWidth(),
     ) {
         Button(
-            onClick = {},
+            onClick = {
+                viewModel.currentDialog = NoteForkScreenViewModel.Dialog.SAVE_PRESET
+            },
             contentPadding = PaddingValues(16.dp),
         ) {
             Icon(

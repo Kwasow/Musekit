@@ -51,7 +51,6 @@ fun LicensesDialog(
     openSubDialog: (String, Int) -> Unit,
 ) {
     AlertDialog(
-        icon = { AlertIcon() },
         title = { AlertTitle(title = stringResource(id = R.string.licenses)) },
         text = { AlertContent(openSubDialog = openSubDialog) },
         onDismissRequest = onDismissRequest,
@@ -61,19 +60,8 @@ fun LicensesDialog(
 
 // ====== Private composables
 @Composable
-private fun AlertIcon() {
-    Icon(
-        painterResource(id = R.drawable.ic_file),
-        contentDescription = stringResource(id = R.string.contentDescription_file_icon),
-    )
-}
-
-@Composable
 private fun AlertTitle(title: String) {
-    Text(
-        text = title,
-        textAlign = TextAlign.Center,
-    )
+    Text(text = title)
 }
 
 @Composable

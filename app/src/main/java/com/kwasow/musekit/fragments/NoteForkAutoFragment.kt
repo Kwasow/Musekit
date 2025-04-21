@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.kwasow.musekit.R
+import com.kwasow.musekit.data.NotationStyle
 import com.kwasow.musekit.data.Note
 import com.kwasow.musekit.databinding.FragmentNoteForkAutoBinding
 import com.kwasow.musekit.ui.screens.fork.NoteForkScreenViewModel
@@ -123,6 +124,6 @@ class NoteForkAutoFragment : Fragment() {
     }
 
     private fun setupTunerView() {
-        tunerView.notationStyle = viewModel.getNotationStyle()
+        tunerView.notationStyle = NotationStyle.English
     }
 }
