@@ -60,12 +60,12 @@ fun NoteForkManualScreen() {
     when (viewModel.currentDialog) {
         NoteForkScreenViewModel.Dialog.SAVE_PRESET -> PresetSaveDialog(
             onSave = { viewModel.addPreset(it, viewModel.currentNote) },
-            onDismiss = { viewModel.currentDialog = NoteForkScreenViewModel.Dialog.NONE },
+            onDismiss = { viewModel.closeDialog() },
         )
         NoteForkScreenViewModel.Dialog.REMOVE_PRESET -> PresetRemoveDialog(
-            name = "TODO",
-            onRemove = {  },
-            onDismiss = { viewModel.currentDialog = NoteForkScreenViewModel.Dialog.NONE },
+            name = viewModel.currentRemovePresetName,
+            onRemove = { viewModel.confirmRemovePreset() },
+            onDismiss = { viewModel.closeDialog() },
         )
         else -> {}
     }
@@ -125,7 +125,7 @@ private fun PresetPicker() {
                     trailingIcon = {
                         if (name != viewModel.defaultPreset.first) {
                             IconButton(onClick = {
-                                viewModel.currentDialog = NoteForkScreenViewModel.Dialog.REMOVE_PRESET
+                                viewModel.removePreset(name)
                             }) {
                                 Icon(
                                     painter = painterResource(id = R.drawable.ic_delete),

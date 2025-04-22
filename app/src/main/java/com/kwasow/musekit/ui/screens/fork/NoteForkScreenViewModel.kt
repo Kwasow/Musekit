@@ -40,6 +40,7 @@ class NoteForkScreenViewModel(
     )
     var currentPreset by mutableStateOf(defaultPreset.first)
     var currentDialog by mutableStateOf(Dialog.NONE)
+    var currentRemovePresetName by mutableStateOf("")
 
     var noteForkMode: Int
         get() = preferencesManager.getNoteForkMode()
@@ -87,12 +88,22 @@ class NoteForkScreenViewModel(
     }
 
     fun removePreset(name: String) {
-        presetsManager.removePreset(name)
-        if (currentPreset == name) {
+        currentRemovePresetName = name
+        currentDialog = Dialog.REMOVE_PRESET
+    }
+
+    fun confirmRemovePreset() {
+        presetsManager.removePreset(currentRemovePresetName)
+        if (currentPreset == currentRemovePresetName) {
             currentPreset = defaultPreset.first
         }
 
         refreshPresets()
+        closeDialog()
+    }
+
+    fun closeDialog() {
+        currentDialog = Dialog.NONE
     }
 
     // ====== Private methods
