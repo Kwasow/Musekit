@@ -50,6 +50,7 @@ import com.kwasow.musekit.R
 import com.kwasow.musekit.data.MetronomeSounds
 import com.kwasow.musekit.services.MetronomeService
 import com.kwasow.musekit.ui.components.AutoSizeText
+import com.kwasow.musekit.ui.components.PlayPauseButton
 import com.kwasow.musekit.ui.components.rememberBoundLocalService
 import com.kwasow.musekit.ui.dialogs.SetBeatDialog
 import org.koin.androidx.compose.koinViewModel
@@ -250,20 +251,11 @@ private fun StartStopButton(
     val isPlaying = service.isPlaying.observeAsState()
 
     with(scope) {
-        Box(modifier = Modifier.weight(1f)) {
-            Card(
-                modifier =
-                    Modifier
-                        .size(50.dp)
-                        .clickable { service.startStopMetronome() },
-            ) {
-                if (isPlaying.value == true) {
-                    Text("Playing")
-                } else {
-                    Text("Paused")
-                }
-            }
-        }
+        PlayPauseButton(
+            modifier = Modifier.weight(1f),
+            isPlaying = isPlaying.value == true,
+            onChange = { service.startStopMetronome() },
+        )
     }
 }
 

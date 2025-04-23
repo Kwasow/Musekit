@@ -38,6 +38,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.kwasow.musekit.R
 import com.kwasow.musekit.ui.components.AutoSizeText
+import com.kwasow.musekit.ui.components.PlayPauseButton
 import com.kwasow.musekit.ui.dialogs.PresetRemoveDialog
 import com.kwasow.musekit.ui.dialogs.PresetSaveDialog
 import org.koin.androidx.compose.koinViewModel
@@ -229,16 +230,11 @@ private fun PropertyCard(
 @Composable
 private fun PlayPause(scope: ColumnScope) {
     with(scope) {
-        Box(modifier = Modifier.weight(1f)) {
-            Card(
-                modifier =
-                    Modifier
-                        .size(50.dp)
-                        .clickable {},
-            ) {
-                Text("Playing")
-            }
-        }
+        PlayPauseButton(
+            modifier = Modifier.weight(1f),
+            isPlaying = false,
+            onChange = { },
+        )
     }
 }
 
