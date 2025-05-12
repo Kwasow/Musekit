@@ -20,7 +20,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.kwasow.musekit.R
 
@@ -51,7 +50,6 @@ fun LicensesDialog(
     openSubDialog: (String, Int) -> Unit,
 ) {
     AlertDialog(
-        icon = { AlertIcon() },
         title = { AlertTitle(title = stringResource(id = R.string.licenses)) },
         text = { AlertContent(openSubDialog = openSubDialog) },
         onDismissRequest = onDismissRequest,
@@ -61,19 +59,8 @@ fun LicensesDialog(
 
 // ====== Private composables
 @Composable
-private fun AlertIcon() {
-    Icon(
-        painterResource(id = R.drawable.ic_file),
-        contentDescription = stringResource(id = R.string.contentDescription_file_icon),
-    )
-}
-
-@Composable
 private fun AlertTitle(title: String) {
-    Text(
-        text = title,
-        textAlign = TextAlign.Center,
-    )
+    Text(text = title)
 }
 
 @Composable

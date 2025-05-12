@@ -11,7 +11,8 @@ import androidx.core.widget.TextViewCompat
 // ====== Public composables
 @Composable
 fun AutoSizeText(
-    text: String,
+    text: CharSequence,
+    boldFont: Boolean,
     modifier: Modifier = Modifier,
 ) {
     AndroidView(
@@ -23,7 +24,11 @@ fun AutoSizeText(
                 height = 0
                 maxLines = 1
                 gravity = Gravity.CENTER
-                typeface = Typeface.DEFAULT_BOLD
+                typeface =
+                    when (boldFont) {
+                        true -> Typeface.DEFAULT_BOLD
+                        false -> Typeface.DEFAULT
+                    }
 
                 TextViewCompat.setAutoSizeTextTypeWithDefaults(
                     this,

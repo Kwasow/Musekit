@@ -8,14 +8,24 @@ import android.text.style.SubscriptSpan
 import android.text.style.SuperscriptSpan
 import com.kwasow.musekit.R
 import java.util.Objects
+import kotlin.math.max
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
-class Note {
+class Note(
+    pitch: Int,
+    var note: Notes,
+    octave: Int,
+) {
     // ====== Fields
-    var pitch: Int
-    var note: Notes
-    var octave: Int
+    var pitch: Int = pitch
+        set(value) {
+            field = max(value, 1)
+        }
+    var octave: Int = octave
+        set(value) {
+            field = max(value, 1)
+        }
 
     companion object {
         fun fromCentDiff(
@@ -43,12 +53,6 @@ class Note {
     constructor(note: Notes) : this(440, note, 4)
 
     constructor(note: Notes, octave: Int) : this(440, note, octave)
-
-    constructor(pitch: Int, note: Notes, octave: Int) {
-        this.pitch = pitch
-        this.note = note
-        this.octave = octave
-    }
 
     // Copy constructor
     constructor(note: Note) : this(note.pitch, note.note, note.octave)

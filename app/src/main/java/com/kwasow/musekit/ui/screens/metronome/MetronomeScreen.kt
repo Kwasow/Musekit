@@ -1,6 +1,5 @@
 package com.kwasow.musekit.ui.screens.metronome
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,7 +18,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -50,6 +48,7 @@ import com.kwasow.musekit.R
 import com.kwasow.musekit.data.MetronomeSounds
 import com.kwasow.musekit.services.MetronomeService
 import com.kwasow.musekit.ui.components.AutoSizeText
+import com.kwasow.musekit.ui.components.PlayPauseButton
 import com.kwasow.musekit.ui.components.rememberBoundLocalService
 import com.kwasow.musekit.ui.dialogs.SetBeatDialog
 import org.koin.androidx.compose.koinViewModel
@@ -180,6 +179,7 @@ private fun TempoPicker(service: MetronomeService) {
 
         AutoSizeText(
             text = currentTempo.value.toString(),
+            boldFont = true,
             modifier =
                 Modifier
                     .padding(horizontal = 16.dp)
@@ -249,20 +249,11 @@ private fun StartStopButton(
     val isPlaying = service.isPlaying.observeAsState()
 
     with(scope) {
-        Box(modifier = Modifier.weight(1f)) {
-            Card(
-                modifier =
-                    Modifier
-                        .size(50.dp)
-                        .clickable { service.startStopMetronome() },
-            ) {
-                if (isPlaying.value == true) {
-                    Text("Playing")
-                } else {
-                    Text("Paused")
-                }
-            }
-        }
+        PlayPauseButton(
+            modifier = Modifier.weight(1f),
+            isPlaying = isPlaying.value == true,
+            onChange = { service.startStopMetronome() },
+        )
     }
 }
 
