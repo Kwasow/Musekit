@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import com.kwasow.musekit.managers.PreferencesManager
 import com.kwasow.musekit.ui.App
 import com.kwasow.musekit.ui.theme.MusekitTheme
@@ -20,14 +21,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            val nightMode =
+            val nightMode by
                 preferencesManager.nightMode.collectAsState(
                     AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM,
                 )
 
-            MusekitTheme(
-                nightMode = nightMode.value,
-            ) {
+            MusekitTheme(nightMode = nightMode) {
                 KoinContext {
                     App()
                 }

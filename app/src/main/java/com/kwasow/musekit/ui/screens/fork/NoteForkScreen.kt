@@ -9,6 +9,7 @@ import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -24,11 +25,11 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun NoteForkScreen() {
     val viewModel = koinViewModel<NoteForkScreenViewModel>()
-    val noteForkMode = viewModel.noteForkMode.collectAsState(0)
+    val noteForkMode by viewModel.noteForkMode.collectAsState(0)
     val pagerState =
         rememberPagerState(
             pageCount = { 2 },
-            initialPage = noteForkMode.value,
+            initialPage = noteForkMode,
         )
 
     val pages =

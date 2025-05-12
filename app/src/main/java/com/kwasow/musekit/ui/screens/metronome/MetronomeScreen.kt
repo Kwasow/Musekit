@@ -59,7 +59,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun MetronomeScreen() {
     val viewModel = koinViewModel<MetronomeScreenViewModel>()
-    val bpm = viewModel.metronomeBpm.collectAsState(60)
+    val bpm by viewModel.metronomeBpm.collectAsState(60)
 
     val metronomeService =
         rememberBoundLocalService<MetronomeService, MetronomeService.LocalBinder> { service }
@@ -84,7 +84,7 @@ fun MetronomeScreen() {
 
         if (viewModel.showSetBeatDialog) {
             SetBeatDialog(
-                initialValue = bpm.value,
+                initialValue = bpm,
                 onDismiss = { viewModel.showSetBeatDialog = false },
                 onSet = { viewModel.setBpm(it) },
             )
@@ -105,7 +105,7 @@ private fun SoundPicker() {
     val viewModel = koinViewModel<MetronomeScreenViewModel>()
 
     var expanded by remember { mutableStateOf(false) }
-    val selectedSound = viewModel.metronomeSound.collectAsState(MetronomeSounds.Default)
+    val selectedSound by viewModel.metronomeSound.collectAsState(null)
 
     ExposedDropdownMenuBox(
         expanded = expanded,
@@ -115,8 +115,13 @@ private fun SoundPicker() {
                 .fillMaxWidth()
                 .padding(bottom = 32.dp),
     ) {
+        val sound = selectedSound
+
         OutlinedTextField(
-            value = stringResource(id = selectedSound.value.resourceNameId),
+            value = when (sound) {
+                null -> ""
+                else -> stringResource(id = sound.resourceNameId)
+            },
             onValueChange = {},
             label = { Text(text = stringResource(id = R.string.sound)) },
             trailingIcon = {
@@ -135,7 +140,7 @@ private fun SoundPicker() {
         ) {
             MetronomeSounds.entries.forEach { sound ->
                 val fontWeight =
-                    if (sound == selectedSound.value) {
+                    if (sound == selectedSound) {
                         FontWeight.Bold
                     } else {
                         FontWeight.Normal
@@ -162,7 +167,7 @@ private fun SoundPicker() {
 @Composable
 private fun TempoPicker() {
     val viewModel = koinViewModel<MetronomeScreenViewModel>()
-    val currentTempo = viewModel.metronomeBpm.collectAsState(60)
+    val currentTempo by viewModel.metronomeBpm.collectAsState(null)
 
     Row(
         modifier =
@@ -171,6 +176,8 @@ private fun TempoPicker() {
                 .height(IntrinsicSize.Max),
         verticalAlignment = Alignment.CenterVertically,
     ) {
+        val tempo = currentTempo
+
         ChangeButtons(
             values =
                 listOf(
@@ -178,11 +185,11 @@ private fun TempoPicker() {
                     Pair(-2, 20.sp),
                     Pair(-1, 16.sp),
                 ),
-            onChange = { viewModel.setBpm(currentTempo.value + it) },
+            onChange = { tempo?.let { viewModel.setBpm(tempo + it) } },
         )
 
         AutoSizeText(
-            text = currentTempo.value.toString(),
+            text = currentTempo?.toString(),
             boldFont = true,
             modifier =
                 Modifier
@@ -198,7 +205,7 @@ private fun TempoPicker() {
                     Pair(2, 20.sp),
                     Pair(1, 16.sp),
                 ),
-            onChange = { viewModel.setBpm(currentTempo.value + it) },
+            onChange = { tempo?.let { viewModel.setBpm(tempo + it) } },
         )
     }
 }
@@ -209,10 +216,7 @@ private fun ChangeButtons(
     onChange: (Int) -> Unit,
 ) {
     Column(modifier = Modifier.width(IntrinsicSize.Max)) {
-        values.forEach { value ->
-            val change = value.first
-            val size = value.second
-
+        values.forEach { (change, size) ->
             OutlinedButton(
                 onClick = { onChange(change) },
                 modifier = Modifier.fillMaxWidth(),

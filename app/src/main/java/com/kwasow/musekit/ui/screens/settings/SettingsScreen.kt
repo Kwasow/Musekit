@@ -17,6 +17,7 @@ import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -120,7 +121,7 @@ private fun AppSettingsSection() {
 @Composable
 private fun ThemeSetting() {
     val viewModel = koinViewModel<SettingsScreenViewModel>()
-    val nightMode = viewModel.nightMode.collectAsState(NIGHT_SYSTEM)
+    val nightMode by viewModel.nightMode.collectAsState(null)
 
     val count = if (Build.VERSION.SDK_INT >= 29) 3 else 2
 
@@ -145,7 +146,7 @@ private fun ThemeSetting() {
                     count = count,
                 ),
             onClick = { viewModel.updateNightMode(NIGHT_NO) },
-            selected = nightMode.value == NIGHT_NO,
+            selected = nightMode == NIGHT_NO,
             label = { Text(stringResource(id = R.string.theme_light)) },
         )
 
@@ -157,7 +158,7 @@ private fun ThemeSetting() {
                         count = count,
                     ),
                 onClick = { viewModel.updateNightMode(NIGHT_SYSTEM) },
-                selected = nightMode.value == NIGHT_SYSTEM,
+                selected = nightMode == NIGHT_SYSTEM,
                 label = { Text(stringResource(id = R.string.theme_auto)) },
             )
         }
@@ -169,7 +170,7 @@ private fun ThemeSetting() {
                     count = count,
                 ),
             onClick = { viewModel.updateNightMode(NIGHT_YES) },
-            selected = nightMode.value == NIGHT_YES,
+            selected = nightMode == NIGHT_YES,
             label = { Text(stringResource(id = R.string.theme_dark)) },
         )
     }
@@ -178,7 +179,7 @@ private fun ThemeSetting() {
 @Composable
 private fun NotationStyleSetting() {
     val viewModel = koinViewModel<SettingsScreenViewModel>()
-    val notationStyle = viewModel.notationStyle.collectAsState(NotationStyle.English)
+    val notationStyle by viewModel.notationStyle.collectAsState(null)
 
     SettingsEntry(
         icon = painterResource(id = R.drawable.ic_globe),
@@ -202,7 +203,7 @@ private fun NotationStyleSetting() {
                         count = NotationStyle.entries.size,
                     ),
                 onClick = { viewModel.updateNotationStyle(style) },
-                selected = notationStyle.value.id == style.id,
+                selected = notationStyle?.id == style.id,
                 label = { Text(stringResource(id = style.nameId)) },
             )
         }
