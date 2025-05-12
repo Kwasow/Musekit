@@ -56,6 +56,7 @@ class NoteForkScreenViewModel(
     // ======= Constructors
     init {
         refreshPresets()
+        setNote(currentNote)
     }
 
     // ======= Public methods

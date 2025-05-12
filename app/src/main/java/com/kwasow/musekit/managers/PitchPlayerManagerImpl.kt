@@ -12,11 +12,7 @@ class PitchPlayerManagerImpl : PitchPlayerManager {
     override var frequency: Double = 440.0
         set(value) {
             field = value
-
-            if (audioTrack.state == AudioTrack.PLAYSTATE_PLAYING) {
-                stop()
-                play()
-            }
+            reloadTone()
         }
 
     private var audioTrack = AudioTrack.Builder()
@@ -26,10 +22,6 @@ class PitchPlayerManagerImpl : PitchPlayerManager {
 
     // ====== Interface methods
     override fun play() {
-        val buffer = createSineWave(frequency)
-
-        audioTrack.write(buffer, 0, buffer.size)
-        audioTrack.setLoopPoints(0, buffer.size, -1)
         audioTrack.play()
     }
 
@@ -38,7 +30,15 @@ class PitchPlayerManagerImpl : PitchPlayerManager {
     }
 
     // ====== Private methods
-    fun createSineWave(frequency: Double): ShortArray {
+    private fun reloadTone() {
+        val tone = createSineWave(frequency)
+
+        audioTrack.write(tone, 0, tone.size)
+        val loopEnd = audioTrack.bufferSizeInFrames
+        audioTrack.setLoopPoints(0, loopEnd, -1)
+    }
+
+    private fun createSineWave(frequency: Double): ShortArray {
         val samples = DoubleArray(SAMPLE_RATE * 2)
         val buffer = ShortArray(SAMPLE_RATE * 2)
 
