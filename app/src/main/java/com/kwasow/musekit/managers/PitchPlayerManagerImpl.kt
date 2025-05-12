@@ -12,16 +12,20 @@ class PitchPlayerManagerImpl : PitchPlayerManager {
     override var frequency: Double = 440.0
         set(value) {
             field = value
+
             reloadTone()
         }
 
-    private var audioTrack = AudioTrack.Builder()
-        .setTransferMode(AudioTrack.MODE_STATIC)
-        .setBufferSizeInBytes(SAMPLE_RATE * 2)
-        .build()
+    private val audioTrack by lazy {
+        AudioTrack.Builder()
+            .setTransferMode(AudioTrack.MODE_STATIC)
+            .setBufferSizeInBytes(SAMPLE_RATE * 2)
+            .build()
+    }
 
     // ====== Interface methods
     override fun play() {
+        reloadTone()
         audioTrack.play()
     }
 
@@ -39,12 +43,11 @@ class PitchPlayerManagerImpl : PitchPlayerManager {
     }
 
     private fun createSineWave(frequency: Double): ShortArray {
-        val samples = DoubleArray(SAMPLE_RATE * 2)
         val buffer = ShortArray(SAMPLE_RATE * 2)
 
         for (i in buffer.indices) {
-            samples[i] = sin(i * 2 * Math.PI * frequency.toInt() / SAMPLE_RATE)
-            buffer[i] = (samples[i] * Short.MAX_VALUE).toInt().toShort()
+            val sample = sin(i * 2 * Math.PI * frequency.toInt() / SAMPLE_RATE)
+            buffer[i] = (sample * Short.MAX_VALUE).toInt().toShort()
         }
 
         return buffer
