@@ -33,14 +33,15 @@ fun PilledTabRow(
     tabs: @Composable RowScope.() -> Unit,
 ) {
     Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .background(
-                MaterialTheme.colorScheme.surfaceContainer,
-                RoundedCornerShape(8.dp)
-            )
-            .height(32.dp),
-        contentAlignment = Alignment.Center
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .background(
+                    MaterialTheme.colorScheme.surfaceContainer,
+                    RoundedCornerShape(8.dp),
+                )
+                .height(32.dp),
+        contentAlignment = Alignment.Center,
     ) {
         Row(
             modifier = Modifier.fillMaxSize(),
@@ -65,7 +66,7 @@ fun RowScope.PilledTabItem(
                 false -> MaterialTheme.colorScheme.onBackground
             },
         animationSpec = tween(easing = LinearEasing),
-        label = "pilledTab_textColor"
+        label = "pilledTab_textColor",
     )
 
     val background by animateColorAsState(
@@ -75,28 +76,29 @@ fun RowScope.PilledTabItem(
                 false -> MaterialTheme.colorScheme.surfaceContainer
             },
         animationSpec = tween(durationMillis = 300, easing = LinearOutSlowInEasing),
-        label = "pilledTab_backgroundColor"
+        label = "pilledTab_backgroundColor",
     )
 
     val interactionSource = remember { MutableInteractionSource() }
 
     Box(
-        modifier = modifier
-            .weight(1f)
-            .fillMaxHeight(1f)
-            .background(background, RoundedCornerShape(8.dp))
-            .clickable(
-                interactionSource = interactionSource,
-                indication = null,
-                onClick = onClick,
-            ),
-        contentAlignment = Alignment.Center
+        modifier =
+            modifier
+                .weight(1f)
+                .fillMaxHeight(1f)
+                .background(background, RoundedCornerShape(8.dp))
+                .clickable(
+                    interactionSource = interactionSource,
+                    indication = null,
+                    onClick = onClick,
+                ),
+        contentAlignment = Alignment.Center,
     ) {
         Text(
             text = text,
             style = MaterialTheme.typography.titleSmall,
             textAlign = TextAlign.Center,
-            color = tabTextColor
+            color = tabTextColor,
         )
     }
 }
@@ -109,13 +111,13 @@ fun PilledTabsPreview() {
         PilledTabItem(
             isSelected = true,
             text = "Tab1",
-            onClick = {}
+            onClick = {},
         )
 
         PilledTabItem(
             isSelected = false,
             text = "Tab2",
-            onClick = {}
+            onClick = {},
         )
     }
 }

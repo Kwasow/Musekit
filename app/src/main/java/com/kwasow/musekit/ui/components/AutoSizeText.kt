@@ -24,10 +24,11 @@ fun AutoSizeText(
                 height = 0
                 maxLines = 1
                 gravity = Gravity.CENTER
-                typeface = when (boldFont) {
-                    true -> Typeface.DEFAULT_BOLD
-                    false -> Typeface.DEFAULT
-                }
+                typeface =
+                    when (boldFont) {
+                        true -> Typeface.DEFAULT_BOLD
+                        false -> Typeface.DEFAULT
+                    }
 
                 TextViewCompat.setAutoSizeTextTypeWithDefaults(
                     this,

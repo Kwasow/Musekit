@@ -57,15 +57,17 @@ fun NoteForkManualScreen() {
     }
 
     when (viewModel.currentDialog) {
-        NoteForkScreenViewModel.Dialog.SAVE_PRESET -> PresetSaveDialog(
-            onSave = { viewModel.addPreset(it, viewModel.currentNote) },
-            onDismiss = { viewModel.closeDialog() },
-        )
-        NoteForkScreenViewModel.Dialog.REMOVE_PRESET -> PresetRemoveDialog(
-            name = viewModel.currentRemovePresetName,
-            onRemove = { viewModel.confirmRemovePreset() },
-            onDismiss = { viewModel.closeDialog() },
-        )
+        NoteForkScreenViewModel.Dialog.SAVE_PRESET ->
+            PresetSaveDialog(
+                onSave = { viewModel.addPreset(it, viewModel.currentNote) },
+                onDismiss = { viewModel.closeDialog() },
+            )
+        NoteForkScreenViewModel.Dialog.REMOVE_PRESET ->
+            PresetRemoveDialog(
+                name = viewModel.currentRemovePresetName,
+                onRemove = { viewModel.confirmRemovePreset() },
+                onDismiss = { viewModel.closeDialog() },
+            )
         else -> {}
     }
 }
@@ -133,7 +135,7 @@ private fun PresetPicker() {
                                 )
                             }
                         }
-                    }
+                    },
                 )
             }
         }
@@ -157,7 +159,7 @@ private fun PitchPicker() {
             onDecrease = {
                 viewModel.setNote(viewModel.currentNote.apply { down() })
             },
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
         )
 
         PropertyCard(
@@ -167,9 +169,9 @@ private fun PitchPicker() {
                 viewModel.setNote(viewModel.currentNote.apply { pitch += 1 })
             },
             onDecrease = {
-                viewModel.setNote(viewModel.currentNote.apply { pitch -= 1})
+                viewModel.setNote(viewModel.currentNote.apply { pitch -= 1 })
             },
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
         )
     }
 }
@@ -180,7 +182,7 @@ private fun PropertyCard(
     value: CharSequence,
     onIncrease: () -> Unit,
     onDecrease: () -> Unit,
-    modifier: Modifier
+    modifier: Modifier,
 ) {
     Card(modifier = modifier) {
         Column(modifier = Modifier.padding(16.dp)) {

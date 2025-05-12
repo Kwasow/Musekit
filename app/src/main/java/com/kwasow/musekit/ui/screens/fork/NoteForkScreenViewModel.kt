@@ -1,7 +1,6 @@
 package com.kwasow.musekit.ui.screens.fork
 
 import android.content.Context
-import android.media.AudioTrack
 import android.text.SpannableStringBuilder
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -17,7 +16,6 @@ import com.kwasow.musekit.managers.PermissionManager
 import com.kwasow.musekit.managers.PitchPlayerManager
 import com.kwasow.musekit.managers.PreferencesManager
 import com.kwasow.musekit.managers.PresetsManager
-import kotlin.math.sin
 
 class NoteForkScreenViewModel(
     private val applicationContext: Context,
@@ -83,13 +81,17 @@ class NoteForkScreenViewModel(
         pitchPlayerManager.frequency = note.getFrequency()
     }
 
-    fun addPreset(name: String, note: Note) {
-        val preset = Preset(
-            name = name,
-            semitones = note.note.semitones,
-            octave = note.octave,
-            pitch = note.pitch,
-        )
+    fun addPreset(
+        name: String,
+        note: Note,
+    ) {
+        val preset =
+            Preset(
+                name = name,
+                semitones = note.note.semitones,
+                octave = note.octave,
+                pitch = note.pitch,
+            )
 
         presetsManager.savePreset(preset)
         currentPreset = name

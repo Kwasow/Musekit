@@ -22,21 +22,24 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun NoteForkScreen() {
     val viewModel = koinViewModel<NoteForkScreenViewModel>()
-    val pagerState = rememberPagerState(
-        pageCount = { 2 },
-        initialPage = viewModel.noteForkMode
-    )
+    val pagerState =
+        rememberPagerState(
+            pageCount = { 2 },
+            initialPage = viewModel.noteForkMode,
+        )
     val coroutineScope = rememberCoroutineScope()
 
-    val pages = listOf<Pair<Int, @Composable () -> Unit>>(
-        Pair(R.string.note_fork_automatic, { NoteForkAutoScreen() }),
-        Pair(R.string.note_fork_manual, { NoteForkManualScreen() }),
-    )
+    val pages =
+        listOf<Pair<Int, @Composable () -> Unit>>(
+            Pair(R.string.note_fork_automatic, { NoteForkAutoScreen() }),
+            Pair(R.string.note_fork_manual, { NoteForkManualScreen() }),
+        )
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 16.dp)
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(top = 16.dp),
     ) {
         PilledTabRow(modifier = Modifier.padding(horizontal = 24.dp)) {
             pages.forEachIndexed { index, (first) ->
