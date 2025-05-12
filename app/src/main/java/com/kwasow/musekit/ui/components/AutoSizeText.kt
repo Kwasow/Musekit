@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 
 // ====== Public composables
@@ -31,9 +30,10 @@ fun AutoSizeText(
     boldFont: Boolean,
     modifier: Modifier = Modifier,
 ) {
-    var textStyle = MaterialTheme.typography.displayMedium.copy(
-        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.85f)
-    )
+    var textStyle =
+        MaterialTheme.typography.displayMedium.copy(
+            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.85f),
+        )
     if (boldFont) {
         textStyle = textStyle.copy(fontWeight = FontWeight.Bold)
     }

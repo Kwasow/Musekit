@@ -19,7 +19,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            val nightMode = themeManager.nightMode.observeAsState(themeManager.getDefaultNightMode())
+            val nightMode =
+                themeManager.nightMode.observeAsState(
+                    themeManager.getDefaultNightMode(),
+                )
 
             MusekitTheme(
                 nightMode = nightMode.value,
