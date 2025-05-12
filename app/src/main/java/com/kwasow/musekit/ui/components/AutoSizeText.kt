@@ -33,10 +33,12 @@ fun AutoSizeText(
     var textStyle =
         MaterialTheme.typography.displayMedium.copy(
             color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.85f),
+            fontWeight =
+                when (boldFont) {
+                    true -> FontWeight.Bold
+                    false -> FontWeight.Normal
+                },
         )
-    if (boldFont) {
-        textStyle = textStyle.copy(fontWeight = FontWeight.Bold)
-    }
 
     Box(
         modifier = modifier,

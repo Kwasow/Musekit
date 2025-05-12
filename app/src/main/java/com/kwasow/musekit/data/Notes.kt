@@ -1,6 +1,6 @@
 package com.kwasow.musekit.data
 
-// Enum classes named using the German notation where
+// Enum classes named using the German notation where:
 //  - the "is" suffix is added to a note with a sharp
 //  - the "as" suffix is added to a note with a flat
 //  - the note one half step below C is known as H; H flat is B

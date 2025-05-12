@@ -74,7 +74,9 @@ android {
 
     ktlint {
         filter {
-            exclude("**/rememberBoundService.kt")
+            exclude { element ->
+                element.file.name == "rememberBoundService.kt"
+            }
         }
     }
 }
@@ -91,6 +93,7 @@ dependencies {
     implementation(platform(libs.koin.bom))
 
     // Compose
+    implementation(libs.compose.accompanist.permissions)
     implementation(libs.compose.livedata)
     implementation(libs.compose.material)
     implementation(libs.compose.material3)

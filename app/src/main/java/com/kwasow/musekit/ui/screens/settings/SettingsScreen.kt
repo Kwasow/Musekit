@@ -31,11 +31,11 @@ import androidx.compose.ui.unit.dp
 import com.kwasow.musekit.BuildConfig
 import com.kwasow.musekit.R
 import com.kwasow.musekit.data.NotationStyle
+import com.kwasow.musekit.ui.components.SettingsEntry
+import com.kwasow.musekit.ui.components.SettingsSection
 import com.kwasow.musekit.ui.dialogs.LicenseDialog
 import com.kwasow.musekit.ui.dialogs.LicensesDialog
 import org.koin.androidx.compose.koinViewModel
-import pl.kwasow.ui.screens.settings.SettingsEntry
-import pl.kwasow.ui.screens.settings.SettingsSection
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM as NIGHT_SYSTEM
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO as NIGHT_NO
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES as NIGHT_YES
@@ -63,6 +63,7 @@ fun SettingsScreen() {
 
     val licenseName = viewModel.currentLicenseName
     val licenseText = viewModel.currentLicenseText
+
     if (licenseName != null && licenseText != null) {
         LicenseDialog(
             name = licenseName,

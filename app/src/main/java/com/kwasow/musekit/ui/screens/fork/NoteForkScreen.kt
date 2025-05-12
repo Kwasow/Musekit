@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -27,7 +28,6 @@ fun NoteForkScreen() {
             pageCount = { 2 },
             initialPage = viewModel.noteForkMode,
         )
-    val coroutineScope = rememberCoroutineScope()
 
     val pages =
         listOf<Pair<Int, @Composable () -> Unit>>(
@@ -41,22 +41,10 @@ fun NoteForkScreen() {
                 .fillMaxSize()
                 .padding(top = 16.dp),
     ) {
-        PilledTabRow(modifier = Modifier.padding(horizontal = 24.dp)) {
-            pages.forEachIndexed { index, (first) ->
-                val selected = pagerState.currentPage == index
-
-                PilledTabItem(
-                    text = stringResource(id = first),
-                    isSelected = selected,
-                    onClick = {
-                        coroutineScope.launch {
-                            pagerState.animateScrollToPage(index)
-                            viewModel.noteForkMode = index
-                        }
-                    },
-                )
-            }
-        }
+        Navigation(
+            pages = pages,
+            pagerState = pagerState,
+        )
 
         HorizontalPager(
             state = pagerState,
@@ -65,6 +53,33 @@ fun NoteForkScreen() {
         ) { page ->
             val content = pages.getOrNull(page)?.second ?: { ErrorScreen() }
             content()
+        }
+    }
+}
+
+// ====== Private composables
+@Composable
+private fun Navigation(
+    pages: List<Pair<Int, @Composable (() -> Unit)>>,
+    pagerState: PagerState,
+) {
+    val viewModel = koinViewModel<NoteForkScreenViewModel>()
+    val coroutineScope = rememberCoroutineScope()
+
+    PilledTabRow(modifier = Modifier.padding(horizontal = 24.dp)) {
+        pages.forEachIndexed { index, (first) ->
+            val selected = pagerState.currentPage == index
+
+            PilledTabItem(
+                text = stringResource(id = first),
+                isSelected = selected,
+                onClick = {
+                    coroutineScope.launch {
+                        pagerState.animateScrollToPage(index)
+                        viewModel.noteForkMode = index
+                    }
+                },
+            )
         }
     }
 }
