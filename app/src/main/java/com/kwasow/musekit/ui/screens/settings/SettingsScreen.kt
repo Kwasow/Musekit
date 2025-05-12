@@ -1,7 +1,6 @@
 package com.kwasow.musekit.ui.screens.settings
 
 import android.os.Build
-import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth

@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             val nightMode =
                 preferencesManager.nightMode.collectAsState(
-                    AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+                    AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM,
                 )
 
             MusekitTheme(

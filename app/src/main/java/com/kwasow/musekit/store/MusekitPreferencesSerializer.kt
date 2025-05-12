@@ -19,10 +19,11 @@ import java.io.OutputStream
 object MusekitPreferencesSerializer : Serializer<MusekitPreferences> {
     override val defaultValue: MusekitPreferences =
         musekitPreferences {
-            nightMode = when (Build.VERSION.SDK_INT >= 29) {
-                true -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-                false -> AppCompatDelegate.MODE_NIGHT_NO
-            }
+            nightMode =
+                when (Build.VERSION.SDK_INT >= 29) {
+                    true -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+                    false -> AppCompatDelegate.MODE_NIGHT_NO
+                }
             noteForkMode = 0
             notationStyle = NotationStyle.English.id
 
@@ -39,8 +40,10 @@ object MusekitPreferencesSerializer : Serializer<MusekitPreferences> {
         }
     }
 
-    override suspend fun writeTo(t: MusekitPreferences, output: OutputStream) =
-        t.writeTo(output)
+    override suspend fun writeTo(
+        t: MusekitPreferences,
+        output: OutputStream,
+    ) = t.writeTo(output)
 }
 
 val Context.musekitPreferencesDataStore: DataStore<MusekitPreferences> by dataStore(

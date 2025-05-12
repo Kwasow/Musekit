@@ -11,7 +11,7 @@ import com.kwasow.musekit.utils.MusekitBeatDetector
 import kotlinx.coroutines.launch
 
 class MetronomeScreenViewModel(
-    private val preferencesManager: PreferencesManager
+    private val preferencesManager: PreferencesManager,
 ) : ViewModel() {
     // ====== Fields
     private val beatDetector = MusekitBeatDetector()
