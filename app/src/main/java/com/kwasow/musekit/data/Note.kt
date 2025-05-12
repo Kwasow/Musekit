@@ -1,11 +1,6 @@
 package com.kwasow.musekit.data
 
 import android.content.Context
-import android.text.SpannableStringBuilder
-import android.text.Spanned
-import android.text.style.RelativeSizeSpan
-import android.text.style.SubscriptSpan
-import android.text.style.SuperscriptSpan
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.style.BaselineShift
@@ -135,16 +130,16 @@ class Note(
                     AnnotatedString.Range(
                         SpanStyle(baselineShift = BaselineShift.Superscript),
                         index,
-                        index
-                    )
+                        index,
+                    ),
                 )
             } else if (c.isDigit()) {
                 annotations.add(
                     AnnotatedString.Range(
                         SpanStyle(baselineShift = BaselineShift.Subscript),
                         index,
-                        index
-                    )
+                        index,
+                    ),
                 )
 //                spannableStringBuilder.setSpan(
 //                    RelativeSizeSpan(0.5f),
@@ -157,7 +152,7 @@ class Note(
 
         return AnnotatedString(
             text = text,
-            annotations = annotations
+            annotations = annotations,
         )
     }
 

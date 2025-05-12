@@ -165,12 +165,13 @@ private fun PitchPicker() {
 
         PropertyCard(
             label = stringResource(id = R.string.pitch),
-            value = AnnotatedString(
-                stringResource(
-                    id = R.string.pitch_placeholder,
-                    viewModel.currentNote.pitch
-                )
-            ),
+            value =
+                AnnotatedString(
+                    stringResource(
+                        id = R.string.pitch_placeholder,
+                        viewModel.currentNote.pitch,
+                    ),
+                ),
             onIncrease = {
                 viewModel.setNote(viewModel.currentNote.apply { pitch += 1 })
             },

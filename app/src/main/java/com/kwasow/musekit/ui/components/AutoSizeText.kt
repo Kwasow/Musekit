@@ -37,13 +37,13 @@ fun AutoSizeText(
 
     Box(
         modifier = modifier,
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         BasicText(
             text = text,
             autoSize = TextAutoSize.StepBased(),
             maxLines = 1,
-            style = textStyle
+            style = textStyle,
         )
     }
 }
