@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 
     alias(libs.plugins.android.application)
+    alias(libs.plugins.google.protobuf)
     alias(libs.plugins.ktlint)
 }
 
@@ -106,7 +107,9 @@ dependencies {
     implementation(libs.koin.compose.base)
 
     implementation(libs.android.appcompat)
+    implementation(libs.android.dataStore)
     implementation(libs.android.lifecycle)
+    implementation(libs.google.libraries.protobuf)
     implementation(libs.kotlin.core)
 
     // Testing
@@ -117,4 +120,23 @@ dependencies {
     androidTestImplementation(libs.compose.ui.test.junit4)
     debugImplementation(libs.compose.ui.tooling.base)
     debugImplementation(libs.compose.ui.test.manifest)
+}
+
+protobuf {
+    protoc {
+        artifact = libs.google.libraries.protobuf.compiler.get().toString()
+    }
+
+    generateProtoTasks {
+        all().forEach { task ->
+            task.builtins {
+                create("java") {
+                    option("lite")
+                }
+                create("kotlin") {
+                    option("lite")
+                }
+            }
+        }
+    }
 }

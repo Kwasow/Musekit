@@ -1,26 +1,28 @@
 package com.kwasow.musekit.managers
 
 import com.kwasow.musekit.data.NotationStyle
+import kotlinx.coroutines.flow.Flow
 
 interface PreferencesManager {
     // ====== Fields
-    fun getNightMode(default: Int): Int
+    val nightMode: Flow<Int>
 
-    fun setNightMode(value: Int)
+    val noteForkMode: Flow<Int>
 
-    fun getNoteForkMode(): Int
+    val automaticTunerPitch: Flow<Int>
 
-    fun setNoteForkMode(value: Int)
+    val metronomeBpm: Flow<Int>
 
-    fun getAutomaticTunerPitch(): Int
+    val notationStyle: Flow<NotationStyle>
 
-    fun setAutomaticTunerPitch(value: Int)
+    // ====== Methods
+    suspend fun setNightMode(value: Int)
 
-    fun getMetronomeBPM(): Int
+    suspend fun setNoteForkMode(value: Int)
 
-    fun setMetronomeBPM(value: Int)
+    suspend fun setAutomaticTunerPitch(value: Int)
 
-    fun getNotationStyle(): NotationStyle
+    suspend fun setMetronomeBPM(value: Int)
 
-    fun setNotationStyle(value: NotationStyle)
+    suspend fun setNotationStyle(value: NotationStyle)
 }
