@@ -1,6 +1,8 @@
 package com.kwasow.musekit.store
 
 import android.content.Context
+import android.os.Build
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.Serializer
@@ -8,6 +10,7 @@ import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
 import androidx.datastore.dataStore
 import com.google.protobuf.InvalidProtocolBufferException
 import com.kwasow.musekit.MusekitPreferences
+import com.kwasow.musekit.data.NotationStyle
 import com.kwasow.musekit.musekitPreferences
 import java.io.InputStream
 import java.io.OutputStream
@@ -15,11 +18,14 @@ import java.io.OutputStream
 object MusekitPreferencesSerializer : Serializer<MusekitPreferences> {
     override val defaultValue: MusekitPreferences =
         musekitPreferences {
-            nightMode = -1
-            noteForkMode = -1
-            automaticTunerPitch = -1
-            metronomeBpm = -1
-            notationStyle = -1
+            nightMode = when (Build.VERSION.SDK_INT >= 29) {
+                true -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+                false -> AppCompatDelegate.MODE_NIGHT_NO
+            }
+            noteForkMode = 0
+            automaticTunerPitch = 440
+            metronomeBpm = 60
+            notationStyle = NotationStyle.English.id
         }
 
     override suspend fun readFrom(input: InputStream): MusekitPreferences {
