@@ -79,8 +79,6 @@ fun RowScope.PilledTabItem(
         label = "pilledTab_backgroundColor",
     )
 
-    val interactionSource = remember { MutableInteractionSource() }
-
     Box(
         modifier =
             modifier
@@ -88,7 +86,7 @@ fun RowScope.PilledTabItem(
                 .fillMaxHeight(1f)
                 .background(background, RoundedCornerShape(8.dp))
                 .clickable(
-                    interactionSource = interactionSource,
+                    interactionSource = remember { MutableInteractionSource() },
                     indication = null,
                     onClick = onClick,
                 ),

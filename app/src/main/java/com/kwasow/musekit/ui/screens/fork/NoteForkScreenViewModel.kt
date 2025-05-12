@@ -6,7 +6,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.neverEqualPolicy
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.AnnotatedString
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import com.kwasow.musekit.R
 import com.kwasow.musekit.data.Note

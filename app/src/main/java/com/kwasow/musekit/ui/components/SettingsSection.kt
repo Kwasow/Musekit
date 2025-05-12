@@ -1,4 +1,4 @@
-package pl.kwasow.ui.screens.settings
+package com.kwasow.musekit.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

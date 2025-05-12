@@ -74,7 +74,9 @@ android {
 
     ktlint {
         filter {
-            exclude("**/rememberBoundService.kt")
+            exclude { element ->
+                element.file.name == "rememberBoundService.kt"
+            }
         }
     }
 }
