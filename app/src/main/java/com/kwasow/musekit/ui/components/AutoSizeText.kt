@@ -3,6 +3,7 @@ package com.kwasow.musekit.ui.components
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.TextAutoSize
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,7 +31,9 @@ fun AutoSizeText(
     boldFont: Boolean,
     modifier: Modifier = Modifier,
 ) {
-    var textStyle = TextStyle.Default.copy(color = TextStyle.Default.color.copy(alpha = 0.75f))
+    var textStyle = MaterialTheme.typography.displayMedium.copy(
+        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.85f)
+    )
     if (boldFont) {
         textStyle = textStyle.copy(fontWeight = FontWeight.Bold)
     }
@@ -41,9 +44,9 @@ fun AutoSizeText(
     ) {
         BasicText(
             text = text,
-            autoSize = TextAutoSize.StepBased(),
-            maxLines = 1,
             style = textStyle,
+            maxLines = 1,
+            autoSize = TextAutoSize.StepBased(),
         )
     }
 }
