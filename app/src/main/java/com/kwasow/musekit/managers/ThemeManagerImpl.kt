@@ -1,18 +1,15 @@
 package com.kwasow.musekit.managers
 
-import android.app.Application
-import android.content.Context
 import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
-import com.google.android.material.color.DynamicColors
+import androidx.lifecycle.MutableLiveData
 
-class ThemeManagerImpl(
-    applicationContext: Context,
-    private val preferencesManager: PreferencesManager,
-) : ThemeManager {
+class ThemeManagerImpl(private val preferencesManager: PreferencesManager) : ThemeManager {
+    // ====== Fields
+    override val nightMode = MutableLiveData(getNightMode())
+
     // ====== Constructors
     init {
-        DynamicColors.applyToActivitiesIfAvailable(applicationContext as Application)
         AppCompatDelegate.setDefaultNightMode(getNightMode())
     }
 
@@ -25,10 +22,13 @@ class ThemeManagerImpl(
         }
     }
 
-    override fun getNightMode(): Int = preferencesManager.getNightMode(getDefaultNightMode())
+    override fun setNightMode(newMode: Int) {
+        preferencesManager.setNightMode(newMode)
+        AppCompatDelegate.setDefaultNightMode(newMode)
 
-    override fun setNightMode(nightMode: Int) {
-        preferencesManager.setNightMode(nightMode)
-        AppCompatDelegate.setDefaultNightMode(nightMode)
+        nightMode.postValue(newMode)
     }
+
+    // ====== Private methods
+    private fun getNightMode(): Int = preferencesManager.getNightMode(getDefaultNightMode())
 }

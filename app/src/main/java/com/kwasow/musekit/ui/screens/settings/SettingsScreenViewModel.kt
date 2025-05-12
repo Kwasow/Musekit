@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import androidx.annotation.RawRes
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.core.net.toUri
@@ -24,7 +23,7 @@ class SettingsScreenViewModel(
     var currentLicenseText by mutableStateOf<String?>(null)
 
     var notationStyle by mutableStateOf(preferencesManager.getNotationStyle())
-    var themeMode by mutableIntStateOf(themeManager.getNightMode())
+    var themeMode = themeManager.nightMode
 
     // ====== Public methods
     fun updateNotationStyle(style: NotationStyle) {
@@ -34,7 +33,6 @@ class SettingsScreenViewModel(
 
     fun updateThemeMode(mode: Int) {
         themeManager.setNightMode(mode)
-        themeMode = themeManager.getNightMode()
     }
 
     fun openGithub() = openUrl("https://github.com/Kwasow/Musekit")

@@ -1,43 +1,52 @@
 package com.kwasow.musekit.ui.components
 
-import android.graphics.Typeface
-import android.view.Gravity
-import androidx.appcompat.widget.AppCompatTextView
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.text.BasicText
+import androidx.compose.foundation.text.TextAutoSize
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.viewinterop.AndroidView
-import androidx.core.widget.TextViewCompat
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 
 // ====== Public composables
 @Composable
 fun AutoSizeText(
-    text: CharSequence,
+    text: String,
     boldFont: Boolean,
     modifier: Modifier = Modifier,
 ) {
-    AndroidView(
+    AutoSizeText(
+        text = AnnotatedString(text),
+        boldFont = boldFont,
         modifier = modifier,
-        factory = { context ->
-            AppCompatTextView(context).apply {
-                setText(text)
-                width = 0
-                height = 0
-                maxLines = 1
-                gravity = Gravity.CENTER
-                typeface =
-                    when (boldFont) {
-                        true -> Typeface.DEFAULT_BOLD
-                        false -> Typeface.DEFAULT
-                    }
-
-                TextViewCompat.setAutoSizeTextTypeWithDefaults(
-                    this,
-                    TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM,
-                )
-            }
-        },
-        update = { view ->
-            view.text = text
-        },
     )
+}
+
+@Composable
+fun AutoSizeText(
+    text: AnnotatedString,
+    boldFont: Boolean,
+    modifier: Modifier = Modifier,
+) {
+    var textStyle =
+        MaterialTheme.typography.displayMedium.copy(
+            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.85f),
+        )
+    if (boldFont) {
+        textStyle = textStyle.copy(fontWeight = FontWeight.Bold)
+    }
+
+    Box(
+        modifier = modifier,
+        contentAlignment = Alignment.Center,
+    ) {
+        BasicText(
+            text = text,
+            style = textStyle,
+            maxLines = 1,
+            autoSize = TextAutoSize.StepBased(),
+        )
+    }
 }

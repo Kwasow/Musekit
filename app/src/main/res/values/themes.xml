@@ -1,25 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Musekit" parent="Theme.Material3.Light.NoActionBar">
-        <!-- Primary colors -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorOnPrimary">@color/colorOnPrimary</item>
-        <item name="colorPrimaryContainer">@color/colorPrimaryContainer</item>
-        <item name="colorOnPrimaryContainer">@color/colorOnPrimaryContainer</item>
-
-        <!-- Secondary colors -->
-        <item name="colorSecondary">@color/colorSecondary</item>
-        <item name="colorSecondaryContainer">@color/colorSecondaryContainer</item>
-
-        <!-- Other material colors -->
-        <item name="colorSurfaceVariant">@color/colorSurfaceVariant</item>
-        <item name="android:textColorTertiary">@color/colorOnSurfaceVariant</item>
-        <item name="colorOnSurfaceVariant">@color/colorOnSurfaceVariant</item>
-
-        <!-- Custom theme attributes -->
-        <item name="materialAlertDialogTheme">@style/ThemeOverlay.Material3.MaterialAlertDialog.Centered</item>
+    <style name="Theme.Musekit" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">?attr/colorSurfaceContainer</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>
 </resources>

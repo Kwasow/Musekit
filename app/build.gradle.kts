@@ -103,10 +103,8 @@ dependencies {
     implementation(libs.koin.compose.base)
 
     implementation(libs.android.appcompat)
-    implementation(libs.android.constraintLayout)
     implementation(libs.android.lifecycle)
     implementation(libs.kotlin.core)
-    implementation(libs.material)
 
     // Testing
     testImplementation(libs.junit)

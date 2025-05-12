@@ -31,6 +31,6 @@ val managersModule =
         }
 
         single<ThemeManager> {
-            ThemeManagerImpl(get(), get())
+            ThemeManagerImpl(get())
         }
     }
