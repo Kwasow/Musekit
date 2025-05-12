@@ -1,5 +1,6 @@
 package com.kwasow.musekit.ui.screens.metronome
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -52,53 +53,63 @@ import com.kwasow.musekit.ui.components.AutoSizeText
 import com.kwasow.musekit.ui.components.PlayPauseButton
 import com.kwasow.musekit.ui.components.rememberBoundLocalService
 import com.kwasow.musekit.ui.dialogs.SetBeatDialog
-import kotlinx.coroutines.flow.first
 import org.koin.androidx.compose.koinViewModel
 
 // ======= Public composables
 @Composable
 fun MetronomeScreen() {
-    val viewModel = koinViewModel<MetronomeScreenViewModel>()
-    val bpm by viewModel.metronomeBpm.collectAsState(60)
-
     val metronomeService =
         rememberBoundLocalService<MetronomeService, MetronomeService.LocalBinder> { service }
 
-    if (metronomeService != null) {
-        Column(
-            modifier =
-                Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            SoundPicker()
-            TempoPicker()
-            BeatIndicator(service = metronomeService)
-            PlayPause(
-                service = metronomeService,
-                scope = this,
-            )
-            AdditionalActions()
-        }
-
-        if (viewModel.showSetBeatDialog) {
-            SetBeatDialog(
-                initialValue = bpm,
-                onDismiss = { viewModel.showSetBeatDialog = false },
-                onSet = { viewModel.setBpm(it) },
-            )
-        }
-    } else {
-        Box(modifier = Modifier.fillMaxSize()) {
-            CircularProgressIndicator(
-                modifier = Modifier.align(Alignment.Center),
-            )
+    AnimatedContent(metronomeService) { service ->
+        when (service) {
+            null -> LoadingView()
+            else -> MainView(service = service)
         }
     }
 }
 
 // ====== Private composables
+@Composable
+private fun MainView(service: MetronomeService) {
+    val viewModel = koinViewModel<MetronomeScreenViewModel>()
+    val bpm by viewModel.metronomeBpm.collectAsState(60)
+
+    Column(
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        SoundPicker()
+        TempoPicker()
+        BeatIndicator(service = service)
+        PlayPause(
+            service = service,
+            scope = this,
+        )
+        AdditionalActions()
+    }
+
+    if (viewModel.showSetBeatDialog) {
+        SetBeatDialog(
+            initialValue = bpm,
+            onDismiss = { viewModel.showSetBeatDialog = false },
+            onSet = { viewModel.setBpm(it) },
+        )
+    }
+}
+
+@Composable
+private fun LoadingView() {
+    Box(modifier = Modifier.fillMaxSize()) {
+        CircularProgressIndicator(
+            modifier = Modifier.align(Alignment.Center),
+        )
+    }
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun SoundPicker() {
@@ -118,10 +129,11 @@ private fun SoundPicker() {
         val sound = selectedSound
 
         OutlinedTextField(
-            value = when (sound) {
-                null -> ""
-                else -> stringResource(id = sound.resourceNameId)
-            },
+            value =
+                when (sound) {
+                    null -> ""
+                    else -> stringResource(id = sound.resourceNameId)
+                },
             onValueChange = {},
             label = { Text(text = stringResource(id = R.string.sound)) },
             trailingIcon = {

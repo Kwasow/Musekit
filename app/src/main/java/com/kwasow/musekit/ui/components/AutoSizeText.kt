@@ -21,10 +21,11 @@ fun AutoSizeText(
     modifier: Modifier = Modifier,
 ) {
     AutoSizeText(
-        text = when (text) {
-            null -> null
-            else -> AnnotatedString(text)
-        },
+        text =
+            when (text) {
+                null -> null
+                else -> AnnotatedString(text)
+            },
         boldFont = boldFont,
         modifier = modifier,
     )
