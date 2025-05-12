@@ -15,15 +15,15 @@ import androidx.compose.ui.platform.LocalContext
 // ====== Public composables
 @Composable
 fun MusekitTheme(
-    nightMode: Int,
+    nightMode: Int?,
     content: @Composable () -> Unit,
 ) {
     val dynamicColor = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
     val darkTheme =
-        if (nightMode == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) {
-            isSystemInDarkTheme()
-        } else {
-            nightMode == AppCompatDelegate.MODE_NIGHT_YES
+        when (nightMode) {
+            null -> false
+            AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> isSystemInDarkTheme()
+            else -> nightMode == AppCompatDelegate.MODE_NIGHT_YES
         }
 
     val colorScheme =
@@ -35,7 +35,9 @@ fun MusekitTheme(
         }
 
     LaunchedEffect(nightMode) {
-        AppCompatDelegate.setDefaultNightMode(nightMode)
+        nightMode?.let {
+            AppCompatDelegate.setDefaultNightMode(it)
+        }
     }
 
     MaterialTheme(

@@ -1,8 +1,5 @@
 package com.kwasow.musekit.ui.components
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.TextAutoSize
@@ -16,24 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 // ====== Public composables
 @Composable
 fun AutoSizeText(
-    text: String?,
-    boldFont: Boolean,
-    modifier: Modifier = Modifier,
-) {
-    AutoSizeText(
-        text =
-            when (text) {
-                null -> null
-                else -> AnnotatedString(text)
-            },
-        boldFont = boldFont,
-        modifier = modifier,
-    )
-}
-
-@Composable
-fun AutoSizeText(
-    text: AnnotatedString?,
+    text: AnnotatedString,
     boldFont: Boolean,
     modifier: Modifier = Modifier,
 ) {
@@ -51,17 +31,11 @@ fun AutoSizeText(
         modifier = modifier,
         contentAlignment = Alignment.Center,
     ) {
-        AnimatedVisibility(
-            visible = text != null,
-            enter = fadeIn(),
-            exit = fadeOut(),
-        ) {
-            BasicText(
-                text = text ?: AnnotatedString(""),
-                style = textStyle,
-                maxLines = 1,
-                autoSize = TextAutoSize.StepBased(),
-            )
-        }
+        BasicText(
+            text = text,
+            style = textStyle,
+            maxLines = 1,
+            autoSize = TextAutoSize.StepBased(),
+        )
     }
 }

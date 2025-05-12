@@ -51,18 +51,12 @@ class NoteForkScreenViewModel(
 
     val noteForkMode = preferencesManager.noteForkMode
     val automaticTunerPitch = preferencesManager.automaticTunerPitch
-    var notationStyle = NotationStyle.English
+    val notationStyle = preferencesManager.notationStyle
 
     // ======= Constructors
     init {
         refreshPresets()
         setNote(currentNote)
-
-        viewModelScope.launch {
-            preferencesManager.notationStyle.collect { collected ->
-                notationStyle = collected
-            }
-        }
     }
 
     // ======= Public methods
@@ -78,8 +72,10 @@ class NoteForkScreenViewModel(
             preferencesManager.setAutomaticTunerPitch(value)
         }
 
-    fun getSuperscriptedNote(note: Note): AnnotatedString =
-        note.getSuperscripted(applicationContext, notationStyle)
+    fun getSuperscriptedNote(
+        note: Note,
+        style: NotationStyle,
+    ): AnnotatedString = note.getSuperscripted(applicationContext, style)
 
     fun setNote(note: Note) {
         currentNote = note

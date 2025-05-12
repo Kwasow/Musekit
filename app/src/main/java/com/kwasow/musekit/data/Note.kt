@@ -127,7 +127,7 @@ class Note(
                     AnnotatedString.Range(
                         SpanStyle(baselineShift = BaselineShift.Superscript),
                         index,
-                        index,
+                        index + 1,
                     ),
                 )
             } else if (c.isDigit()) {
@@ -135,7 +135,7 @@ class Note(
                     AnnotatedString.Range(
                         SpanStyle(baselineShift = BaselineShift.Subscript),
                         index,
-                        index,
+                        index + 1,
                     ),
                 )
             }
