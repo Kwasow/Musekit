@@ -63,6 +63,7 @@ fun SettingsScreen() {
 
     val licenseName = viewModel.currentLicenseName
     val licenseText = viewModel.currentLicenseText
+
     if (licenseName != null && licenseText != null) {
         LicenseDialog(
             name = licenseName,

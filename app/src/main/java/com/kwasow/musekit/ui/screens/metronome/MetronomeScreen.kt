@@ -71,7 +71,7 @@ fun MetronomeScreen() {
             SoundPicker(service = metronomeService)
             TempoPicker(service = metronomeService)
             BeatIndicator(service = metronomeService)
-            StartStopButton(
+            PlayPause(
                 service = metronomeService,
                 scope = this,
             )
@@ -242,7 +242,7 @@ private fun BeatIndicator(service: MetronomeService) {
 }
 
 @Composable
-private fun StartStopButton(
+private fun PlayPause(
     service: MetronomeService,
     scope: ColumnScope,
 ) {
@@ -259,40 +259,51 @@ private fun StartStopButton(
 
 @Composable
 private fun AdditionalActions(service: MetronomeService) {
-    val viewModel = koinViewModel<MetronomeScreenViewModel>()
-
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier.fillMaxWidth(),
     ) {
-        Button(
-            onClick = { viewModel.showSetBeatDialog = true },
-            contentPadding = PaddingValues(16.dp),
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_edit),
-                contentDescription = "",
-                modifier = Modifier.size(ButtonDefaults.IconSize),
-            )
-            Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-            Text(text = stringResource(id = R.string.set_beat))
-        }
+        SetBeatButton()
+        TapBeatButton(service)
+    }
+}
 
-        Button(
-            onClick = {
-                viewModel.beatEvent()?.let { res ->
-                    service.setTempo(res)
-                }
-            },
-            contentPadding = PaddingValues(16.dp),
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_tap),
-                contentDescription = "",
-                modifier = Modifier.size(ButtonDefaults.IconSize),
-            )
-            Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-            Text(text = stringResource(id = R.string.tap_beat))
-        }
+@Composable
+private fun SetBeatButton() {
+    val viewModel = koinViewModel<MetronomeScreenViewModel>()
+
+    Button(
+        onClick = { viewModel.showSetBeatDialog = true },
+        contentPadding = PaddingValues(16.dp),
+    ) {
+        Icon(
+            painter = painterResource(id = R.drawable.ic_edit),
+            contentDescription = "",
+            modifier = Modifier.size(ButtonDefaults.IconSize),
+        )
+        Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+        Text(text = stringResource(id = R.string.set_beat))
+    }
+}
+
+@Composable
+private fun TapBeatButton(service: MetronomeService) {
+    val viewModel = koinViewModel<MetronomeScreenViewModel>()
+
+    Button(
+        onClick = {
+            viewModel.beatEvent()?.let { res ->
+                service.setTempo(res)
+            }
+        },
+        contentPadding = PaddingValues(16.dp),
+    ) {
+        Icon(
+            painter = painterResource(id = R.drawable.ic_tap),
+            contentDescription = "",
+            modifier = Modifier.size(ButtonDefaults.IconSize),
+        )
+        Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+        Text(text = stringResource(id = R.string.tap_beat))
     }
 }
