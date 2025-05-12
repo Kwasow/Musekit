@@ -1,18 +1,11 @@
 package com.kwasow.musekit.managers
 
-import android.app.Application
-import android.content.Context
 import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
-import com.google.android.material.color.DynamicColors
 
-class ThemeManagerImpl(
-    applicationContext: Context,
-    private val preferencesManager: PreferencesManager,
-) : ThemeManager {
+class ThemeManagerImpl(private val preferencesManager: PreferencesManager) : ThemeManager {
     // ====== Constructors
     init {
-        DynamicColors.applyToActivitiesIfAvailable(applicationContext as Application)
         AppCompatDelegate.setDefaultNightMode(getNightMode())
     }
 

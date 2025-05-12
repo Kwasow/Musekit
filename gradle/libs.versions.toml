@@ -17,10 +17,8 @@ androidTestJunit = "1.2.1"
 appcompat = "1.7.0"
 composeLivedata = "1.8.1"
 composeNavigation = "2.9.0"
-constraintLayout = "2.2.1"
 junit = "4.13.2"
 kotlinCore = "1.16.0"
-material = "1.12.0"
 
 # Plugins
 androidGradlePlugin = "8.8.2"
@@ -29,7 +27,6 @@ ktlintPlugin = "12.2.0"
 
 [libraries]
 android-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-android-constraintLayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintLayout" }
 android-lifecycle = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidLifecycle" }
 android-test-espresso = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidTestEspresso" }
 android-test-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidTestJunit" }
@@ -48,7 +45,6 @@ koin-android = { group = "io.insert-koin", name = "koin-android" }
 koin-core = { group = "io.insert-koin", name = "koin-core" }
 koin-compose-base = { group = "io.insert-koin", name = "koin-androidx-compose" }
 kotlin-core = { group = "androidx.core", name = "core-ktx", version.ref = "kotlinCore" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
