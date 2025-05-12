@@ -1,10 +1,14 @@
 package com.kwasow.musekit.managers
 
+import androidx.lifecycle.MutableLiveData
+import kotlinx.coroutines.flow.Flow
+
 interface ThemeManager {
+    // ====== Fields
+    val nightMode: MutableLiveData<Int>
+
     // ====== Methods
     fun getDefaultNightMode(): Int
 
-    fun getNightMode(): Int
-
-    fun setNightMode(nightMode: Int)
+    fun setNightMode(newMode: Int)
 }

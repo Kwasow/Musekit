@@ -16,6 +16,7 @@ import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -118,6 +119,7 @@ private fun AppSettingsSection() {
 @Composable
 private fun ThemeSetting() {
     val viewModel = koinViewModel<SettingsScreenViewModel>()
+    val themeMode = viewModel.themeMode.observeAsState()
 
     val count = if (Build.VERSION.SDK_INT >= 29) 3 else 2
 
@@ -142,7 +144,7 @@ private fun ThemeSetting() {
                     count = count,
                 ),
             onClick = { viewModel.updateThemeMode(NIGHT_NO) },
-            selected = viewModel.themeMode == NIGHT_NO,
+            selected = themeMode.value == NIGHT_NO,
             label = { Text(stringResource(id = R.string.theme_light)) },
         )
 
@@ -154,7 +156,7 @@ private fun ThemeSetting() {
                         count = count,
                     ),
                 onClick = { viewModel.updateThemeMode(NIGHT_SYSTEM) },
-                selected = viewModel.themeMode == NIGHT_SYSTEM,
+                selected = themeMode.value == NIGHT_SYSTEM,
                 label = { Text(stringResource(id = R.string.theme_auto)) },
             )
         }
@@ -166,7 +168,7 @@ private fun ThemeSetting() {
                     count = count,
                 ),
             onClick = { viewModel.updateThemeMode(NIGHT_YES) },
-            selected = viewModel.themeMode == NIGHT_YES,
+            selected = themeMode.value == NIGHT_YES,
             label = { Text(stringResource(id = R.string.theme_dark)) },
         )
     }

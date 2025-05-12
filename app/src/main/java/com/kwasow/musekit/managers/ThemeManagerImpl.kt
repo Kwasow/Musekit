@@ -2,8 +2,12 @@ package com.kwasow.musekit.managers
 
 import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.lifecycle.MutableLiveData
 
 class ThemeManagerImpl(private val preferencesManager: PreferencesManager) : ThemeManager {
+    // ====== Fields
+    override val nightMode = MutableLiveData(getNightMode())
+
     // ====== Constructors
     init {
         AppCompatDelegate.setDefaultNightMode(getNightMode())
@@ -18,10 +22,13 @@ class ThemeManagerImpl(private val preferencesManager: PreferencesManager) : The
         }
     }
 
-    override fun getNightMode(): Int = preferencesManager.getNightMode(getDefaultNightMode())
+    override fun setNightMode(newMode: Int) {
+        preferencesManager.setNightMode(newMode)
+        AppCompatDelegate.setDefaultNightMode(newMode)
 
-    override fun setNightMode(nightMode: Int) {
-        preferencesManager.setNightMode(nightMode)
-        AppCompatDelegate.setDefaultNightMode(nightMode)
+        nightMode.postValue(newMode)
     }
+
+    // ====== Private methods
+    private fun getNightMode(): Int = preferencesManager.getNightMode(getDefaultNightMode())
 }
