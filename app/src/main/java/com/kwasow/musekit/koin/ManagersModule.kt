@@ -8,8 +8,6 @@ import com.kwasow.musekit.managers.PreferencesManager
 import com.kwasow.musekit.managers.PreferencesManagerImpl
 import com.kwasow.musekit.managers.PresetsManager
 import com.kwasow.musekit.managers.PresetsManagerImpl
-import com.kwasow.musekit.managers.ThemeManager
-import com.kwasow.musekit.managers.ThemeManagerImpl
 import org.koin.dsl.module
 
 val managersModule =
@@ -28,9 +26,5 @@ val managersModule =
 
         single<PresetsManager> {
             PresetsManagerImpl(get())
-        }
-
-        single<ThemeManager> {
-            ThemeManagerImpl(get())
         }
     }
