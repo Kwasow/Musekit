@@ -12,6 +12,11 @@ import android.os.Looper
 import androidx.lifecycle.MutableLiveData
 import com.kwasow.musekit.data.MetronomeSounds
 import com.kwasow.musekit.managers.PreferencesManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancelChildren
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import kotlin.properties.Delegates
 
@@ -31,14 +36,20 @@ class MetronomeService : Service(), Runnable {
 
     private var right = true
 
+    private val job = SupervisorJob()
+    private val coroutineScope = CoroutineScope(Dispatchers.IO + job)
+
+    private var sound = MetronomeSounds.Default
+    private var bpm = 60
+
     val isPlaying: MutableLiveData<Boolean> = MutableLiveData(false)
-    val sound: MutableLiveData<MetronomeSounds> = MutableLiveData(MetronomeSounds.Default)
-    val bpm: MutableLiveData<Int> = MutableLiveData(preferencesManager.getMetronomeBPM())
     val tickerPosition: MutableLiveData<Float> = MutableLiveData(0f)
 
     // ====== Interface methods
     override fun onCreate() {
         super.onCreate()
+
+        setupCollectors()
 
         val audioAttributes =
             AudioAttributes.Builder()
@@ -52,7 +63,7 @@ class MetronomeService : Service(), Runnable {
                 .setMaxStreams(10)
                 .build()
 
-        soundId = soundPool.load(this, sound.value!!.resourceId, 1)
+        soundId = soundPool.load(this, sound.resourceId, 1)
         handler = Handler(Looper.getMainLooper())
     }
 
@@ -66,6 +77,7 @@ class MetronomeService : Service(), Runnable {
 
     override fun onDestroy() {
         super.onDestroy()
+        job.cancelChildren()
 
         if (this::soundPool.isInitialized) {
             soundPool.release()
@@ -74,32 +86,17 @@ class MetronomeService : Service(), Runnable {
 
     override fun run() {
         if (isPlaying.value == true) {
-            val tickerAnimation = buildAnimation(bpm.value!!)
-            if (sound.value != MetronomeSounds.None) {
+            val tickerAnimation = buildAnimation(bpm)
+            if (sound != MetronomeSounds.None) {
                 soundPool.play(soundId, 1F, 1F, 0, 0, 1F)
             }
             tickerAnimation.start()
 
-            handler.postDelayed(this, (1000L * 60) / bpm.value!!)
+            handler.postDelayed(this, (1000L * 60) / bpm)
         }
     }
 
     // ====== Public methods
-    fun setTempo(value: Int) {
-        bpm.postValue(value)
-        preferencesManager.setMetronomeBPM(value)
-    }
-
-    fun updateTempo(by: Int) = setTempo(bpm.value!! + by)
-
-    fun setSound(newSound: MetronomeSounds) {
-        sound.postValue(newSound)
-
-        if (newSound.resourceId != -1) {
-            soundId = soundPool.load(this, newSound.resourceId, 1)
-        }
-    }
-
     fun startStopMetronome() {
         if (isPlaying.value == true) {
             stopMetronome()
@@ -134,5 +131,17 @@ class MetronomeService : Service(), Runnable {
         right = !right
 
         return tickerAnimation
+    }
+
+    private fun setupCollectors() {
+        coroutineScope.launch {
+            preferencesManager.metronomeBpm.collect { collected ->
+                bpm = collected
+            }
+
+            preferencesManager.metronomeSound.collect { collected ->
+                sound = collected
+            }
+        }
     }
 }

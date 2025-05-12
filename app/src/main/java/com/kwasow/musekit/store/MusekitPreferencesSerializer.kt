@@ -10,6 +10,7 @@ import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
 import androidx.datastore.dataStore
 import com.google.protobuf.InvalidProtocolBufferException
 import com.kwasow.musekit.MusekitPreferences
+import com.kwasow.musekit.data.MetronomeSounds
 import com.kwasow.musekit.data.NotationStyle
 import com.kwasow.musekit.musekitPreferences
 import java.io.InputStream
@@ -23,9 +24,11 @@ object MusekitPreferencesSerializer : Serializer<MusekitPreferences> {
                 false -> AppCompatDelegate.MODE_NIGHT_NO
             }
             noteForkMode = 0
+            notationStyle = NotationStyle.English.id
+
             automaticTunerPitch = 440
             metronomeBpm = 60
-            notationStyle = NotationStyle.English.id
+            metronomeSound = MetronomeSounds.Default.ordinal
         }
 
     override suspend fun readFrom(input: InputStream): MusekitPreferences {

@@ -1,6 +1,7 @@
 package com.kwasow.musekit.managers
 
 import android.content.Context
+import com.kwasow.musekit.data.MetronomeSounds
 import com.kwasow.musekit.data.NotationStyle
 import com.kwasow.musekit.store.musekitPreferencesDataStore
 import kotlinx.coroutines.flow.Flow
@@ -20,6 +21,12 @@ class PreferencesManagerImpl(val context: Context) : PreferencesManager {
                 preferences.noteForkMode
             }
 
+    override val notationStyle: Flow<NotationStyle> =
+        context.musekitPreferencesDataStore.data
+            .map { preferences ->
+                NotationStyle.valueOf(id = preferences.notationStyle) ?: NotationStyle.English
+            }
+
     override val automaticTunerPitch: Flow<Int> =
         context.musekitPreferencesDataStore.data
             .map { preferences ->
@@ -32,10 +39,10 @@ class PreferencesManagerImpl(val context: Context) : PreferencesManager {
                 preferences.metronomeBpm
             }
 
-    override val notationStyle: Flow<NotationStyle> =
+    override val metronomeSound: Flow<MetronomeSounds> =
         context.musekitPreferencesDataStore.data
             .map { preferences ->
-                NotationStyle.valueOf(id = preferences.notationStyle) ?: NotationStyle.English
+                MetronomeSounds.valueOf(preferences.metronomeSound) ?: MetronomeSounds.Default
             }
 
     // ====== Public methods
@@ -55,6 +62,14 @@ class PreferencesManagerImpl(val context: Context) : PreferencesManager {
         }
     }
 
+    override suspend fun setNotationStyle(value: NotationStyle) {
+        context.musekitPreferencesDataStore.updateData { currentPreferences ->
+            currentPreferences.toBuilder()
+                .setNotationStyle(value.id)
+                .build()
+        }
+    }
+
     override suspend fun setAutomaticTunerPitch(value: Int) {
         context.musekitPreferencesDataStore.updateData { currentPreferences ->
             currentPreferences.toBuilder()
@@ -63,7 +78,7 @@ class PreferencesManagerImpl(val context: Context) : PreferencesManager {
         }
     }
 
-    override suspend fun setMetronomeBPM(value: Int) {
+    override suspend fun setMetronomeBpm(value: Int) {
         context.musekitPreferencesDataStore.updateData { currentPreferences ->
             currentPreferences.toBuilder()
                 .setMetronomeBpm(value)
@@ -71,10 +86,10 @@ class PreferencesManagerImpl(val context: Context) : PreferencesManager {
         }
     }
 
-    override suspend fun setNotationStyle(value: NotationStyle) {
+    override suspend fun setMetronomeSound(value: MetronomeSounds) {
         context.musekitPreferencesDataStore.updateData { currentPreferences ->
             currentPreferences.toBuilder()
-                .setNotationStyle(value.id)
+                .setMetronomeSound(value.id)
                 .build()
         }
     }

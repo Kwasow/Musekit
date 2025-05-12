@@ -31,6 +31,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -51,12 +52,16 @@ import com.kwasow.musekit.ui.components.AutoSizeText
 import com.kwasow.musekit.ui.components.PlayPauseButton
 import com.kwasow.musekit.ui.components.rememberBoundLocalService
 import com.kwasow.musekit.ui.dialogs.SetBeatDialog
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import org.koin.androidx.compose.koinViewModel
 
 // ======= Public composables
 @Composable
 fun MetronomeScreen() {
     val viewModel = koinViewModel<MetronomeScreenViewModel>()
+    val bpm = viewModel.metronomeBpm.collectAsState(60)
+
     val metronomeService =
         rememberBoundLocalService<MetronomeService, MetronomeService.LocalBinder> { service }
 
@@ -68,21 +73,21 @@ fun MetronomeScreen() {
                     .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            SoundPicker(service = metronomeService)
-            TempoPicker(service = metronomeService)
+            SoundPicker()
+            TempoPicker()
             BeatIndicator(service = metronomeService)
             PlayPause(
                 service = metronomeService,
                 scope = this,
             )
-            AdditionalActions(service = metronomeService)
+            AdditionalActions()
         }
 
         if (viewModel.showSetBeatDialog) {
             SetBeatDialog(
-                initialValue = metronomeService!!.bpm.value!!,
+                initialValue = bpm.value,
                 onDismiss = { viewModel.showSetBeatDialog = false },
-                onSet = { metronomeService.setTempo(it) },
+                onSet = { viewModel.setBpm(it) },
             )
         }
     } else {
@@ -97,9 +102,11 @@ fun MetronomeScreen() {
 // ====== Private composables
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun SoundPicker(service: MetronomeService) {
+private fun SoundPicker() {
+    val viewModel = koinViewModel<MetronomeScreenViewModel>()
+
     var expanded by remember { mutableStateOf(false) }
-    val selectedSound = service.sound.observeAsState()
+    val selectedSound = viewModel.metronomeSound.collectAsState(MetronomeSounds.Default)
 
     ExposedDropdownMenuBox(
         expanded = expanded,
@@ -110,7 +117,7 @@ private fun SoundPicker(service: MetronomeService) {
                 .padding(bottom = 32.dp),
     ) {
         OutlinedTextField(
-            value = stringResource(id = selectedSound.value!!.resourceNameId),
+            value = stringResource(id = selectedSound.value.resourceNameId),
             onValueChange = {},
             label = { Text(text = stringResource(id = R.string.sound)) },
             trailingIcon = {
@@ -145,7 +152,7 @@ private fun SoundPicker(service: MetronomeService) {
                     },
                     onClick = {
                         expanded = false
-                        service.setSound(sound)
+                        viewModel.setSound(sound)
                     },
                 )
             }
@@ -154,11 +161,9 @@ private fun SoundPicker(service: MetronomeService) {
 }
 
 @Composable
-private fun TempoPicker(service: MetronomeService) {
-    val currentTempo = service.bpm.observeAsState()
-    val onChange = { by: Int ->
-        service.updateTempo(by)
-    }
+private fun TempoPicker() {
+    val viewModel = koinViewModel<MetronomeScreenViewModel>()
+    val currentTempo = viewModel.metronomeBpm.collectAsState(60)
 
     Row(
         modifier =
@@ -174,7 +179,7 @@ private fun TempoPicker(service: MetronomeService) {
                     Pair(-2, 20.sp),
                     Pair(-1, 16.sp),
                 ),
-            onChange = onChange,
+            onChange = { viewModel.setBpm(currentTempo.value + it) },
         )
 
         AutoSizeText(
@@ -194,7 +199,7 @@ private fun TempoPicker(service: MetronomeService) {
                     Pair(2, 20.sp),
                     Pair(1, 16.sp),
                 ),
-            onChange = onChange,
+            onChange = { viewModel.setBpm(currentTempo.value + it) },
         )
     }
 }
@@ -258,13 +263,13 @@ private fun PlayPause(
 }
 
 @Composable
-private fun AdditionalActions(service: MetronomeService) {
+private fun AdditionalActions() {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier.fillMaxWidth(),
     ) {
         SetBeatButton()
-        TapBeatButton(service)
+        TapBeatButton()
     }
 }
 
@@ -287,13 +292,13 @@ private fun SetBeatButton() {
 }
 
 @Composable
-private fun TapBeatButton(service: MetronomeService) {
+private fun TapBeatButton() {
     val viewModel = koinViewModel<MetronomeScreenViewModel>()
 
     Button(
         onClick = {
             viewModel.beatEvent()?.let { res ->
-                service.setTempo(res)
+                viewModel.setBpm(res)
             }
         },
         contentPadding = PaddingValues(16.dp),

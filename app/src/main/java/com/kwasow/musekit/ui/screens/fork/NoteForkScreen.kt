@@ -8,6 +8,7 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -23,10 +24,11 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun NoteForkScreen() {
     val viewModel = koinViewModel<NoteForkScreenViewModel>()
+    val noteForkMode = viewModel.noteForkMode.collectAsState(0)
     val pagerState =
         rememberPagerState(
             pageCount = { 2 },
-            initialPage = viewModel.noteForkMode,
+            initialPage = noteForkMode.value,
         )
 
     val pages =
@@ -76,7 +78,7 @@ private fun Navigation(
                 onClick = {
                     coroutineScope.launch {
                         pagerState.animateScrollToPage(index)
-                        viewModel.noteForkMode = index
+                        viewModel.setNoteForkMode(index)
                     }
                 },
             )

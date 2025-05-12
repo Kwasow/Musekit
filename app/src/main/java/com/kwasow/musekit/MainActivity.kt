@@ -3,8 +3,9 @@ package com.kwasow.musekit
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.livedata.observeAsState
-import com.kwasow.musekit.managers.ThemeManager
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.runtime.collectAsState
+import com.kwasow.musekit.managers.PreferencesManager
 import com.kwasow.musekit.ui.App
 import com.kwasow.musekit.ui.theme.MusekitTheme
 import org.koin.android.ext.android.inject
@@ -12,7 +13,7 @@ import org.koin.compose.KoinContext
 
 class MainActivity : ComponentActivity() {
     // ====== Fields
-    private val themeManager by inject<ThemeManager>()
+    private val preferencesManager by inject<PreferencesManager>()
 
     // ====== Interface methods
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,8 +21,8 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val nightMode =
-                themeManager.nightMode.observeAsState(
-                    themeManager.getDefaultNightMode(),
+                preferencesManager.nightMode.collectAsState(
+                    AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
                 )
 
             MusekitTheme(
