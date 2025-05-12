@@ -1,8 +1,6 @@
 package com.kwasow.musekit.ui.screens.fork
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
@@ -154,10 +152,10 @@ private fun PitchPicker() {
             label = stringResource(id = R.string.note),
             value = viewModel.getSuperscriptedNote(viewModel.currentNote),
             onIncrease = {
-                viewModel.currentNote = viewModel.currentNote.apply { up() }
+                viewModel.setNote(viewModel.currentNote.apply { up() })
             },
             onDecrease = {
-                viewModel.currentNote = viewModel.currentNote.apply { down() }
+                viewModel.setNote(viewModel.currentNote.apply { down() })
             },
             modifier = Modifier.weight(1f)
         )
@@ -166,10 +164,10 @@ private fun PitchPicker() {
             label = stringResource(id = R.string.pitch),
             value = stringResource(id = R.string.pitch_placeholder, viewModel.currentNote.pitch),
             onIncrease = {
-                viewModel.currentNote = viewModel.currentNote.apply { pitch += 1 }
+                viewModel.setNote(viewModel.currentNote.apply { pitch += 1 })
             },
             onDecrease = {
-                viewModel.currentNote = viewModel.currentNote.apply { pitch -= 1}
+                viewModel.setNote(viewModel.currentNote.apply { pitch -= 1})
             },
             modifier = Modifier.weight(1f)
         )
@@ -229,11 +227,13 @@ private fun PropertyCard(
 
 @Composable
 private fun PlayPause(scope: ColumnScope) {
+    val viewModel = koinViewModel<NoteForkScreenViewModel>()
+
     with(scope) {
         PlayPauseButton(
             modifier = Modifier.weight(1f),
-            isPlaying = false,
-            onChange = { },
+            isPlaying = viewModel.isPlaying,
+            onChange = { viewModel.startStopNote() },
         )
     }
 }

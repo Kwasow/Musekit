@@ -1,6 +1,7 @@
 package com.kwasow.musekit.ui.screens.fork
 
 import android.content.Context
+import android.media.AudioTrack
 import android.text.SpannableStringBuilder
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -13,12 +14,15 @@ import com.kwasow.musekit.data.Note
 import com.kwasow.musekit.data.Notes
 import com.kwasow.musekit.data.Preset
 import com.kwasow.musekit.managers.PermissionManager
+import com.kwasow.musekit.managers.PitchPlayerManager
 import com.kwasow.musekit.managers.PreferencesManager
 import com.kwasow.musekit.managers.PresetsManager
+import kotlin.math.sin
 
 class NoteForkScreenViewModel(
     private val applicationContext: Context,
     private val permissionManager: PermissionManager,
+    private val pitchPlayerManager: PitchPlayerManager,
     private val preferencesManager: PreferencesManager,
     private val presetsManager: PresetsManager,
 ) : ViewModel() {
@@ -38,9 +42,12 @@ class NoteForkScreenViewModel(
         value = Note(),
         policy = neverEqualPolicy(),
     )
+        private set
+
     var currentPreset by mutableStateOf(defaultPreset.first)
     var currentDialog by mutableStateOf(Dialog.NONE)
     var currentRemovePresetName by mutableStateOf("")
+    var isPlaying by mutableStateOf(false)
 
     var noteForkMode: Int
         get() = preferencesManager.getNoteForkMode()
@@ -71,6 +78,8 @@ class NoteForkScreenViewModel(
 
     fun setNote(note: Note) {
         currentNote = note
+
+        pitchPlayerManager.frequency = note.getFrequency()
     }
 
     fun addPreset(name: String, note: Note) {
@@ -104,6 +113,16 @@ class NoteForkScreenViewModel(
 
     fun closeDialog() {
         currentDialog = Dialog.NONE
+    }
+
+    fun startStopNote() {
+        if (isPlaying) {
+            pitchPlayerManager.stop()
+        } else {
+            pitchPlayerManager.play()
+        }
+
+        isPlaying = !isPlaying
     }
 
     // ====== Private methods

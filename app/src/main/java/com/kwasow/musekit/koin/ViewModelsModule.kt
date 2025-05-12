@@ -13,7 +13,7 @@ val viewModelsModule =
         }
 
         viewModel {
-            NoteForkScreenViewModel(get(), get(), get(), get())
+            NoteForkScreenViewModel(get(), get(), get(), get(), get())
         }
 
         viewModel {
