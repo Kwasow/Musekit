@@ -6,6 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.neverEqualPolicy
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.AnnotatedString
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import com.kwasow.musekit.R
@@ -69,7 +70,7 @@ class NoteForkScreenViewModel(
 
     fun setPitch(value: Int) = preferencesManager.setAutomaticTunerPitch(value)
 
-    fun getSuperscriptedNote(note: Note): SpannableStringBuilder =
+    fun getSuperscriptedNote(note: Note): AnnotatedString =
         note.getSuperscripted(
             applicationContext,
             getNotationStyle(),

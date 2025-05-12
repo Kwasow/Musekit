@@ -6,6 +6,7 @@ import android.text.SpannableStringBuilder
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
+import androidx.compose.ui.text.AnnotatedString
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.color.MaterialColors
 import com.kwasow.musekit.data.NotationStyle
@@ -132,7 +133,7 @@ class TunerView : LinearLayout {
         binding.tunerCheckMark.drawable.setTint(inactiveColor)
     }
 
-    fun getSuperscriptedNote(note: Note): SpannableStringBuilder =
+    fun getSuperscriptedNote(note: Note): AnnotatedString =
         note.getSuperscripted(
             context,
             notationStyle,

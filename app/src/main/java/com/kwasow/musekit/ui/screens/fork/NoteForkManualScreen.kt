@@ -32,6 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.kwasow.musekit.R
@@ -164,7 +165,12 @@ private fun PitchPicker() {
 
         PropertyCard(
             label = stringResource(id = R.string.pitch),
-            value = stringResource(id = R.string.pitch_placeholder, viewModel.currentNote.pitch),
+            value = AnnotatedString(
+                stringResource(
+                    id = R.string.pitch_placeholder,
+                    viewModel.currentNote.pitch
+                )
+            ),
             onIncrease = {
                 viewModel.setNote(viewModel.currentNote.apply { pitch += 1 })
             },
@@ -179,7 +185,7 @@ private fun PitchPicker() {
 @Composable
 private fun PropertyCard(
     label: String,
-    value: CharSequence,
+    value: AnnotatedString,
     onIncrease: () -> Unit,
     onDecrease: () -> Unit,
     modifier: Modifier,

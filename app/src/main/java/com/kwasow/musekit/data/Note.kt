@@ -6,6 +6,9 @@ import android.text.Spanned
 import android.text.style.RelativeSizeSpan
 import android.text.style.SubscriptSpan
 import android.text.style.SuperscriptSpan
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.style.BaselineShift
 import com.kwasow.musekit.R
 import java.util.Objects
 import kotlin.math.max
@@ -117,40 +120,45 @@ class Note(
     fun getSuperscripted(
         context: Context,
         style: NotationStyle,
-    ): SpannableStringBuilder {
+    ): AnnotatedString {
         val text =
             context.getString(
                 R.string.note_placeholder,
                 this.getNoteName(style),
                 this.octave,
             )
-        val spannableStringBuilder = SpannableStringBuilder(text)
+        val annotations = mutableListOf<AnnotatedString.Range<AnnotatedString.Annotation>>()
 
         text.forEachIndexed { index, c ->
             if (c == '♯' || c == '♭') {
-                spannableStringBuilder.setSpan(
-                    SuperscriptSpan(),
-                    index,
-                    index + 1,
-                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
+                annotations.add(
+                    AnnotatedString.Range(
+                        SpanStyle(baselineShift = BaselineShift.Superscript),
+                        index,
+                        index
+                    )
                 )
             } else if (c.isDigit()) {
-                spannableStringBuilder.setSpan(
-                    RelativeSizeSpan(0.5f),
-                    index,
-                    index + 1,
-                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
+                annotations.add(
+                    AnnotatedString.Range(
+                        SpanStyle(baselineShift = BaselineShift.Subscript),
+                        index,
+                        index
+                    )
                 )
-                spannableStringBuilder.setSpan(
-                    SubscriptSpan(),
-                    index,
-                    index + 1,
-                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
-                )
+//                spannableStringBuilder.setSpan(
+//                    RelativeSizeSpan(0.5f),
+//                    index,
+//                    index + 1,
+//                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
+//                )
             }
         }
 
-        return spannableStringBuilder
+        return AnnotatedString(
+            text = text,
+            annotations = annotations
+        )
     }
 
     // ======= Private methods
