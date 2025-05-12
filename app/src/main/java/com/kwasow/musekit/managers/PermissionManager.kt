@@ -5,10 +5,5 @@ import androidx.fragment.app.Fragment
 
 interface PermissionManager {
     // ====== Methods
-    fun requestMicrophonePermission(
-        fragment: Fragment,
-        callback: ActivityResultCallback<Boolean>,
-    )
-
     fun openPermissionSettings()
 }

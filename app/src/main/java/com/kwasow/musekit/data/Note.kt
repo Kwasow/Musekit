@@ -52,9 +52,6 @@ class Note(
 
     constructor(note: Notes, octave: Int) : this(440, note, octave)
 
-    // Copy constructor
-    constructor(note: Note) : this(note.pitch, note.note, note.octave)
-
     // ====== Interface methods
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -141,12 +138,6 @@ class Note(
                         index,
                     ),
                 )
-//                spannableStringBuilder.setSpan(
-//                    RelativeSizeSpan(0.5f),
-//                    index,
-//                    index + 1,
-//                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
-//                )
             }
         }
 

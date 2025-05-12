@@ -91,6 +91,7 @@ dependencies {
     implementation(platform(libs.koin.bom))
 
     // Compose
+    implementation(libs.compose.accompanist.permissions)
     implementation(libs.compose.livedata)
     implementation(libs.compose.material)
     implementation(libs.compose.material3)

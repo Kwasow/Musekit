@@ -60,11 +60,6 @@ class NoteForkScreenViewModel(
     // ======= Public methods
     fun launchPermissionSettings() = permissionManager.openPermissionSettings()
 
-    fun requestMicrophonePermission(
-        fragment: Fragment,
-        callback: (Boolean) -> Unit,
-    ) = permissionManager.requestMicrophonePermission(fragment, callback)
-
     fun getPitch(): Int = preferencesManager.getAutomaticTunerPitch()
 
     fun setPitch(value: Int) = preferencesManager.setAutomaticTunerPitch(value)
