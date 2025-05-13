@@ -1,7 +1,5 @@
 package com.kwasow.musekit.ui.screens.metronome
 
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,6 +28,7 @@ import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Slider
+import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -62,11 +61,9 @@ fun MetronomeScreen() {
     val metronomeService =
         rememberBoundLocalService<MetronomeService, MetronomeService.LocalBinder> { service }
 
-    AnimatedContent(metronomeService) { service ->
-        when (service) {
-            null -> LoadingView()
-            else -> MainView(service = service)
-        }
+    when (metronomeService) {
+        null -> LoadingView()
+        else -> MainView(service = metronomeService)
     }
 }
 
@@ -257,10 +254,15 @@ private fun BeatIndicator(service: MetronomeService) {
         onValueChange = {},
         modifier =
             Modifier
-                .padding(vertical = 16.dp)
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .padding(vertical = 16.dp),
         enabled = false,
-        interactionSource = remember { MutableInteractionSource() },
+        colors =
+            SliderDefaults.colors(
+                disabledActiveTrackColor = MaterialTheme.colorScheme.secondaryContainer,
+                disabledInactiveTrackColor = MaterialTheme.colorScheme.secondaryContainer,
+                disabledThumbColor = MaterialTheme.colorScheme.primary,
+            ),
     )
 }
 

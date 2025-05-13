@@ -9,7 +9,8 @@
     <string name="contentDescription_note_down">Note down</string>
     <string name="contentDescription_pitch_up">Pitch up</string>
     <string name="contentDescription_pitch_down">Pitch down</string>
-    <string name="contentDescription_start_stop">Start/stop</string>
+    <string name="contentDescription_start">Start</string>
+    <string name="contentDescription_stop">Stop</string>
     <string name="contentDescription_metronome_ticker">Metronome ticker</string>
 
     <!-- Note fork strings -->

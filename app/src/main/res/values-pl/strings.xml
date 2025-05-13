@@ -7,7 +7,7 @@
     <string name="contentDescription_note_down">Dźwięk w dół</string>
     <string name="contentDescription_pitch_up">Zwiększ częstotliwość podstawową</string>
     <string name="contentDescription_pitch_down">Zmniejsz częstotliowść podstawową</string>
-    <string name="contentDescription_start_stop">Start/stop</string>
+    <string name="contentDescription_stop">Stop</string>
     <string name="contentDescription_metronome_ticker">Wslaźnik metronomu</string>
     <string name="note">Dźwięk</string>
     <string name="pitch">Częstotliwość</string>
@@ -79,4 +79,5 @@
     <string name="notation_style_subtitle">Wybierz konwencję nazwenictwa dźwięków</string>
     <string name="notation_style_english">Angielska</string>
     <string name="notation_style_german">Niemicka</string>
+    <string name="contentDescription_start">Start</string>
 </resources>

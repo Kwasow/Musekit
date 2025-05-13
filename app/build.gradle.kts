@@ -106,8 +106,10 @@ dependencies {
     implementation(libs.koin.core)
     implementation(libs.koin.compose.base)
 
+    // Other
     implementation(libs.android.appcompat)
     implementation(libs.android.dataStore)
+    implementation(libs.android.graphics.shapes)
     implementation(libs.android.lifecycle)
     implementation(libs.google.libraries.protobuf)
     implementation(libs.kotlin.core)
