@@ -17,8 +17,8 @@ class MetronomeScreenViewModel(
     private val beatDetector = MusekitBeatDetector()
 
     var showSetBeatDialog by mutableStateOf(false)
-    var metronomeSound = preferencesManager.metronomeSound
-    var metronomeBpm = preferencesManager.metronomeBpm
+    val metronomeSound = preferencesManager.metronomeSound
+    val metronomeBpm = preferencesManager.metronomeBpm
 
     // ====== Public methods
     fun beatEvent(): Int? = beatDetector.beatEvent()

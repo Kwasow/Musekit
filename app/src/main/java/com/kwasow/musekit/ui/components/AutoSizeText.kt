@@ -13,9 +13,22 @@ import androidx.compose.ui.text.font.FontWeight
 // ====== Public composables
 @Composable
 fun AutoSizeText(
-    text: AnnotatedString,
-    boldFont: Boolean,
+    text: String,
     modifier: Modifier = Modifier,
+    boldFont: Boolean = false,
+) {
+    AutoSizeText(
+        text = AnnotatedString(text),
+        boldFont = boldFont,
+        modifier = modifier,
+    )
+}
+
+@Composable
+fun AutoSizeText(
+    text: AnnotatedString,
+    modifier: Modifier = Modifier,
+    boldFont: Boolean = false,
 ) {
     val textStyle =
         MaterialTheme.typography.displayMedium.copy(

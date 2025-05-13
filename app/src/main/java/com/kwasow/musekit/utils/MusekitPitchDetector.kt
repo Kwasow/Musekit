@@ -1,5 +1,6 @@
 package com.kwasow.musekit.utils
 
+import android.os.CountDownTimer
 import androidx.lifecycle.MutableLiveData
 import be.tarsos.dsp.AudioDispatcher
 import be.tarsos.dsp.filters.HighPass
@@ -54,6 +55,13 @@ class MusekitPitchDetector(
             )
     }
 
+    private val timer =
+        object : CountDownTimer(3000, 1000) {
+            override fun onTick(millisUntilFinished: Long) = Unit
+
+            override fun onFinish() = detectionResult.postValue(null)
+        }
+
     private val history = mutableListOf<Pair<Note, Double>>()
     private val pitchDetectionHandler =
         PitchDetectionHandler { res, _ ->
@@ -66,12 +74,15 @@ class MusekitPitchDetector(
             }
 
             if (history.size >= MIN_ITEM_COUNT) {
-                currentPitch.postValue(calculateAverage())
+                timer.cancel()
+                timer.start()
+
+                detectionResult.postValue(calculateAverage())
                 history.clear()
             }
         }
 
-    val currentPitch: MutableLiveData<Pair<Note, Double>?> by lazy {
+    val detectionResult: MutableLiveData<Pair<Note, Double>?> by lazy {
         MutableLiveData()
     }
 
