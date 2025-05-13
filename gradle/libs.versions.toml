@@ -3,8 +3,8 @@
 compileSdk = "35"
 targetSdk = "35"
 minSdk = "23"
-versionCode = "1721768587"
-versionName = "2.3.0"
+versionCode = "1721768589"
+versionName = "2.5.0"
 
 # BoM
 composeBom = "2025.05.00"
