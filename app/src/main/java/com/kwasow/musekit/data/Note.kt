@@ -3,7 +3,9 @@ package com.kwasow.musekit.data
 import android.content.Context
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.BaselineShift
+import androidx.compose.ui.unit.em
 import com.kwasow.musekit.R
 import java.util.Objects
 import kotlin.math.max
@@ -119,32 +121,45 @@ class Note(
                 this.getNoteName(style),
                 this.octave,
             )
-        val annotations = mutableListOf<AnnotatedString.Range<AnnotatedString.Annotation>>()
 
-        text.forEachIndexed { index, c ->
-            if (c == '♯' || c == '♭') {
-                annotations.add(
-                    AnnotatedString.Range(
-                        SpanStyle(baselineShift = BaselineShift.Superscript),
-                        index,
-                        index,
-                    ),
-                )
-            } else if (c.isDigit()) {
-                annotations.add(
-                    AnnotatedString.Range(
-                        SpanStyle(baselineShift = BaselineShift.Subscript),
-                        index,
-                        index,
-                    ),
-                )
+        return buildAnnotatedString {
+            append(text)
+
+            text.forEachIndexed { index, c ->
+                when (c) {
+                    '♯', '♭' -> {
+                        addStyle(
+                            SpanStyle(
+                                baselineShift = BaselineShift(0.6f),
+                                fontSize = 0.5f.em,
+                            ),
+                            index,
+                            index + 1,
+                        )
+                    }
+                    in '0'..'9' -> {
+                        addStyle(
+                            SpanStyle(
+                                baselineShift = BaselineShift(-0.25f),
+                                fontSize = 0.5f.em,
+                            ),
+                            index,
+                            index + 1,
+                        )
+
+                        // Balancing, effectively invisible superscript
+                        pushStyle(
+                            SpanStyle(
+                                baselineShift = BaselineShift(0.6f),
+                                fontSize = 0.5f.em,
+                            ),
+                        )
+                        append("\u200B") // Zero-width space
+                        pop()
+                    }
+                }
             }
         }
-
-        return AnnotatedString(
-            text = text,
-            annotations = annotations,
-        )
     }
 
     // ======= Private methods

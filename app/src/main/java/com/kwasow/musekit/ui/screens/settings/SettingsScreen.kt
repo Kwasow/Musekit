@@ -16,7 +16,8 @@ import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -120,7 +121,7 @@ private fun AppSettingsSection() {
 @Composable
 private fun ThemeSetting() {
     val viewModel = koinViewModel<SettingsScreenViewModel>()
-    val themeMode = viewModel.themeMode.observeAsState()
+    val nightMode by viewModel.nightMode.collectAsState(null)
 
     val count = if (Build.VERSION.SDK_INT >= 29) 3 else 2
 
@@ -144,8 +145,8 @@ private fun ThemeSetting() {
                     index = 0,
                     count = count,
                 ),
-            onClick = { viewModel.updateThemeMode(NIGHT_NO) },
-            selected = themeMode.value == NIGHT_NO,
+            onClick = { viewModel.updateNightMode(NIGHT_NO) },
+            selected = nightMode == NIGHT_NO,
             label = { Text(stringResource(id = R.string.theme_light)) },
         )
 
@@ -156,8 +157,8 @@ private fun ThemeSetting() {
                         index = 1,
                         count = count,
                     ),
-                onClick = { viewModel.updateThemeMode(NIGHT_SYSTEM) },
-                selected = themeMode.value == NIGHT_SYSTEM,
+                onClick = { viewModel.updateNightMode(NIGHT_SYSTEM) },
+                selected = nightMode == NIGHT_SYSTEM,
                 label = { Text(stringResource(id = R.string.theme_auto)) },
             )
         }
@@ -168,8 +169,8 @@ private fun ThemeSetting() {
                     index = count - 1,
                     count = count,
                 ),
-            onClick = { viewModel.updateThemeMode(NIGHT_YES) },
-            selected = themeMode.value == NIGHT_YES,
+            onClick = { viewModel.updateNightMode(NIGHT_YES) },
+            selected = nightMode == NIGHT_YES,
             label = { Text(stringResource(id = R.string.theme_dark)) },
         )
     }
@@ -178,6 +179,7 @@ private fun ThemeSetting() {
 @Composable
 private fun NotationStyleSetting() {
     val viewModel = koinViewModel<SettingsScreenViewModel>()
+    val notationStyle by viewModel.notationStyle.collectAsState(null)
 
     SettingsEntry(
         icon = painterResource(id = R.drawable.ic_globe),
@@ -201,7 +203,7 @@ private fun NotationStyleSetting() {
                         count = NotationStyle.entries.size,
                     ),
                 onClick = { viewModel.updateNotationStyle(style) },
-                selected = viewModel.notationStyle.id == style.id,
+                selected = notationStyle?.id == style.id,
                 label = { Text(stringResource(id = style.nameId)) },
             )
         }

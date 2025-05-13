@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option java_package = "com.kwasow.musekit";
+option java_multiple_files = true;
+
+message MusekitPreferences {
+  int32 night_mode = 1;
+  int32 note_fork_mode = 2;
+  int32 notation_style = 3;
+  
+  int32 automatic_tuner_pitch = 4;
+  int32 metronome_bpm = 5;
+  int32 metronome_sound = 6;
+}
+

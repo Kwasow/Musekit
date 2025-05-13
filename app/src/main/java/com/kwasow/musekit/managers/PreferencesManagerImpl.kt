@@ -1,66 +1,96 @@
 package com.kwasow.musekit.managers
 
 import android.content.Context
-import android.content.SharedPreferences
-import androidx.core.content.edit
+import com.kwasow.musekit.data.MetronomeSounds
 import com.kwasow.musekit.data.NotationStyle
+import com.kwasow.musekit.store.musekitPreferencesDataStore
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
-class PreferencesManagerImpl(context: Context) : PreferencesManager {
+class PreferencesManagerImpl(val context: Context) : PreferencesManager {
     // ====== Fields
-    companion object {
-        // Shared preferences keys
-        private const val PREFERENCES_FILE = "com.kwasow.musekit.ApplicationSharedPreferences"
+    override val nightMode: Flow<Int> =
+        context.musekitPreferencesDataStore.data
+            .map { preferences ->
+                preferences.nightMode
+            }
 
-        private const val KEY_NIGHT_MODE = "DarkTheme"
-        private const val KEY_NOTE_FORK_MODE = "NoteForkMode"
-        private const val KEY_AUTO_TUNER_PITCH = "AutoTunerPitch"
-        private const val KEY_METRONOME_BPM = "MetronomeBPM"
-        private const val KEY_NOTATION_STYLE = "NotationStyle"
-    }
+    override val noteForkMode: Flow<Int> =
+        context.musekitPreferencesDataStore.data
+            .map { preferences ->
+                preferences.noteForkMode
+            }
 
-    private var sharedPreferences: SharedPreferences =
-        context.getSharedPreferences(
-            PREFERENCES_FILE,
-            Context.MODE_PRIVATE,
-        )
+    override val notationStyle: Flow<NotationStyle> =
+        context.musekitPreferencesDataStore.data
+            .map { preferences ->
+                NotationStyle.valueOf(id = preferences.notationStyle) ?: NotationStyle.English
+            }
+
+    override val automaticTunerPitch: Flow<Int> =
+        context.musekitPreferencesDataStore.data
+            .map { preferences ->
+                preferences.automaticTunerPitch
+            }
+
+    override val metronomeBpm: Flow<Int> =
+        context.musekitPreferencesDataStore.data
+            .map { preferences ->
+                preferences.metronomeBpm
+            }
+
+    override val metronomeSound: Flow<MetronomeSounds> =
+        context.musekitPreferencesDataStore.data
+            .map { preferences ->
+                MetronomeSounds.valueOf(preferences.metronomeSound) ?: MetronomeSounds.Default
+            }
 
     // ====== Public methods
-    override fun setNightMode(value: Int) = setInt(KEY_NIGHT_MODE, value)
-
-    override fun getNightMode(default: Int): Int = getInt(KEY_NIGHT_MODE, default)
-
-    override fun setNoteForkMode(value: Int) = setInt(KEY_NOTE_FORK_MODE, value)
-
-    override fun getNoteForkMode(): Int = getInt(KEY_NOTE_FORK_MODE, 0)
-
-    override fun setAutomaticTunerPitch(value: Int) = setInt(KEY_AUTO_TUNER_PITCH, value)
-
-    override fun getAutomaticTunerPitch(): Int = getInt(KEY_AUTO_TUNER_PITCH, 440)
-
-    override fun setMetronomeBPM(value: Int) = setInt(KEY_METRONOME_BPM, value)
-
-    override fun getMetronomeBPM(): Int = getInt(KEY_METRONOME_BPM, 60)
-
-    override fun setNotationStyle(value: NotationStyle) = setInt(KEY_NOTATION_STYLE, value.id)
-
-    override fun getNotationStyle(): NotationStyle {
-        val id = sharedPreferences.getInt(KEY_NOTATION_STYLE, NotationStyle.English.id)
-        val style = NotationStyle.valueOf(id)
-
-        return style ?: NotationStyle.English
+    override suspend fun setNightMode(value: Int) {
+        context.musekitPreferencesDataStore.updateData { currentPreferences ->
+            currentPreferences.toBuilder()
+                .setNightMode(value)
+                .build()
+        }
     }
 
-    // ====== Private methods
-    private fun setInt(
-        key: String,
-        value: Int,
-    ) = sharedPreferences.edit {
-        putInt(key, value)
-        apply()
+    override suspend fun setNoteForkMode(value: Int) {
+        context.musekitPreferencesDataStore.updateData { currentPreferences ->
+            currentPreferences.toBuilder()
+                .setNoteForkMode(value)
+                .build()
+        }
     }
 
-    private fun getInt(
-        key: String,
-        default: Int,
-    ): Int = sharedPreferences.getInt(key, default)
+    override suspend fun setNotationStyle(value: NotationStyle) {
+        context.musekitPreferencesDataStore.updateData { currentPreferences ->
+            currentPreferences.toBuilder()
+                .setNotationStyle(value.id)
+                .build()
+        }
+    }
+
+    override suspend fun setAutomaticTunerPitch(value: Int) {
+        context.musekitPreferencesDataStore.updateData { currentPreferences ->
+            currentPreferences.toBuilder()
+                .setAutomaticTunerPitch(value)
+                .build()
+        }
+    }
+
+    override suspend fun setMetronomeBpm(value: Int) {
+        context.musekitPreferencesDataStore.updateData { currentPreferences ->
+            currentPreferences.toBuilder()
+                .setMetronomeBpm(value.coerceIn(30, 300))
+                .build()
+        }
+    }
+
+    override suspend fun setMetronomeSound(value: MetronomeSounds) {
+        context.musekitPreferencesDataStore.updateData { currentPreferences ->
+            currentPreferences.toBuilder()
+                .setMetronomeSound(value.id)
+                .build()
+        }
+    }
 }

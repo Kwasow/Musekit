@@ -24,6 +24,7 @@ import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,6 +37,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.kwasow.musekit.R
+import com.kwasow.musekit.data.NotationStyle
 import com.kwasow.musekit.ui.components.AutoSizeText
 import com.kwasow.musekit.ui.components.PlayPauseButton
 import com.kwasow.musekit.ui.dialogs.PresetRemoveDialog
@@ -146,6 +148,7 @@ private fun PresetPicker() {
 @Composable
 private fun PitchPicker() {
     val viewModel = koinViewModel<NoteForkScreenViewModel>()
+    val notationStyle by viewModel.notationStyle.collectAsState(NotationStyle.English)
 
     Row(
         modifier = Modifier.padding(vertical = 16.dp),
@@ -153,7 +156,7 @@ private fun PitchPicker() {
     ) {
         PropertyCard(
             label = stringResource(id = R.string.note),
-            value = viewModel.getSuperscriptedNote(viewModel.currentNote),
+            value = viewModel.getSuperscriptedNote(viewModel.currentNote, notationStyle),
             onIncrease = {
                 viewModel.setNote(viewModel.currentNote.apply { up() })
             },

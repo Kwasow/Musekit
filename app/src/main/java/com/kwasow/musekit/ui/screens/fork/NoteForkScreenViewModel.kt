@@ -7,7 +7,9 @@ import androidx.compose.runtime.neverEqualPolicy
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.AnnotatedString
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.kwasow.musekit.R
+import com.kwasow.musekit.data.NotationStyle
 import com.kwasow.musekit.data.Note
 import com.kwasow.musekit.data.Notes
 import com.kwasow.musekit.data.Preset
@@ -15,6 +17,7 @@ import com.kwasow.musekit.managers.PermissionManager
 import com.kwasow.musekit.managers.PitchPlayerManager
 import com.kwasow.musekit.managers.PreferencesManager
 import com.kwasow.musekit.managers.PresetsManager
+import kotlinx.coroutines.launch
 
 class NoteForkScreenViewModel(
     private val applicationContext: Context,
@@ -46,9 +49,9 @@ class NoteForkScreenViewModel(
     var currentRemovePresetName by mutableStateOf("")
     var isPlaying by mutableStateOf(false)
 
-    var noteForkMode: Int
-        get() = preferencesManager.getNoteForkMode()
-        set(value) = preferencesManager.setNoteForkMode(value)
+    val noteForkMode = preferencesManager.noteForkMode
+    val automaticTunerPitch = preferencesManager.automaticTunerPitch
+    val notationStyle = preferencesManager.notationStyle
 
     // ======= Constructors
     init {
@@ -59,15 +62,20 @@ class NoteForkScreenViewModel(
     // ======= Public methods
     fun launchPermissionSettings() = permissionManager.openPermissionSettings()
 
-    fun getPitch(): Int = preferencesManager.getAutomaticTunerPitch()
+    fun setNoteForkMode(mode: Int) =
+        viewModelScope.launch {
+            preferencesManager.setNoteForkMode(mode)
+        }
 
-    fun setPitch(value: Int) = preferencesManager.setAutomaticTunerPitch(value)
+    fun setAutomaticTunerPitch(value: Int) =
+        viewModelScope.launch {
+            preferencesManager.setAutomaticTunerPitch(value)
+        }
 
-    fun getSuperscriptedNote(note: Note): AnnotatedString =
-        note.getSuperscripted(
-            applicationContext,
-            getNotationStyle(),
-        )
+    fun getSuperscriptedNote(
+        note: Note,
+        style: NotationStyle,
+    ): AnnotatedString = note.getSuperscripted(applicationContext, style)
 
     fun setNote(note: Note) {
         currentNote = note
@@ -123,8 +131,6 @@ class NoteForkScreenViewModel(
     }
 
     // ====== Private methods
-    private fun getNotationStyle() = preferencesManager.getNotationStyle()
-
     private fun refreshPresets() {
         val newPresets = mutableListOf(defaultPreset)
         presetsManager.getPresets().forEach {

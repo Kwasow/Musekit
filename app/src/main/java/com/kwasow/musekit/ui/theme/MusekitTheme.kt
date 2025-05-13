@@ -1,5 +1,6 @@
 package com.kwasow.musekit.ui.theme
 
+import android.app.Activity
 import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -9,20 +10,24 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
+import androidx.core.view.WindowCompat
 
 // ====== Public composables
 @Composable
 fun MusekitTheme(
-    nightMode: Int,
+    nightMode: Int?,
     content: @Composable () -> Unit,
 ) {
+    val view = LocalView.current
     val dynamicColor = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
     val darkTheme =
-        if (nightMode == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) {
-            isSystemInDarkTheme()
-        } else {
-            nightMode == AppCompatDelegate.MODE_NIGHT_YES
+        when (nightMode) {
+            null -> false
+            AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> isSystemInDarkTheme()
+            else -> nightMode == AppCompatDelegate.MODE_NIGHT_YES
         }
 
     val colorScheme =
@@ -32,6 +37,14 @@ fun MusekitTheme(
             darkTheme -> darkScheme
             else -> lightScheme
         }
+
+    LaunchedEffect(darkTheme) {
+        (view.context as? Activity)?.window?.let { window ->
+            WindowCompat.getInsetsController(window, view).apply {
+                isAppearanceLightStatusBars = !darkTheme
+            }
+        }
+    }
 
     MaterialTheme(
         colorScheme = colorScheme,

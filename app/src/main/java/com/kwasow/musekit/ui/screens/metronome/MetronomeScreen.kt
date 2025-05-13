@@ -1,5 +1,6 @@
 package com.kwasow.musekit.ui.screens.metronome
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -31,6 +32,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -40,6 +42,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -56,50 +59,65 @@ import org.koin.androidx.compose.koinViewModel
 // ======= Public composables
 @Composable
 fun MetronomeScreen() {
-    val viewModel = koinViewModel<MetronomeScreenViewModel>()
     val metronomeService =
         rememberBoundLocalService<MetronomeService, MetronomeService.LocalBinder> { service }
 
-    if (metronomeService != null) {
-        Column(
-            modifier =
-                Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            SoundPicker(service = metronomeService)
-            TempoPicker(service = metronomeService)
-            BeatIndicator(service = metronomeService)
-            PlayPause(
-                service = metronomeService,
-                scope = this,
-            )
-            AdditionalActions(service = metronomeService)
-        }
-
-        if (viewModel.showSetBeatDialog) {
-            SetBeatDialog(
-                initialValue = metronomeService!!.bpm.value!!,
-                onDismiss = { viewModel.showSetBeatDialog = false },
-                onSet = { metronomeService.setTempo(it) },
-            )
-        }
-    } else {
-        Box(modifier = Modifier.fillMaxSize()) {
-            CircularProgressIndicator(
-                modifier = Modifier.align(Alignment.Center),
-            )
+    AnimatedContent(metronomeService) { service ->
+        when (service) {
+            null -> LoadingView()
+            else -> MainView(service = service)
         }
     }
 }
 
 // ====== Private composables
+@Composable
+private fun MainView(service: MetronomeService) {
+    val viewModel = koinViewModel<MetronomeScreenViewModel>()
+    val bpm by viewModel.metronomeBpm.collectAsState(60)
+
+    Column(
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        SoundPicker()
+        TempoPicker()
+        BeatIndicator(service = service)
+        PlayPause(
+            service = service,
+            scope = this,
+        )
+        AdditionalActions()
+    }
+
+    if (viewModel.showSetBeatDialog) {
+        SetBeatDialog(
+            initialValue = bpm,
+            onDismiss = { viewModel.showSetBeatDialog = false },
+            onSet = { viewModel.setBpm(it) },
+        )
+    }
+}
+
+@Composable
+private fun LoadingView() {
+    Box(modifier = Modifier.fillMaxSize()) {
+        CircularProgressIndicator(
+            modifier = Modifier.align(Alignment.Center),
+        )
+    }
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun SoundPicker(service: MetronomeService) {
+private fun SoundPicker() {
+    val viewModel = koinViewModel<MetronomeScreenViewModel>()
+
     var expanded by remember { mutableStateOf(false) }
-    val selectedSound = service.sound.observeAsState()
+    val selectedSound by viewModel.metronomeSound.collectAsState(null)
 
     ExposedDropdownMenuBox(
         expanded = expanded,
@@ -109,8 +127,14 @@ private fun SoundPicker(service: MetronomeService) {
                 .fillMaxWidth()
                 .padding(bottom = 32.dp),
     ) {
+        val sound = selectedSound
+
         OutlinedTextField(
-            value = stringResource(id = selectedSound.value!!.resourceNameId),
+            value =
+                when (sound) {
+                    null -> ""
+                    else -> stringResource(id = sound.resourceNameId)
+                },
             onValueChange = {},
             label = { Text(text = stringResource(id = R.string.sound)) },
             trailingIcon = {
@@ -129,7 +153,7 @@ private fun SoundPicker(service: MetronomeService) {
         ) {
             MetronomeSounds.entries.forEach { sound ->
                 val fontWeight =
-                    if (sound == selectedSound.value) {
+                    if (sound == selectedSound) {
                         FontWeight.Bold
                     } else {
                         FontWeight.Normal
@@ -145,7 +169,7 @@ private fun SoundPicker(service: MetronomeService) {
                     },
                     onClick = {
                         expanded = false
-                        service.setSound(sound)
+                        viewModel.setSound(sound)
                     },
                 )
             }
@@ -154,11 +178,9 @@ private fun SoundPicker(service: MetronomeService) {
 }
 
 @Composable
-private fun TempoPicker(service: MetronomeService) {
-    val currentTempo = service.bpm.observeAsState()
-    val onChange = { by: Int ->
-        service.updateTempo(by)
-    }
+private fun TempoPicker() {
+    val viewModel = koinViewModel<MetronomeScreenViewModel>()
+    val currentTempo by viewModel.metronomeBpm.collectAsState(null)
 
     Row(
         modifier =
@@ -174,11 +196,13 @@ private fun TempoPicker(service: MetronomeService) {
                     Pair(-2, 20.sp),
                     Pair(-1, 16.sp),
                 ),
-            onChange = onChange,
+            onChange = { change ->
+                currentTempo?.let { tempo -> viewModel.setBpm(tempo + change) }
+            },
         )
 
         AutoSizeText(
-            text = currentTempo.value.toString(),
+            text = AnnotatedString(currentTempo?.toString() ?: ""),
             boldFont = true,
             modifier =
                 Modifier
@@ -194,7 +218,9 @@ private fun TempoPicker(service: MetronomeService) {
                     Pair(2, 20.sp),
                     Pair(1, 16.sp),
                 ),
-            onChange = onChange,
+            onChange = { change ->
+                currentTempo?.let { tempo -> viewModel.setBpm(tempo + change) }
+            },
         )
     }
 }
@@ -205,10 +231,7 @@ private fun ChangeButtons(
     onChange: (Int) -> Unit,
 ) {
     Column(modifier = Modifier.width(IntrinsicSize.Max)) {
-        values.forEach { value ->
-            val change = value.first
-            val size = value.second
-
+        values.forEach { (change, size) ->
             OutlinedButton(
                 onClick = { onChange(change) },
                 modifier = Modifier.fillMaxWidth(),
@@ -258,13 +281,13 @@ private fun PlayPause(
 }
 
 @Composable
-private fun AdditionalActions(service: MetronomeService) {
+private fun AdditionalActions() {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier.fillMaxWidth(),
     ) {
         SetBeatButton()
-        TapBeatButton(service)
+        TapBeatButton()
     }
 }
 
@@ -287,13 +310,13 @@ private fun SetBeatButton() {
 }
 
 @Composable
-private fun TapBeatButton(service: MetronomeService) {
+private fun TapBeatButton() {
     val viewModel = koinViewModel<MetronomeScreenViewModel>()
 
     Button(
         onClick = {
             viewModel.beatEvent()?.let { res ->
-                service.setTempo(res)
+                viewModel.setBpm(res)
             }
         },
         contentPadding = PaddingValues(16.dp),
