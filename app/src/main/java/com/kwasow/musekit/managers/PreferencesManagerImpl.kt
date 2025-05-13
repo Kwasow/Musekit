@@ -81,7 +81,7 @@ class PreferencesManagerImpl(val context: Context) : PreferencesManager {
     override suspend fun setMetronomeBpm(value: Int) {
         context.musekitPreferencesDataStore.updateData { currentPreferences ->
             currentPreferences.toBuilder()
-                .setMetronomeBpm(value)
+                .setMetronomeBpm(value.coerceIn(30, 300))
                 .build()
         }
     }

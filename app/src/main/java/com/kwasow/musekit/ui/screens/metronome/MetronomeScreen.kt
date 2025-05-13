@@ -189,8 +189,6 @@ private fun TempoPicker() {
                 .height(IntrinsicSize.Max),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        val tempo = currentTempo
-
         ChangeButtons(
             values =
                 listOf(
@@ -198,7 +196,9 @@ private fun TempoPicker() {
                     Pair(-2, 20.sp),
                     Pair(-1, 16.sp),
                 ),
-            onChange = { tempo?.let { viewModel.setBpm(tempo + it) } },
+            onChange = { change ->
+                currentTempo?.let { tempo -> viewModel.setBpm(tempo + change) }
+            },
         )
 
         AutoSizeText(
@@ -218,7 +218,9 @@ private fun TempoPicker() {
                     Pair(2, 20.sp),
                     Pair(1, 16.sp),
                 ),
-            onChange = { tempo?.let { viewModel.setBpm(tempo + it) } },
+            onChange = { change ->
+                currentTempo?.let { tempo -> viewModel.setBpm(tempo + change) }
+            },
         )
     }
 }
