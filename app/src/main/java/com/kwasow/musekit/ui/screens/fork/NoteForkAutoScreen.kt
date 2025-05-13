@@ -40,7 +40,10 @@ private fun MainView() {
                 .padding(16.dp),
         contentAlignment = Alignment.Center,
     ) {
-        TunerView()
+        TunerView(
+            note = null,
+            cents = null,
+        )
     }
 }
 
