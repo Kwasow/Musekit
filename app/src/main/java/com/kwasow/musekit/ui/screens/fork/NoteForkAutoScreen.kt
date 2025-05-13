@@ -1,6 +1,7 @@
 package com.kwasow.musekit.ui.screens.fork
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -14,6 +15,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.kwasow.musekit.R
 import com.kwasow.musekit.ui.components.PermissionMicrophoneView
+import com.kwasow.musekit.ui.components.TunerView
 import org.koin.androidx.compose.koinViewModel
 
 // ====== Public composables
@@ -21,7 +23,7 @@ import org.koin.androidx.compose.koinViewModel
 fun NoteForkAutoScreen() {
     PermissionMicrophoneView { granted ->
         if (granted) {
-            Text("Auto")
+            MainView()
         } else {
             MicrophonePermissionNotGranted()
         }
@@ -29,6 +31,19 @@ fun NoteForkAutoScreen() {
 }
 
 // ====== Private composables
+@Composable
+private fun MainView() {
+    Box(
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+        contentAlignment = Alignment.Center,
+    ) {
+        TunerView()
+    }
+}
+
 @Composable
 private fun MicrophonePermissionNotGranted() {
     val viewModel = koinViewModel<NoteForkScreenViewModel>()
