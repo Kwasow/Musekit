@@ -44,7 +44,7 @@ fun TunerView(
             tint =
                 when (cents) {
                     null -> MaterialTheme.colorScheme.surfaceContainer
-                    in -5.0..5.0 -> MaterialTheme.colorScheme.surfaceContainerHighest
+                    in -5.0..5.0 -> MaterialTheme.colorScheme.primary
                     else -> MaterialTheme.colorScheme.surfaceContainer
                 },
         )
@@ -128,7 +128,7 @@ private fun Bar(
             CardDefaults.cardColors(
                 containerColor =
                     when (selected) {
-                        true -> MaterialTheme.colorScheme.surfaceContainerHighest
+                        true -> MaterialTheme.colorScheme.primary
                         false -> MaterialTheme.colorScheme.surfaceContainer
                     },
             ),
