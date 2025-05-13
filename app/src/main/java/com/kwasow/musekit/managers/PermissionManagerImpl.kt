@@ -19,6 +19,7 @@ class PermissionManagerImpl(
                 ("package:" + context.packageName).toUri(),
             )
         intent.addCategory(Intent.CATEGORY_DEFAULT)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
 
         context.startActivity(intent)
     }
