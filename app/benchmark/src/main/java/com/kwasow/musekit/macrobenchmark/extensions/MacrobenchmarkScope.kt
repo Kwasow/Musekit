@@ -5,13 +5,13 @@ import androidx.test.uiautomator.By
 import androidx.test.uiautomator.Until
 
 fun MacrobenchmarkScope.waitForTextShown(text: String) {
-    check(device.wait(Until.hasObject(By.text(text)), 1000)) {
-        "View showing '$text' not found after waiting 1000 ms."
+    check(device.wait(Until.hasObject(By.textContains(text)), 1000)) {
+        throw IllegalStateException("View showing '$text' not found after waiting 1000 ms.")
     }
 }
 
 fun MacrobenchmarkScope.clickOnText(text: String) {
     device
-        .findObject(By.text(text))
+        .findObject(By.textContains(text))
         .click()
 }

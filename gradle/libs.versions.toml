@@ -12,12 +12,12 @@ koinBom = "4.0.2"
 
 # Libraries
 accompanistPermissions = "0.37.2"
+androidBenchmark = "1.3.4"
 androidDataStore = "1.1.6"
 androidLifecycle = "2.9.0"
 androidTestEspresso = "3.6.1"
 androidTestJunit = "1.2.1"
 appcompat = "1.7.0"
-benchmarkMacroJunit4 = "1.3.4"
 composeLivedata = "1.8.1"
 composeNavigation = "2.9.0"
 graphicsShapes = "1.0.1"
@@ -41,7 +41,7 @@ android-lifecycle = { group = "androidx.lifecycle", name = "lifecycle-runtime-kt
 android-profileInstaller = { group = "androidx.profileinstaller", name = "profileinstaller", version.ref = "profileInstaller" }
 android-test-espresso = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidTestEspresso" }
 android-test-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidTestJunit" }
-benchmark-macro-junit4 = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version.ref = "benchmarkMacroJunit4" }
+benchmark-macro-junit4 = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version.ref = "androidBenchmark" }
 compose-accompanist-permissions = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "accompanistPermissions" }
 compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
 compose-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "composeLivedata" }
@@ -64,6 +64,7 @@ uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", versi
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+android-benchmark = { id = "androidx.benchmark", version.ref = "androidBenchmark" }
 google-protobuf = { id = "com.google.protobuf", version.ref = "googleProtobufPlugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinPlugins" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlinPlugins" }
