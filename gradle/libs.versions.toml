@@ -64,7 +64,6 @@ uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", versi
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
-android-benchmark = { id = "androidx.benchmark", version.ref = "androidBenchmark" }
 google-protobuf = { id = "com.google.protobuf", version.ref = "googleProtobufPlugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinPlugins" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlinPlugins" }
