@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 
     alias(libs.plugins.android.application)
+    alias(libs.plugins.android.baselineprofile)
     alias(libs.plugins.google.protobuf)
     alias(libs.plugins.ktlint)
 }
@@ -131,6 +132,8 @@ dependencies {
     androidTestImplementation(libs.compose.ui.test.junit4)
     debugImplementation(libs.compose.ui.tooling.base)
     debugImplementation(libs.compose.ui.test.manifest)
+
+    baselineProfile(project(":app:baselineprofile"))
 }
 
 protobuf {
