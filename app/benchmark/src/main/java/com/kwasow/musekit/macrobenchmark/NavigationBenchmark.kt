@@ -31,7 +31,7 @@ class NavigationBenchmark {
         packageName = "com.kwasow.musekit",
         metrics = listOf(FrameTimingMetric()),
         iterations = 5,
-        startupMode = StartupMode.COLD,
+        startupMode = StartupMode.WARM,
         setupBlock = {
             pressHome()
             startActivityAndWait()
@@ -39,7 +39,6 @@ class NavigationBenchmark {
             waitForTextShown("Metronome")
         }
     ) {
-        waitForTextShown("Metronome")
         clickOnText("Metronome")
         waitForTextShown("Set beat")
     }
