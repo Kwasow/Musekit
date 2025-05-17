@@ -29,6 +29,7 @@ uiautomator = "2.3.0"
 
 # Plugins
 androidGradlePlugin = "8.8.2"
+baselineProfile = "1.3.4"
 googleProtobufPlugin = "0.9.4"
 kotlinPlugins = "2.1.10"
 ktlintPlugin = "12.2.0"
@@ -64,8 +65,9 @@ uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", versi
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+android-baselineprofile = { id = "androidx.baselineprofile", version.ref = "baselineProfile" }
+android-test = { id = "com.android.test", version.ref = "androidGradlePlugin" }
 google-protobuf = { id = "com.google.protobuf", version.ref = "googleProtobufPlugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinPlugins" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlinPlugins" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintPlugin" }
-android-test = { id = "com.android.test", version.ref = "androidGradlePlugin" }

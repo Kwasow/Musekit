@@ -1,4 +1,4 @@
-package com.kwasow.musekit.macrobenchmark
+package com.kwasow.musekit.baselineprofile
 
 import android.Manifest
 import androidx.benchmark.macro.FrameTimingMetric
@@ -6,8 +6,8 @@ import androidx.benchmark.macro.StartupMode
 import androidx.benchmark.macro.junit4.MacrobenchmarkRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.kwasow.musekit.macrobenchmark.extensions.clickOnText
-import com.kwasow.musekit.macrobenchmark.extensions.waitForTextShown
+import com.kwasow.musekit.baselineprofile.extensions.clickOnText
+import com.kwasow.musekit.baselineprofile.extensions.waitForTextShown
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

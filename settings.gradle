@@ -16,4 +16,4 @@ dependencyResolutionManagement {
 rootProject.name = "Musekit"
 include ':app'
 
-include ':app:benchmark'
+include ':app:baselineprofile'

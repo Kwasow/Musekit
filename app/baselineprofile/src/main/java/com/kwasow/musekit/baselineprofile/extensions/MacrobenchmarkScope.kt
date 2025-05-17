@@ -1,4 +1,4 @@
-package com.kwasow.musekit.macrobenchmark.extensions
+package com.kwasow.musekit.baselineprofile.extensions
 
 import androidx.benchmark.macro.MacrobenchmarkScope
 import androidx.test.uiautomator.By

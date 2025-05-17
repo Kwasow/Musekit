@@ -1,10 +1,11 @@
 plugins {
+    alias(libs.plugins.android.baselineprofile)
     alias(libs.plugins.android.test)
     alias(libs.plugins.kotlin.android)
 }
 
 android {
-    namespace = "com.kwasow.musekit.macrobenchmark"
+    namespace = "com.kwasow.musekit.baselineprofile"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
@@ -12,17 +13,6 @@ android {
         targetSdk = libs.versions.targetSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildTypes {
-        // This benchmark buildType is used for benchmarking, and should function like your
-        // release build (for example, with minification on). It"s signed with a debug key
-        // for easy local/CI testing.
-        create("benchmark") {
-            isDebuggable = true
-            signingConfig = signingConfigs.getByName("debug")
-            matchingFallbacks += listOf("release")
-        }
     }
 
     compileOptions {
@@ -35,7 +25,13 @@ android {
     }
 
     targetProjectPath = ":app"
-    experimentalProperties["android.experimental.self-instrumenting"] = true
+
+}
+
+// This is the configuration block for the Baseline Profile plugin.
+// You can specify to run the generators on a managed devices or connected devices.
+baselineProfile {
+    useConnectedDevices = true
 }
 
 dependencies {
@@ -46,7 +42,11 @@ dependencies {
 }
 
 androidComponents {
-    beforeVariants(selector().all()) {
-        it.enable = it.buildType == "benchmark"
+    onVariants { v ->
+        val artifactsLoader = v.artifacts.getBuiltArtifactsLoader()
+        v.instrumentationRunnerArguments.put(
+            "targetAppId",
+            v.testedApks.map { artifactsLoader.load(it)?.applicationId }
+        )
     }
 }
