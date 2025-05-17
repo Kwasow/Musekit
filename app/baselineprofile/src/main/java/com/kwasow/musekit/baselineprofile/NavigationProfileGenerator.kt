@@ -23,7 +23,6 @@ class NavigationProfileGenerator {
         rule.collect(
             packageName = InstrumentationRegistry.getArguments().getString("targetAppId")
                 ?: throw Exception("targetAppId not passed as instrumentation runner arg"),
-            includeInStartupProfile = true
         ) {
             InstrumentationRegistry.getInstrumentation().uiAutomation.grantRuntimePermission(
                 "com.kwasow.musekit",
@@ -44,9 +43,8 @@ class NavigationProfileGenerator {
         rule.collect(
             packageName = InstrumentationRegistry.getArguments().getString("targetAppId")
                 ?: throw Exception("targetAppId not passed as instrumentation runner arg"),
-            includeInStartupProfile = true
         ) {
-            InstrumentationRegistry.getInstrumentation().uiAutomation.revokeRuntimePermission(
+            InstrumentationRegistry.getInstrumentation().uiAutomation.grantRuntimePermission(
                 "com.kwasow.musekit",
                 Manifest.permission.RECORD_AUDIO
             )

@@ -1,4 +1,4 @@
-package com.kwasow.musekit.macrobenchmark
+package com.kwasow.musekit.baselineprofile
 
 import android.Manifest
 import androidx.benchmark.macro.StartupMode
