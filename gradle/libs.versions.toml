@@ -12,6 +12,7 @@ koinBom = "4.0.2"
 
 # Libraries
 accompanistPermissions = "0.37.2"
+androidBenchmark = "1.3.4"
 androidDataStore = "1.1.6"
 androidLifecycle = "2.9.0"
 androidTestEspresso = "3.6.1"
@@ -22,7 +23,9 @@ composeNavigation = "2.9.0"
 graphicsShapes = "1.0.1"
 junit = "4.13.2"
 kotlinCore = "1.16.0"
+profileInstaller = "1.4.1"
 protobuf = "4.30.1"
+uiautomator = "2.3.0"
 
 # Plugins
 androidGradlePlugin = "8.8.2"
@@ -35,8 +38,10 @@ android-appcompat = { group = "androidx.appcompat", name = "appcompat", version.
 android-dataStore = { group = "androidx.datastore", name = "datastore", version.ref = "androidDataStore" }
 android-graphics-shapes = { group = "androidx.graphics", name = "graphics-shapes", version.ref = "graphicsShapes" }
 android-lifecycle = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidLifecycle" }
+android-profileInstaller = { group = "androidx.profileinstaller", name = "profileinstaller", version.ref = "profileInstaller" }
 android-test-espresso = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidTestEspresso" }
 android-test-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidTestJunit" }
+benchmark-macro-junit4 = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version.ref = "androidBenchmark" }
 compose-accompanist-permissions = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "accompanistPermissions" }
 compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
 compose-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "composeLivedata" }
@@ -55,6 +60,7 @@ koin-android = { group = "io.insert-koin", name = "koin-android" }
 koin-core = { group = "io.insert-koin", name = "koin-core" }
 koin-compose-base = { group = "io.insert-koin", name = "koin-androidx-compose" }
 kotlin-core = { group = "androidx.core", name = "core-ktx", version.ref = "kotlinCore" }
+uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiautomator" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
@@ -62,3 +68,4 @@ google-protobuf = { id = "com.google.protobuf", version.ref = "googleProtobufPlu
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinPlugins" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlinPlugins" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintPlugin" }
+android-test = { id = "com.android.test", version.ref = "androidGradlePlugin" }

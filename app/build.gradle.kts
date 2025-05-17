@@ -37,6 +37,14 @@ android {
             versionNameSuffix = "-beta"
             applicationIdSuffix = ".beta"
         }
+        create("benchmark") {
+            initWith(buildTypes.getByName("release"))
+            signingConfig = signingConfigs.getByName("debug")
+            matchingFallbacks += listOf("release")
+
+            isDebuggable = false
+            isProfileable = true
+        }
     }
 
     compileOptions {
@@ -50,7 +58,7 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
     buildFeatures {
@@ -111,6 +119,7 @@ dependencies {
     implementation(libs.android.dataStore)
     implementation(libs.android.graphics.shapes)
     implementation(libs.android.lifecycle)
+    implementation(libs.android.profileInstaller)
     implementation(libs.google.libraries.protobuf)
     implementation(libs.kotlin.core)
 
