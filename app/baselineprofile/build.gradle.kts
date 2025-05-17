@@ -6,22 +6,22 @@ plugins {
 
 android {
     namespace = "com.kwasow.musekit.baselineprofile"
-    compileSdk = 35
+    compileSdk = libs.versions.compileSdk.get().toInt()
+
+    defaultConfig {
+        minSdk = 29
+        targetSdk = libs.versions.targetSdk.get().toInt()
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 
     kotlinOptions {
-        jvmTarget = "11"
-    }
-
-    defaultConfig {
-        minSdk = 28
-        targetSdk = 35
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
     targetProjectPath = ":app"
