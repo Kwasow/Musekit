@@ -35,11 +35,24 @@ class NavigationBenchmark {
         setupBlock = {
             pressHome()
             startActivityAndWait()
-
-            waitForTextShown("Metronome")
         }
     ) {
         clickOnText("Metronome")
         waitForTextShown("Set beat")
+    }
+
+    @Test
+    fun forkToSettings() = benchmarkRule.measureRepeated(
+        packageName = "com.kwasow.musekit",
+        metrics = listOf(FrameTimingMetric()),
+        iterations = 5,
+        startupMode = StartupMode.WARM,
+        setupBlock = {
+            pressHome()
+            startActivityAndWait()
+        }
+    ) {
+        clickOnText("Settings")
+        waitForTextShown("Musekit")
     }
 }
