@@ -99,7 +99,7 @@ private fun SoundPicker() {
     val viewModel = koinViewModel<MetronomeScreenViewModel>()
 
     var expanded by remember { mutableStateOf(false) }
-    val selectedSound by viewModel.metronomeSound.collectAsState(null)
+    val selectedSound by viewModel.metronomeSound.collectAsState(MetronomeSounds.Default)
 
     ExposedDropdownMenuBox(
         expanded = expanded,

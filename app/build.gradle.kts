@@ -89,6 +89,10 @@ android {
             }
         }
     }
+
+    baselineProfile {
+        mergeIntoMain = true
+    }
 }
 
 tasks.withType<Test> {
