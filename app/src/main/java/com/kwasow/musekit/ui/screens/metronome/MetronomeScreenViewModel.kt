@@ -14,7 +14,7 @@ class MetronomeScreenViewModel(
     private val preferencesManager: PreferencesManager,
 ) : ViewModel() {
     // ====== Fields
-    private val beatDetector = MusekitBeatDetector()
+    private val beatDetector by lazy { MusekitBeatDetector() }
 
     var showSetBeatDialog by mutableStateOf(false)
     val metronomeSound = preferencesManager.metronomeSound
