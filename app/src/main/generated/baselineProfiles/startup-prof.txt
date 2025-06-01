@@ -7054,7 +7054,7 @@ SPLandroidx/compose/ui/layout/Placeable;->getMeasuredSize-YbymL2g()J
 SPLandroidx/compose/ui/layout/Placeable;->getMeasuredWidth()I
 SPLandroidx/compose/ui/layout/Placeable;->getMeasurementConstraints-msEJaDk()J
 SPLandroidx/compose/ui/layout/Placeable;->getWidth()I
-HSPLandroidx/compose/ui/layout/Placeable;->onMeasuredSizeChanged()V
+SPLandroidx/compose/ui/layout/Placeable;->onMeasuredSizeChanged()V
 SPLandroidx/compose/ui/layout/Placeable;->setMeasuredSize-ozmzZPI(J)V
 SPLandroidx/compose/ui/layout/Placeable;->setMeasurementConstraints-BRTryo0(J)V
 Landroidx/compose/ui/layout/Placeable$PlacementScope;
@@ -12291,7 +12291,6 @@ SPLcom/kwasow/musekit/data/Note;-><clinit>()V
 SPLcom/kwasow/musekit/data/Note;-><init>()V
 SPLcom/kwasow/musekit/data/Note;-><init>(I)V
 SPLcom/kwasow/musekit/data/Note;-><init>(ILcom/kwasow/musekit/data/Notes;I)V
-SPLcom/kwasow/musekit/data/Note;->down()V
 SPLcom/kwasow/musekit/data/Note;->getFrequency()D
 SPLcom/kwasow/musekit/data/Note;->setOctave(I)V
 SPLcom/kwasow/musekit/data/Note;->up()V
@@ -12814,7 +12813,7 @@ SPLkotlin/collections/AbstractList$IteratorImpl;->next()Ljava/lang/Object;
 Lkotlin/collections/AbstractMap;
 SPLkotlin/collections/AbstractMap;-><clinit>()V
 SPLkotlin/collections/AbstractMap;-><init>()V
-HSPLkotlin/collections/AbstractMap;->containsEntry$kotlin_stdlib(Ljava/util/Map$Entry;)Z
+SPLkotlin/collections/AbstractMap;->containsEntry$kotlin_stdlib(Ljava/util/Map$Entry;)Z
 SPLkotlin/collections/AbstractMap;->entrySet()Ljava/util/Set;
 SPLkotlin/collections/AbstractMap;->equals(Ljava/lang/Object;)Z
 SPLkotlin/collections/AbstractMap;->size()I
@@ -13211,7 +13210,6 @@ Lkotlin/math/MathKt;
 Lkotlin/math/MathKt__MathHKt;
 Lkotlin/math/MathKt__MathJVMKt;
 SPLkotlin/math/MathKt__MathJVMKt;->getSign(J)I
-SPLkotlin/math/MathKt__MathJVMKt;->log2(D)D
 SPLkotlin/math/MathKt__MathJVMKt;->roundToInt(D)I
 SPLkotlin/math/MathKt__MathJVMKt;->roundToInt(F)I
 Lkotlin/properties/ReadOnlyProperty;
@@ -13913,6 +13911,7 @@ SPLkotlinx/coroutines/channels/BufferedChannel;->getSendSegment$volatile$FU()Lja
 SPLkotlinx/coroutines/channels/BufferedChannel;->getSendersAndCloseStatus$volatile$FU()Ljava/util/concurrent/atomic/AtomicLongFieldUpdater;
 SPLkotlinx/coroutines/channels/BufferedChannel;->getSendersCounter$kotlinx_coroutines_core()J
 SPLkotlinx/coroutines/channels/BufferedChannel;->get_closeCause$volatile$FU()Ljava/util/concurrent/atomic/AtomicReferenceFieldUpdater;
+SPLkotlinx/coroutines/channels/BufferedChannel;->hasElements$kotlinx_coroutines_core()Z
 SPLkotlinx/coroutines/channels/BufferedChannel;->incCompletedExpandBufferAttempts$default(Lkotlinx/coroutines/channels/BufferedChannel;JILjava/lang/Object;)V
 SPLkotlinx/coroutines/channels/BufferedChannel;->incCompletedExpandBufferAttempts(J)V
 SPLkotlinx/coroutines/channels/BufferedChannel;->invokeCloseHandler()V
@@ -13950,6 +13949,7 @@ SPLkotlinx/coroutines/channels/BufferedChannel$BufferedChannelIterator;->hasNext
 SPLkotlinx/coroutines/channels/BufferedChannel$BufferedChannelIterator;->hasNextOnNoWaiterSuspend(Lkotlinx/coroutines/channels/ChannelSegment;IJLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 SPLkotlinx/coroutines/channels/BufferedChannel$BufferedChannelIterator;->invokeOnCancellation(Lkotlinx/coroutines/internal/Segment;I)V
 SPLkotlinx/coroutines/channels/BufferedChannel$BufferedChannelIterator;->next()Ljava/lang/Object;
+SPLkotlinx/coroutines/channels/BufferedChannel$BufferedChannelIterator;->onClosedHasNext()Z
 SPLkotlinx/coroutines/channels/BufferedChannel$BufferedChannelIterator;->tryResumeHasNext(Ljava/lang/Object;)Z
 SPLkotlinx/coroutines/channels/BufferedChannel$BufferedChannelIterator;->tryResumeHasNextOnClosedChannel()V
 Lkotlinx/coroutines/channels/BufferedChannel$SendBroadcast;
