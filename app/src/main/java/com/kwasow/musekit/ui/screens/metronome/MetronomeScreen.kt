@@ -1,7 +1,6 @@
 package com.kwasow.musekit.ui.screens.metronome
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -17,7 +16,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -60,15 +58,12 @@ fun MetronomeScreen() {
     val metronomeService =
         rememberBoundLocalService<MetronomeService, MetronomeService.LocalBinder> { service }
 
-    when (metronomeService) {
-        null -> LoadingView()
-        else -> MainView(service = metronomeService)
-    }
+    MainView(service = metronomeService)
 }
 
 // ====== Private composables
 @Composable
-private fun MainView(service: MetronomeService) {
+private fun MainView(service: MetronomeService?) {
     val viewModel = koinViewModel<MetronomeScreenViewModel>()
     val bpm by viewModel.metronomeBpm.collectAsState(60)
 
@@ -98,22 +93,13 @@ private fun MainView(service: MetronomeService) {
     }
 }
 
-@Composable
-private fun LoadingView() {
-    Box(modifier = Modifier.fillMaxSize()) {
-        CircularProgressIndicator(
-            modifier = Modifier.align(Alignment.Center),
-        )
-    }
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun SoundPicker() {
     val viewModel = koinViewModel<MetronomeScreenViewModel>()
 
     var expanded by remember { mutableStateOf(false) }
-    val selectedSound by viewModel.metronomeSound.collectAsState(null)
+    val selectedSound by viewModel.metronomeSound.collectAsState(MetronomeSounds.Default)
 
     ExposedDropdownMenuBox(
         expanded = expanded,
@@ -126,11 +112,7 @@ private fun SoundPicker() {
         val sound = selectedSound
 
         OutlinedTextField(
-            value =
-                when (sound) {
-                    null -> ""
-                    else -> stringResource(id = sound.resourceNameId)
-                },
+            value = stringResource(id = sound.resourceNameId),
             onValueChange = {},
             label = { Text(text = stringResource(id = R.string.sound)) },
             trailingIcon = {
@@ -243,11 +225,11 @@ private fun ChangeButtons(
 }
 
 @Composable
-private fun BeatIndicator(service: MetronomeService) {
-    val sliderPosition = service.tickerPosition.observeAsState()
+private fun BeatIndicator(service: MetronomeService?) {
+    val sliderPosition = service?.tickerPosition?.observeAsState()
 
     Slider(
-        value = sliderPosition.value!!,
+        value = sliderPosition?.value ?: 0f,
         steps = 0,
         valueRange = 0f..1f,
         onValueChange = {},
@@ -267,16 +249,16 @@ private fun BeatIndicator(service: MetronomeService) {
 
 @Composable
 private fun PlayPause(
-    service: MetronomeService,
+    service: MetronomeService?,
     scope: ColumnScope,
 ) {
-    val isPlaying = service.isPlaying.observeAsState()
+    val isPlaying = service?.isPlaying?.observeAsState()
 
     with(scope) {
         PlayPauseButton(
             modifier = Modifier.weight(1f),
-            isPlaying = isPlaying.value == true,
-            onChange = { service.startStopMetronome() },
+            isPlaying = isPlaying?.value == true,
+            onChange = { service?.startStopMetronome() },
         )
     }
 }
