@@ -112,11 +112,7 @@ private fun SoundPicker() {
         val sound = selectedSound
 
         OutlinedTextField(
-            value =
-                when (sound) {
-                    null -> ""
-                    else -> stringResource(id = sound.resourceNameId)
-                },
+            value = stringResource(id = sound.resourceNameId),
             onValueChange = {},
             label = { Text(text = stringResource(id = R.string.sound)) },
             trailingIcon = {
