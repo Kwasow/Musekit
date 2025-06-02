@@ -7,6 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.kwasow.musekit.data.MetronomeSounds
 import com.kwasow.musekit.managers.PreferencesManager
 import com.kwasow.musekit.utils.MusekitBeatDetector
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class MetronomeScreenViewModel(
@@ -15,8 +17,16 @@ class MetronomeScreenViewModel(
     // ====== Fields
     private val beatDetector by lazy { MusekitBeatDetector() }
 
-    val metronomeSound = preferencesManager.metronomeSound
-    val metronomeBpm = preferencesManager.metronomeBpm
+    val metronomeSound = preferencesManager.metronomeSound.stateIn(
+        viewModelScope,
+        SharingStarted.WhileSubscribed(),
+        MetronomeSounds.Default
+    )
+    val metronomeBpm = preferencesManager.metronomeBpm.stateIn(
+        viewModelScope,
+        SharingStarted.WhileSubscribed(),
+        null
+    )
 
     // ====== Public methods
     fun beatEvent(): Int? = beatDetector.beatEvent()

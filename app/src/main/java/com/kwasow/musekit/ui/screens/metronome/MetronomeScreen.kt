@@ -66,7 +66,7 @@ fun MetronomeScreen() {
 private fun MainView(service: MetronomeService?) {
     val viewModel = koinViewModel<MetronomeScreenViewModel>()
     var showSetBeatDialog by remember { mutableStateOf(false) }
-    val bpm by viewModel.metronomeBpm.collectAsState(60)
+    val bpm by viewModel.metronomeBpm.collectAsState()
 
     Column(
         modifier =
@@ -87,7 +87,7 @@ private fun MainView(service: MetronomeService?) {
 
     if (showSetBeatDialog) {
         SetBeatDialog(
-            initialValue = bpm,
+            initialValue = bpm ?: 60,
             onDismiss = { showSetBeatDialog = false },
             onSet = { viewModel.setBpm(it) },
         )
@@ -100,7 +100,7 @@ private fun SoundPicker() {
     val viewModel = koinViewModel<MetronomeScreenViewModel>()
 
     var expanded by remember { mutableStateOf(false) }
-    val selectedSound by viewModel.metronomeSound.collectAsState(MetronomeSounds.Default)
+    val selectedSound by viewModel.metronomeSound.collectAsState()
 
     ExposedDropdownMenuBox(
         expanded = expanded,
@@ -159,7 +159,7 @@ private fun SoundPicker() {
 @Composable
 private fun TempoPicker() {
     val viewModel = koinViewModel<MetronomeScreenViewModel>()
-    val currentTempo by viewModel.metronomeBpm.collectAsState(null)
+    val currentTempo by viewModel.metronomeBpm.collectAsState()
 
     Row(
         modifier =
