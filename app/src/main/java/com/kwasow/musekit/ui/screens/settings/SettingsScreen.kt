@@ -18,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,11 +32,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.kwasow.musekit.BuildConfig
 import com.kwasow.musekit.R
+import com.kwasow.musekit.data.LicenseDialogInfo
 import com.kwasow.musekit.data.NotationStyle
 import com.kwasow.musekit.ui.components.SettingsEntry
 import com.kwasow.musekit.ui.components.SettingsSection
 import com.kwasow.musekit.ui.dialogs.LicenseDialog
-import com.kwasow.musekit.ui.dialogs.LicensesDialog
 import org.koin.androidx.compose.koinViewModel
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM as NIGHT_SYSTEM
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO as NIGHT_NO
@@ -45,33 +46,23 @@ import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES as NIGHT_YES
 @Composable
 fun SettingsScreen() {
     val viewModel = koinViewModel<SettingsScreenViewModel>()
+    var licenseDialog = remember { LicenseDialogInfo() }
 
     Column(
         modifier = Modifier.verticalScroll(rememberScrollState()),
     ) {
         AppDetails()
         AppSettingsSection()
-        AboutSection()
+        AboutSection(
+            onOpenLicenseDialog = { licenseDialog.state = LicenseDialogInfo.State.DIALOG_OPEN },
+        )
         Footer()
     }
 
-    if (viewModel.showLicensesDialog) {
-        LicensesDialog(
-            onDismissRequest = { viewModel.closeDialogs() },
-            openSubDialog = { name, file -> viewModel.openLicenseDialog(name, file) },
-        )
-    }
-
-    val licenseName = viewModel.currentLicenseName
-    val licenseText = viewModel.currentLicenseText
-
-    if (licenseName != null && licenseText != null) {
-        LicenseDialog(
-            name = licenseName,
-            content = licenseText,
-            onDismissRequest = { viewModel.closeDialogs() },
-        )
-    }
+    LicenseDialog(
+        details = licenseDialog,
+        openFile = { viewModel.openFile(it) },
+    )
 }
 
 // ====== Private composables
@@ -121,7 +112,7 @@ private fun AppSettingsSection() {
 @Composable
 private fun ThemeSetting() {
     val viewModel = koinViewModel<SettingsScreenViewModel>()
-    val nightMode by viewModel.nightMode.collectAsState(null)
+    val nightMode by viewModel.nightMode.collectAsState()
 
     val count = if (Build.VERSION.SDK_INT >= 29) 3 else 2
 
@@ -179,7 +170,7 @@ private fun ThemeSetting() {
 @Composable
 private fun NotationStyleSetting() {
     val viewModel = koinViewModel<SettingsScreenViewModel>()
-    val notationStyle by viewModel.notationStyle.collectAsState(null)
+    val notationStyle by viewModel.notationStyle.collectAsState()
 
     SettingsEntry(
         icon = painterResource(id = R.drawable.ic_globe),
@@ -211,7 +202,7 @@ private fun NotationStyleSetting() {
 }
 
 @Composable
-private fun AboutSection() {
+private fun AboutSection(onOpenLicenseDialog: () -> Unit) {
     val viewModel = koinViewModel<SettingsScreenViewModel>()
 
     SettingsSection(title = stringResource(id = R.string.about)) {
@@ -250,7 +241,7 @@ private fun AboutSection() {
             iconDescription = stringResource(id = R.string.contentDescription_file_icon),
             name = stringResource(id = R.string.licenses),
             description = stringResource(id = R.string.licenses_subtitle),
-            onClick = { viewModel.showLicensesDialog = true },
+            onClick = onOpenLicenseDialog,
         )
     }
 }

@@ -3,14 +3,13 @@ package com.kwasow.musekit.ui.screens.settings
 import android.content.Context
 import android.content.Intent
 import androidx.annotation.RawRes
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kwasow.musekit.data.NotationStyle
 import com.kwasow.musekit.managers.PreferencesManager
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class SettingsScreenViewModel(
@@ -18,12 +17,18 @@ class SettingsScreenViewModel(
     private val preferencesManager: PreferencesManager,
 ) : ViewModel() {
     // ====== Fields
-    var showLicensesDialog by mutableStateOf(false)
-    var currentLicenseName by mutableStateOf<String?>(null)
-    var currentLicenseText by mutableStateOf<String?>(null)
-
-    var notationStyle = preferencesManager.notationStyle
-    var nightMode = preferencesManager.nightMode
+    var notationStyle =
+        preferencesManager.notationStyle.stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(),
+            null,
+        )
+    var nightMode =
+        preferencesManager.nightMode.stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(),
+            null,
+        )
 
     // ====== Public methods
     fun updateNotationStyle(style: NotationStyle) =
@@ -42,19 +47,14 @@ class SettingsScreenViewModel(
 
     fun openWebsite() = openUrl("https://kwasow.pl")
 
-    fun openLicenseDialog(
-        name: String,
-        file: Int,
-    ) {
-        showLicensesDialog = false
-        currentLicenseName = name
-        currentLicenseText = readRawFileAsString(file)
-    }
+    fun openFile(
+        @RawRes id: Int,
+    ): String {
+        val inputStream = applicationContext.resources.openRawResource(id)
+        val byteArray = ByteArray(inputStream.available())
+        inputStream.read(byteArray)
 
-    fun closeDialogs() {
-        showLicensesDialog = false
-        currentLicenseName = null
-        currentLicenseName = null
+        return String(byteArray)
     }
 
     // ====== Private methods
@@ -64,15 +64,5 @@ class SettingsScreenViewModel(
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK
             }
         applicationContext.startActivity(browserIntent)
-    }
-
-    private fun readRawFileAsString(
-        @RawRes id: Int,
-    ): String {
-        val inputStream = applicationContext.resources.openRawResource(id)
-        val byteArray = ByteArray(inputStream.available())
-        inputStream.read(byteArray)
-
-        return String(byteArray)
     }
 }
