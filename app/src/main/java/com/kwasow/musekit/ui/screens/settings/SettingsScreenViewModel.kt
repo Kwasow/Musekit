@@ -17,16 +17,18 @@ class SettingsScreenViewModel(
     private val preferencesManager: PreferencesManager,
 ) : ViewModel() {
     // ====== Fields
-    var notationStyle = preferencesManager.notationStyle.stateIn(
-        viewModelScope,
-        SharingStarted.WhileSubscribed(),
-        null
-    )
-    var nightMode = preferencesManager.nightMode.stateIn(
-        viewModelScope,
-        SharingStarted.WhileSubscribed(),
-        null
-    )
+    var notationStyle =
+        preferencesManager.notationStyle.stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(),
+            null,
+        )
+    var nightMode =
+        preferencesManager.nightMode.stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(),
+            null,
+        )
 
     // ====== Public methods
     fun updateNotationStyle(style: NotationStyle) =

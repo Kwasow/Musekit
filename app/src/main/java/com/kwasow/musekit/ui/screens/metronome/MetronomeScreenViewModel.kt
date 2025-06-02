@@ -17,16 +17,18 @@ class MetronomeScreenViewModel(
     // ====== Fields
     private val beatDetector by lazy { MusekitBeatDetector() }
 
-    val metronomeSound = preferencesManager.metronomeSound.stateIn(
-        viewModelScope,
-        SharingStarted.WhileSubscribed(),
-        MetronomeSounds.Default
-    )
-    val metronomeBpm = preferencesManager.metronomeBpm.stateIn(
-        viewModelScope,
-        SharingStarted.WhileSubscribed(),
-        null
-    )
+    val metronomeSound =
+        preferencesManager.metronomeSound.stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(),
+            MetronomeSounds.Default,
+        )
+    val metronomeBpm =
+        preferencesManager.metronomeBpm.stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(),
+            null,
+        )
 
     // ====== Public methods
     fun beatEvent(): Int? = beatDetector.beatEvent()
