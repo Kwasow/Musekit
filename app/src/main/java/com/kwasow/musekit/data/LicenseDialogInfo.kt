@@ -7,7 +7,7 @@ import androidx.compose.runtime.setValue
 class LicenseDialogInfo(
     state: State = State.CLOSED,
     name: String = "",
-    text: String = ""
+    text: String = "",
 ) {
     var state by mutableStateOf(state)
     var name by mutableStateOf(name)

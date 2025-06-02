@@ -54,14 +54,14 @@ fun SettingsScreen() {
         AppDetails()
         AppSettingsSection()
         AboutSection(
-            onOpenLicenseDialog = { licenseDialog.state = LicenseDialogInfo.State.DIALOG_OPEN }
+            onOpenLicenseDialog = { licenseDialog.state = LicenseDialogInfo.State.DIALOG_OPEN },
         )
         Footer()
     }
 
     LicenseDialog(
         details = licenseDialog,
-        openFile = { viewModel.openFile(it) }
+        openFile = { viewModel.openFile(it) },
     )
 }
 
@@ -202,9 +202,7 @@ private fun NotationStyleSetting() {
 }
 
 @Composable
-private fun AboutSection(
-    onOpenLicenseDialog: () -> Unit
-) {
+private fun AboutSection(onOpenLicenseDialog: () -> Unit) {
     val viewModel = koinViewModel<SettingsScreenViewModel>()
 
     SettingsSection(title = stringResource(id = R.string.about)) {

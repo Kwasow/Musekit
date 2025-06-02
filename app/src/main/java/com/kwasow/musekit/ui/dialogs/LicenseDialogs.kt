@@ -5,7 +5,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -48,9 +47,9 @@ fun LicenseDialog(
                             details.text = openFile(file)
                             details.state = LicenseDialogInfo.State.SUBDIALOG_OPEN
                         }
-                    }
+                    },
                 )
-           },
+            },
             onDismissRequest = onDismissRequest,
             confirmButton = { AlertConfirmButton(onClick = onDismissRequest) },
             modifier = Modifier.padding(vertical = 64.dp),
@@ -70,7 +69,7 @@ private fun AlertTitle(details: LicenseDialogInfo) {
 @Composable
 private fun AlertContent(
     details: LicenseDialogInfo,
-    openSubDialog: (String, Int) -> Unit
+    openSubDialog: (String, Int) -> Unit,
 ) {
     when (details.state) {
         LicenseDialogInfo.State.CLOSED -> {}

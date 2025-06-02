@@ -35,7 +35,9 @@ class SettingsScreenViewModel(
 
     fun openWebsite() = openUrl("https://kwasow.pl")
 
-    fun openFile(@RawRes id: Int): String {
+    fun openFile(
+        @RawRes id: Int,
+    ): String {
         val inputStream = applicationContext.resources.openRawResource(id)
         val byteArray = ByteArray(inputStream.available())
         inputStream.read(byteArray)

@@ -265,9 +265,7 @@ private fun PlayPause(
 }
 
 @Composable
-private fun AdditionalActions(
-    onOpenSetBeatDialog: () -> Unit
-) {
+private fun AdditionalActions(onOpenSetBeatDialog: () -> Unit) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier.fillMaxWidth(),
@@ -278,9 +276,7 @@ private fun AdditionalActions(
 }
 
 @Composable
-private fun SetBeatButton(
-    onOpenSetBeatDialog: () -> Unit
-) {
+private fun SetBeatButton(onOpenSetBeatDialog: () -> Unit) {
     Button(
         onClick = onOpenSetBeatDialog,
         contentPadding = PaddingValues(16.dp),
