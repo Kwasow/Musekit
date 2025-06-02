@@ -49,8 +49,6 @@ class MetronomeService : Service(), Runnable {
     override fun onCreate() {
         super.onCreate()
 
-        setupCollectors()
-
         val audioAttributes =
             AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_UNKNOWN)
@@ -65,6 +63,8 @@ class MetronomeService : Service(), Runnable {
 
         soundId = soundPool.load(this, sound.resourceId, 1)
         handler = Handler(Looper.getMainLooper())
+
+        setupCollectors()
     }
 
     override fun onBind(intent: Intent?): IBinder {
@@ -135,12 +135,17 @@ class MetronomeService : Service(), Runnable {
 
     private fun setupCollectors() {
         coroutineScope.launch {
-            preferencesManager.metronomeBpm.collect { collected ->
-                bpm = collected
-            }
-
             preferencesManager.metronomeSound.collect { collected ->
+                println("Updating sound")
                 sound = collected
+                soundId = soundPool.load(this@MetronomeService, collected.resourceId, 1)
+            }
+        }
+
+        coroutineScope.launch {
+            preferencesManager.metronomeBpm.collect { collected ->
+                println("Updating bpm")
+                bpm = collected
             }
         }
     }
