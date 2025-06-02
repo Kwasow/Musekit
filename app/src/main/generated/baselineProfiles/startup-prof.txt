@@ -3886,7 +3886,7 @@ SPLandroidx/compose/runtime/SlotReader;->aux([II)Ljava/lang/Object;
 SPLandroidx/compose/runtime/SlotReader;->beginEmpty()V
 SPLandroidx/compose/runtime/SlotReader;->close()V
 SPLandroidx/compose/runtime/SlotReader;->endEmpty()V
-SPLandroidx/compose/runtime/SlotReader;->endGroup()V
+HSPLandroidx/compose/runtime/SlotReader;->endGroup()V
 SPLandroidx/compose/runtime/SlotReader;->extractKeys()Ljava/util/List;
 SPLandroidx/compose/runtime/SlotReader;->getCurrentGroup()I
 SPLandroidx/compose/runtime/SlotReader;->getGroupAux()Ljava/lang/Object;
@@ -3997,7 +3997,7 @@ SPLandroidx/compose/runtime/SlotWriter;->markGroup$default(Landroidx/compose/run
 SPLandroidx/compose/runtime/SlotWriter;->markGroup(I)V
 SPLandroidx/compose/runtime/SlotWriter;->moveFrom(Landroidx/compose/runtime/SlotTable;IZ)Ljava/util/List;
 SPLandroidx/compose/runtime/SlotWriter;->moveGroupGapTo(I)V
-HSPLandroidx/compose/runtime/SlotWriter;->moveSlotGapTo(II)V
+SPLandroidx/compose/runtime/SlotWriter;->moveSlotGapTo(II)V
 SPLandroidx/compose/runtime/SlotWriter;->node(I)Ljava/lang/Object;
 SPLandroidx/compose/runtime/SlotWriter;->node(Landroidx/compose/runtime/Anchor;)Ljava/lang/Object;
 SPLandroidx/compose/runtime/SlotWriter;->nodeIndex([II)I
@@ -4386,7 +4386,7 @@ SPLandroidx/compose/runtime/external/kotlinx/collections/immutable/implementatio
 SPLandroidx/compose/runtime/external/kotlinx/collections/immutable/implementations/immutableMap/PersistentHashMap;->access$getEMPTY$cp()Landroidx/compose/runtime/external/kotlinx/collections/immutable/implementations/immutableMap/PersistentHashMap;
 SPLandroidx/compose/runtime/external/kotlinx/collections/immutable/implementations/immutableMap/PersistentHashMap;->containsKey(Ljava/lang/Object;)Z
 SPLandroidx/compose/runtime/external/kotlinx/collections/immutable/implementations/immutableMap/PersistentHashMap;->createEntries()Landroidx/compose/runtime/external/kotlinx/collections/immutable/ImmutableSet;
-HSPLandroidx/compose/runtime/external/kotlinx/collections/immutable/implementations/immutableMap/PersistentHashMap;->get(Ljava/lang/Object;)Ljava/lang/Object;
+SPLandroidx/compose/runtime/external/kotlinx/collections/immutable/implementations/immutableMap/PersistentHashMap;->get(Ljava/lang/Object;)Ljava/lang/Object;
 SPLandroidx/compose/runtime/external/kotlinx/collections/immutable/implementations/immutableMap/PersistentHashMap;->getEntries()Ljava/util/Set;
 SPLandroidx/compose/runtime/external/kotlinx/collections/immutable/implementations/immutableMap/PersistentHashMap;->getNode$runtime_release()Landroidx/compose/runtime/external/kotlinx/collections/immutable/implementations/immutableMap/TrieNode;
 SPLandroidx/compose/runtime/external/kotlinx/collections/immutable/implementations/immutableMap/PersistentHashMap;->getSize()I
@@ -4399,7 +4399,7 @@ Landroidx/compose/runtime/external/kotlinx/collections/immutable/implementations
 SPLandroidx/compose/runtime/external/kotlinx/collections/immutable/implementations/immutableMap/PersistentHashMapBaseIterator;-><clinit>()V
 SPLandroidx/compose/runtime/external/kotlinx/collections/immutable/implementations/immutableMap/PersistentHashMapBaseIterator;-><init>(Landroidx/compose/runtime/external/kotlinx/collections/immutable/implementations/immutableMap/TrieNode;[Landroidx/compose/runtime/external/kotlinx/collections/immutable/implementations/immutableMap/TrieNodeBaseIterator;)V
 SPLandroidx/compose/runtime/external/kotlinx/collections/immutable/implementations/immutableMap/PersistentHashMapBaseIterator;->checkHasNext()V
-HSPLandroidx/compose/runtime/external/kotlinx/collections/immutable/implementations/immutableMap/PersistentHashMapBaseIterator;->ensureNextEntryIsReady()V
+SPLandroidx/compose/runtime/external/kotlinx/collections/immutable/implementations/immutableMap/PersistentHashMapBaseIterator;->ensureNextEntryIsReady()V
 SPLandroidx/compose/runtime/external/kotlinx/collections/immutable/implementations/immutableMap/PersistentHashMapBaseIterator;->hasNext()Z
 SPLandroidx/compose/runtime/external/kotlinx/collections/immutable/implementations/immutableMap/PersistentHashMapBaseIterator;->moveToNextNodeWithData(I)I
 SPLandroidx/compose/runtime/external/kotlinx/collections/immutable/implementations/immutableMap/PersistentHashMapBaseIterator;->next()Ljava/lang/Object;
@@ -4564,7 +4564,7 @@ SPLandroidx/compose/runtime/internal/PersistentCompositionLocalHashMap;->contain
 SPLandroidx/compose/runtime/internal/PersistentCompositionLocalHashMap;->containsKey(Ljava/lang/Object;)Z
 SPLandroidx/compose/runtime/internal/PersistentCompositionLocalHashMap;->get(Landroidx/compose/runtime/CompositionLocal;)Landroidx/compose/runtime/ValueHolder;
 SPLandroidx/compose/runtime/internal/PersistentCompositionLocalHashMap;->get(Landroidx/compose/runtime/CompositionLocal;)Ljava/lang/Object;
-SPLandroidx/compose/runtime/internal/PersistentCompositionLocalHashMap;->get(Ljava/lang/Object;)Ljava/lang/Object;
+HSPLandroidx/compose/runtime/internal/PersistentCompositionLocalHashMap;->get(Ljava/lang/Object;)Ljava/lang/Object;
 SPLandroidx/compose/runtime/internal/PersistentCompositionLocalHashMap;->getCurrentValue(Landroidx/compose/runtime/CompositionLocal;)Ljava/lang/Object;
 SPLandroidx/compose/runtime/internal/PersistentCompositionLocalHashMap;->putValue(Landroidx/compose/runtime/CompositionLocal;Landroidx/compose/runtime/ValueHolder;)Landroidx/compose/runtime/PersistentCompositionLocalMap;
 Landroidx/compose/runtime/internal/PersistentCompositionLocalHashMap$Builder;
@@ -11299,7 +11299,7 @@ SPLandroidx/emoji2/text/MetadataRepo;->put(Landroidx/emoji2/text/TypefaceEmojiRa
 Landroidx/emoji2/text/MetadataRepo$Node;
 SPLandroidx/emoji2/text/MetadataRepo$Node;-><init>()V
 SPLandroidx/emoji2/text/MetadataRepo$Node;-><init>(I)V
-HSPLandroidx/emoji2/text/MetadataRepo$Node;->get(I)Landroidx/emoji2/text/MetadataRepo$Node;
+SPLandroidx/emoji2/text/MetadataRepo$Node;->get(I)Landroidx/emoji2/text/MetadataRepo$Node;
 SPLandroidx/emoji2/text/MetadataRepo$Node;->getData()Landroidx/emoji2/text/TypefaceEmojiRasterizer;
 SPLandroidx/emoji2/text/MetadataRepo$Node;->put(Landroidx/emoji2/text/TypefaceEmojiRasterizer;II)V
 Landroidx/emoji2/text/SpannableBuilder;
@@ -11315,7 +11315,7 @@ Landroidx/emoji2/text/UnprecomputeTextOnModificationSpannable;
 Landroidx/emoji2/text/flatbuffer/MetadataItem;
 SPLandroidx/emoji2/text/flatbuffer/MetadataItem;-><init>()V
 HSPLandroidx/emoji2/text/flatbuffer/MetadataItem;->__assign(ILjava/nio/ByteBuffer;)Landroidx/emoji2/text/flatbuffer/MetadataItem;
-SPLandroidx/emoji2/text/flatbuffer/MetadataItem;->__init(ILjava/nio/ByteBuffer;)V
+HSPLandroidx/emoji2/text/flatbuffer/MetadataItem;->__init(ILjava/nio/ByteBuffer;)V
 SPLandroidx/emoji2/text/flatbuffer/MetadataItem;->codepoints(I)I
 SPLandroidx/emoji2/text/flatbuffer/MetadataItem;->codepointsLength()I
 SPLandroidx/emoji2/text/flatbuffer/MetadataItem;->emojiStyle()Z
@@ -11330,7 +11330,7 @@ SPLandroidx/emoji2/text/flatbuffer/MetadataList;->list(Landroidx/emoji2/text/fla
 SPLandroidx/emoji2/text/flatbuffer/MetadataList;->listLength()I
 Landroidx/emoji2/text/flatbuffer/Table;
 SPLandroidx/emoji2/text/flatbuffer/Table;-><init>()V
-SPLandroidx/emoji2/text/flatbuffer/Table;->__indirect(I)I
+HSPLandroidx/emoji2/text/flatbuffer/Table;->__indirect(I)I
 HSPLandroidx/emoji2/text/flatbuffer/Table;->__offset(I)I
 SPLandroidx/emoji2/text/flatbuffer/Table;->__reset(ILjava/nio/ByteBuffer;)V
 HSPLandroidx/emoji2/text/flatbuffer/Table;->__vector(I)I
@@ -11874,7 +11874,7 @@ HSPLbe/tarsos/dsp/util/fft/FloatFFT;->cftf161([FI[FI)V
 SPLbe/tarsos/dsp/util/fft/FloatFFT;->cftf162([FI[FI)V
 HSPLbe/tarsos/dsp/util/fft/FloatFFT;->cftf1st(I[FI[FI)V
 SPLbe/tarsos/dsp/util/fft/FloatFFT;->cftfsub(I[FI[II[F)V
-SPLbe/tarsos/dsp/util/fft/FloatFFT;->cftleaf(II[FII[F)V
+HSPLbe/tarsos/dsp/util/fft/FloatFFT;->cftleaf(II[FII[F)V
 HSPLbe/tarsos/dsp/util/fft/FloatFFT;->cftmdl1(I[FI[FI)V
 HSPLbe/tarsos/dsp/util/fft/FloatFFT;->cftmdl2(I[FI[FI)V
 SPLbe/tarsos/dsp/util/fft/FloatFFT;->cftrec4(I[FII[F)V
@@ -12291,9 +12291,9 @@ SPLcom/kwasow/musekit/data/Note;-><clinit>()V
 SPLcom/kwasow/musekit/data/Note;-><init>()V
 SPLcom/kwasow/musekit/data/Note;-><init>(I)V
 SPLcom/kwasow/musekit/data/Note;-><init>(ILcom/kwasow/musekit/data/Notes;I)V
+SPLcom/kwasow/musekit/data/Note;->down()V
 SPLcom/kwasow/musekit/data/Note;->getFrequency()D
 SPLcom/kwasow/musekit/data/Note;->setOctave(I)V
-SPLcom/kwasow/musekit/data/Note;->up()V
 Lcom/kwasow/musekit/data/Note$Companion;
 SPLcom/kwasow/musekit/data/Note$Companion;-><init>()V
 SPLcom/kwasow/musekit/data/Note$Companion;-><init>(Lkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -12770,9 +12770,10 @@ SPLkotlin/SynchronizedLazyImpl;->getValue()Ljava/lang/Object;
 Lkotlin/TuplesKt;
 SPLkotlin/TuplesKt;->to(Ljava/lang/Object;Ljava/lang/Object;)Lkotlin/Pair;
 Lkotlin/UByte$$ExternalSyntheticBackport0;
-SPLkotlin/UByte$$ExternalSyntheticBackport0;->m$3(Ljava/lang/Object;)Ljava/util/List;
 SPLkotlin/UByte$$ExternalSyntheticBackport0;->m(J)I
 SPLkotlin/UByte$$ExternalSyntheticBackport0;->m(JJ)I
+SPLkotlin/UByte$$ExternalSyntheticBackport0;->m(Ljava/lang/Object;)Ljava/util/List;
+SPLkotlin/UByte$$ExternalSyntheticBackport0;->m(Ljava/lang/Object;)V
 SPLkotlin/UByte$$ExternalSyntheticBackport0;->m([Ljava/lang/Object;)Ljava/util/List;
 Lkotlin/ULong;
 SPLkotlin/ULong;-><clinit>()V
@@ -12813,7 +12814,7 @@ SPLkotlin/collections/AbstractList$IteratorImpl;->next()Ljava/lang/Object;
 Lkotlin/collections/AbstractMap;
 SPLkotlin/collections/AbstractMap;-><clinit>()V
 SPLkotlin/collections/AbstractMap;-><init>()V
-SPLkotlin/collections/AbstractMap;->containsEntry$kotlin_stdlib(Ljava/util/Map$Entry;)Z
+HSPLkotlin/collections/AbstractMap;->containsEntry$kotlin_stdlib(Ljava/util/Map$Entry;)Z
 SPLkotlin/collections/AbstractMap;->entrySet()Ljava/util/Set;
 SPLkotlin/collections/AbstractMap;->equals(Ljava/lang/Object;)Z
 SPLkotlin/collections/AbstractMap;->size()I
@@ -13949,7 +13950,6 @@ SPLkotlinx/coroutines/channels/BufferedChannel$BufferedChannelIterator;->hasNext
 SPLkotlinx/coroutines/channels/BufferedChannel$BufferedChannelIterator;->hasNextOnNoWaiterSuspend(Lkotlinx/coroutines/channels/ChannelSegment;IJLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 SPLkotlinx/coroutines/channels/BufferedChannel$BufferedChannelIterator;->invokeOnCancellation(Lkotlinx/coroutines/internal/Segment;I)V
 SPLkotlinx/coroutines/channels/BufferedChannel$BufferedChannelIterator;->next()Ljava/lang/Object;
-SPLkotlinx/coroutines/channels/BufferedChannel$BufferedChannelIterator;->onClosedHasNext()Z
 SPLkotlinx/coroutines/channels/BufferedChannel$BufferedChannelIterator;->tryResumeHasNext(Ljava/lang/Object;)Z
 SPLkotlinx/coroutines/channels/BufferedChannel$BufferedChannelIterator;->tryResumeHasNextOnClosedChannel()V
 Lkotlinx/coroutines/channels/BufferedChannel$SendBroadcast;

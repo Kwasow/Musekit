@@ -1,0 +1,3 @@
+- Fixed choosing metronome sound not working
+- Minor performance improvements
+
