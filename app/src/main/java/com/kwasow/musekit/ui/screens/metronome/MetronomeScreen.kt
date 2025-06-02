@@ -65,6 +65,7 @@ fun MetronomeScreen() {
 @Composable
 private fun MainView(service: MetronomeService?) {
     val viewModel = koinViewModel<MetronomeScreenViewModel>()
+    var showSetBeatDialog by remember { mutableStateOf(false) }
     val bpm by viewModel.metronomeBpm.collectAsState(60)
 
     Column(
@@ -81,13 +82,13 @@ private fun MainView(service: MetronomeService?) {
             service = service,
             scope = this,
         )
-        AdditionalActions()
+        AdditionalActions(onOpenSetBeatDialog = { showSetBeatDialog = true })
     }
 
-    if (viewModel.showSetBeatDialog) {
+    if (showSetBeatDialog) {
         SetBeatDialog(
             initialValue = bpm,
-            onDismiss = { viewModel.showSetBeatDialog = false },
+            onDismiss = { showSetBeatDialog = false },
             onSet = { viewModel.setBpm(it) },
         )
     }
@@ -264,22 +265,24 @@ private fun PlayPause(
 }
 
 @Composable
-private fun AdditionalActions() {
+private fun AdditionalActions(
+    onOpenSetBeatDialog: () -> Unit
+) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier.fillMaxWidth(),
     ) {
-        SetBeatButton()
+        SetBeatButton(onOpenSetBeatDialog = onOpenSetBeatDialog)
         TapBeatButton()
     }
 }
 
 @Composable
-private fun SetBeatButton() {
-    val viewModel = koinViewModel<MetronomeScreenViewModel>()
-
+private fun SetBeatButton(
+    onOpenSetBeatDialog: () -> Unit
+) {
     Button(
-        onClick = { viewModel.showSetBeatDialog = true },
+        onClick = onOpenSetBeatDialog,
         contentPadding = PaddingValues(16.dp),
     ) {
         Icon(
