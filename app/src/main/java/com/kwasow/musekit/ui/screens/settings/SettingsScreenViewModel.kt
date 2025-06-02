@@ -2,10 +2,6 @@ package com.kwasow.musekit.ui.screens.settings
 
 import android.content.Context
 import android.content.Intent
-import androidx.annotation.RawRes
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,10 +14,6 @@ class SettingsScreenViewModel(
     private val preferencesManager: PreferencesManager,
 ) : ViewModel() {
     // ====== Fields
-    var showLicensesDialog by mutableStateOf(false)
-    var currentLicenseName by mutableStateOf<String?>(null)
-    var currentLicenseText by mutableStateOf<String?>(null)
-
     var notationStyle = preferencesManager.notationStyle
     var nightMode = preferencesManager.nightMode
 
@@ -42,21 +34,6 @@ class SettingsScreenViewModel(
 
     fun openWebsite() = openUrl("https://kwasow.pl")
 
-    fun openLicenseDialog(
-        name: String,
-        file: Int,
-    ) {
-        showLicensesDialog = false
-        currentLicenseName = name
-        currentLicenseText = readRawFileAsString(file)
-    }
-
-    fun closeDialogs() {
-        showLicensesDialog = false
-        currentLicenseName = null
-        currentLicenseName = null
-    }
-
     // ====== Private methods
     private fun openUrl(url: String) {
         val browserIntent =
@@ -64,15 +41,5 @@ class SettingsScreenViewModel(
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK
             }
         applicationContext.startActivity(browserIntent)
-    }
-
-    private fun readRawFileAsString(
-        @RawRes id: Int,
-    ): String {
-        val inputStream = applicationContext.resources.openRawResource(id)
-        val byteArray = ByteArray(inputStream.available())
-        inputStream.read(byteArray)
-
-        return String(byteArray)
     }
 }
