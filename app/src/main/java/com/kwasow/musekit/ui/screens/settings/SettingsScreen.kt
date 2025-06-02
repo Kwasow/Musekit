@@ -112,7 +112,7 @@ private fun AppSettingsSection() {
 @Composable
 private fun ThemeSetting() {
     val viewModel = koinViewModel<SettingsScreenViewModel>()
-    val nightMode by viewModel.nightMode.collectAsState(null)
+    val nightMode by viewModel.nightMode.collectAsState()
 
     val count = if (Build.VERSION.SDK_INT >= 29) 3 else 2
 
@@ -170,7 +170,7 @@ private fun ThemeSetting() {
 @Composable
 private fun NotationStyleSetting() {
     val viewModel = koinViewModel<SettingsScreenViewModel>()
-    val notationStyle by viewModel.notationStyle.collectAsState(null)
+    val notationStyle by viewModel.notationStyle.collectAsState()
 
     SettingsEntry(
         icon = painterResource(id = R.drawable.ic_globe),

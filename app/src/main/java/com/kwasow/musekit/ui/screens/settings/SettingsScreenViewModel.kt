@@ -8,6 +8,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kwasow.musekit.data.NotationStyle
 import com.kwasow.musekit.managers.PreferencesManager
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class SettingsScreenViewModel(
@@ -15,8 +17,16 @@ class SettingsScreenViewModel(
     private val preferencesManager: PreferencesManager,
 ) : ViewModel() {
     // ====== Fields
-    var notationStyle = preferencesManager.notationStyle
-    var nightMode = preferencesManager.nightMode
+    var notationStyle = preferencesManager.notationStyle.stateIn(
+        viewModelScope,
+        SharingStarted.WhileSubscribed(),
+        null
+    )
+    var nightMode = preferencesManager.nightMode.stateIn(
+        viewModelScope,
+        SharingStarted.WhileSubscribed(),
+        null
+    )
 
     // ====== Public methods
     fun updateNotationStyle(style: NotationStyle) =
