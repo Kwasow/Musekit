@@ -2,6 +2,7 @@ package com.kwasow.musekit.ui.screens.settings
 
 import android.content.Context
 import android.content.Intent
+import androidx.annotation.RawRes
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -33,6 +34,14 @@ class SettingsScreenViewModel(
     fun openMastodon() = openUrl("https://mstdn.social/@kwasow")
 
     fun openWebsite() = openUrl("https://kwasow.pl")
+
+    fun openFile(@RawRes id: Int): String {
+        val inputStream = applicationContext.resources.openRawResource(id)
+        val byteArray = ByteArray(inputStream.available())
+        inputStream.read(byteArray)
+
+        return String(byteArray)
+    }
 
     // ====== Private methods
     private fun openUrl(url: String) {

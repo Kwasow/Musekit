@@ -18,15 +18,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
@@ -40,7 +37,6 @@ import com.kwasow.musekit.data.NotationStyle
 import com.kwasow.musekit.ui.components.SettingsEntry
 import com.kwasow.musekit.ui.components.SettingsSection
 import com.kwasow.musekit.ui.dialogs.LicenseDialog
-import com.kwasow.musekit.ui.dialogs.LicensesDialog
 import org.koin.androidx.compose.koinViewModel
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM as NIGHT_SYSTEM
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO as NIGHT_NO
@@ -49,7 +45,7 @@ import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES as NIGHT_YES
 // ====== Public composables
 @Composable
 fun SettingsScreen() {
-    val context = LocalContext.current
+    val viewModel = koinViewModel<SettingsScreenViewModel>()
     var licenseDialog = remember { LicenseDialogInfo() }
 
     Column(
@@ -63,22 +59,10 @@ fun SettingsScreen() {
         Footer()
     }
 
-    when (licenseDialog.state) {
-        LicenseDialogInfo.State.CLOSED -> {}
-        LicenseDialogInfo.State.DIALOG_OPEN -> {
-            LicensesDialog(
-                onDismissRequest = { licenseDialog.state = LicenseDialogInfo.State.CLOSED },
-                openSubDialog = { name, file -> licenseDialog.open(context, name, file) },
-            )
-        }
-        LicenseDialogInfo.State.SUBDIALOG_OPEN -> {
-            LicenseDialog(
-                name = licenseDialog.name,
-                content = licenseDialog.text,
-                onDismissRequest = { licenseDialog.state = LicenseDialogInfo.State.CLOSED },
-            )
-        }
-    }
+    LicenseDialog(
+        details = licenseDialog,
+        openFile = { viewModel.openFile(it) }
+    )
 }
 
 // ====== Private composables
