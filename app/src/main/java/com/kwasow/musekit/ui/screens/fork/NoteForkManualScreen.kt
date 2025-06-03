@@ -26,6 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -37,7 +38,8 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.kwasow.musekit.R
-import com.kwasow.musekit.data.NotationStyle
+import com.kwasow.musekit.data.Note
+import com.kwasow.musekit.data.dialogs.RemovePresetDialog
 import com.kwasow.musekit.ui.components.AutoSizeText
 import com.kwasow.musekit.ui.components.PlayPauseButton
 import com.kwasow.musekit.ui.dialogs.PresetRemoveDialog
@@ -48,28 +50,45 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun NoteForkManualScreen() {
     val viewModel = koinViewModel<NoteForkScreenViewModel>()
+    var presetDialog by remember { mutableStateOf(RemovePresetDialog()) }
+    var currentPreset by remember { mutableStateOf(viewModel.defaultPreset.first) }
 
     Column(
         modifier = Modifier.padding(horizontal = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        PresetPicker()
+        PresetPicker(
+            currentPreset = currentPreset,
+            setPreset = { name, note ->
+                currentPreset = name
+                viewModel.setNote(note)
+            },
+            onRemovePreset = { presetDialog.openRemove(it) },
+        )
         PitchPicker()
         PlayPause(scope = this)
-        AdditionalActions()
+        AdditionalActions(onSavePreset = { presetDialog.openSave() })
     }
 
-    when (viewModel.currentDialog) {
-        NoteForkScreenViewModel.Dialog.SAVE_PRESET ->
+    when (presetDialog.state) {
+        RemovePresetDialog.State.SAVE_PRESET ->
             PresetSaveDialog(
-                onSave = { viewModel.addPreset(it, viewModel.currentNote) },
-                onDismiss = { viewModel.closeDialog() },
+                onSave = { name ->
+                    viewModel.addPreset(name, viewModel.currentNote)
+                    currentPreset = name
+                    presetDialog.close()
+                },
+                onDismiss = { presetDialog.close() },
             )
-        NoteForkScreenViewModel.Dialog.REMOVE_PRESET ->
+        RemovePresetDialog.State.REMOVE_PRESET ->
             PresetRemoveDialog(
-                name = viewModel.currentRemovePresetName,
-                onRemove = { viewModel.confirmRemovePreset() },
-                onDismiss = { viewModel.closeDialog() },
+                name = presetDialog.removePresetName,
+                onRemove = {
+                    viewModel.removePreset(presetDialog.removePresetName)
+                    currentPreset = "—"
+                    presetDialog.close()
+                },
+                onDismiss = { presetDialog.close() },
             )
         else -> {}
     }
@@ -78,8 +97,13 @@ fun NoteForkManualScreen() {
 // ====== Private methods
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun PresetPicker() {
+private fun PresetPicker(
+    currentPreset: String,
+    setPreset: (String, Note) -> Unit,
+    onRemovePreset: (String) -> Unit,
+) {
     val viewModel = koinViewModel<NoteForkScreenViewModel>()
+    var presets = viewModel.presets.observeAsState()
     var expanded by remember { mutableStateOf(false) }
 
     ExposedDropdownMenuBox(
@@ -88,7 +112,7 @@ private fun PresetPicker() {
         modifier = Modifier.fillMaxWidth(),
     ) {
         OutlinedTextField(
-            value = viewModel.currentPreset,
+            value = currentPreset,
             onValueChange = {},
             label = { Text(text = stringResource(id = R.string.presets)) },
             trailingIcon = {
@@ -105,9 +129,9 @@ private fun PresetPicker() {
             expanded = expanded,
             onDismissRequest = { expanded = false },
         ) {
-            viewModel.presets.forEach { (name, note) ->
+            presets.value?.forEach { (name, note) ->
                 val fontWeight =
-                    if (name == viewModel.currentPreset) {
+                    if (name == currentPreset) {
                         FontWeight.Bold
                     } else {
                         FontWeight.Normal
@@ -123,14 +147,11 @@ private fun PresetPicker() {
                     },
                     onClick = {
                         expanded = false
-                        viewModel.currentPreset = name
-                        viewModel.setNote(note)
+                        setPreset(name, Note(note))
                     },
                     trailingIcon = {
                         if (name != viewModel.defaultPreset.first) {
-                            IconButton(onClick = {
-                                viewModel.removePreset(name)
-                            }) {
+                            IconButton(onClick = { onRemovePreset(name) }) {
                                 Icon(
                                     painter = painterResource(id = R.drawable.ic_delete),
                                     contentDescription = "",
@@ -148,7 +169,7 @@ private fun PresetPicker() {
 @Composable
 private fun PitchPicker() {
     val viewModel = koinViewModel<NoteForkScreenViewModel>()
-    val notationStyle by viewModel.notationStyle.collectAsState(NotationStyle.English)
+    val notationStyle by viewModel.notationStyle.collectAsState()
 
     Row(
         modifier = Modifier.padding(vertical = 16.dp),
@@ -240,28 +261,25 @@ private fun PropertyCard(
 @Composable
 private fun PlayPause(scope: ColumnScope) {
     val viewModel = koinViewModel<NoteForkScreenViewModel>()
+    val isPlaying = viewModel.isPlaying.observeAsState(false)
 
     with(scope) {
         PlayPauseButton(
             modifier = Modifier.weight(1f),
-            isPlaying = viewModel.isPlaying,
+            isPlaying = isPlaying.value,
             onChange = { viewModel.startStopNote() },
         )
     }
 }
 
 @Composable
-private fun AdditionalActions() {
-    val viewModel = koinViewModel<NoteForkScreenViewModel>()
-
+private fun AdditionalActions(onSavePreset: () -> Unit) {
     Row(
         horizontalArrangement = Arrangement.End,
         modifier = Modifier.fillMaxWidth(),
     ) {
         Button(
-            onClick = {
-                viewModel.currentDialog = NoteForkScreenViewModel.Dialog.SAVE_PRESET
-            },
+            onClick = onSavePreset,
             contentPadding = PaddingValues(16.dp),
         ) {
             Icon(

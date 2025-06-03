@@ -54,6 +54,8 @@ class Note(
 
     constructor(note: Notes, octave: Int) : this(440, note, octave)
 
+    constructor(note: Note) : this(note.pitch, note.note, note.octave)
+
     // ====== Interface methods
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

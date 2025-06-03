@@ -1,4 +1,4 @@
-package com.kwasow.musekit.data
+package com.kwasow.musekit.data.dialogs
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

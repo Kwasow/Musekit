@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.neverEqualPolicy
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.AnnotatedString
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kwasow.musekit.R
@@ -17,7 +18,11 @@ import com.kwasow.musekit.managers.PermissionManager
 import com.kwasow.musekit.managers.PitchPlayerManager
 import com.kwasow.musekit.managers.PreferencesManager
 import com.kwasow.musekit.managers.PresetsManager
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class NoteForkScreenViewModel(
     private val applicationContext: Context,
@@ -26,32 +31,31 @@ class NoteForkScreenViewModel(
     private val preferencesManager: PreferencesManager,
     private val presetsManager: PresetsManager,
 ) : ViewModel() {
-    // ======= Classes
-    enum class Dialog {
-        SAVE_PRESET,
-        REMOVE_PRESET,
-        NONE,
-    }
-
     // ======= Fields
     val defaultPreset =
-        applicationContext.getString(R.string.default_preset) to Note(440, Notes.A, 4)
+        applicationContext.getString(R.string.default_preset) to Note()
 
-    var presets by mutableStateOf<List<Pair<String, Note>>>(emptyList())
+    val presets: MutableLiveData<List<Pair<String, Note>>> = MutableLiveData(emptyList())
     var currentNote by mutableStateOf(
         value = Note(),
         policy = neverEqualPolicy(),
     )
         private set
+    val isPlaying = MutableLiveData(false)
 
-    var currentPreset by mutableStateOf(defaultPreset.first)
-    var currentDialog by mutableStateOf(Dialog.NONE)
-    var currentRemovePresetName by mutableStateOf("")
-    var isPlaying by mutableStateOf(false)
-
-    val noteForkMode = preferencesManager.noteForkMode
-    val automaticTunerPitch = preferencesManager.automaticTunerPitch
-    val notationStyle = preferencesManager.notationStyle
+    val noteForkMode = runBlocking { preferencesManager.noteForkMode.first() }
+    val automaticTunerPitch =
+        preferencesManager.automaticTunerPitch.stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(),
+            440,
+        )
+    val notationStyle =
+        preferencesManager.notationStyle.stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(),
+            NotationStyle.English,
+        )
 
     // ======= Constructors
     init {
@@ -96,38 +100,22 @@ class NoteForkScreenViewModel(
             )
 
         presetsManager.savePreset(preset)
-        currentPreset = name
-
         refreshPresets()
     }
 
-    fun removePreset(name: String) {
-        currentRemovePresetName = name
-        currentDialog = Dialog.REMOVE_PRESET
-    }
-
-    fun confirmRemovePreset() {
-        presetsManager.removePreset(currentRemovePresetName)
-        if (currentPreset == currentRemovePresetName) {
-            currentPreset = defaultPreset.first
-        }
-
+    fun removePreset(presetName: String) {
+        presetsManager.removePreset(presetName)
         refreshPresets()
-        closeDialog()
-    }
-
-    fun closeDialog() {
-        currentDialog = Dialog.NONE
     }
 
     fun startStopNote() {
-        if (isPlaying) {
+        if (isPlaying.value == true) {
             pitchPlayerManager.stop()
+            isPlaying.postValue(false)
         } else {
             pitchPlayerManager.play()
+            isPlaying.postValue(true)
         }
-
-        isPlaying = !isPlaying
     }
 
     // ====== Private methods
@@ -140,6 +128,6 @@ class NoteForkScreenViewModel(
             newPresets.add(name to note)
         }
 
-        presets = newPresets
+        presets.postValue(newPresets)
     }
 }
