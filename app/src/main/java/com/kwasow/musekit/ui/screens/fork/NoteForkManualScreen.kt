@@ -51,12 +51,20 @@ import org.koin.androidx.compose.koinViewModel
 fun NoteForkManualScreen() {
     val viewModel = koinViewModel<NoteForkScreenViewModel>()
     var presetDialog by remember { mutableStateOf(RemovePresetDialog()) }
+    var currentPreset by remember { mutableStateOf(viewModel.defaultPreset.first) }
 
     Column(
         modifier = Modifier.padding(horizontal = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        PresetPicker(onRemovePreset = { presetDialog.openRemove(it) })
+        PresetPicker(
+            currentPreset = currentPreset,
+            setPreset = { name, note ->
+                currentPreset = name
+                viewModel.setNote(note)
+            },
+            onRemovePreset = { presetDialog.openRemove(it) },
+        )
         PitchPicker()
         PlayPause(scope = this)
         AdditionalActions(onSavePreset = { presetDialog.openSave() })
@@ -65,8 +73,9 @@ fun NoteForkManualScreen() {
     when (presetDialog.state) {
         RemovePresetDialog.State.SAVE_PRESET ->
             PresetSaveDialog(
-                onSave = {
-                    viewModel.addPreset(it, viewModel.currentNote)
+                onSave = { name ->
+                    viewModel.addPreset(name, viewModel.currentNote)
+                    currentPreset = name
                     presetDialog.close()
                 },
                 onDismiss = { presetDialog.close() },
@@ -76,6 +85,7 @@ fun NoteForkManualScreen() {
                 name = presetDialog.removePresetName,
                 onRemove = {
                     viewModel.removePreset(presetDialog.removePresetName)
+                    currentPreset = "—"
                     presetDialog.close()
                 },
                 onDismiss = { presetDialog.close() },
@@ -87,7 +97,11 @@ fun NoteForkManualScreen() {
 // ====== Private methods
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun PresetPicker(onRemovePreset: (String) -> Unit) {
+private fun PresetPicker(
+    currentPreset: String,
+    setPreset: (String, Note) -> Unit,
+    onRemovePreset: (String) -> Unit,
+) {
     val viewModel = koinViewModel<NoteForkScreenViewModel>()
     var presets = viewModel.presets.observeAsState()
     var expanded by remember { mutableStateOf(false) }
@@ -98,7 +112,7 @@ private fun PresetPicker(onRemovePreset: (String) -> Unit) {
         modifier = Modifier.fillMaxWidth(),
     ) {
         OutlinedTextField(
-            value = viewModel.currentPreset,
+            value = currentPreset,
             onValueChange = {},
             label = { Text(text = stringResource(id = R.string.presets)) },
             trailingIcon = {
@@ -117,7 +131,7 @@ private fun PresetPicker(onRemovePreset: (String) -> Unit) {
         ) {
             presets.value?.forEach { (name, note) ->
                 val fontWeight =
-                    if (name == viewModel.currentPreset) {
+                    if (name == currentPreset) {
                         FontWeight.Bold
                     } else {
                         FontWeight.Normal
@@ -133,8 +147,7 @@ private fun PresetPicker(onRemovePreset: (String) -> Unit) {
                     },
                     onClick = {
                         expanded = false
-                        viewModel.currentPreset = name
-                        viewModel.setNote(Note(note))
+                        setPreset(name, Note(note))
                     },
                     trailingIcon = {
                         if (name != viewModel.defaultPreset.first) {

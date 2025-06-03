@@ -41,8 +41,6 @@ class NoteForkScreenViewModel(
         policy = neverEqualPolicy(),
     )
         private set
-
-    var currentPreset by mutableStateOf(defaultPreset.first)
     val isPlaying = MutableLiveData(false)
 
     val noteForkMode = runBlocking { preferencesManager.noteForkMode.first() }
@@ -102,17 +100,11 @@ class NoteForkScreenViewModel(
             )
 
         presetsManager.savePreset(preset)
-        currentPreset = name
-
         refreshPresets()
     }
 
     fun removePreset(presetName: String) {
         presetsManager.removePreset(presetName)
-        if (currentPreset == presetName) {
-            currentPreset = defaultPreset.first
-        }
-
         refreshPresets()
     }
 
