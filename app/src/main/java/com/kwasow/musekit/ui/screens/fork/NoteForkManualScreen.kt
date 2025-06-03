@@ -37,7 +37,6 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.kwasow.musekit.R
-import com.kwasow.musekit.data.NotationStyle
 import com.kwasow.musekit.ui.components.AutoSizeText
 import com.kwasow.musekit.ui.components.PlayPauseButton
 import com.kwasow.musekit.ui.dialogs.PresetRemoveDialog
@@ -148,7 +147,7 @@ private fun PresetPicker() {
 @Composable
 private fun PitchPicker() {
     val viewModel = koinViewModel<NoteForkScreenViewModel>()
-    val notationStyle by viewModel.notationStyle.collectAsState(NotationStyle.English)
+    val notationStyle by viewModel.notationStyle.collectAsState()
 
     Row(
         modifier = Modifier.padding(vertical = 16.dp),

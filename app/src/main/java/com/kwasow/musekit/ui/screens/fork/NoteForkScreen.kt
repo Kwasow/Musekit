@@ -8,7 +8,6 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -17,20 +16,17 @@ import com.kwasow.musekit.R
 import com.kwasow.musekit.ui.components.PilledTabItem
 import com.kwasow.musekit.ui.components.PilledTabRow
 import com.kwasow.musekit.ui.screens.error.ErrorScreen
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import org.koin.androidx.compose.koinViewModel
 
 // ====== Public composables
 @Composable
 fun NoteForkScreen() {
     val viewModel = koinViewModel<NoteForkScreenViewModel>()
-    val noteForkMode = runBlocking { viewModel.noteForkMode.first() }
     val pagerState =
         rememberPagerState(
             pageCount = { 2 },
-            initialPage = noteForkMode,
+            initialPage = viewModel.noteForkMode,
         )
 
     val pages =

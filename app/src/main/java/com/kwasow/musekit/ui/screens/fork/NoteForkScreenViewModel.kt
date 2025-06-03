@@ -17,7 +17,11 @@ import com.kwasow.musekit.managers.PermissionManager
 import com.kwasow.musekit.managers.PitchPlayerManager
 import com.kwasow.musekit.managers.PreferencesManager
 import com.kwasow.musekit.managers.PresetsManager
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class NoteForkScreenViewModel(
     private val applicationContext: Context,
@@ -49,9 +53,19 @@ class NoteForkScreenViewModel(
     var currentRemovePresetName by mutableStateOf("")
     var isPlaying by mutableStateOf(false)
 
-    val noteForkMode = preferencesManager.noteForkMode
-    val automaticTunerPitch = preferencesManager.automaticTunerPitch
-    val notationStyle = preferencesManager.notationStyle
+    val noteForkMode = runBlocking { preferencesManager.noteForkMode.first() }
+    val automaticTunerPitch =
+        preferencesManager.automaticTunerPitch.stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(),
+            440,
+        )
+    val notationStyle =
+        preferencesManager.notationStyle.stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(),
+            NotationStyle.English,
+        )
 
     // ======= Constructors
     init {

@@ -54,8 +54,8 @@ fun NoteForkAutoScreen() {
 @Composable
 private fun MainView() {
     val viewModel = koinViewModel<NoteForkScreenViewModel>()
-    val pitch by viewModel.automaticTunerPitch.collectAsState(440)
-    val style by viewModel.notationStyle.collectAsState(null)
+    val pitch by viewModel.automaticTunerPitch.collectAsState()
+    val style by viewModel.notationStyle.collectAsState()
 
     val dispatcher = remember { MusekitPitchDetector.buildDefaultDispatcher() }
     val pitchDetector = remember { MusekitPitchDetector(dispatcher) { pitch } }
@@ -95,7 +95,7 @@ private fun MainView() {
 @Composable
 private fun PitchSelector(modifier: Modifier = Modifier) {
     val viewModel = koinViewModel<NoteForkScreenViewModel>()
-    val automaticTunerPitch by viewModel.automaticTunerPitch.collectAsState(440)
+    val automaticTunerPitch by viewModel.automaticTunerPitch.collectAsState()
 
     Card(modifier = modifier.fillMaxWidth()) {
         Row(
