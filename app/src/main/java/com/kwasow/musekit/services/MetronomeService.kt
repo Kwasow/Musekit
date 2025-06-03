@@ -136,15 +136,15 @@ class MetronomeService : Service(), Runnable {
     private fun setupCollectors() {
         coroutineScope.launch {
             preferencesManager.metronomeSound.collect { collected ->
-                println("Updating sound")
                 sound = collected
-                soundId = soundPool.load(this@MetronomeService, collected.resourceId, 1)
+                if (collected != MetronomeSounds.None) {
+                    soundId = soundPool.load(this@MetronomeService, collected.resourceId, 1)
+                }
             }
         }
 
         coroutineScope.launch {
             preferencesManager.metronomeBpm.collect { collected ->
-                println("Updating bpm")
                 bpm = collected
             }
         }
