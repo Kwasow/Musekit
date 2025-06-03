@@ -79,7 +79,7 @@ private fun MainView() {
     ) {
         TunerView(
             note =
-                style?.let { style ->
+                style.let { style ->
                     val note = detectionResult.value?.first ?: return@let null
                     return@let viewModel.getSuperscriptedNote(note, style)
                 },

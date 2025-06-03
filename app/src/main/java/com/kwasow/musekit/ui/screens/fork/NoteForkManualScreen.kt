@@ -274,8 +274,6 @@ private fun PlayPause(scope: ColumnScope) {
 
 @Composable
 private fun AdditionalActions(onSavePreset: () -> Unit) {
-    val viewModel = koinViewModel<NoteForkScreenViewModel>()
-
     Row(
         horizontalArrangement = Arrangement.End,
         modifier = Modifier.fillMaxWidth(),
