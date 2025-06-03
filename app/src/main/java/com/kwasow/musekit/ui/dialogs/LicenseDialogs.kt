@@ -22,7 +22,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.kwasow.musekit.R
-import com.kwasow.musekit.data.LicenseDialogInfo
+import com.kwasow.musekit.data.dialogs.LicenseDialogInfo
 import kotlinx.coroutines.launch
 
 // ====== Public composables
