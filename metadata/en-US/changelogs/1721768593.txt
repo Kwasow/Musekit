@@ -1,0 +1,2 @@
+- Fixed app crashing when "none" sound selected in metronome
+
