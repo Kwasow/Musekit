@@ -2,10 +2,10 @@ package com.kwasow.musekit.ui
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -26,23 +26,24 @@ import com.kwasow.musekit.ui.screens.settings.SettingsScreen
 fun App() {
     val navController = rememberNavController()
 
-    val topLevelRoutes = listOf(
-        TopLevelRoute(
-            stringResource(id = R.string.tuning),
-            NoteFork,
-            painterResource(id = R.drawable.ic_note_fork)
-        ),
-        TopLevelRoute(
-            stringResource(id = R.string.metronome),
-            Metronome,
-            painterResource(id = R.drawable.ic_metronome)
-        ),
-        TopLevelRoute(
-            stringResource(id = R.string.settings),
-            Settings,
-            painterResource(id = R.drawable.ic_settings)
+    val topLevelRoutes =
+        listOf(
+            TopLevelRoute(
+                stringResource(id = R.string.tuning),
+                NoteFork,
+                painterResource(id = R.drawable.ic_note_fork),
+            ),
+            TopLevelRoute(
+                stringResource(id = R.string.metronome),
+                Metronome,
+                painterResource(id = R.drawable.ic_metronome),
+            ),
+            TopLevelRoute(
+                stringResource(id = R.string.settings),
+                Settings,
+                painterResource(id = R.drawable.ic_settings),
+            ),
         )
-    )
 
     Scaffold(
         bottomBar = {
@@ -63,7 +64,7 @@ fun App() {
                                 launchSingleTop = true
                                 restoreState = true
                             }
-                        }
+                        },
                     )
                 }
             }
@@ -72,7 +73,7 @@ fun App() {
         NavHost(
             navController = navController,
             startDestination = NoteFork,
-            modifier = Modifier.padding(paddingValues)
+            modifier = Modifier.padding(paddingValues),
         ) {
             composable<NoteFork> { NoteForkScreen() }
             composable<Metronome> { MetronomeScreen() }
