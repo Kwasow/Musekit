@@ -7,7 +7,7 @@ versionCode = "1721768593"
 versionName = "2.5.0-beta3"
 
 # BoM
-composeBom = "2025.05.01"
+composeBom = "2025.06.00"
 koinBom = "4.0.2"
 
 # Libraries
