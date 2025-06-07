@@ -7,7 +7,7 @@ versionCode = "1721768593"
 versionName = "2.5.0-beta3"
 
 # BoM
-composeBom = "2025.06.00"
+composeBom = "2025.05.01"
 koinBom = "4.0.2"
 
 # Libraries
@@ -70,4 +70,5 @@ android-test = { id = "com.android.test", version.ref = "androidGradlePlugin" }
 google-protobuf = { id = "com.google.protobuf", version.ref = "googleProtobufPlugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinPlugins" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlinPlugins" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinPlugins" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintPlugin" }
