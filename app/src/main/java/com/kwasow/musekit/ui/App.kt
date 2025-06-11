@@ -1,56 +1,71 @@
 package com.kwasow.musekit.ui
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavDestination.Companion.hasRoute
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.kwasow.musekit.R
-import com.kwasow.musekit.ui.screens.error.ErrorScreen
+import com.kwasow.musekit.extensions.fadeComposable
 import com.kwasow.musekit.ui.screens.fork.NoteForkScreen
 import com.kwasow.musekit.ui.screens.metronome.MetronomeScreen
 import com.kwasow.musekit.ui.screens.settings.SettingsScreen
-import kotlinx.coroutines.launch
 
 // ====== Public composables
 @Composable
 fun App() {
-    val coroutineScope = rememberCoroutineScope()
-    val pagerState = rememberPagerState(pageCount = { 3 })
+    val navController = rememberNavController()
 
-    val items =
+    val topLevelRoutes =
         listOf(
-            Pair(R.string.tuning, R.drawable.ic_note_fork),
-            Pair(R.string.metronome, R.drawable.ic_metronome),
-            Pair(R.string.settings, R.drawable.ic_settings),
+            TopLevelRoute(
+                stringResource(id = R.string.tuning),
+                NoteFork,
+                painterResource(id = R.drawable.ic_note_fork),
+            ),
+            TopLevelRoute(
+                stringResource(id = R.string.metronome),
+                Metronome,
+                painterResource(id = R.drawable.ic_metronome),
+            ),
+            TopLevelRoute(
+                stringResource(id = R.string.settings),
+                Settings,
+                painterResource(id = R.drawable.ic_settings),
+            ),
         )
 
     Scaffold(
         bottomBar = {
             NavigationBar {
-                items.forEachIndexed { index, (nameId, iconId) ->
-                    val name = stringResource(id = nameId)
+                val navBackStackEntry = navController.currentBackStackEntryAsState()
+                val currentDestination = navBackStackEntry.value?.destination
 
+                topLevelRoutes.forEach { route ->
                     NavigationBarItem(
-                        icon = {
-                            Icon(
-                                painterResource(id = iconId),
-                                contentDescription = name,
-                            )
-                        },
-                        label = { Text(name) },
-                        selected = pagerState.currentPage == index,
+                        icon = { Icon(route.icon, contentDescription = route.name) },
+                        label = { Text(route.name) },
+                        selected =
+                            currentDestination?.hierarchy?.any {
+                                it.hasRoute(route.route::class)
+                            } == true,
                         onClick = {
-                            coroutineScope.launch {
-                                pagerState.animateScrollToPage(index)
+                            navController.navigate(route.route) {
+                                popUpTo(navController.graph.startDestinationId) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
                             }
                         },
                     )
@@ -58,17 +73,14 @@ fun App() {
             }
         },
     ) { paddingValues ->
-        HorizontalPager(
-            state = pagerState,
+        NavHost(
+            navController = navController,
+            startDestination = NoteFork,
             modifier = Modifier.padding(paddingValues),
-            userScrollEnabled = false,
-        ) { page ->
-            when (page) {
-                0 -> NoteForkScreen()
-                1 -> MetronomeScreen()
-                2 -> SettingsScreen()
-                else -> ErrorScreen()
-            }
+        ) {
+            fadeComposable<NoteFork> { NoteForkScreen() }
+            fadeComposable<Metronome> { MetronomeScreen() }
+            fadeComposable<Settings> { SettingsScreen() }
         }
     }
 }
