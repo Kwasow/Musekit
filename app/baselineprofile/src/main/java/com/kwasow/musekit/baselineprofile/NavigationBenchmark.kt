@@ -30,7 +30,7 @@ class NavigationBenchmark {
     fun forkToMetronome() = benchmarkRule.measureRepeated(
         packageName = "com.kwasow.musekit",
         metrics = listOf(FrameTimingMetric()),
-        iterations = 5,
+        iterations = Config.ITERATIONS,
         startupMode = StartupMode.WARM,
         setupBlock = {
             pressHome()
@@ -45,7 +45,7 @@ class NavigationBenchmark {
     fun forkToSettings() = benchmarkRule.measureRepeated(
         packageName = "com.kwasow.musekit",
         metrics = listOf(FrameTimingMetric()),
-        iterations = 5,
+        iterations = Config.ITERATIONS,
         startupMode = StartupMode.WARM,
         setupBlock = {
             pressHome()
@@ -54,5 +54,56 @@ class NavigationBenchmark {
     ) {
         clickOnText("Settings")
         waitForTextShown("Musekit")
+    }
+
+    @Test
+    fun metronomeToSettings() = benchmarkRule.measureRepeated(
+        packageName = "com.kwasow.musekit",
+        metrics = listOf(FrameTimingMetric()),
+        iterations = Config.ITERATIONS,
+        startupMode = StartupMode.WARM,
+        setupBlock = {
+            pressHome()
+            startActivityAndWait()
+            clickOnText("Metronome")
+            waitForTextShown("Set beat")
+        }
+    ) {
+        clickOnText("Settings")
+        waitForTextShown("Musekit")
+    }
+
+    @Test
+    fun settingsToMetronome() = benchmarkRule.measureRepeated(
+        packageName = "com.kwasow.musekit",
+        metrics = listOf(FrameTimingMetric()),
+        iterations = Config.ITERATIONS,
+        startupMode = StartupMode.WARM,
+        setupBlock = {
+            pressHome()
+            startActivityAndWait()
+            clickOnText("Settings")
+            waitForTextShown("Musekit")
+        }
+    ) {
+        clickOnText("Metronome")
+        waitForTextShown("Set beat")
+    }
+
+    @Test
+    fun settingsToFork() = benchmarkRule.measureRepeated(
+        packageName = "com.kwasow.musekit",
+        metrics = listOf(FrameTimingMetric()),
+        iterations = Config.ITERATIONS,
+        startupMode = StartupMode.WARM,
+        setupBlock = {
+            pressHome()
+            startActivityAndWait()
+            clickOnText("Settings")
+            waitForTextShown("Musekit")
+        }
+    ) {
+        clickOnText("Tuning")
+        waitForTextShown("Automatic")
     }
 }

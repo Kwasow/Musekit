@@ -28,7 +28,7 @@ class StartupBenchmark {
     fun coldStart() = benchmarkRule.measureRepeated(
         packageName = "com.kwasow.musekit",
         metrics = listOf(StartupTimingMetric()),
-        iterations = 5,
+        iterations = Config.ITERATIONS,
         startupMode = StartupMode.COLD,
         setupBlock = {
             pressHome()
