@@ -1,0 +1,2 @@
+The app's UI has been rebuilt from the ground app to allow for faster development and more advanced UI features. Stay tuned for more updates!
+
