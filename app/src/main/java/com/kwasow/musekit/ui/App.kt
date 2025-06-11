@@ -13,10 +13,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.kwasow.musekit.R
+import com.kwasow.musekit.extensions.fadeComposable
 import com.kwasow.musekit.ui.screens.fork.NoteForkScreen
 import com.kwasow.musekit.ui.screens.metronome.MetronomeScreen
 import com.kwasow.musekit.ui.screens.settings.SettingsScreen
@@ -55,7 +55,10 @@ fun App() {
                     NavigationBarItem(
                         icon = { Icon(route.icon, contentDescription = route.name) },
                         label = { Text(route.name) },
-                        selected = currentDestination?.hierarchy?.any { it.hasRoute(route.route::class) } == true,
+                        selected =
+                            currentDestination?.hierarchy?.any {
+                                it.hasRoute(route.route::class)
+                            } == true,
                         onClick = {
                             navController.navigate(route.route) {
                                 popUpTo(navController.graph.startDestinationId) {
@@ -75,9 +78,9 @@ fun App() {
             startDestination = NoteFork,
             modifier = Modifier.padding(paddingValues),
         ) {
-            composable<NoteFork> { NoteForkScreen() }
-            composable<Metronome> { MetronomeScreen() }
-            composable<Settings> { SettingsScreen() }
+            fadeComposable<NoteFork> { NoteForkScreen() }
+            fadeComposable<Metronome> { MetronomeScreen() }
+            fadeComposable<Settings> { SettingsScreen() }
         }
     }
 }
