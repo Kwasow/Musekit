@@ -1,0 +1,3 @@
+- Minor UI changes in settings
+- Fix sleep not prevented in tuner/metronome
+
