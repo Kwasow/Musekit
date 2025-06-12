@@ -3,17 +3,14 @@ package com.kwasow.musekit.ui.screens.metronome
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenuItem
@@ -23,7 +20,6 @@ import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuAnchorType
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
@@ -40,25 +36,27 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.kwasow.musekit.R
 import com.kwasow.musekit.data.MetronomeSounds
 import com.kwasow.musekit.services.MetronomeService
-import com.kwasow.musekit.ui.components.AutoSizeText
 import com.kwasow.musekit.ui.components.PlayPauseButton
 import com.kwasow.musekit.ui.components.rememberBoundLocalService
 import com.kwasow.musekit.ui.dialogs.SetBeatDialog
 import org.koin.androidx.compose.koinViewModel
 
 // ======= Public composables
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MetronomeScreen() {
     val metronomeService =
         rememberBoundLocalService<MetronomeService, MetronomeService.LocalBinder> { service }
 
-    MainView(service = metronomeService)
+    BottomSheetScaffold(
+        sheetContent = { MetronomeSettings() }
+    ) {
+        MainView(service = metronomeService)
+    }
 }
 
 // ====== Private composables
@@ -76,7 +74,7 @@ private fun MainView(service: MetronomeService?) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         SoundPicker()
-        TempoPicker()
+        TempoDisplay()
         BeatIndicator(service = service)
         PlayPause(
             service = service,
@@ -157,72 +155,14 @@ private fun SoundPicker() {
 }
 
 @Composable
-private fun TempoPicker() {
+private fun TempoDisplay() {
     val viewModel = koinViewModel<MetronomeScreenViewModel>()
     val currentTempo by viewModel.metronomeBpm.collectAsState()
 
-    Row(
-        modifier =
-            Modifier
-                .fillMaxWidth()
-                .height(IntrinsicSize.Max),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        ChangeButtons(
-            values =
-                listOf(
-                    Pair(-5, 24.sp),
-                    Pair(-2, 20.sp),
-                    Pair(-1, 16.sp),
-                ),
-            onChange = { change ->
-                currentTempo?.let { tempo -> viewModel.setBpm(tempo + change) }
-            },
-        )
-
-        AutoSizeText(
-            text = currentTempo?.toString() ?: "",
-            boldFont = true,
-            modifier =
-                Modifier
-                    .padding(horizontal = 16.dp)
-                    .weight(1f)
-                    .fillMaxHeight(),
-        )
-
-        ChangeButtons(
-            values =
-                listOf(
-                    Pair(5, 24.sp),
-                    Pair(2, 20.sp),
-                    Pair(1, 16.sp),
-                ),
-            onChange = { change ->
-                currentTempo?.let { tempo -> viewModel.setBpm(tempo + change) }
-            },
-        )
-    }
-}
-
-@Composable
-private fun ChangeButtons(
-    values: List<Pair<Int, TextUnit>>,
-    onChange: (Int) -> Unit,
-) {
-    Column(modifier = Modifier.width(IntrinsicSize.Max)) {
-        values.forEach { (change, size) ->
-            OutlinedButton(
-                onClick = { onChange(change) },
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                Text(
-                    text = if (change > 0) "+$change" else change.toString(),
-                    fontSize = size,
-                    modifier = Modifier.padding(horizontal = 8.dp),
-                )
-            }
-        }
-    }
+    Text(
+        text = "♪ Tempo = " + (currentTempo?.toString() ?: ""),
+        fontWeight = FontWeight.Bold,
+    )
 }
 
 @Composable
