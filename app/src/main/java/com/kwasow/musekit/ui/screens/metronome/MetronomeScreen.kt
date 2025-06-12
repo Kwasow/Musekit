@@ -29,6 +29,7 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -37,6 +38,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -45,6 +47,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kwasow.musekit.R
 import com.kwasow.musekit.data.MetronomeSounds
+import com.kwasow.musekit.extensions.allowSleep
+import com.kwasow.musekit.extensions.preventSleep
 import com.kwasow.musekit.services.MetronomeService
 import com.kwasow.musekit.ui.components.AutoSizeText
 import com.kwasow.musekit.ui.components.PlayPauseButton
@@ -55,8 +59,16 @@ import org.koin.androidx.compose.koinViewModel
 // ======= Public composables
 @Composable
 fun MetronomeScreen() {
+    val context = LocalContext.current
     val metronomeService =
         rememberBoundLocalService<MetronomeService, MetronomeService.LocalBinder> { service }
+
+    DisposableEffect(Unit) {
+        context.preventSleep()
+        onDispose {
+            context.allowSleep()
+        }
+    }
 
     MainView(service = metronomeService)
 }
