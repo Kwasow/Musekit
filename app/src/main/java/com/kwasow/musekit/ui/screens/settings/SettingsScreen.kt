@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.SegmentedButton
@@ -34,6 +34,7 @@ import com.kwasow.musekit.BuildConfig
 import com.kwasow.musekit.R
 import com.kwasow.musekit.data.NotationStyle
 import com.kwasow.musekit.data.dialogs.LicenseDialogInfo
+import com.kwasow.musekit.ui.components.SettingsDivider
 import com.kwasow.musekit.ui.components.SettingsEntry
 import com.kwasow.musekit.ui.components.SettingsSection
 import com.kwasow.musekit.ui.dialogs.LicenseDialog
@@ -68,12 +69,15 @@ fun SettingsScreen() {
 // ====== Private composables
 @Composable
 private fun AppDetails() {
+    val color = MaterialTheme.colorScheme.onPrimary
+
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         OutlinedCard(
-            modifier = Modifier.padding(24.dp),
+            modifier = Modifier.padding(top = 24.dp, bottom = 12.dp),
+            colors = CardDefaults.outlinedCardColors(color),
         ) {
             Image(
                 painter = painterResource(id = R.drawable.ic_launcher_foreground),
@@ -103,7 +107,7 @@ private fun AppSettingsSection() {
     SettingsSection(title = stringResource(id = R.string.settings)) {
         ThemeSetting()
 
-        HorizontalDivider()
+        SettingsDivider()
 
         NotationStyleSetting()
     }
@@ -214,7 +218,7 @@ private fun AboutSection(onOpenLicenseDialog: () -> Unit) {
             onClick = { viewModel.openGithub() },
         )
 
-        HorizontalDivider()
+        SettingsDivider()
 
         SettingsEntry(
             icon = painterResource(id = R.drawable.ic_mastodon),
@@ -224,7 +228,7 @@ private fun AboutSection(onOpenLicenseDialog: () -> Unit) {
             onClick = { viewModel.openMastodon() },
         )
 
-        HorizontalDivider()
+        SettingsDivider()
 
         SettingsEntry(
             icon = painterResource(id = R.drawable.ic_web),
@@ -234,7 +238,7 @@ private fun AboutSection(onOpenLicenseDialog: () -> Unit) {
             onClick = { viewModel.openWebsite() },
         )
 
-        HorizontalDivider()
+        SettingsDivider()
 
         SettingsEntry(
             icon = painterResource(id = R.drawable.ic_file),
