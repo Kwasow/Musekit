@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
@@ -68,12 +69,15 @@ fun SettingsScreen() {
 // ====== Private composables
 @Composable
 private fun AppDetails() {
+    val color = MaterialTheme.colorScheme.onPrimary
+
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         OutlinedCard(
-            modifier = Modifier.padding(24.dp),
+            modifier = Modifier.padding(top = 24.dp, bottom = 12.dp),
+            colors = CardDefaults.outlinedCardColors(color),
         ) {
             Image(
                 painter = painterResource(id = R.drawable.ic_launcher_foreground),
