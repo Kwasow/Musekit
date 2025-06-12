@@ -1,48 +1,33 @@
 package com.kwasow.musekit.ui.screens.metronome
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.BottomSheetScaffold
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.MenuAnchorType
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.kwasow.musekit.R
-import com.kwasow.musekit.data.MetronomeSounds
 import com.kwasow.musekit.services.MetronomeService
 import com.kwasow.musekit.ui.components.PlayPauseButton
 import com.kwasow.musekit.ui.components.rememberBoundLocalService
 import com.kwasow.musekit.ui.dialogs.SetBeatDialog
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 // ======= Public composables
@@ -54,14 +39,24 @@ fun MetronomeScreen() {
 
     val metronomeService =
         rememberBoundLocalService<MetronomeService, MetronomeService.LocalBinder> { service }
+    val coroutineScope = rememberCoroutineScope()
+    var scaffoldState = rememberBottomSheetScaffoldState()
     var showSetBeatDialog by remember { mutableStateOf(false) }
 
     BottomSheetScaffold(
         sheetContent = {
             MetronomeSettings(onOpenSetBeatDialog = { showSetBeatDialog = true })
-        }
+        },
+        scaffoldState = scaffoldState,
     ) {
-        MainView(service = metronomeService)
+        MainView(
+            service = metronomeService,
+            closeBottomSheet = {
+                coroutineScope.launch {
+                    scaffoldState.bottomSheetState.hide()
+                }
+            }
+        )
 
         if (showSetBeatDialog) {
             SetBeatDialog(
@@ -75,7 +70,10 @@ fun MetronomeScreen() {
 
 // ====== Private composables
 @Composable
-private fun MainView(service: MetronomeService?) {
+private fun MainView(
+    service: MetronomeService?,
+    closeBottomSheet: () -> Unit,
+) {
     Column(
         modifier =
             Modifier
@@ -87,7 +85,7 @@ private fun MainView(service: MetronomeService?) {
         BeatIndicator(service = service)
         PlayPause(
             service = service,
-            scope = this,
+            closeBottomSheet = closeBottomSheet,
         )
     }
 }
@@ -129,15 +127,15 @@ private fun BeatIndicator(service: MetronomeService?) {
 @Composable
 private fun PlayPause(
     service: MetronomeService?,
-    scope: ColumnScope,
+    closeBottomSheet: () -> Unit,
 ) {
     val isPlaying = service?.isPlaying?.observeAsState()
 
-    with(scope) {
-        PlayPauseButton(
-            modifier = Modifier.weight(1f),
-            isPlaying = isPlaying?.value == true,
-            onChange = { service?.startStopMetronome() },
-        )
-    }
+    PlayPauseButton(
+        isPlaying = isPlaying?.value == true,
+        onChange = {
+            service?.startStopMetronome()
+            closeBottomSheet()
+        },
+    )
 }
