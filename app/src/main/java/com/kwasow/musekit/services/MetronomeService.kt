@@ -89,7 +89,7 @@ class MetronomeService : Service(), Runnable {
                 soundPool.play(soundId, 1F, 1F, 0, 0, 1F)
             }
             currentBeat.value?.let { old ->
-                currentBeat.postValue((old + 1) % numberOfBeats)
+                currentBeat.postValue(old % 4 + 1)
             }
 
             handler.postDelayed(this, (1000L * 60) / bpm)
@@ -102,13 +102,13 @@ class MetronomeService : Service(), Runnable {
             stopMetronome()
         } else {
             startMetronome()
-            currentBeat.postValue(1)
         }
     }
 
     // ====== Private methods
     private fun startMetronome() {
         isPlaying.postValue(true)
+        currentBeat.postValue(0)
         handler.post(this)
     }
 

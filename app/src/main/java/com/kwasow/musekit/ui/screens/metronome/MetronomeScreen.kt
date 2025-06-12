@@ -24,12 +24,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.kwasow.musekit.R
 import com.kwasow.musekit.services.MetronomeService
 import com.kwasow.musekit.ui.components.PlayPauseButton
 import com.kwasow.musekit.ui.components.rememberBoundLocalService
@@ -114,7 +116,7 @@ private fun TempoDisplay(modifier: Modifier = Modifier) {
     val text =
         buildAnnotatedString {
             withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
-                append("♪ Tempo = ")
+                append("♪ ${stringResource(id = R.string.tempo)} = ")
             }
             append(currentTempo?.toString() ?: "")
         }
@@ -135,11 +137,13 @@ private fun BeatIndicator(service: MetronomeService?) {
     val currentBeat = service?.currentBeat?.observeAsState()
 
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 12.dp),
         horizontalArrangement = Arrangement.SpaceEvenly,
     ) {
         totalBeats?.let { beats ->
-            (0 until beats).forEach { index ->
+            (1..beats).forEach { index ->
                 val active = isPlaying?.value == true && currentBeat?.value == index
                 val color =
                     if (active) {

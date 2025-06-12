@@ -38,7 +38,7 @@ fun MetronomeSettings(onOpenSetBeatDialog: () -> Unit) {
     ) {
         item {
             SectionTitle(
-                text = stringResource(id = R.string.beat),
+                text = stringResource(id = R.string.tempo),
                 paddingValues = PaddingValues(bottom = 16.dp),
             )
             TempoSetting(onOpenSetBeatDialog = onOpenSetBeatDialog)
@@ -47,6 +47,11 @@ fun MetronomeSettings(onOpenSetBeatDialog: () -> Unit) {
         item {
             SectionTitle(stringResource(id = R.string.sound))
             SoundSettings()
+        }
+
+        item {
+            SectionTitle(stringResource(id = R.string.beats))
+            BeatsSettings()
         }
     }
 }
@@ -106,7 +111,7 @@ private fun TempoSetting(onOpenSetBeatDialog: () -> Unit) {
                 modifier = Modifier.size(ButtonDefaults.IconSize),
             )
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-            Text(text = stringResource(id = R.string.set_beat))
+            Text(text = stringResource(id = R.string.set_tempo))
         }
 
         Button(
@@ -123,9 +128,14 @@ private fun TempoSetting(onOpenSetBeatDialog: () -> Unit) {
                 modifier = Modifier.size(ButtonDefaults.IconSize),
             )
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-            Text(text = stringResource(id = R.string.tap_beat))
+            Text(text = stringResource(id = R.string.tap_tempo))
         }
     }
+}
+
+@Composable
+private fun BeatsSettings() {
+
 }
 
 @Composable
