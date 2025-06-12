@@ -30,6 +30,7 @@ object MusekitPreferencesSerializer : Serializer<MusekitPreferences> {
             automaticTunerPitch = 440
             metronomeBpm = 60
             metronomeSound = MetronomeSounds.Default.ordinal
+            metronomeNumberOfBeats = 4
         }
 
     override suspend fun readFrom(input: InputStream): MusekitPreferences {

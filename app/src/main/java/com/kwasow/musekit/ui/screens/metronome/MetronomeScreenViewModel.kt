@@ -29,6 +29,12 @@ class MetronomeScreenViewModel(
             SharingStarted.WhileSubscribed(),
             null,
         )
+    val metronomeNumberOfBeats =
+        preferencesManager.metronomeNumberOfBeats.stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(),
+            null,
+        )
 
     // ====== Public methods
     fun beatEvent(): Int? = beatDetector.beatEvent()
@@ -41,5 +47,10 @@ class MetronomeScreenViewModel(
     fun setSound(sound: MetronomeSounds) =
         viewModelScope.launch {
             preferencesManager.setMetronomeSound(sound)
+        }
+
+    fun setNumberOfBeats(value: Int) =
+        viewModelScope.launch {
+            preferencesManager.setMetronomeNumberOfBeats(value)
         }
 }

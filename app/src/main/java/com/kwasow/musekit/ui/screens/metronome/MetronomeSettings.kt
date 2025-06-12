@@ -25,7 +25,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.kwasow.musekit.R
 import com.kwasow.musekit.data.MetronomeSounds
@@ -40,7 +39,10 @@ fun MetronomeSettings(
         contentPadding = PaddingValues(horizontal = 16.dp),
     ) {
         item {
-            SectionTitle(stringResource(id = R.string.beat))
+            SectionTitle(
+                text = stringResource(id = R.string.beat),
+                paddingValues = PaddingValues(bottom = 16.dp)
+            )
             TempoSetting(onOpenSetBeatDialog = onOpenSetBeatDialog)
         }
 
@@ -53,12 +55,15 @@ fun MetronomeSettings(
 
 // ====== Private composables
 @Composable
-private fun SectionTitle(text: String) {
+private fun SectionTitle(
+    text: String,
+    paddingValues: PaddingValues = PaddingValues(vertical = 16.dp)
+) {
     Text(
         text = text,
         style = MaterialTheme.typography.titleLarge,
         fontWeight = FontWeight.Bold,
-        modifier = Modifier.padding(vertical = 16.dp)
+        modifier = Modifier.padding(paddingValues)
     )
 }
 

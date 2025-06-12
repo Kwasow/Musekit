@@ -45,6 +45,14 @@ class PreferencesManagerImpl(val context: Context) : PreferencesManager {
                 MetronomeSounds.valueOf(preferences.metronomeSound) ?: MetronomeSounds.Default
             }
 
+    override val metronomeNumberOfBeats: Flow<Int> =
+        context.musekitPreferencesDataStore.data
+            .map { preferences ->
+                val value = preferences.metronomeNumberOfBeats
+
+                return@map if (value == 0) 4 else value
+            }
+
     // ====== Public methods
     override suspend fun setNightMode(value: Int) {
         context.musekitPreferencesDataStore.updateData { currentPreferences ->
@@ -90,6 +98,14 @@ class PreferencesManagerImpl(val context: Context) : PreferencesManager {
         context.musekitPreferencesDataStore.updateData { currentPreferences ->
             currentPreferences.toBuilder()
                 .setMetronomeSound(value.id)
+                .build()
+        }
+    }
+
+    override suspend fun setMetronomeNumberOfBeats(value: Int) {
+        context.musekitPreferencesDataStore.updateData { currentPreferences ->
+            currentPreferences.toBuilder()
+                .setMetronomeNumberOfBeats(value.coerceIn(1, 12))
                 .build()
         }
     }

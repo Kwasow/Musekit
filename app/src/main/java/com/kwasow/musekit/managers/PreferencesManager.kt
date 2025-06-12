@@ -18,6 +18,8 @@ interface PreferencesManager {
 
     val metronomeSound: Flow<MetronomeSounds>
 
+    val metronomeNumberOfBeats: Flow<Int>
+
     // ====== Methods
     suspend fun setNightMode(value: Int)
 
@@ -30,4 +32,6 @@ interface PreferencesManager {
     suspend fun setMetronomeBpm(value: Int)
 
     suspend fun setMetronomeSound(value: MetronomeSounds)
+
+    suspend fun setMetronomeNumberOfBeats(value: Int)
 }
