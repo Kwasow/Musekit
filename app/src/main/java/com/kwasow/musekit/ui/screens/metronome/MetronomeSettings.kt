@@ -32,16 +32,14 @@ import org.koin.androidx.compose.koinViewModel
 
 // ====== Public composables
 @Composable
-fun MetronomeSettings(
-    onOpenSetBeatDialog: () -> Unit
-) {
+fun MetronomeSettings(onOpenSetBeatDialog: () -> Unit) {
     LazyColumn(
         contentPadding = PaddingValues(horizontal = 16.dp),
     ) {
         item {
             SectionTitle(
                 text = stringResource(id = R.string.beat),
-                paddingValues = PaddingValues(bottom = 16.dp)
+                paddingValues = PaddingValues(bottom = 16.dp),
             )
             TempoSetting(onOpenSetBeatDialog = onOpenSetBeatDialog)
         }
@@ -57,20 +55,18 @@ fun MetronomeSettings(
 @Composable
 private fun SectionTitle(
     text: String,
-    paddingValues: PaddingValues = PaddingValues(vertical = 16.dp)
+    paddingValues: PaddingValues = PaddingValues(vertical = 16.dp),
 ) {
     Text(
         text = text,
         style = MaterialTheme.typography.titleLarge,
         fontWeight = FontWeight.Bold,
-        modifier = Modifier.padding(paddingValues)
+        modifier = Modifier.padding(paddingValues),
     )
 }
 
 @Composable
-private fun TempoSetting(
-    onOpenSetBeatDialog: () -> Unit
-) {
+private fun TempoSetting(onOpenSetBeatDialog: () -> Unit) {
     val viewModel = koinViewModel<MetronomeScreenViewModel>()
     val currentTempo by viewModel.metronomeBpm.collectAsState()
 
@@ -82,13 +78,14 @@ private fun TempoSetting(
             OutlinedButton(
                 onClick = { currentTempo?.let { viewModel.setBpm(it + value) } },
                 shape = CircleShape,
-                contentPadding = PaddingValues(0.dp)
+                contentPadding = PaddingValues(0.dp),
             ) {
-                val text = if (value > 0) {
-                    "+$value"
-                } else {
-                    value.toString()
-                }
+                val text =
+                    if (value > 0) {
+                        "+$value"
+                    } else {
+                        value.toString()
+                    }
 
                 Text(text)
             }
@@ -97,7 +94,7 @@ private fun TempoSetting(
 
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         Button(
             onClick = onOpenSetBeatDialog,
@@ -138,7 +135,7 @@ private fun SoundSettings() {
 
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceEvenly
+        horizontalArrangement = Arrangement.SpaceEvenly,
     ) {
         MetronomeSounds.entries.forEach { sound ->
             Column(horizontalAlignment = Alignment.CenterHorizontally) {

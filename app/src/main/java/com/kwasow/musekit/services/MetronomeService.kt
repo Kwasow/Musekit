@@ -1,6 +1,5 @@
 package com.kwasow.musekit.services
 
-import android.animation.ValueAnimator
 import android.app.Service
 import android.content.Intent
 import android.media.AudioAttributes
@@ -16,7 +15,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancelChildren
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import kotlin.properties.Delegates

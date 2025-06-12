@@ -12,12 +12,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Slider
-import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -66,7 +63,7 @@ fun MetronomeScreen() {
                 coroutineScope.launch {
                     scaffoldState.bottomSheetState.partialExpand()
                 }
-            }
+            },
         )
 
         if (showSetBeatDialog) {
@@ -86,17 +83,19 @@ private fun MainView(
     closeBottomSheet: () -> Unit,
 ) {
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(16.dp),
     ) {
         TempoDisplay(modifier = Modifier.align(Alignment.TopEnd))
 
         Column(
-            modifier = Modifier
-                .align(Alignment.Center)
-                .fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
+            modifier =
+                Modifier
+                    .align(Alignment.Center)
+                    .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             BeatIndicator(service = service)
             PlayPause(
@@ -112,12 +111,13 @@ private fun TempoDisplay(modifier: Modifier = Modifier) {
     val viewModel = koinViewModel<MetronomeScreenViewModel>()
     val currentTempo by viewModel.metronomeBpm.collectAsState()
 
-    val text = buildAnnotatedString {
-        withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
-            append("♪ Tempo = ")
+    val text =
+        buildAnnotatedString {
+            withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
+                append("♪ Tempo = ")
+            }
+            append(currentTempo?.toString() ?: "")
         }
-        append(currentTempo?.toString() ?: "")
-    }
 
     Text(
         text = text,
@@ -149,9 +149,10 @@ private fun BeatIndicator(service: MetronomeService?) {
                     }
 
                 Canvas(
-                    modifier = Modifier
-                        .size(30.dp)
-                        .padding(2.dp)
+                    modifier =
+                        Modifier
+                            .size(30.dp)
+                            .padding(2.dp),
                 ) {
                     drawCircle(color = color)
                 }
