@@ -49,23 +49,33 @@ import org.koin.androidx.compose.koinViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MetronomeScreen() {
+    val viewModel = koinViewModel<MetronomeScreenViewModel>()
+    val bpm by viewModel.metronomeBpm.collectAsState()
+
     val metronomeService =
         rememberBoundLocalService<MetronomeService, MetronomeService.LocalBinder> { service }
+    var showSetBeatDialog by remember { mutableStateOf(false) }
 
     BottomSheetScaffold(
-        sheetContent = { MetronomeSettings() }
+        sheetContent = {
+            MetronomeSettings(onOpenSetBeatDialog = { showSetBeatDialog = true })
+        }
     ) {
         MainView(service = metronomeService)
+
+        if (showSetBeatDialog) {
+            SetBeatDialog(
+                initialValue = bpm ?: 60,
+                onDismiss = { showSetBeatDialog = false },
+                onSet = { viewModel.setBpm(it) },
+            )
+        }
     }
 }
 
 // ====== Private composables
 @Composable
 private fun MainView(service: MetronomeService?) {
-    val viewModel = koinViewModel<MetronomeScreenViewModel>()
-    var showSetBeatDialog by remember { mutableStateOf(false) }
-    val bpm by viewModel.metronomeBpm.collectAsState()
-
     Column(
         modifier =
             Modifier
@@ -73,84 +83,12 @@ private fun MainView(service: MetronomeService?) {
                 .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        SoundPicker()
         TempoDisplay()
         BeatIndicator(service = service)
         PlayPause(
             service = service,
             scope = this,
         )
-        AdditionalActions(onOpenSetBeatDialog = { showSetBeatDialog = true })
-    }
-
-    if (showSetBeatDialog) {
-        SetBeatDialog(
-            initialValue = bpm ?: 60,
-            onDismiss = { showSetBeatDialog = false },
-            onSet = { viewModel.setBpm(it) },
-        )
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun SoundPicker() {
-    val viewModel = koinViewModel<MetronomeScreenViewModel>()
-
-    var expanded by remember { mutableStateOf(false) }
-    val selectedSound by viewModel.metronomeSound.collectAsState()
-
-    ExposedDropdownMenuBox(
-        expanded = expanded,
-        onExpandedChange = { expanded = !expanded },
-        modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(bottom = 32.dp),
-    ) {
-        val sound = selectedSound
-
-        OutlinedTextField(
-            value = stringResource(id = sound.resourceNameId),
-            onValueChange = {},
-            label = { Text(text = stringResource(id = R.string.sound)) },
-            trailingIcon = {
-                ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
-            },
-            readOnly = true,
-            modifier =
-                Modifier
-                    .menuAnchor(type = MenuAnchorType.PrimaryNotEditable)
-                    .fillMaxWidth(),
-        )
-
-        ExposedDropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false },
-        ) {
-            MetronomeSounds.entries.forEach { sound ->
-                val fontWeight =
-                    if (sound == selectedSound) {
-                        FontWeight.Bold
-                    } else {
-                        FontWeight.Normal
-                    }
-
-                DropdownMenuItem(
-                    text = {
-                        Text(
-                            text = stringResource(id = sound.resourceNameId),
-                            style = MaterialTheme.typography.bodyMedium,
-                            fontWeight = fontWeight,
-                        )
-                    },
-                    onClick = {
-                        expanded = false
-                        viewModel.setSound(sound)
-                    },
-                )
-            }
-        }
     }
 }
 
@@ -201,54 +139,5 @@ private fun PlayPause(
             isPlaying = isPlaying?.value == true,
             onChange = { service?.startStopMetronome() },
         )
-    }
-}
-
-@Composable
-private fun AdditionalActions(onOpenSetBeatDialog: () -> Unit) {
-    Row(
-        horizontalArrangement = Arrangement.SpaceBetween,
-        modifier = Modifier.fillMaxWidth(),
-    ) {
-        SetBeatButton(onOpenSetBeatDialog = onOpenSetBeatDialog)
-        TapBeatButton()
-    }
-}
-
-@Composable
-private fun SetBeatButton(onOpenSetBeatDialog: () -> Unit) {
-    Button(
-        onClick = onOpenSetBeatDialog,
-        contentPadding = PaddingValues(16.dp),
-    ) {
-        Icon(
-            painter = painterResource(id = R.drawable.ic_edit),
-            contentDescription = "",
-            modifier = Modifier.size(ButtonDefaults.IconSize),
-        )
-        Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-        Text(text = stringResource(id = R.string.set_beat))
-    }
-}
-
-@Composable
-private fun TapBeatButton() {
-    val viewModel = koinViewModel<MetronomeScreenViewModel>()
-
-    Button(
-        onClick = {
-            viewModel.beatEvent()?.let { res ->
-                viewModel.setBpm(res)
-            }
-        },
-        contentPadding = PaddingValues(16.dp),
-    ) {
-        Icon(
-            painter = painterResource(id = R.drawable.ic_tap),
-            contentDescription = "",
-            modifier = Modifier.size(ButtonDefaults.IconSize),
-        )
-        Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-        Text(text = stringResource(id = R.string.tap_beat))
     }
 }
