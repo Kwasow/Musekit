@@ -1,0 +1,6 @@
+<i>Musekit</i> ist eine einfache App, die alle Tools bietet, die ein Musiker benötigt, ohne störende Werbung und ohne Daten zu sammeln.
+
+<b>Features:</b>
+
+- Notengabel
+- Metronom
