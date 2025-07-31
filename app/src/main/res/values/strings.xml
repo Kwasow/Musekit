@@ -38,8 +38,8 @@
 
     <!-- Metronome strings -->
     <string name="sound">Sound</string>
-    <string name="set_tempo">Set tempo</string>
-    <string name="tap_tempo">Tap tempo</string>
+    <string name="set_tempo">Set</string>
+    <string name="tap_tempo">Tap</string>
     <string name="tempo">Tempo</string>
     <string name="tempo_hint" translatable="false">60</string>
     <string name="beats">Beats</string>"

@@ -98,12 +98,15 @@ private fun TempoSetting(onOpenSetBeatDialog: () -> Unit) {
     }
 
     Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 8.dp),
+        horizontalArrangement = Arrangement.End,
     ) {
         Button(
             onClick = onOpenSetBeatDialog,
-            contentPadding = PaddingValues(16.dp),
+            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+            modifier = Modifier.padding(end = 8.dp)
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_edit),
@@ -120,7 +123,7 @@ private fun TempoSetting(onOpenSetBeatDialog: () -> Unit) {
                     viewModel.setBpm(res)
                 }
             },
-            contentPadding = PaddingValues(16.dp),
+            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_tap),
