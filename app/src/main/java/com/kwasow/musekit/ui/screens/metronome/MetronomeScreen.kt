@@ -49,7 +49,7 @@ fun MetronomeScreen() {
     val metronomeService =
         rememberBoundLocalService<MetronomeService, MetronomeService.LocalBinder> { service }
     val coroutineScope = rememberCoroutineScope()
-    var scaffoldState = rememberBottomSheetScaffoldState()
+    val scaffoldState = rememberBottomSheetScaffoldState()
     var showSetBeatDialog by remember { mutableStateOf(false) }
 
     BottomSheetScaffold(
@@ -137,9 +137,10 @@ private fun BeatIndicator(service: MetronomeService?) {
     val currentBeat = service?.currentBeat?.observeAsState()
 
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 12.dp),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(bottom = 12.dp),
         horizontalArrangement = Arrangement.SpaceEvenly,
     ) {
         totalBeats?.let { beats ->

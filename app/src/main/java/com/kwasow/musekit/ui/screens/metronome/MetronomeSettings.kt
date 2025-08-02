@@ -13,6 +13,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.RadioButton
@@ -98,15 +99,16 @@ private fun TempoSetting(onOpenSetBeatDialog: () -> Unit) {
     }
 
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 8.dp),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp),
         horizontalArrangement = Arrangement.End,
     ) {
         Button(
             onClick = onOpenSetBeatDialog,
             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-            modifier = Modifier.padding(end = 8.dp)
+            modifier = Modifier.padding(end = 8.dp),
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_edit),
@@ -138,7 +140,36 @@ private fun TempoSetting(onOpenSetBeatDialog: () -> Unit) {
 
 @Composable
 private fun BeatsSettings() {
+    val viewModel = koinViewModel<MetronomeScreenViewModel>()
+    val numberOfBeats by viewModel.metronomeNumberOfBeats.collectAsState()
 
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        IconButton(
+            onClick = { numberOfBeats?.let { viewModel.setNumberOfBeats(it - 1) } },
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_minus_circle),
+                contentDescription = "",
+                modifier = Modifier.size(20.dp),
+            )
+        }
+
+        Text(text = numberOfBeats.toString())
+
+        IconButton(
+            onClick = { numberOfBeats?.let { viewModel.setNumberOfBeats(it + 1) } },
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_plus_circle),
+                contentDescription = "",
+                modifier = Modifier.size(20.dp),
+            )
+        }
+    }
 }
 
 @Composable
