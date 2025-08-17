@@ -154,7 +154,10 @@ private fun PresetPicker(
                             IconButton(onClick = { onRemovePreset(name) }) {
                                 Icon(
                                     painter = painterResource(id = R.drawable.ic_delete),
-                                    contentDescription = stringResource(id = R.string.contentDescription_trash_can),
+                                    contentDescription =
+                                        stringResource(
+                                            id = R.string.contentDescription_trash_can,
+                                        ),
                                     tint = MaterialTheme.colorScheme.primary,
                                 )
                             }
@@ -239,7 +242,10 @@ private fun PropertyCard(
                 IconButton(onClick = onDecrease) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_minus_circle),
-                        contentDescription = stringResource(id = R.string.contentDescription_decrease),
+                        contentDescription =
+                            stringResource(
+                                id = R.string.contentDescription_decrease,
+                            ),
                         modifier = Modifier.size(20.dp),
                         tint = MaterialTheme.colorScheme.primary,
                     )
@@ -248,7 +254,10 @@ private fun PropertyCard(
                 IconButton(onClick = onIncrease) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_plus_circle),
-                        contentDescription = stringResource(id = R.string.contentDescription_increase),
+                        contentDescription =
+                            stringResource(
+                                id = R.string.contentDescription_increase,
+                            ),
                         modifier = Modifier.size(20.dp),
                         tint = MaterialTheme.colorScheme.primary,
                     )

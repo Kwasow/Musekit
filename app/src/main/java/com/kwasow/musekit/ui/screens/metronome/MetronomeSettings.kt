@@ -133,7 +133,10 @@ private fun TempoSetting(onOpenSetBeatDialog: () -> Unit) {
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_tap),
-                contentDescription = stringResource(id = R.string.contentDescription_finger_tapping),
+                contentDescription =
+                    stringResource(
+                        id = R.string.contentDescription_finger_tapping,
+                    ),
                 modifier = Modifier.size(ButtonDefaults.IconSize),
             )
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
@@ -150,10 +153,11 @@ private fun BeatsSettings() {
     Row(
         horizontalArrangement = Arrangement.SpaceAround,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(IntrinsicSize.Min)
-            .padding(bottom = 12.dp),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .height(IntrinsicSize.Min)
+                .padding(bottom = 12.dp),
     ) {
         IconButton(
             onClick = { numberOfBeats?.let { viewModel.setNumberOfBeats(it - 1) } },
@@ -167,7 +171,7 @@ private fun BeatsSettings() {
 
         AutoSizeText(
             text = numberOfBeats.toString(),
-            modifier = Modifier.fillMaxHeight()
+            modifier = Modifier.fillMaxHeight(),
         )
 
         IconButton(
