@@ -116,7 +116,7 @@ private fun TempoSetting(onOpenSetBeatDialog: () -> Unit) {
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_edit),
-                contentDescription = "",
+                contentDescription = stringResource(id = R.string.contentDescription_pen),
                 modifier = Modifier.size(ButtonDefaults.IconSize),
             )
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
@@ -133,7 +133,7 @@ private fun TempoSetting(onOpenSetBeatDialog: () -> Unit) {
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_tap),
-                contentDescription = "",
+                contentDescription = stringResource(id = R.string.contentDescription_finger_tapping),
                 modifier = Modifier.size(ButtonDefaults.IconSize),
             )
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
@@ -160,7 +160,7 @@ private fun BeatsSettings() {
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_minus_circle),
-                contentDescription = "",
+                contentDescription = stringResource(id = R.string.contentDescription_decrease),
                 modifier = Modifier.size(28.dp),
             )
         }
@@ -175,7 +175,7 @@ private fun BeatsSettings() {
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_plus_circle),
-                contentDescription = "",
+                contentDescription = stringResource(id = R.string.contentDescription_increase),
                 modifier = Modifier.size(28.dp),
             )
         }

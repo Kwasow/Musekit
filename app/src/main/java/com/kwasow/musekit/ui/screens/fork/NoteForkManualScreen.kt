@@ -103,7 +103,7 @@ private fun PresetPicker(
     onRemovePreset: (String) -> Unit,
 ) {
     val viewModel = koinViewModel<NoteForkScreenViewModel>()
-    var presets = viewModel.presets.observeAsState()
+    val presets = viewModel.presets.observeAsState()
     var expanded by remember { mutableStateOf(false) }
 
     ExposedDropdownMenuBox(
@@ -154,7 +154,7 @@ private fun PresetPicker(
                             IconButton(onClick = { onRemovePreset(name) }) {
                                 Icon(
                                     painter = painterResource(id = R.drawable.ic_delete),
-                                    contentDescription = "",
+                                    contentDescription = stringResource(id = R.string.contentDescription_trash_can),
                                     tint = MaterialTheme.colorScheme.primary,
                                 )
                             }
@@ -239,7 +239,7 @@ private fun PropertyCard(
                 IconButton(onClick = onDecrease) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_minus_circle),
-                        contentDescription = "",
+                        contentDescription = stringResource(id = R.string.contentDescription_decrease),
                         modifier = Modifier.size(20.dp),
                         tint = MaterialTheme.colorScheme.primary,
                     )
@@ -248,7 +248,7 @@ private fun PropertyCard(
                 IconButton(onClick = onIncrease) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_plus_circle),
-                        contentDescription = "",
+                        contentDescription = stringResource(id = R.string.contentDescription_increase),
                         modifier = Modifier.size(20.dp),
                         tint = MaterialTheme.colorScheme.primary,
                     )
@@ -284,7 +284,7 @@ private fun AdditionalActions(onSavePreset: () -> Unit) {
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_save),
-                contentDescription = "",
+                contentDescription = stringResource(id = R.string.contentDescription_save),
                 modifier = Modifier.size(ButtonDefaults.IconSize),
             )
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
