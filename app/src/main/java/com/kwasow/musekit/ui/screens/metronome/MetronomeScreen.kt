@@ -15,6 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -24,6 +25,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -32,6 +34,8 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kwasow.musekit.R
+import com.kwasow.musekit.extensions.allowSleep
+import com.kwasow.musekit.extensions.preventSleep
 import com.kwasow.musekit.services.MetronomeService
 import com.kwasow.musekit.ui.components.PlayPauseButton
 import com.kwasow.musekit.ui.components.rememberBoundLocalService
@@ -46,11 +50,19 @@ fun MetronomeScreen() {
     val viewModel = koinViewModel<MetronomeScreenViewModel>()
     val bpm by viewModel.metronomeBpm.collectAsState()
 
+    val context = LocalContext.current
     val metronomeService =
         rememberBoundLocalService<MetronomeService, MetronomeService.LocalBinder> { service }
     val coroutineScope = rememberCoroutineScope()
     val scaffoldState = rememberBottomSheetScaffoldState()
     var showSetBeatDialog by remember { mutableStateOf(false) }
+
+    DisposableEffect(Unit) {
+        context.preventSleep()
+        onDispose {
+            context.allowSleep()
+        }
+    }
 
     BottomSheetScaffold(
         sheetContent = {

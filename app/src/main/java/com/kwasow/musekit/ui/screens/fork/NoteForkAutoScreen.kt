@@ -109,7 +109,7 @@ private fun PitchSelector(modifier: Modifier = Modifier) {
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_minus_circle),
-                contentDescription = stringResource(id = R.string.contentDescription_pitch_down),
+                contentDescription = stringResource(id = R.string.contentDescription_decrease),
                 tint = MaterialTheme.colorScheme.primary,
                 modifier =
                     Modifier
@@ -128,7 +128,7 @@ private fun PitchSelector(modifier: Modifier = Modifier) {
 
             Icon(
                 painter = painterResource(id = R.drawable.ic_plus_circle),
-                contentDescription = stringResource(id = R.string.contentDescription_pitch_up),
+                contentDescription = stringResource(id = R.string.contentDescription_increase),
                 tint = MaterialTheme.colorScheme.primary,
                 modifier =
                     Modifier

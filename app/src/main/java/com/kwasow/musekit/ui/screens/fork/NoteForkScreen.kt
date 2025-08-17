@@ -8,11 +8,15 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.kwasow.musekit.R
+import com.kwasow.musekit.extensions.allowSleep
+import com.kwasow.musekit.extensions.preventSleep
 import com.kwasow.musekit.ui.components.PilledTabItem
 import com.kwasow.musekit.ui.components.PilledTabRow
 import com.kwasow.musekit.ui.screens.error.ErrorScreen
@@ -23,6 +27,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun NoteForkScreen() {
     val viewModel = koinViewModel<NoteForkScreenViewModel>()
+    val context = LocalContext.current
     val pagerState =
         rememberPagerState(
             pageCount = { 2 },
@@ -34,6 +39,13 @@ fun NoteForkScreen() {
             Pair(R.string.note_fork_automatic, { NoteForkAutoScreen() }),
             Pair(R.string.note_fork_manual, { NoteForkManualScreen() }),
         )
+
+    DisposableEffect(Unit) {
+        context.preventSleep()
+        onDispose {
+            context.allowSleep()
+        }
+    }
 
     Column(
         modifier =

@@ -1,6 +1,6 @@
-A simple app providing all the tools a musician may need, without disturbing ads and without collecting any data.
+<i>Musekit</i> is a simple app providing all the tools a musician may need, without disturbing ads and without collecting any data.
 
-Features:
+<b>Features:
+
 - Tuner (Automatic & Note fork)
 - Metronome
-
