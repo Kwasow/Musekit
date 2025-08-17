@@ -34,7 +34,7 @@ class NavigationProfileGenerator {
 
             waitForTextShown("Metronome")
             clickOnText("Metronome")
-            waitForTextShown("Set beat")
+            waitForTextShown("Tempo =")
         }
     }
 
