@@ -1,0 +1,2 @@
+Completely redesigned metronome! Now you can customize the number of beats, with more features coming soon.
+
