@@ -7,32 +7,32 @@ versionCode = "1721768595"
 versionName = "2.5.1"
 
 # BoM
-composeBom = "2025.05.01"
-koinBom = "4.0.2"
+composeBom = "2025.08.00"
+koinBom = "4.1.0"
 
 # Libraries
-accompanistPermissions = "0.37.2"
-androidBenchmark = "1.3.4"
+accompanistPermissions = "0.37.3"
+androidBenchmark = "1.4.0"
 androidDataStore = "1.1.7"
-androidLifecycle = "2.9.0"
-androidTestEspresso = "3.6.1"
-androidTestJunit = "1.2.1"
-appcompat = "1.7.0"
-composeLivedata = "1.8.2"
-composeNavigation = "2.9.0"
+androidLifecycle = "2.9.2"
+androidTestEspresso = "3.7.0"
+androidTestJunit = "1.3.0"
+appcompat = "1.7.1"
+composeLivedata = "1.9.0"
+composeNavigation = "2.9.3"
 graphicsShapes = "1.0.1"
 junit = "4.13.2"
-kotlinCore = "1.16.0"
+kotlinCore = "1.17.0"
 profileInstaller = "1.4.1"
-protobuf = "4.30.1"
+protobuf = "4.32.0"
 uiautomator = "2.3.0"
 
 # Plugins
 androidGradlePlugin = "8.12.0"
-baselineProfile = "1.3.4"
-googleProtobufPlugin = "0.9.4"
-kotlinPlugins = "2.1.10"
-ktlintPlugin = "12.2.0"
+baselineProfile = "1.4.0"
+googleProtobufPlugin = "0.9.5"
+kotlinPlugins = "2.2.10"
+ktlintPlugin = "13.0.0"
 
 [libraries]
 android-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
