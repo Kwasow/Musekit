@@ -1,7 +1,7 @@
 [versions]
 # Build details
-compileSdk = "35"
-targetSdk = "35"
+compileSdk = "36"
+targetSdk = "36"
 minSdk = "23"
 versionCode = "1721768595"
 versionName = "2.5.1"
