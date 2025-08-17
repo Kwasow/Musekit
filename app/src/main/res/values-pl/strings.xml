@@ -3,12 +3,7 @@
     <string name="tuning">Strojenie</string>
     <string name="metronome">Metronom</string>
     <string name="settings">Ustawienia</string>
-    <string name="contentDescription_note_up">Dźwięk w górę</string>
-    <string name="contentDescription_note_down">Dźwięk w dół</string>
-    <string name="contentDescription_pitch_up">Zwiększ częstotliwość podstawową</string>
-    <string name="contentDescription_pitch_down">Zmniejsz częstotliowść podstawową</string>
     <string name="contentDescription_stop">Stop</string>
-    <string name="contentDescription_metronome_ticker">Wslaźnik metronomu</string>
     <string name="note">Dźwięk</string>
     <string name="pitch">Częstotliwość</string>
     <string name="note_fork_manual">Ręczny</string>
@@ -48,9 +43,12 @@
     <string name="icons">Ikonki od css.gg</string>
     <string name="tarsos">TarsosDSP</string>
     <string name="contentDescription_right_arrow">Strzałka w prawo</string>
+    <string name="contentDescription_save">Zapisz</string>
     <string name="sound">Dźwięk metronomu</string>
-    <string name="tap_beat">Wybij tempo</string>
-    <string name="beat">Tempo</string>
+    <string name="tap_tempo">Wybij</string>
+    <string name="tempo">Tempo</string>
+    <string name="beats">Miary</string>
+    <string name="contentDescription_finger_tapping">Stukanie palcem</string>
     <string name="metronome_sound_default">Domyślny</string>
     <string name="metronome_sound_beep">Beep</string>
     <string name="metronome_sound_ding">Ding</string>
@@ -73,11 +71,15 @@
     <string name="note_fork_automatic">Automatyczny</string>
     <string name="record_permission_not_granted">Dostęp do mikrofonu nie został przyznany</string>
     <string name="special_thanks">Specjalne podziękowania dla TarsosDSP za zbudowanie biblioteki do rozpoznawania tonów.</string>
-    <string name="set_beat">Ustaw tempo</string>
+    <string name="set_tempo">Ustaw</string>
     <string name="contentDescription_internet_website">Strona internetowa</string>
     <string name="notation_style">Nazwy dźwięków</string>
     <string name="notation_style_subtitle">Wybierz konwencję nazwenictwa dźwięków</string>
     <string name="notation_style_english">Angielska</string>
     <string name="notation_style_german">Niemicka</string>
+    <string name="contentDescription_decrease">Zmniejsz</string>
     <string name="contentDescription_start">Start</string>
+    <string name="contentDescription_increase">Zwiększ</string>
+    <string name="contentDescription_trash_can">Śmietnik</string>
+    <string name="contentDescription_pen">Długopis</string>
 </resources>

@@ -1,6 +1,5 @@
 package com.kwasow.musekit.services
 
-import android.animation.ValueAnimator
 import android.app.Service
 import android.content.Intent
 import android.media.AudioAttributes
@@ -34,16 +33,16 @@ class MetronomeService : Service(), Runnable {
     private lateinit var soundPool: SoundPool
     private lateinit var handler: Handler
 
-    private var right = true
-
     private val job = SupervisorJob()
     private val coroutineScope = CoroutineScope(Dispatchers.IO + job)
 
     private var sound = MetronomeSounds.Default
     private var bpm = 60
+    private var numberOfBeats = 4
 
     val isPlaying: MutableLiveData<Boolean> = MutableLiveData(false)
     val tickerPosition: MutableLiveData<Float> = MutableLiveData(0f)
+    val currentBeat: MutableLiveData<Int> = MutableLiveData(1)
 
     // ====== Interface methods
     override fun onCreate() {
@@ -86,11 +85,12 @@ class MetronomeService : Service(), Runnable {
 
     override fun run() {
         if (isPlaying.value == true) {
-            val tickerAnimation = buildAnimation(bpm)
             if (sound != MetronomeSounds.None) {
                 soundPool.play(soundId, 1F, 1F, 0, 0, 1F)
             }
-            tickerAnimation.start()
+            currentBeat.value?.let { old ->
+                currentBeat.postValue(old % numberOfBeats + 1)
+            }
 
             handler.postDelayed(this, (1000L * 60) / bpm)
         }
@@ -108,29 +108,12 @@ class MetronomeService : Service(), Runnable {
     // ====== Private methods
     private fun startMetronome() {
         isPlaying.postValue(true)
+        currentBeat.postValue(0)
         handler.post(this)
     }
 
     private fun stopMetronome() {
         isPlaying.postValue(false)
-    }
-
-    private fun buildAnimation(bpm: Int): ValueAnimator {
-        val tickerAnimation =
-            if (right) {
-                ValueAnimator.ofFloat(0F, 1F)
-            } else {
-                ValueAnimator.ofFloat(1F, 0F)
-            }
-
-        tickerAnimation.addUpdateListener {
-            tickerPosition.postValue(it.animatedValue as Float)
-        }
-
-        tickerAnimation.duration = 1000L * 60 / bpm
-        right = !right
-
-        return tickerAnimation
     }
 
     private fun setupCollectors() {
@@ -146,6 +129,12 @@ class MetronomeService : Service(), Runnable {
         coroutineScope.launch {
             preferencesManager.metronomeBpm.collect { collected ->
                 bpm = collected
+            }
+        }
+
+        coroutineScope.launch {
+            preferencesManager.metronomeNumberOfBeats.collect { collected ->
+                numberOfBeats = collected
             }
         }
     }

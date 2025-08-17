@@ -5,13 +5,6 @@
     <string name="tuning">Tuning</string>
     <string name="metronome">Metronome</string>
     <string name="settings">Settings</string>
-    <string name="contentDescription_note_up">Note up</string>
-    <string name="contentDescription_note_down">Note down</string>
-    <string name="contentDescription_pitch_up">Pitch up</string>
-    <string name="contentDescription_pitch_down">Pitch down</string>
-    <string name="contentDescription_start">Start</string>
-    <string name="contentDescription_stop">Stop</string>
-    <string name="contentDescription_metronome_ticker">Metronome ticker</string>
 
     <!-- Note fork strings -->
     <string name="note">Note</string>
@@ -25,6 +18,12 @@
     <string name="open_settings">Open settings</string>
     <string name="contentDescription_tuner_check">Note in tune checkmark</string>
 
+    <!-- Shared strings -->
+    <string name="contentDescription_increase">Increase</string>
+    <string name="contentDescription_decrease">Decrease</string>
+    <string name="contentDescription_start">Start</string>
+    <string name="contentDescription_stop">Stop</string>
+
     <!-- Note fork presets -->
     <string name="presets">Presets</string>
     <string name="default_preset">Default</string>
@@ -35,13 +34,18 @@
     <string name="delete_preset">Delete preset</string>
     <string name="warning_preset_deletion">The preset \"%1$s\" will be permanently deleted.</string>
     <string name="delete">Delete</string>
+    <string name="contentDescription_trash_can">Trash can</string>
+    <string name="contentDescription_save">Save</string>
 
     <!-- Metronome strings -->
     <string name="sound">Sound</string>
-    <string name="set_beat">Set beat</string>
-    <string name="tap_beat">Tap beat</string>
-    <string name="beat">Beat</string>
-    <string name="beat_hint" translatable="false">60</string>
+    <string name="set_tempo">Set</string>
+    <string name="tap_tempo">Tap</string>
+    <string name="tempo">Tempo</string>
+    <string name="tempo_hint" translatable="false">60</string>
+    <string name="beats">Beats</string>"
+    <string name="contentDescription_pen">Pen</string>
+    <string name="contentDescription_finger_tapping">Finger tapping</string>
     
     <!-- Metronome sound names -->
     <string name="metronome_sound_default">Default</string>

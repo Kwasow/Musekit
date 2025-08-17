@@ -11,5 +11,6 @@ message MusekitPreferences {
   int32 automatic_tuner_pitch = 4;
   int32 metronome_bpm = 5;
   int32 metronome_sound = 6;
+  int32 metronome_number_of_beats = 7;
 }
 

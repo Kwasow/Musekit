@@ -54,7 +54,7 @@ fun SetBeatDialog(
 // ====== Private composables
 @Composable
 private fun AlertTitle() {
-    Text(text = stringResource(id = R.string.set_beat))
+    Text(text = stringResource(id = R.string.set_tempo))
 }
 
 @Composable
