@@ -164,6 +164,6 @@ class Note(
         }
     }
 
-    // ======= Private methods
+    // ====== Private methods
     private fun getNoteName(style: NotationStyle): String = note.getName(style)
 }

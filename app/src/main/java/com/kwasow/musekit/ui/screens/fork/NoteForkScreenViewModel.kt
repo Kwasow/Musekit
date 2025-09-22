@@ -31,7 +31,7 @@ class NoteForkScreenViewModel(
     private val preferencesManager: PreferencesManager,
     private val presetsManager: PresetsManager,
 ) : ViewModel() {
-    // ======= Fields
+    // ====== Fields
     val defaultPreset =
         applicationContext.getString(R.string.default_preset) to Note()
 
@@ -57,13 +57,13 @@ class NoteForkScreenViewModel(
             NotationStyle.English,
         )
 
-    // ======= Constructors
+    // ====== Constructors
     init {
         refreshPresets()
         setNote(currentNote)
     }
 
-    // ======= Public methods
+    // ====== Public methods
     fun launchPermissionSettings() = permissionManager.openPermissionSettings()
 
     fun setNoteForkMode(mode: Int) =

@@ -51,7 +51,7 @@ fun TunerView(
     }
 }
 
-// ======= Private composables
+// ====== Private composables
 @Composable
 private fun TuningStateIndicator(
     note: AnnotatedString?,

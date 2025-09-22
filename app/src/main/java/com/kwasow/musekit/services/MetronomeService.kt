@@ -39,10 +39,15 @@ class MetronomeService : Service(), Runnable {
     private var sound = MetronomeSounds.Default
     private var bpm = 60
     private var numberOfBeats = 4
+    private var currentIndex = 0
 
     val isPlaying: MutableLiveData<Boolean> = MutableLiveData(false)
-    val tickerPosition: MutableLiveData<Float> = MutableLiveData(0f)
-    val currentBeat: MutableLiveData<Int> = MutableLiveData(1)
+    var listener: TickListener? = null
+
+    // ====== Inner classes
+    interface TickListener {
+        fun onTick(index: Int)
+    }
 
     // ====== Interface methods
     override fun onCreate() {
@@ -57,7 +62,7 @@ class MetronomeService : Service(), Runnable {
         soundPool =
             SoundPool.Builder()
                 .setAudioAttributes(audioAttributes)
-                .setMaxStreams(10)
+                .setMaxStreams(1)
                 .build()
 
         soundId = soundPool.load(this, sound.resourceId, 1)
@@ -68,10 +73,6 @@ class MetronomeService : Service(), Runnable {
 
     override fun onBind(intent: Intent?): IBinder {
         return binder
-    }
-
-    override fun onUnbind(intent: Intent?): Boolean {
-        return super.onUnbind(intent)
     }
 
     override fun onDestroy() {
@@ -88,9 +89,11 @@ class MetronomeService : Service(), Runnable {
             if (sound != MetronomeSounds.None) {
                 soundPool.play(soundId, 1F, 1F, 0, 0, 1F)
             }
-            currentBeat.value?.let { old ->
-                currentBeat.postValue(old % numberOfBeats + 1)
+
+            if (currentIndex >= numberOfBeats) {
+                currentIndex = 0
             }
+            listener?.onTick(currentIndex++)
 
             handler.postDelayed(this, (1000L * 60) / bpm)
         }
@@ -108,7 +111,10 @@ class MetronomeService : Service(), Runnable {
     // ====== Private methods
     private fun startMetronome() {
         isPlaying.postValue(true)
-        currentBeat.postValue(0)
+
+        currentIndex = 0
+        listener?.onTick(currentIndex)
+
         handler.post(this)
     }
 
