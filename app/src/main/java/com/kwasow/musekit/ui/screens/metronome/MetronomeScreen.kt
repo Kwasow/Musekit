@@ -19,6 +19,7 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -43,7 +44,7 @@ import com.kwasow.musekit.ui.dialogs.SetBeatDialog
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
-// ======= Public composables
+// ====== Public composables
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MetronomeScreen() {
@@ -146,7 +147,23 @@ private fun BeatIndicator(service: MetronomeService?) {
 
     val isPlaying = service?.isPlaying?.observeAsState()
     val totalBeats by viewModel.metronomeNumberOfBeats.collectAsState()
-    val currentBeat = service?.currentBeat?.observeAsState()
+    var currentBeat by remember { mutableIntStateOf(0) }
+
+    val listener = remember {
+        object : MetronomeService.TickListener {
+            override fun onTick(index: Int) {
+                currentBeat = index
+            }
+        }
+    }
+
+    DisposableEffect(service) {
+        service?.listener = listener
+
+        onDispose {
+            service?.listener = null
+        }
+    }
 
     Row(
         modifier =
@@ -156,8 +173,8 @@ private fun BeatIndicator(service: MetronomeService?) {
         horizontalArrangement = Arrangement.SpaceEvenly,
     ) {
         totalBeats?.let { beats ->
-            (1..beats).forEach { index ->
-                val active = isPlaying?.value == true && currentBeat?.value == index
+            (0 until beats).forEach { index ->
+                val active = isPlaying?.value == true && currentBeat == index
                 val color =
                     if (active) {
                         MaterialTheme.colorScheme.primary
