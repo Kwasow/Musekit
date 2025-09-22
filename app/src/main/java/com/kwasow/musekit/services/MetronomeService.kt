@@ -75,10 +75,6 @@ class MetronomeService : Service(), Runnable {
         return binder
     }
 
-    override fun onUnbind(intent: Intent?): Boolean {
-        return super.onUnbind(intent)
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         job.cancelChildren()
@@ -94,8 +90,9 @@ class MetronomeService : Service(), Runnable {
                 soundPool.play(soundId, 1F, 1F, 0, 0, 1F)
             }
 
-            if (currentIndex >= numberOfBeats)
+            if (currentIndex >= numberOfBeats) {
                 currentIndex = 0
+            }
             listener?.onTick(currentIndex++)
 
             handler.postDelayed(this, (1000L * 60) / bpm)

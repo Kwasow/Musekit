@@ -149,13 +149,14 @@ private fun BeatIndicator(service: MetronomeService?) {
     val totalBeats by viewModel.metronomeNumberOfBeats.collectAsState()
     var currentBeat by remember { mutableIntStateOf(0) }
 
-    val listener = remember {
-        object : MetronomeService.TickListener {
-            override fun onTick(index: Int) {
-                currentBeat = index
+    val listener =
+        remember {
+            object : MetronomeService.TickListener {
+                override fun onTick(index: Int) {
+                    currentBeat = index
+                }
             }
         }
-    }
 
     DisposableEffect(service) {
         service?.listener = listener
