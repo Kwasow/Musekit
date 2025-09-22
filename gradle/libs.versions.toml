@@ -7,24 +7,24 @@ versionCode = "1721768596"
 versionName = "2.6.0"
 
 # BoM
-composeBom = "2025.08.00"
-koinBom = "4.1.0"
+composeBom = "2025.09.00"
+koinBom = "4.1.1"
 
 # Libraries
 accompanistPermissions = "0.37.3"
-androidBenchmark = "1.4.0"
+androidBenchmark = "1.4.1"
 androidDataStore = "1.1.7"
-androidLifecycle = "2.9.2"
+androidLifecycle = "2.9.4"
 androidTestEspresso = "3.7.0"
 androidTestJunit = "1.3.0"
 appcompat = "1.7.1"
-composeLivedata = "1.9.0"
-composeNavigation = "2.9.3"
+composeLivedata = "1.9.1"
+composeNavigation = "2.9.4"
 graphicsShapes = "1.0.1"
 junit = "4.13.2"
 kotlinCore = "1.17.0"
 profileInstaller = "1.4.1"
-protobuf = "4.32.0"
+protobuf = "4.32.1"
 uiautomator = "2.3.0"
 
 # Plugins
