@@ -39,7 +39,9 @@ class MetronomeService : Service(), Runnable {
     private var sound = MetronomeSounds.Default
     private var bpm = 60
     private var numberOfBeats = 4
+
     private var currentIndex = 0
+    private var interval = 0L
 
     val isPlaying: MutableLiveData<Boolean> = MutableLiveData(false)
     var listener: TickListener? = null
@@ -86,6 +88,8 @@ class MetronomeService : Service(), Runnable {
 
     override fun run() {
         if (isPlaying.value == true) {
+            handler.postDelayed(this, interval)
+
             if (sound != MetronomeSounds.None) {
                 soundPool.play(soundId, 1F, 1F, 0, 0, 1F)
             }
@@ -94,8 +98,6 @@ class MetronomeService : Service(), Runnable {
                 currentIndex = 0
             }
             listener?.onTick(currentIndex++)
-
-            handler.postDelayed(this, (1000L * 60) / bpm)
         }
     }
 
@@ -122,6 +124,8 @@ class MetronomeService : Service(), Runnable {
         isPlaying.postValue(false)
     }
 
+    private fun toInterval(bpm: Int): Long = (1000L * 60) / bpm
+
     private fun setupCollectors() {
         coroutineScope.launch {
             preferencesManager.metronomeSound.collect { collected ->
@@ -135,6 +139,7 @@ class MetronomeService : Service(), Runnable {
         coroutineScope.launch {
             preferencesManager.metronomeBpm.collect { collected ->
                 bpm = collected
+                interval = toInterval(bpm)
             }
         }
 
