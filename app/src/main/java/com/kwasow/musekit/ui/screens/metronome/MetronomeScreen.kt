@@ -19,7 +19,6 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -49,19 +48,47 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun MetronomeScreen() {
     val viewModel = koinViewModel<MetronomeScreenViewModel>()
-    val bpm by viewModel.metronomeBpm.collectAsState()
 
     val context = LocalContext.current
     val metronomeService =
         rememberBoundLocalService<MetronomeService, MetronomeService.LocalBinder> { service }
     val coroutineScope = rememberCoroutineScope()
     val scaffoldState = rememberBottomSheetScaffoldState()
+
+    val bpm by viewModel.metronomeBpm.collectAsState()
     var showSetBeatDialog by remember { mutableStateOf(false) }
+
+    val tickListener = remember {
+        object : MetronomeService.TickListener {
+            override fun onStart() {
+                viewModel.isPlaying.postValue(true)
+            }
+
+            override fun onTick(index: Int) {
+                viewModel.currentBeat.postValue(index)
+            }
+
+            override fun onStop() {
+                viewModel.isPlaying.postValue(false)
+            }
+        }
+    }
 
     DisposableEffect(Unit) {
         context.preventSleep()
+        metronomeService?.listener = tickListener
+
         onDispose {
             context.allowSleep()
+            metronomeService?.listener = null
+        }
+    }
+
+    DisposableEffect(metronomeService) {
+        metronomeService?.listener = tickListener
+
+        onDispose {
+            metronomeService?.listener = null
         }
     }
 
@@ -112,7 +139,7 @@ private fun MainView(
                     .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            BeatIndicator(service = service)
+            BeatIndicator()
             PlayPause(
                 service = service,
                 closeBottomSheet = closeBottomSheet,
@@ -142,29 +169,12 @@ private fun TempoDisplay(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun BeatIndicator(service: MetronomeService?) {
+private fun BeatIndicator() {
     val viewModel = koinViewModel<MetronomeScreenViewModel>()
 
-    val isPlaying = service?.isPlaying?.observeAsState()
     val totalBeats by viewModel.metronomeNumberOfBeats.collectAsState()
-    var currentBeat by remember { mutableIntStateOf(0) }
-
-    val listener =
-        remember {
-            object : MetronomeService.TickListener {
-                override fun onTick(index: Int) {
-                    currentBeat = index
-                }
-            }
-        }
-
-    DisposableEffect(service) {
-        service?.listener = listener
-
-        onDispose {
-            service?.listener = null
-        }
-    }
+    val isPlaying by viewModel.isPlaying.observeAsState(false)
+    val currentBeat by viewModel.currentBeat.observeAsState(0)
 
     Row(
         modifier =
@@ -175,7 +185,7 @@ private fun BeatIndicator(service: MetronomeService?) {
     ) {
         totalBeats?.let { beats ->
             (0 until beats).forEach { index ->
-                val active = isPlaying?.value == true && currentBeat == index
+                val active = isPlaying && currentBeat == index
                 val color =
                     if (active) {
                         MaterialTheme.colorScheme.primary
@@ -201,14 +211,16 @@ private fun PlayPause(
     service: MetronomeService?,
     closeBottomSheet: () -> Unit,
 ) {
-    val isPlaying = service?.isPlaying?.observeAsState()
+    val viewModel = koinViewModel<MetronomeScreenViewModel>()
+
+    val isPlaying by viewModel.isPlaying.observeAsState(false)
 
     PlayPauseButton(
-        isPlaying = isPlaying?.value == true,
+        isPlaying = isPlaying,
         onChange = {
             service?.startStopMetronome()
 
-            if (isPlaying?.value == false) {
+            if (!isPlaying) {
                 closeBottomSheet()
             }
         },

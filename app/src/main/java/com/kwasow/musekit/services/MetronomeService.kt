@@ -8,7 +8,6 @@ import android.os.Binder
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
-import androidx.lifecycle.MutableLiveData
 import com.kwasow.musekit.data.MetronomeSounds
 import com.kwasow.musekit.managers.PreferencesManager
 import kotlinx.coroutines.CoroutineScope
@@ -40,15 +39,20 @@ class MetronomeService : Service(), Runnable {
     private var bpm = 60
     private var numberOfBeats = 4
 
+    var isPlaying = false
+        private set
     private var currentIndex = 0
     private var interval = 0L
 
-    val isPlaying: MutableLiveData<Boolean> = MutableLiveData(false)
     var listener: TickListener? = null
 
     // ====== Inner classes
     interface TickListener {
+        fun onStart()
+
         fun onTick(index: Int)
+
+        fun onStop()
     }
 
     // ====== Interface methods
@@ -87,7 +91,7 @@ class MetronomeService : Service(), Runnable {
     }
 
     override fun run() {
-        if (isPlaying.value == true) {
+        if (isPlaying) {
             handler.postDelayed(this, interval)
 
             if (sound != MetronomeSounds.None) {
@@ -103,27 +107,17 @@ class MetronomeService : Service(), Runnable {
 
     // ====== Public methods
     fun startStopMetronome() {
-        if (isPlaying.value == true) {
-            stopMetronome()
+        if (isPlaying) {
+            listener?.onStop()
         } else {
-            startMetronome()
+            listener?.onStart()
+            handler.post(this)
         }
+
+        isPlaying = !isPlaying
     }
 
     // ====== Private methods
-    private fun startMetronome() {
-        isPlaying.postValue(true)
-
-        currentIndex = 0
-        listener?.onTick(currentIndex)
-
-        handler.post(this)
-    }
-
-    private fun stopMetronome() {
-        isPlaying.postValue(false)
-    }
-
     private fun toInterval(bpm: Int): Long = (1000L * 60) / bpm
 
     private fun setupCollectors() {
