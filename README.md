@@ -4,8 +4,7 @@
 <a href="https://github.com/Kwasow/Musekit/actions/workflows/android.yml"><img src="https://github.com/Kwasow/Musekit/actions/workflows/android.yml/badge.svg" alt="Build status"></a>
 <a href="https://github.com/Kwasow/Musekit/actions/workflows/ktlint.yml"><img src="https://github.com/Kwasow/Musekit/actions/workflows/ktlint.yml/badge.svg" alt="ktlint status"></a>
 <a href="https://github.com/Kwasow/Musekit/actions/workflows/test.ym"><img src="https://github.com/Kwasow/Musekit/actions/workflows/test.yml/badge.svg" alt="Test status"></a>
-<a href="https://ktlint.github.io/"><img src="https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg" alt="ktlint"></a>
-</p>
+<a href="https://shields.rbtlog.dev/com.kwasow.musekit"><img src="https://shields.rbtlog.dev/simple/com.kwasow.musekit" alt="IzzyOnDroid reproducible build"></a>
 
 The app aims at providing a simple tool for musicians for free, without
 disturbing ads and unnecessary features.
@@ -17,6 +16,10 @@ being added later on.
     src="https://f-droid.org/badge/get-it-on.png"
     alt="Get it on F-Droid"
     height="80">](https://f-droid.org/packages/com.kwasow.musekit)
+[<img
+    src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png"
+    alt="Get it on IzzyOnDroid"
+    height="80">](https://apt.izzysoft.de/packages/com.kwasow.musekit)
 [<img 
     src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png"
     alt="Get it on Google Play"
