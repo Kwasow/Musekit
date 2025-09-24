@@ -1,0 +1,5 @@
+Completely redesigned metronome! Now you can customize the number of beats, with more features coming soon.
+
+Fixes:
+- the metronome should now be more accurate at higher BPMs
+
