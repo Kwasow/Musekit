@@ -3,11 +3,14 @@ package com.kwasow.musekit.services
 import android.app.Service
 import android.content.Intent
 import android.media.AudioAttributes
+import android.media.AudioManager
+import android.media.AudioTrack
 import android.media.SoundPool
 import android.os.Binder
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
+import android.util.Log
 import com.kwasow.musekit.data.MetronomeSounds
 import com.kwasow.musekit.managers.PreferencesManager
 import kotlinx.coroutines.CoroutineScope
@@ -61,7 +64,6 @@ class MetronomeService : Service(), Runnable {
 
         val audioAttributes =
             AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_UNKNOWN)
                 .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                 .build()
 
@@ -71,7 +73,7 @@ class MetronomeService : Service(), Runnable {
                 .setMaxStreams(1)
                 .build()
 
-        soundId = soundPool.load(this, sound.resourceId, 1)
+        soundId = soundPool.load(this, sound.getResourceId(), 1)
         handler = Handler(Looper.getMainLooper())
 
         setupCollectors()
@@ -91,6 +93,8 @@ class MetronomeService : Service(), Runnable {
     }
 
     override fun run() {
+        Log.d("Beat time", System.currentTimeMillis().toString())
+
         if (isPlaying) {
             handler.postDelayed(this, interval)
 
@@ -101,6 +105,7 @@ class MetronomeService : Service(), Runnable {
             if (currentIndex >= numberOfBeats) {
                 currentIndex = 0
             }
+
             listener?.onTick(currentIndex++)
         }
     }
@@ -118,14 +123,16 @@ class MetronomeService : Service(), Runnable {
     }
 
     // ====== Private methods
-    private fun toInterval(bpm: Int): Long = (1000L * 60) / bpm
+    private fun toInterval(bpm: Int): Long = 60000L / bpm
 
     private fun setupCollectors() {
         coroutineScope.launch {
             preferencesManager.metronomeSound.collect { collected ->
+                Log.d("Preferred sample rate", AudioTrack.getNativeOutputSampleRate(AudioManager.STREAM_MUSIC).toString())
+
                 sound = collected
                 if (collected != MetronomeSounds.None) {
-                    soundId = soundPool.load(this@MetronomeService, collected.resourceId, 1)
+                    soundId = soundPool.load(this@MetronomeService, collected.getResourceId(), 1)
                 }
             }
         }
