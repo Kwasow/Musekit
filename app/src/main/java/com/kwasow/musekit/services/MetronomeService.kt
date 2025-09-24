@@ -3,14 +3,12 @@ package com.kwasow.musekit.services
 import android.app.Service
 import android.content.Intent
 import android.media.AudioAttributes
-import android.media.AudioManager
-import android.media.AudioTrack
 import android.media.SoundPool
 import android.os.Binder
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
-import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import com.kwasow.musekit.data.MetronomeSounds
 import com.kwasow.musekit.managers.PreferencesManager
 import kotlinx.coroutines.CoroutineScope
@@ -39,24 +37,11 @@ class MetronomeService : Service(), Runnable {
     private val coroutineScope = CoroutineScope(Dispatchers.IO + job)
 
     private var sound = MetronomeSounds.Default
-    private var bpm = 60
+    private var interval = toInterval(60)
     private var numberOfBeats = 4
 
-    var isPlaying = false
-        private set
-    private var currentIndex = 0
-    private var interval = 0L
-
-    var listener: TickListener? = null
-
-    // ====== Inner classes
-    interface TickListener {
-        fun onStart()
-
-        fun onTick(index: Int)
-
-        fun onStop()
-    }
+    val isPlaying: MutableLiveData<Boolean> = MutableLiveData(false)
+    val currentBeat: MutableLiveData<Int> = MutableLiveData(1)
 
     // ====== Interface methods
     override fun onCreate() {
@@ -64,13 +49,14 @@ class MetronomeService : Service(), Runnable {
 
         val audioAttributes =
             AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_UNKNOWN)
                 .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                 .build()
 
         soundPool =
             SoundPool.Builder()
                 .setAudioAttributes(audioAttributes)
-                .setMaxStreams(1)
+                .setMaxStreams(3)
                 .build()
 
         soundId = soundPool.load(this, sound.getResourceId(), 1)
@@ -83,6 +69,10 @@ class MetronomeService : Service(), Runnable {
         return binder
     }
 
+    override fun onUnbind(intent: Intent?): Boolean {
+        return super.onUnbind(intent)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         job.cancelChildren()
@@ -93,43 +83,43 @@ class MetronomeService : Service(), Runnable {
     }
 
     override fun run() {
-        Log.d("Beat time", System.currentTimeMillis().toString())
-
-        if (isPlaying) {
+        if (isPlaying.value == true) {
             handler.postDelayed(this, interval)
 
             if (sound != MetronomeSounds.None) {
                 soundPool.play(soundId, 1F, 1F, 0, 0, 1F)
             }
-
-            if (currentIndex >= numberOfBeats) {
-                currentIndex = 0
+            currentBeat.value?.let { old ->
+                currentBeat.postValue(old % numberOfBeats + 1)
             }
-
-            listener?.onTick(currentIndex++)
         }
     }
 
     // ====== Public methods
     fun startStopMetronome() {
-        if (isPlaying) {
-            listener?.onStop()
+        if (isPlaying.value == true) {
+            stopMetronome()
         } else {
-            listener?.onStart()
-            handler.post(this)
+            startMetronome()
         }
-
-        isPlaying = !isPlaying
     }
 
     // ====== Private methods
-    private fun toInterval(bpm: Int): Long = 60000L / bpm
+    private fun toInterval(bpm: Int): Long = (1000L * 60) / bpm
+
+    private fun startMetronome() {
+        isPlaying.postValue(true)
+        currentBeat.postValue(0)
+        handler.post(this)
+    }
+
+    private fun stopMetronome() {
+        isPlaying.postValue(false)
+    }
 
     private fun setupCollectors() {
         coroutineScope.launch {
             preferencesManager.metronomeSound.collect { collected ->
-                Log.d("Preferred sample rate", AudioTrack.getNativeOutputSampleRate(AudioManager.STREAM_MUSIC).toString())
-
                 sound = collected
                 if (collected != MetronomeSounds.None) {
                     soundId = soundPool.load(this@MetronomeService, collected.getResourceId(), 1)
@@ -139,8 +129,7 @@ class MetronomeService : Service(), Runnable {
 
         coroutineScope.launch {
             preferencesManager.metronomeBpm.collect { collected ->
-                bpm = collected
-                interval = toInterval(bpm)
+                interval = toInterval(collected)
             }
         }
 
