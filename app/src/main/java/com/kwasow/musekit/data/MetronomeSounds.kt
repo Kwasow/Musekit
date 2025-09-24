@@ -13,7 +13,12 @@ enum class MetronomeSounds(
     @RawRes private val resourceId48: Int,
     @StringRes val resourceNameId: Int,
 ) {
-    Default(0, R.raw.metronome_click_44, R.raw.metronome_click_48, R.string.metronome_sound_default),
+    Default(
+        0,
+        R.raw.metronome_click_44,
+        R.raw.metronome_click_48,
+        R.string.metronome_sound_default,
+    ),
     Beep(1, R.raw.metronome_beep_44, R.raw.metronome_beep_48, R.string.metronome_sound_beep),
     Ding(2, R.raw.metronome_ding_44, R.raw.metronome_ding_48, R.string.metronome_sound_ding),
     Wood(3, R.raw.metronome_wood_44, R.raw.metronome_wood_48, R.string.metronome_sound_wood),

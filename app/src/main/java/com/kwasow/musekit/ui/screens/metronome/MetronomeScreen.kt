@@ -156,7 +156,7 @@ private fun BeatIndicator(service: MetronomeService?) {
         horizontalArrangement = Arrangement.SpaceEvenly,
     ) {
         totalBeats?.let { beats ->
-            (1 .. beats).forEach { index ->
+            (1..beats).forEach { index ->
                 val active = isPlaying?.value == true && currentBeat?.value == index
                 val color =
                     if (active) {
