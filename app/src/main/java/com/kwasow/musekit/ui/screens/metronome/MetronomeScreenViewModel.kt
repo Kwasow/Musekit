@@ -2,6 +2,7 @@ package com.kwasow.musekit.ui.screens.metronome
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kwasow.musekit.data.MetronomeSounds
@@ -35,6 +36,9 @@ class MetronomeScreenViewModel(
             SharingStarted.WhileSubscribed(),
             null,
         )
+
+    var isPlaying = MutableLiveData(false)
+    var currentBeat = MutableLiveData(0)
 
     // ====== Public methods
     fun beatEvent(): Int? = beatDetector.beatEvent()

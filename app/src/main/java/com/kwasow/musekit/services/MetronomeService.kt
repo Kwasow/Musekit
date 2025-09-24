@@ -37,17 +37,11 @@ class MetronomeService : Service(), Runnable {
     private val coroutineScope = CoroutineScope(Dispatchers.IO + job)
 
     private var sound = MetronomeSounds.Default
-    private var bpm = 60
+    private var interval = toInterval(60)
     private var numberOfBeats = 4
-    private var currentIndex = 0
 
     val isPlaying: MutableLiveData<Boolean> = MutableLiveData(false)
-    var listener: TickListener? = null
-
-    // ====== Inner classes
-    interface TickListener {
-        fun onTick(index: Int)
-    }
+    val currentBeat: MutableLiveData<Int> = MutableLiveData(1)
 
     // ====== Interface methods
     override fun onCreate() {
@@ -62,10 +56,10 @@ class MetronomeService : Service(), Runnable {
         soundPool =
             SoundPool.Builder()
                 .setAudioAttributes(audioAttributes)
-                .setMaxStreams(1)
+                .setMaxStreams(3)
                 .build()
 
-        soundId = soundPool.load(this, sound.resourceId, 1)
+        soundId = soundPool.load(this, sound.getResourceId(), 1)
         handler = Handler(Looper.getMainLooper())
 
         setupCollectors()
@@ -73,6 +67,10 @@ class MetronomeService : Service(), Runnable {
 
     override fun onBind(intent: Intent?): IBinder {
         return binder
+    }
+
+    override fun onUnbind(intent: Intent?): Boolean {
+        return super.onUnbind(intent)
     }
 
     override fun onDestroy() {
@@ -86,16 +84,14 @@ class MetronomeService : Service(), Runnable {
 
     override fun run() {
         if (isPlaying.value == true) {
+            handler.postDelayed(this, interval)
+
             if (sound != MetronomeSounds.None) {
                 soundPool.play(soundId, 1F, 1F, 0, 0, 1F)
             }
-
-            if (currentIndex >= numberOfBeats) {
-                currentIndex = 0
+            currentBeat.value?.let { old ->
+                currentBeat.postValue(old % numberOfBeats + 1)
             }
-            listener?.onTick(currentIndex++)
-
-            handler.postDelayed(this, (1000L * 60) / bpm)
         }
     }
 
@@ -109,12 +105,11 @@ class MetronomeService : Service(), Runnable {
     }
 
     // ====== Private methods
+    private fun toInterval(bpm: Int): Long = (1000L * 60) / bpm
+
     private fun startMetronome() {
         isPlaying.postValue(true)
-
-        currentIndex = 0
-        listener?.onTick(currentIndex)
-
+        currentBeat.postValue(0)
         handler.post(this)
     }
 
@@ -127,14 +122,14 @@ class MetronomeService : Service(), Runnable {
             preferencesManager.metronomeSound.collect { collected ->
                 sound = collected
                 if (collected != MetronomeSounds.None) {
-                    soundId = soundPool.load(this@MetronomeService, collected.resourceId, 1)
+                    soundId = soundPool.load(this@MetronomeService, collected.getResourceId(), 1)
                 }
             }
         }
 
         coroutineScope.launch {
             preferencesManager.metronomeBpm.collect { collected ->
-                bpm = collected
+                interval = toInterval(collected)
             }
         }
 
