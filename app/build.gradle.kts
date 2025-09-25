@@ -7,6 +7,8 @@ plugins {
     alias(libs.plugins.android.baselineprofile)
     alias(libs.plugins.google.protobuf)
     alias(libs.plugins.ktlint)
+
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -119,6 +121,11 @@ dependencies {
     implementation(libs.koin.android)
     implementation(libs.koin.core)
     implementation(libs.koin.compose.base)
+
+    // Room
+    ksp(libs.room.compiler)
+    implementation(libs.room.kotlin)
+    implementation(libs.room.runtime)
 
     // Other
     implementation(libs.android.appcompat)

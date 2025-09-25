@@ -9,6 +9,7 @@ versionName = "2.6.0"
 # BoM
 composeBom = "2025.09.00"
 koinBom = "4.1.1"
+room = "2.8.1"
 
 # Libraries
 accompanistPermissions = "0.37.3"
@@ -32,6 +33,7 @@ androidGradlePlugin = "8.12.3"
 baselineProfile = "1.4.1"
 googleProtobufPlugin = "0.9.5"
 kotlinPlugins = "2.2.20"
+ksp = "2.2.20-2.0.3"
 ktlintPlugin = "12.3.0"
 
 [libraries]
@@ -61,6 +63,9 @@ koin-android = { group = "io.insert-koin", name = "koin-android" }
 koin-core = { group = "io.insert-koin", name = "koin-core" }
 koin-compose-base = { group = "io.insert-koin", name = "koin-androidx-compose" }
 kotlin-core = { group = "androidx.core", name = "core-ktx", version.ref = "kotlinCore" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+room-kotlin = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiautomator" }
 
 [plugins]
@@ -71,4 +76,5 @@ google-protobuf = { id = "com.google.protobuf", version.ref = "googleProtobufPlu
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinPlugins" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlinPlugins" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinPlugins" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintPlugin" }
