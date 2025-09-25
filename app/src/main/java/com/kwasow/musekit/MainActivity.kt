@@ -11,7 +11,6 @@ import com.kwasow.musekit.ui.App
 import com.kwasow.musekit.ui.theme.MusekitTheme
 import kotlinx.coroutines.runBlocking
 import org.koin.android.ext.android.inject
-import org.koin.compose.KoinContext
 import kotlin.getValue
 
 class MainActivity : ComponentActivity() {
@@ -32,9 +31,7 @@ class MainActivity : ComponentActivity() {
                 preferencesManager.nightMode.collectAsState(null)
 
             MusekitTheme(nightMode = nightMode) {
-                KoinContext {
-                    App()
-                }
+                App()
             }
         }
     }
