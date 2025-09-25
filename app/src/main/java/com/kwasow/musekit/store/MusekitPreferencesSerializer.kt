@@ -19,6 +19,7 @@ import java.io.OutputStream
 object MusekitPreferencesSerializer : Serializer<MusekitPreferences> {
     override val defaultValue: MusekitPreferences =
         musekitPreferences {
+            // General app settings
             nightMode =
                 when (Build.VERSION.SDK_INT >= 29) {
                     true -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
@@ -27,10 +28,14 @@ object MusekitPreferencesSerializer : Serializer<MusekitPreferences> {
             noteForkMode = 0
             notationStyle = NotationStyle.English.id
 
+            // Metronome and note fork settings
             automaticTunerPitch = 440
             metronomeBpm = 60
             metronomeSound = MetronomeSounds.Default.ordinal
             metronomeNumberOfBeats = 4
+
+            // Miscellaneous
+            lastVersionCode = -1
         }
 
     override suspend fun readFrom(input: InputStream): MusekitPreferences {
