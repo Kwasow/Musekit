@@ -21,6 +21,7 @@ androidTestJunit = "1.3.0"
 appcompat = "1.7.1"
 composeLivedata = "1.9.1"
 composeNavigation = "2.9.4"
+desugar = "2.1.5"
 graphicsShapes = "1.0.1"
 junit = "4.13.2"
 kotlinCore = "1.17.0"
@@ -55,6 +56,7 @@ compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4
 compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 compose-ui-tooling-base = { group = "androidx.compose.ui", name = "ui-tooling" }
 compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+desugar = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar" }
 google-libraries-protobuf = { group = "com.google.protobuf", name = "protobuf-kotlin-lite", version.ref = "protobuf" }
 google-libraries-protobuf-compiler = { group = "com.google.protobuf", name = "protoc", version.ref = "protobuf" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

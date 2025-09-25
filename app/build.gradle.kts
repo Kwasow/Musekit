@@ -52,6 +52,8 @@ android {
     }
 
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
@@ -105,6 +107,8 @@ tasks.withType<Test> {
 }
 
 dependencies {
+    coreLibraryDesugaring(libs.desugar)
+
     // BoM
     implementation(platform(libs.compose.bom))
     implementation(platform(libs.koin.bom))
