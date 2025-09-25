@@ -6,7 +6,6 @@ import com.kwasow.musekit.BuildConfig
 import com.kwasow.musekit.store.musekitPreferencesDataStore
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.runBlocking
 import kotlin.properties.Delegates
 
 class UpdateManagerImpl(
@@ -17,24 +16,22 @@ class UpdateManagerImpl(
     private val currentVersionCode = BuildConfig.VERSION_CODE.toLong()
 
     // ====== Interface methods
-    override fun init() {
+    override suspend fun init() {
         // Read last version
         lastVersionCode =
-            runBlocking {
-                context.musekitPreferencesDataStore.data
-                    .map { preferences ->
-                        preferences.lastVersionCode
-                    }.first()
-            }
-
-        Log.d("UpdateManager", "Last version code: $lastVersionCode")
+            context.musekitPreferencesDataStore.data
+                .map { preferences ->
+                    preferences.lastVersionCode
+                }.first()
 
         // Run updates
+        Log.i(
+            "Update manager",
+            "Last version code: $lastVersionCode, current version code: $currentVersionCode",
+        )
 
         // Update last version
-        runBlocking {
-            updateLastVersionCode()
-        }
+        updateLastVersionCode()
     }
 
     // ====== Private methods
