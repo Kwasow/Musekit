@@ -9,7 +9,6 @@ import com.kwasow.musekit.managers.PreferencesManager
 import com.kwasow.musekit.ui.App
 import com.kwasow.musekit.ui.theme.MusekitTheme
 import org.koin.android.ext.android.inject
-import org.koin.compose.KoinContext
 
 class MainActivity : ComponentActivity() {
     // ====== Fields
@@ -24,9 +23,7 @@ class MainActivity : ComponentActivity() {
                 preferencesManager.nightMode.collectAsState(null)
 
             MusekitTheme(nightMode = nightMode) {
-                KoinContext {
-                    App()
-                }
+                App()
             }
         }
     }
