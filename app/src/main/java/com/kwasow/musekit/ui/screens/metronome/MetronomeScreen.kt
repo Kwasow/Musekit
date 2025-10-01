@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberBottomSheetScaffoldState
@@ -26,8 +28,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
@@ -102,7 +106,7 @@ private fun MainView(
                 .fillMaxSize()
                 .padding(16.dp),
     ) {
-        TempoDisplay(modifier = Modifier.align(Alignment.TopEnd))
+        TopBar()
 
         Column(
             modifier =
@@ -121,7 +125,25 @@ private fun MainView(
 }
 
 @Composable
-private fun TempoDisplay(modifier: Modifier = Modifier) {
+private fun TopBar() {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        IconButton(onClick = {}) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_history),
+                contentDescription = "TODO",
+            )
+        }
+
+        TempoDisplay()
+    }
+}
+
+@Composable
+private fun TempoDisplay() {
     val viewModel = koinViewModel<MetronomeScreenViewModel>()
     val currentTempo by viewModel.metronomeBpm.collectAsState()
 
@@ -136,7 +158,6 @@ private fun TempoDisplay(modifier: Modifier = Modifier) {
     Text(
         text = text,
         fontSize = 20.sp,
-        modifier = modifier,
     )
 }
 
