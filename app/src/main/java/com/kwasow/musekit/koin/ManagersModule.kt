@@ -10,6 +10,8 @@ import com.kwasow.musekit.managers.PresetsManager
 import com.kwasow.musekit.managers.PresetsManagerImpl
 import com.kwasow.musekit.managers.UpdateManager
 import com.kwasow.musekit.managers.UpdateManagerImpl
+import com.kwasow.musekit.managers.WorklogManager
+import com.kwasow.musekit.managers.WorklogManagerImpl
 import org.koin.dsl.module
 
 val managersModule =
@@ -32,5 +34,9 @@ val managersModule =
 
         single<UpdateManager> {
             UpdateManagerImpl(get())
+        }
+
+        single<WorklogManager> {
+            WorklogManagerImpl()
         }
     }
