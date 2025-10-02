@@ -13,7 +13,6 @@ import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberBottomSheetScaffoldState
@@ -32,11 +31,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kwasow.musekit.R
@@ -46,6 +43,7 @@ import com.kwasow.musekit.services.MetronomeService
 import com.kwasow.musekit.ui.components.PlayPauseButton
 import com.kwasow.musekit.ui.components.rememberBoundLocalService
 import com.kwasow.musekit.ui.dialogs.SetBeatDialog
+import com.kwasow.musekit.ui.dialogs.WorklogDialog
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
@@ -61,7 +59,9 @@ fun MetronomeScreen() {
         rememberBoundLocalService<MetronomeService, MetronomeService.LocalBinder> { service }
     val coroutineScope = rememberCoroutineScope()
     val scaffoldState = rememberBottomSheetScaffoldState()
+
     var showSetBeatDialog by remember { mutableStateOf(false) }
+    var showWorklogDialog by remember { mutableStateOf(false) }
 
     DisposableEffect(Unit) {
         context.preventSleep()
@@ -84,6 +84,7 @@ fun MetronomeScreen() {
                     scaffoldState.bottomSheetState.partialExpand()
                 }
             },
+            onOpenWorklog = { showWorklogDialog = true },
         )
 
         if (showSetBeatDialog) {
@@ -91,6 +92,12 @@ fun MetronomeScreen() {
                 initialValue = bpm ?: 60,
                 onDismiss = { showSetBeatDialog = false },
                 onSet = { viewModel.setBpm(it) },
+            )
+        }
+
+        if (showWorklogDialog) {
+            WorklogDialog(
+                onDismiss = { showWorklogDialog = false },
             )
         }
     }
@@ -101,6 +108,7 @@ fun MetronomeScreen() {
 private fun MainView(
     service: MetronomeService?,
     closeBottomSheet: () -> Unit,
+    onOpenWorklog: () -> Unit,
 ) {
     Box(
         modifier =
@@ -108,7 +116,7 @@ private fun MainView(
                 .fillMaxSize()
                 .padding(horizontal = 16.dp),
     ) {
-        TopBar()
+        TopBar(onOpenWorklog = onOpenWorklog)
 
         Column(
             modifier =
@@ -127,13 +135,13 @@ private fun MainView(
 }
 
 @Composable
-private fun TopBar() {
+private fun TopBar(onOpenWorklog: () -> Unit) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        IconButton(onClick = {}) {
+        IconButton(onClick = onOpenWorklog) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_history),
                 contentDescription = "TODO",
@@ -161,7 +169,7 @@ private fun TempoDisplay() {
     Text(
         text = text,
         fontSize = 20.sp,
-        modifier = Modifier.padding(8.dp)
+        modifier = Modifier.padding(8.dp),
     )
 }
 
@@ -220,10 +228,4 @@ private fun PlayPause(
             }
         },
     )
-}
-
-@Preview
-@Composable
-private fun TopBarPreview() {
-    TopBar()
 }

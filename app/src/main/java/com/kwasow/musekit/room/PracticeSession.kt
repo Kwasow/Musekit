@@ -9,5 +9,5 @@ import java.time.LocalDate
 data class PracticeSession(
     @PrimaryKey val id: Int,
     @ColumnInfo(name = "date") val date: LocalDate,
-    @ColumnInfo(name = "length") val length: Long
+    @ColumnInfo(name = "length") val length: Long,
 )
