@@ -42,8 +42,8 @@ import com.kwasow.musekit.extensions.preventSleep
 import com.kwasow.musekit.services.MetronomeService
 import com.kwasow.musekit.ui.components.PlayPauseButton
 import com.kwasow.musekit.ui.components.rememberBoundLocalService
+import com.kwasow.musekit.ui.composition.LocalMusekitNavigation
 import com.kwasow.musekit.ui.dialogs.SetBeatDialog
-import com.kwasow.musekit.ui.dialogs.WorklogDialog
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
@@ -59,9 +59,7 @@ fun MetronomeScreen() {
         rememberBoundLocalService<MetronomeService, MetronomeService.LocalBinder> { service }
     val coroutineScope = rememberCoroutineScope()
     val scaffoldState = rememberBottomSheetScaffoldState()
-
     var showSetBeatDialog by remember { mutableStateOf(false) }
-    var showWorklogDialog by remember { mutableStateOf(false) }
 
     DisposableEffect(Unit) {
         context.preventSleep()
@@ -84,7 +82,6 @@ fun MetronomeScreen() {
                     scaffoldState.bottomSheetState.partialExpand()
                 }
             },
-            onOpenWorklog = { showWorklogDialog = true },
         )
 
         if (showSetBeatDialog) {
@@ -92,12 +89,6 @@ fun MetronomeScreen() {
                 initialValue = bpm ?: 60,
                 onDismiss = { showSetBeatDialog = false },
                 onSet = { viewModel.setBpm(it) },
-            )
-        }
-
-        if (showWorklogDialog) {
-            WorklogDialog(
-                onDismiss = { showWorklogDialog = false },
             )
         }
     }
@@ -108,7 +99,6 @@ fun MetronomeScreen() {
 private fun MainView(
     service: MetronomeService?,
     closeBottomSheet: () -> Unit,
-    onOpenWorklog: () -> Unit,
 ) {
     Box(
         modifier =
@@ -116,7 +106,7 @@ private fun MainView(
                 .fillMaxSize()
                 .padding(horizontal = 16.dp),
     ) {
-        TopBar(onOpenWorklog = onOpenWorklog)
+        TopBar()
 
         Column(
             modifier =
@@ -135,16 +125,21 @@ private fun MainView(
 }
 
 @Composable
-private fun TopBar(onOpenWorklog: () -> Unit) {
+private fun TopBar() {
+    val navigation = LocalMusekitNavigation.current
+
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        IconButton(onClick = onOpenWorklog) {
+        IconButton(onClick = { navigation.navigateToWorklog() }) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_history),
-                contentDescription = "TODO",
+                contentDescription =
+                    stringResource(
+                        id = R.string.contentDescription_practice_history,
+                    ),
             )
         }
 
@@ -163,7 +158,6 @@ private fun TempoDisplay() {
                 append("♪ ${stringResource(id = R.string.tempo)} = ")
             }
             append(currentTempo?.toString() ?: "")
-            append("60")
         }
 
     Text(
