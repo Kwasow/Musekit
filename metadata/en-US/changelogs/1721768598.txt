@@ -1,5 +1,2 @@
 This is a maintenance release that restores F-droid builds. Sorry for the delay in updates, everything should be back to normal now.
 
-Fixes:
-- Metronome beat's volume should be consistent now
-
