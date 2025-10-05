@@ -14,6 +14,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -54,14 +55,20 @@ private fun TopBar() {
 @Composable
 private fun MainView(paddingValues: PaddingValues) {
     val viewModel = koinViewModel<WorklogScreenViewModel>()
+    val practiceSessions = viewModel.practiceSessions.observeAsState()
 
-    LazyColumn(
-        modifier = Modifier.padding(paddingValues)
-    ) {
-        items(viewModel.getPracticeSessions()) { session ->
-            Row {
-                Text(session.date.toString())
-                Text(session.length.toString())
+    val sessions = practiceSessions.value
+    if (sessions == null) {
+        Text("Loading...")
+    } else {
+        LazyColumn(
+            modifier = Modifier.padding(paddingValues)
+        ) {
+            items(sessions) { session ->
+                Row {
+                    Text(session.date.toString())
+                    Text(session.length.toString())
+                }
             }
         }
     }
