@@ -3,7 +3,7 @@
 compileSdk = "36"
 targetSdk = "36"
 minSdk = "23"
-versionCode = "1721768598"
+versionCode = "1721768599"
 versionName = "2.6.1"
 
 # BoM
