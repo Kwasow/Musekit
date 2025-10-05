@@ -4,12 +4,16 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import java.time.LocalDate
 
 @Dao
 interface PracticeSessionDao {
     @Query("SELECT * FROM PracticeSession")
     fun getAll(): List<PracticeSession>
+
+    @Update
+    fun update(practiceSession: PracticeSession)
 
     @Query("SELECT * FROM PracticeSession WHERE date LIKE :date LIMIT 1")
     fun getByDate(date: LocalDate): PracticeSession
@@ -18,5 +22,5 @@ interface PracticeSessionDao {
     fun insertAll(vararg practiceSessions: PracticeSession)
 
     @Delete
-    fun delete()
+    fun delete(practiceSession: PracticeSession)
 }

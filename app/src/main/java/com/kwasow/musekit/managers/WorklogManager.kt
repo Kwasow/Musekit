@@ -2,10 +2,11 @@ package com.kwasow.musekit.managers
 
 import com.kwasow.musekit.room.PracticeSession
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 interface WorklogManager {
     // ====== Methods
-    fun getPracticeSessions(): List<PracticeSession>
+    suspend fun getPracticeSessions(): List<PracticeSession>
 
-    fun addWorklogEntry(startTime: LocalDate, endTime: LocalDate)
+    suspend fun addWorklogEntry(startTime: LocalDateTime, endTime: LocalDateTime)
 }

@@ -22,6 +22,6 @@ val viewModelsModule =
         }
 
         viewModel {
-            WorklogScreenViewModel()
+            WorklogScreenViewModel(get())
         }
     }

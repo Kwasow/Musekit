@@ -37,6 +37,6 @@ val managersModule =
         }
 
         single<WorklogManager> {
-            WorklogManagerImpl()
+            WorklogManagerImpl(get())
         }
     }

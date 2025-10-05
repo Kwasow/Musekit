@@ -7,7 +7,7 @@ import java.time.LocalDate
 
 @Entity
 data class PracticeSession(
-    @PrimaryKey val id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int,
     @ColumnInfo(name = "date") val date: LocalDate,
     @ColumnInfo(name = "length") val length: Long,
 )
