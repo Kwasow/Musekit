@@ -28,7 +28,7 @@ protobuf = "4.32.1"
 uiautomator = "2.3.0"
 
 # Plugins
-androidGradlePlugin = "8.12.3"
+androidGradlePlugin = "8.11.1" # Check F-droid before updating, newer versions don't work
 baselineProfile = "1.4.1"
 googleProtobufPlugin = "0.9.5"
 kotlinPlugins = "2.2.20"
