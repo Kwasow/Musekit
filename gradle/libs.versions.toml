@@ -47,6 +47,10 @@ compose-accompanist-permissions = { group = "com.google.accompanist", name = "ac
 compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
 compose-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "composeLivedata" }
 compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+compose-material3-adaptive = { group = "androidx.compose.material3.adaptive", name = "adaptive"}
+compose-material3-adaptive-layout = { group = "androidx.compose.material3.adaptive", name = "adaptive-layout"}
+compose-material3-adaptive-navigation = { group = "androidx.compose.material3.adaptive", name = "adaptive-navigation"}
+#compose-material3-adaptive-navigation-suite = { group = "androidx.compose.material3", name = "material3-adaptive-navigation-suite" }
 compose-material = { group = "androidx.compose.material", name = "material" }
 compose-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "composeNavigation" }
 compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
