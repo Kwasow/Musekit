@@ -33,7 +33,11 @@ These are the SHA-256 fingerprints for the signing certificates:
 
 ## Credits
 
-This project wouldn't be possible without the work of others:
+Contributors:
+
+- Czech translation by [@tomo90](https://github.com/tomo90)
+
+Third party libraries and tools:
 
 - TarsosDSP - https://github.com/JorenSix/TarsosDSP
 - ShapeShifter - https://github.com/alexjlockwood/ShapeShifter
