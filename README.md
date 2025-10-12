@@ -35,7 +35,8 @@ These are the SHA-256 fingerprints for the signing certificates:
 
 Contributors:
 
-- Czech translation by [@tomo90](https://github.com/tomo90)
+- \[App\] Czech translation by [@tomo90](https://github.com/tomo90)
+- \[Metadata\] German Translation by [@IzzySoft](https://github.com/IzzySoft)
 
 Third party libraries and tools:
 
