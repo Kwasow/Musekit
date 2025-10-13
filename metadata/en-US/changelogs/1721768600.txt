@@ -1,0 +1,2 @@
+- Fixed manual tuner frequency being an octave to high
+- Added Czech translation
