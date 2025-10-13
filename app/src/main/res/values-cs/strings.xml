@@ -1,0 +1,104 @@
+<resources>
+    <!-- Bottom navigation bar labels -->
+    <string name="tuning">Ladička</string>
+    <string name="metronome">Metronom</string>
+    <string name="settings">Nastavení</string>
+
+    <!-- Note fork strings -->
+    <string name="note">Tón</string>
+    <string name="pitch">Výška tónu</string>
+    <string name="note_fork_automatic">Automaticky</string>
+    <string name="note_fork_manual">Ručně</string>
+    <string name="record_permission_not_granted">Nebylo uděleno oprávnění pro přístup k mikrofonu</string>
+    <string name="play_sound_to_tune">Zahraj nějaký tón</string>
+    <string name="open_settings">Otevřít nastavení</string>
+    <string name="contentDescription_tuner_check">Tón je naladěn</string>
+
+    <!-- Shared strings -->
+    <string name="contentDescription_increase">Zvýšit</string>
+    <string name="contentDescription_decrease">Snížit</string>
+    <string name="contentDescription_start">Spustit</string>
+    <string name="contentDescription_stop">Zastavit</string>
+
+    <!-- Note fork presets -->
+    <string name="presets">Předvolby</string>
+    <string name="default_preset">Výchozí</string>
+    <string name="save_preset">Uložit předvolbu</string>
+    <string name="save">Uložit</string>
+    <string name="cancel">Zrušit</string>
+    <string name="preset_name">Název předvolby (vyžadováno)</string>
+    <string name="delete_preset">Smazat předvolbu</string>
+    <string name="warning_preset_deletion">Předvolba \"%1$s\" bude nevratně smazána.</string>
+    <string name="delete">Smazat</string>
+    <string name="contentDescription_trash_can">Koš</string>
+    <string name="contentDescription_save">Uložit</string>
+
+    <!-- Metronome strings -->
+    <string name="sound">Zvuk</string>
+    <string name="set_tempo">Nastavit</string>
+    <string name="tap_tempo">Ťukni</string>
+    <string name="tempo">Tempo</string>
+    <string name="beats">Doby</string>"
+    <string name="contentDescription_pen">Pero</string>
+    <string name="contentDescription_finger_tapping">Ťukni prstem</string>
+    
+    <!-- Metronome sound names -->
+    <string name="metronome_sound_default">Výchozí</string>
+    <string name="metronome_sound_beep">Pípnutí</string>
+    <string name="metronome_sound_ding">Cinknutí</string>
+    <string name="metronome_sound_wood">Ťuknutí</string>
+    <string name="metronome_sound_none">(žádný)</string>
+
+    <!-- Settings strings -->
+    <string name="about">O aplikaci</string>
+    <string name="contentDescription_app_icon">Ikona aplikace</string>
+    <string name="notation_style">Styl notace</string>
+    <string name="notation_style_subtitle">Způsob pojmenování not</string>
+    <string name="notation_style_english">Anglický</string>
+    <string name="notation_style_german">Německý</string>
+    <string name="notation_style_fixed_do">Solmizace</string>
+    <string name="source_code">Zdrojový kód</string>
+    <string name="source_code_subtitle">Hlášení problémů a požadavků</string>
+    <string name="developer">Účet vývojáře</string>
+    <string name="developer_subtitle">Najdi mě na Mastodonu</string>"
+    <string name="developer_website">Web vývojáře</string>
+    <string name="developer_website_subtitle">Prozkoumejte mé další projekty</string>
+    <string name="licenses">Licence</string>
+    <string name="licenses_subtitle">Rozpoznávání tónů, ikony a další</string>
+    <string name="version">Verze %1$s</string>
+    <string name="close">Zavřít</string>
+    <string name="contentDescription_github_logo">Logo Github</string>
+    <string name="contentDescription_mastodon_logo">Logo Mastodon</string>
+    <string name="contentDescription_internet_website">Web</string>
+    <string name="contentDescription_localization">Lokalizace</string>
+    <string name="contentDescription_file_icon">Soubor</string>
+    <string name="contentDescription_moon_icon">Měsíc</string>
+    <string name="contentDescription_current_theme_symbol">Aktuální téma</string>
+
+    <!-- Night mode dialog -->
+    <string name="theme">Téma</string>
+    <string name="theme_subtitle">Zvolit styl aplikace</string>
+    <string name="theme_dark">Tmavé</string>
+    <string name="theme_light">Světlé</string>
+    <string name="theme_auto">Systémové</string>
+    <string name="accent_colour">Barevný akcent</string>
+    <string name="green">Zelený</string>
+    <string name="red">Červený</string>
+    <string name="blue">Modrý</string>
+    <string name="yellow">Žlutý</string>
+    <string name="contentDescription_check_icon">Značka</string>
+
+    <!-- Error string -->
+    <string name="whoopsie">Jejda, něco se pokazilo!</string>
+    <string name="close_app">Zavřít aplikaci</string>
+    <string name="contentDescription_ghost_icon">Ikona ducha</string>
+
+    <!-- Licenses dialog -->
+    <string name="this_app">Tato aplikace</string>
+    <string name="icons">Ikony vytvořil css.gg</string>
+    <string name="mit">Licence MIT</string>
+    <string name="tarsos">TarsosDSP</string>
+    <string name="contentDescription_right_arrow">Šipka doprava</string>
+    <string name="special_thanks">Zvláštní poděkování patří TarsosDSP za vývoj knohovny pro rozpoznávání výšky tónů.</string>
+
+</resources>
