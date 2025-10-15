@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
@@ -7,6 +9,8 @@ plugins {
     alias(libs.plugins.android.baselineprofile)
     alias(libs.plugins.google.protobuf)
     alias(libs.plugins.ktlint)
+
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -51,6 +55,8 @@ android {
     }
 
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
@@ -60,8 +66,10 @@ android {
         includeInBundle = false
     }
 
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    kotlin {
+        compilerOptions {
+            jvmTarget = JvmTarget.JVM_1_8
+        }
     }
 
     buildFeatures {
@@ -104,6 +112,8 @@ tasks.withType<Test> {
 }
 
 dependencies {
+    coreLibraryDesugaring(libs.desugar)
+
     // BoM
     implementation(platform(libs.compose.bom))
     implementation(platform(libs.koin.bom))
@@ -120,6 +130,11 @@ dependencies {
     implementation(libs.koin.android)
     implementation(libs.koin.core)
     implementation(libs.koin.compose.base)
+
+    // Room
+    ksp(libs.room.compiler)
+    implementation(libs.room.kotlin)
+    implementation(libs.room.runtime)
 
     // Other
     implementation(libs.android.appcompat)
@@ -159,4 +174,10 @@ protobuf {
             }
         }
     }
+}
+
+tasks.matching {
+    it.name == "kspDebugKotlin"
+}.configureEach {
+    dependsOn(tasks.named("generateDebugProto"))
 }

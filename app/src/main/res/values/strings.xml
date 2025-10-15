@@ -46,6 +46,10 @@
     <string name="beats">Beats</string>"
     <string name="contentDescription_pen">Pen</string>
     <string name="contentDescription_finger_tapping">Finger tapping</string>
+
+    <!-- Worklog -->
+    <string name="practice_history">Practice history</string>
+    <string name="contentDescription_practice_history">History</string>
     
     <!-- Metronome sound names -->
     <string name="metronome_sound_default">Default</string>

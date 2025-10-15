@@ -5,11 +5,19 @@ import kotlinx.serialization.Serializable
 
 data class TopLevelRoute<T : Any>(val name: String, val route: T, val icon: Painter)
 
+// ====== Main routes
 @Serializable
-object NoteFork
+object Main
 
 @Serializable
+object Worklog
+
+// ====== Nested routes
+@Serializable
 object Metronome
+
+@Serializable
+object NoteFork
 
 @Serializable
 object Settings
