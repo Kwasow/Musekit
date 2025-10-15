@@ -113,6 +113,9 @@ dependencies {
     implementation(libs.compose.livedata)
     implementation(libs.compose.material)
     implementation(libs.compose.material3)
+    implementation(libs.compose.material3.adaptive)
+    implementation(libs.compose.material3.adaptive.layout)
+    implementation(libs.compose.material3.adaptive.navigation)
     implementation(libs.compose.navigation)
     implementation(libs.compose.ui.tooling.preview)
 
