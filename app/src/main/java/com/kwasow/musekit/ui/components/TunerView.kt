@@ -136,6 +136,7 @@ private fun FinishIndicator(cents: Double?) {
             }
 
             append(round(cents).toString())
+            append("¢")
         }
     }
 
