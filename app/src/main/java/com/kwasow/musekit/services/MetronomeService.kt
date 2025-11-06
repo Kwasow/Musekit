@@ -11,12 +11,14 @@ import android.os.Looper
 import androidx.lifecycle.MutableLiveData
 import com.kwasow.musekit.data.MetronomeSounds
 import com.kwasow.musekit.managers.PreferencesManager
+import com.kwasow.musekit.managers.WorklogManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
+import java.time.LocalDateTime
 import kotlin.properties.Delegates
 
 class MetronomeService : Service(), Runnable {
@@ -28,6 +30,7 @@ class MetronomeService : Service(), Runnable {
     private var binder = LocalBinder()
 
     private val preferencesManager by inject<PreferencesManager>()
+    private val worklogManager by inject<WorklogManager>()
 
     private var soundId by Delegates.notNull<Int>()
     private lateinit var soundPool: SoundPool
@@ -39,6 +42,8 @@ class MetronomeService : Service(), Runnable {
     private var sound = MetronomeSounds.Default
     private var interval = toInterval(60)
     private var numberOfBeats = 4
+
+    private var sessionStart: LocalDateTime? = null
 
     val isPlaying: MutableLiveData<Boolean> = MutableLiveData(false)
     val currentBeat: MutableLiveData<Int> = MutableLiveData(1)
@@ -99,7 +104,15 @@ class MetronomeService : Service(), Runnable {
     fun startStopMetronome() {
         if (isPlaying.value == true) {
             stopMetronome()
+
+            sessionStart?.let { start ->
+                coroutineScope.launch {
+                    worklogManager.addWorklogEntry(start, LocalDateTime.now())
+                }
+            }
+            sessionStart = null
         } else {
+            sessionStart = LocalDateTime.now()
             startMetronome()
         }
     }
