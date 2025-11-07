@@ -1,6 +1,5 @@
 package com.kwasow.musekit.managers
 
-import android.health.connect.datatypes.units.Length
 import com.kwasow.musekit.room.AppDatabase
 import com.kwasow.musekit.room.PracticeSession
 import java.time.LocalDate
@@ -17,7 +16,10 @@ class WorklogManagerImpl(database: AppDatabase) : WorklogManager {
         return practiceSessionDao.getAll()
     }
 
-    override suspend fun addWorklogEntry(startTime: LocalDateTime, endTime: LocalDateTime) {
+    override suspend fun addWorklogEntry(
+        startTime: LocalDateTime,
+        endTime: LocalDateTime,
+    ) {
         // 1. If you practice while daylight saving time changes, you'll probably loose/gain
         //    and hour of practice. I won't be testing or handling that. Maybe it is handled by
         //    the Java standard library.
@@ -43,7 +45,10 @@ class WorklogManagerImpl(database: AppDatabase) : WorklogManager {
     }
 
     // ====== Private methods
-    private suspend fun addWorklogEntry(date: LocalDate, length: Long) {
+    private suspend fun addWorklogEntry(
+        date: LocalDate,
+        length: Long,
+    ) {
         val existingEntry = practiceSessionDao.get(date) ?: PracticeSession(date = date, length = 0)
         val updatedEntry = existingEntry.copy(length = length)
         practiceSessionDao.insertAll(updatedEntry)

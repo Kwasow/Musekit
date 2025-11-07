@@ -53,7 +53,10 @@ private fun TopBar() {
                 )
             }
         },
-        colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.surfaceContainer)
+        colors =
+            TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.surfaceContainer,
+            ),
     )
 }
 
@@ -70,7 +73,7 @@ private fun MainView(paddingValues: PaddingValues) {
         modifier =
             Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
+                .padding(paddingValues),
     ) {
         val sessions = practiceSessions.value
 

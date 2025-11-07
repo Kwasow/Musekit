@@ -10,7 +10,7 @@ val databaseModule =
             Room.databaseBuilder(
                 get(),
                 AppDatabase::class.java,
-                "musekit-database"
+                "musekit-database",
             ).build()
         }
     }

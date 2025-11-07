@@ -8,7 +8,7 @@ import com.kwasow.musekit.room.PracticeSession
 import kotlinx.coroutines.launch
 
 class WorklogScreenViewModel(
-    private val worklogManager: WorklogManager
+    private val worklogManager: WorklogManager,
 ) : ViewModel() {
     // ====== Fields
     val practiceSessions: MutableLiveData<List<PracticeSession>?> = MutableLiveData()
