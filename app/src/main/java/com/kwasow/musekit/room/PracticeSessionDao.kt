@@ -10,14 +10,14 @@ import java.time.LocalDate
 @Dao
 interface PracticeSessionDao {
     @Query("SELECT * FROM PracticeSession")
-    fun getAll(): List<PracticeSession>
+    suspend fun getAll(): List<PracticeSession>
 
     @Query("SELECT * FROM PracticeSession WHERE date LIKE :date LIMIT 1")
-    fun get(date: LocalDate): PracticeSession?
+    suspend fun get(date: LocalDate): PracticeSession?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(vararg practiceSessions: PracticeSession)
+    suspend fun insertAll(vararg practiceSessions: PracticeSession)
 
     @Delete
-    fun delete(practiceSession: PracticeSession)
+    suspend fun delete(practiceSession: PracticeSession)
 }
