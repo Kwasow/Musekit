@@ -2,11 +2,8 @@ package com.kwasow.musekit.ui.screens.worklog
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -80,14 +77,21 @@ private fun MainView(paddingValues: PaddingValues) {
         if (sessions == null) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         } else {
-            LazyColumn {
-                items(sessions) { session ->
-                    Row {
-                        Text(session.date.toString())
-                        Text(session.length.toString())
-                    }
-                }
+            val byMonth = sessions.groupBy { session ->
+                Pair(session.date.year, session.date.monthValue)
             }
+
+
         }
     }
+}
+
+@Composable
+private fun PracticeEntriesSection() {
+
+}
+
+@Composable
+private fun PracticeEntry() {
+
 }
