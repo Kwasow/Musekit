@@ -1,0 +1,104 @@
+<resources>
+    <!-- Bottom navigation bar labels -->
+    <string name="tuning">Stimmen</string>
+    <string name="metronome">Metronom</string>
+    <string name="settings">Einstellungen</string>
+
+    <!-- Note fork strings -->
+    <string name="note">Note</string>
+    <string name="pitch">Tonhöhe</string>
+    <string name="note_fork_automatic">Automatisch</string>
+    <string name="note_fork_manual">Manuell</string>
+    <string name="record_permission_not_granted">Mikrofonzugriff wurde nicht gewährt</string>
+    <string name="play_sound_to_tune">Ton abspielen, um das Stimmen zu starten</string>
+    <string name="open_settings">Einstellungen öffnen </string>
+    <string name="contentDescription_tuner_check">Hinweis im Häkchen des Stimmens</string>
+
+    <!-- Shared strings -->
+    <string name="contentDescription_increase">Erhöhen</string>
+    <string name="contentDescription_decrease">Verringern</string>
+    <string name="contentDescription_start">Start</string>
+    <string name="contentDescription_stop">Stopp</string>
+
+    <!-- Note fork presets -->
+    <string name="presets">Voreinstellungen</string>
+    <string name="default_preset">Standard</string>
+    <string name="save_preset">Voreinstellungen speichern</string>
+    <string name="save">Speichern</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="preset_name">Voreinstellungsname (erforderlich)</string>
+    <string name="delete_preset">Voreinstellungen lösche</string>
+    <string name="warning_preset_deletion">Die Voreinstellung „%1$s“ wird dauerhaft gelöscht.</string>
+    <string name="delete">Löschen</string>
+    <string name="contentDescription_trash_can">Papierkorb</string>
+    <string name="contentDescription_save">Speichern</string>
+
+    <!-- Metronome strings -->
+    <string name="sound">Ton</string>
+    <string name="set_tempo">Einstellen</string>
+    <string name="tap_tempo">Tippen</string>
+    <string name="tempo">Tempo</string>
+    <string name="beats"></string>"
+    <string name="contentDescription_pen">Stift</string>
+    <string name="contentDescription_finger_tapping">Fingertippen</string>
+    
+    <!-- Metronome sound names -->
+    <string name="metronome_sound_default">Standard</string>
+    <string name="metronome_sound_beep">Piep</string>
+    <string name="metronome_sound_ding">Ding</string>
+    <string name="metronome_sound_wood">Holz</string>
+    <string name="metronome_sound_none">(kein)</string>
+
+    <!-- Settings strings -->
+    <string name="about">Über</string>
+    <string name="contentDescription_app_icon">App-Symbol</string>
+    <string name="notation_style">Notationsstil</string>
+    <string name="notation_style_subtitle">Wählen Sie, wie Noten benannt werden sollen.</string>
+    <string name="notation_style_english">Englisch</string>
+    <string name="notation_style_german">Deutsch</string>
+    <string name="notation_style_fixed_do">Fixed Do</string>
+    <string name="source_code">Quellcode</string>
+    <string name="source_code_subtitle">Fehler melden und Funktionen vorschlagen</string>
+    <string name="developer">Entwicklerkonto</string>
+    <string name="developer_subtitle">Finden Sie mich auf Mastodon</string>"
+    <string name="developer_website">Entwicklerwebsite</string>
+    <string name="developer_website_subtitle">Schauen Sie sich meine anderen Projekte an</string>
+    <string name="licenses">Lizenzen</string>
+    <string name="licenses_subtitle">Tonhöheerkennung, Symbole und sonstiges</string>
+    <string name="version">Version %1$s</string>
+    <string name="close">Schließen</string>
+    <string name="contentDescription_github_logo">Github-Logo</string>
+    <string name="contentDescription_mastodon_logo">Mastodon-Logo</string>
+    <string name="contentDescription_internet_website">Website</string>
+    <string name="contentDescription_localization">Lokalisierung</string>
+    <string name="contentDescription_file_icon">Datei</string>
+    <string name="contentDescription_moon_icon">Mond</string>
+    <string name="contentDescription_current_theme_symbol">Aktuelles Design</string>
+
+    <!-- Night mode dialog -->
+    <string name="theme">Design</string>
+    <string name="theme_subtitle">Wählen Sie den App-Stil aus</string>
+    <string name="theme_dark">Dunkel</string>
+    <string name="theme_light">Hell</string>
+    <string name="theme_auto">System</string>
+    <string name="accent_colour">Akzentfarbe</string>
+    <string name="green">Grün</string>
+    <string name="red">Rot</string>
+    <string name="blue">Blau</string>
+    <string name="yellow">Gelb</string>
+    <string name="contentDescription_check_icon">Ein Häckchen</string>
+
+    <!-- Error string -->
+    <string name="whoopsie">Hoppla, Sie sollten nicht hier sein!</string>
+    <string name="close_app">App schließen</string>
+    <string name="contentDescription_ghost_icon">Geister Symbol</string>
+
+    <!-- Licenses dialog -->
+    <string name="this_app">Diese App</string>
+    <string name="icons">Symbole von css.gg</string>
+    <string name="mit">MIT-Lizenz</string>
+    <string name="tarsos">TarsosDSP</string>
+    <string name="contentDescription_right_arrow">Pfeil nach rechts</string>
+    <string name="special_thanks">Besonderer Dank gilt TarsosDSP für die Erstellung der Tonhöhenerkennungsbibliothek.</string>
+
+</resources>
