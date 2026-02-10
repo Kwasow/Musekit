@@ -38,7 +38,7 @@
     <string name="set_tempo">Einstellen</string>
     <string name="tap_tempo">Tippen</string>
     <string name="tempo">Tempo</string>
-    <string name="beats"></string>"
+    <string name="beats">Pulse</string>"
     <string name="contentDescription_pen">Stift</string>
     <string name="contentDescription_finger_tapping">Fingertippen</string>
     
@@ -86,7 +86,7 @@
     <string name="red">Rot</string>
     <string name="blue">Blau</string>
     <string name="yellow">Gelb</string>
-    <string name="contentDescription_check_icon">Ein Häckchen</string>
+    <string name="contentDescription_check_icon">Ein Häkchen</string>
 
     <!-- Error string -->
     <string name="whoopsie">Hoppla, Sie sollten nicht hier sein!</string>
