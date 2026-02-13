@@ -38,7 +38,7 @@
     <string name="set_tempo">Einstellen</string>
     <string name="tap_tempo">Tippen</string>
     <string name="tempo">Tempo</string>
-    <string name="beats">Pulse</string>"
+    <string name="beats">Schläge</string>"
     <string name="contentDescription_pen">Stift</string>
     <string name="contentDescription_finger_tapping">Fingertippen</string>
     
@@ -64,7 +64,7 @@
     <string name="developer_website">Entwicklerwebsite</string>
     <string name="developer_website_subtitle">Schauen Sie sich meine anderen Projekte an</string>
     <string name="licenses">Lizenzen</string>
-    <string name="licenses_subtitle">Tonhöheerkennung, Symbole und sonstiges</string>
+    <string name="licenses_subtitle">Tonhöhenerkennung, Symbole und sonstiges</string>
     <string name="version">Version %1$s</string>
     <string name="close">Schließen</string>
     <string name="contentDescription_github_logo">Github-Logo</string>
@@ -99,6 +99,6 @@
     <string name="mit">MIT-Lizenz</string>
     <string name="tarsos">TarsosDSP</string>
     <string name="contentDescription_right_arrow">Pfeil nach rechts</string>
-    <string name="special_thanks">Besonderer Dank gilt TarsosDSP für die Erstellung der Tonhöhenerkennungsbibliothek.</string>
+    <string name="special_thanks">Besonderer Dank an TarsosDSP für die Erstellung der Tonhöhenerkennungsbibliothek.</string>
 
 </resources>
