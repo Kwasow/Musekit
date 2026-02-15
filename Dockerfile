@@ -1,8 +1,8 @@
-FROM ubuntu:noble
+FROM ubuntu:24.04
 
 # Dependencies
 RUN apt-get update && apt-get install -y \
-  openjdk-17-jdk zip unzip
+  openjdk-17-jdk zip unzip wget
 
 # Setup env
 ENV ANDROID_HOME=/home/ubuntu/Android
@@ -20,7 +20,7 @@ RUN su - ubuntu -c "\
   unzip commandlinetools-linux-14742923_latest.zip -d cmdline-tools && \
   mv cmdline-tools/cmdline-tools cmdline-tools/latest && \
   rm commandlinetools-linux-14742923_latest.zip && \
-  yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
+  yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses \
 "
 
 RUN su - ubuntu -c "mkdir ~/.gradle"
