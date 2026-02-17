@@ -40,6 +40,7 @@ android {
             versionNameSuffix = "-beta"
             applicationIdSuffix = ".beta"
         }
+
         create("benchmark") {
             initWith(buildTypes.getByName("release"))
             signingConfig = signingConfigs.getByName("debug")
