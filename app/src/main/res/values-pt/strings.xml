@@ -1,0 +1,104 @@
+<resources>
+    <!-- Bottom navigation bar labels -->
+    <string name="tuning">Afinador</string>
+    <string name="metronome">Metrônomo</string>
+    <string name="settings">Configurações</string>
+
+    <!-- Note fork strings -->
+    <string name="note">Nota</string>
+    <string name="pitch">Frequência</string>
+    <string name="note_fork_automatic">Automático</string>
+    <string name="note_fork_manual">Manual</string>
+    <string name="record_permission_not_granted">Acesso ao microfone não concedido</string>
+    <string name="play_sound_to_tune">Toque uma nota para começar a afinar</string>
+    <string name="open_settings">Abrir as configurações</string>
+    <string name="contentDescription_tuner_check">Nota afinada com sucesso</string>
+
+    <!-- Shared strings -->
+    <string name="contentDescription_increase">Subir</string>
+    <string name="contentDescription_decrease">Baixar</string>
+    <string name="contentDescription_start">Iniciar</string>
+    <string name="contentDescription_stop">Parar</string>
+
+    <!-- Note fork presets -->
+    <string name="presets">Predefinição</string>
+    <string name="default_preset">Padrão</string>
+    <string name="save_preset">Salvar predefinição</string>
+    <string name="save">Salvar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="preset_name">Nome da predefinição (obrigatório)</string>
+    <string name="delete_preset">Excluir predefinição</string>
+    <string name="warning_preset_deletion">A predefinição „%1$s“ será excluída permanentemente.</string>
+    <string name="delete">Excluir</string>
+    <string name="contentDescription_trash_can">Lixeira</string>
+    <string name="contentDescription_save">Salvar</string>
+
+    <!-- Metronome strings -->
+    <string name="sound">Som</string>
+    <string name="set_tempo">Definir</string>
+    <string name="tap_tempo">Toque</string>
+    <string name="tempo">Ritmo</string>
+    <string name="beats">Batidas</string>"
+    <string name="contentDescription_pen">Caneta</string>
+    <string name="contentDescription_finger_tapping">Toque com o dedo</string>
+    
+    <!-- Metronome sound names -->
+    <string name="metronome_sound_default">Padrão</string>
+    <string name="metronome_sound_beep">Bipe</string>
+    <string name="metronome_sound_ding">Campainha</string>
+    <string name="metronome_sound_wood">Madeira</string>
+    <string name="metronome_sound_none">(nenhum)</string>
+
+    <!-- Settings strings -->
+    <string name="about">Sobre</string>
+    <string name="contentDescription_app_icon">Ícone do aplicativo</string>
+    <string name="notation_style">Estilo de notação</string>
+    <string name="notation_style_subtitle">Escolha o estilo de notação musical.</string>
+    <string name="notation_style_english">Inglês</string>
+    <string name="notation_style_german">Alemão</string>
+    <string name="notation_style_fixed_do">Dó Fixo</string>
+    <string name="source_code">Código-fonte</string>
+    <string name="source_code_subtitle">Reportar erros e solicitar funções</string>
+    <string name="developer">Conta do desenvolvedor</string>
+    <string name="developer_subtitle">Me encontre no Mastodon</string>"
+    <string name="developer_website">Site do desenvolvedor</string>
+    <string name="developer_website_subtitle">Dê uma olhada em meus outros projetos</string>
+    <string name="licenses">Licenças</string>
+    <string name="licenses_subtitle">Reconhecimento de frequência, ícones e outros</string>
+    <string name="version">Versão %1$s</string>
+    <string name="close">Fechar</string>
+    <string name="contentDescription_github_logo">Logotipo Github</string>
+    <string name="contentDescription_mastodon_logo">Logotipo Mastodon</string>
+    <string name="contentDescription_internet_website">Site</string>
+    <string name="contentDescription_localization">Localização</string>
+    <string name="contentDescription_file_icon">Dados</string>
+    <string name="contentDescription_moon_icon">Lua</string>
+    <string name="contentDescription_current_theme_symbol">Tema atual</string>
+
+    <!-- Night mode dialog -->
+    <string name="theme">Tema</string>
+    <string name="theme_subtitle">Escolha o tema do aplicativo</string>
+    <string name="theme_dark">Escuro</string>
+    <string name="theme_light">Claro</string>
+    <string name="theme_auto">Sistema</string>
+    <string name="accent_colour">Cor de destaque</string>
+    <string name="green">Verde</string>
+    <string name="red">Vermelho</string>
+    <string name="blue">Azul</string>
+    <string name="yellow">Amarelo</string>
+    <string name="contentDescription_check_icon">Confirmado</string>
+
+    <!-- Error string -->
+    <string name="whoopsie">Ops, você não deveria estar aqui!</string>
+    <string name="close_app">Fechar aplicativo</string>
+    <string name="contentDescription_ghost_icon">Ícone fantasma</string>
+
+    <!-- Licenses dialog -->
+    <string name="this_app">Este aplicativo</string>
+    <string name="icons">Ícones por css.gg</string>
+    <string name="mit">Licença MIT</string>
+    <string name="tarsos">TarsosDSP</string>
+    <string name="contentDescription_right_arrow">Ver detalhes da licença</string>
+    <string name="special_thanks">Agradecimento especial a TarsosDSP pela criação da biblioteca de reconhecimento de frequências.</string>
+
+</resources>
