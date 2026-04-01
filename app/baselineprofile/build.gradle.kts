@@ -12,7 +12,6 @@ configure<TestExtension> {
 
     defaultConfig {
         minSdk = 29
-        targetSdk = libs.versions.targetSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

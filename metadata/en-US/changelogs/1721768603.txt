@@ -1,0 +1,4 @@
+- Added Portuguese translation
+- Fixed inconsistent metronome timings
+- Made manual tuner automatically stop when you leave the screen
+
