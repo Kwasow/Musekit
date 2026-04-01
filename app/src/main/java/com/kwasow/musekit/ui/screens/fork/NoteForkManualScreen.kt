@@ -38,7 +38,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.kwasow.musekit.R
 import com.kwasow.musekit.data.Note
 import com.kwasow.musekit.data.dialogs.RemovePresetDialog
