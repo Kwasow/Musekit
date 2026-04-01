@@ -28,7 +28,7 @@ protobuf = "4.32.1"
 uiautomator = "2.3.0"
 
 # Plugins
-androidGradlePlugin = "8.13.2" # Check F-droid before updating, newer versions don't work
+androidGradlePlugin = "9.1.0"
 baselineProfile = "1.4.1"
 googleProtobufPlugin = "0.9.5"
 kotlinPlugins = "2.2.20"
@@ -68,7 +68,6 @@ android-application = { id = "com.android.application", version.ref = "androidGr
 android-baselineprofile = { id = "androidx.baselineprofile", version.ref = "baselineProfile" }
 android-test = { id = "com.android.test", version.ref = "androidGradlePlugin" }
 google-protobuf = { id = "com.google.protobuf", version.ref = "googleProtobufPlugin" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinPlugins" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlinPlugins" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinPlugins" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintPlugin" }
