@@ -24,6 +24,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -37,6 +38,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.kwasow.musekit.R
 import com.kwasow.musekit.data.Note
 import com.kwasow.musekit.data.dialogs.RemovePresetDialog
@@ -271,6 +273,12 @@ private fun PropertyCard(
 private fun PlayPause(scope: ColumnScope) {
     val viewModel = koinViewModel<NoteForkScreenViewModel>()
     val isPlaying = viewModel.isPlaying.observeAsState(false)
+
+    DisposableEffect(true) {
+        onDispose {
+            viewModel.stopNote()
+        }
+    }
 
     with(scope) {
         PlayPauseButton(
