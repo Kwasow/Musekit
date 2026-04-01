@@ -110,12 +110,20 @@ class NoteForkScreenViewModel(
 
     fun startStopNote() {
         if (isPlaying.value == true) {
-            pitchPlayerManager.stop()
-            isPlaying.postValue(false)
+            stopNote()
         } else {
-            pitchPlayerManager.play()
-            isPlaying.postValue(true)
+            startNote()
         }
+    }
+
+    fun startNote() {
+        pitchPlayerManager.play()
+        isPlaying.postValue(true)
+    }
+
+    fun stopNote() {
+        pitchPlayerManager.stop()
+        isPlaying.postValue(false)
     }
 
     // ====== Private methods

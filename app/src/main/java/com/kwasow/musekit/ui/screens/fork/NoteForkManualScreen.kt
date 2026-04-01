@@ -24,6 +24,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -271,6 +272,12 @@ private fun PropertyCard(
 private fun PlayPause(scope: ColumnScope) {
     val viewModel = koinViewModel<NoteForkScreenViewModel>()
     val isPlaying = viewModel.isPlaying.observeAsState(false)
+
+    DisposableEffect(true) {
+        onDispose {
+            viewModel.stopNote()
+        }
+    }
 
     with(scope) {
         PlayPauseButton(
