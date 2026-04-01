@@ -46,7 +46,8 @@ class UpdateManagerImpl(
 
     private suspend fun updateLastVersionCode() {
         context.musekitPreferencesDataStore.updateData { currentPreferences ->
-            currentPreferences.toBuilder()
+            currentPreferences
+                .toBuilder()
                 .setLastVersionCode(BuildConfig.VERSION_CODE.toLong())
                 .build()
         }

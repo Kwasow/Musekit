@@ -1,5 +1,7 @@
+import com.android.build.api.dsl.ApplicationExtension
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
 
@@ -9,15 +11,27 @@ plugins {
     alias(libs.plugins.ktlint)
 }
 
-android {
+configure<ApplicationExtension> {
     namespace = "com.kwasow.musekit"
-    compileSdk = libs.versions.compileSdk.get().toInt()
+    compileSdk =
+        libs.versions.compileSdk
+            .get()
+            .toInt()
 
     defaultConfig {
         applicationId = "com.kwasow.musekit"
-        minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = libs.versions.versionCode.get().toInt()
+        minSdk =
+            libs.versions.minSdk
+                .get()
+                .toInt()
+        targetSdk =
+            libs.versions.targetSdk
+                .get()
+                .toInt()
+        versionCode =
+            libs.versions.versionCode
+                .get()
+                .toInt()
         versionName = libs.versions.versionName.get()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -61,10 +75,6 @@ android {
         includeInBundle = false
     }
 
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
-    }
-
     buildFeatures {
         viewBinding = true
         buildConfig = true
@@ -86,18 +96,6 @@ android {
     lint {
         disable.add("MissingTranslation")
     }
-
-    ktlint {
-        filter {
-            exclude { element ->
-                element.file.name == "rememberBoundService.kt"
-            }
-        }
-    }
-
-    baselineProfile {
-        mergeIntoMain = true
-    }
 }
 
 tasks.withType<Test> {
@@ -114,8 +112,9 @@ dependencies {
     // Compose
     implementation(libs.compose.accompanist.permissions)
     implementation(libs.compose.livedata)
-    implementation(libs.compose.material)
     implementation(libs.compose.material3)
+    implementation(libs.compose.material.icons.core)
+    implementation(libs.compose.material.icons.extended)
     implementation(libs.compose.navigation)
     implementation(libs.compose.ui.tooling.preview)
 
@@ -145,9 +144,30 @@ dependencies {
     baselineProfile(project(":app:baselineprofile"))
 }
 
+kotlin {
+    compilerOptions {
+        jvmTarget = JvmTarget.JVM_1_8
+    }
+}
+
+ktlint {
+    filter {
+        exclude { element ->
+            element.file.name == "rememberBoundService.kt"
+        }
+    }
+}
+
+baselineProfile {
+    mergeIntoMain = true
+}
+
 protobuf {
     protoc {
-        artifact = libs.google.libraries.protobuf.compiler.get().toString()
+        artifact =
+            libs.google.libraries.protobuf.compiler
+                .get()
+                .toString()
     }
 
     generateProtoTasks {

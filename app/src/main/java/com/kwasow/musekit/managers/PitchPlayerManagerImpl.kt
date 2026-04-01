@@ -17,7 +17,8 @@ class PitchPlayerManagerImpl : PitchPlayerManager {
         }
 
     private val audioTrack by lazy {
-        AudioTrack.Builder()
+        AudioTrack
+            .Builder()
             .setTransferMode(AudioTrack.MODE_STATIC)
             .setBufferSizeInBytes(SAMPLE_RATE * 2)
             .build()

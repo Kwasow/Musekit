@@ -19,7 +19,9 @@ import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import kotlin.properties.Delegates
 
-class MetronomeService : Service(), Runnable {
+class MetronomeService :
+    Service(),
+    Runnable {
     // ====== Fields
     inner class LocalBinder : Binder() {
         val service: MetronomeService = this@MetronomeService
@@ -50,15 +52,17 @@ class MetronomeService : Service(), Runnable {
         super.onCreate()
 
         val audioAttributes =
-            AudioAttributes.Builder()
+            AudioAttributes
+                .Builder()
                 .setUsage(AudioAttributes.USAGE_UNKNOWN)
                 .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                 .build()
 
         soundPool =
-            SoundPool.Builder()
+            SoundPool
+                .Builder()
                 .setAudioAttributes(audioAttributes)
-                .setMaxStreams(15)
+                .setMaxStreams(1)
                 .build()
 
         soundId = soundPool.load(this, sound.getResourceId(), 1)
@@ -71,13 +75,9 @@ class MetronomeService : Service(), Runnable {
         setupCollectors()
     }
 
-    override fun onBind(intent: Intent?): IBinder {
-        return binder
-    }
+    override fun onBind(intent: Intent?): IBinder = binder
 
-    override fun onUnbind(intent: Intent?): Boolean {
-        return super.onUnbind(intent)
-    }
+    override fun onUnbind(intent: Intent?): Boolean = super.onUnbind(intent)
 
     override fun onDestroy() {
         super.onDestroy()
