@@ -58,7 +58,7 @@ class MetronomeService : Service(), Runnable {
         soundPool =
             SoundPool.Builder()
                 .setAudioAttributes(audioAttributes)
-                .setMaxStreams(15)
+                .setMaxStreams(1)
                 .build()
 
         soundId = soundPool.load(this, sound.getResourceId(), 1)
