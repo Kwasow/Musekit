@@ -39,8 +39,7 @@ fun PilledTabRow(
                 .background(
                     MaterialTheme.colorScheme.surfaceContainer,
                     RoundedCornerShape(8.dp),
-                )
-                .height(32.dp),
+                ).height(32.dp),
         contentAlignment = Alignment.Center,
     ) {
         Row(

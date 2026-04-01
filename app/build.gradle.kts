@@ -13,13 +13,25 @@ plugins {
 
 configure<ApplicationExtension> {
     namespace = "com.kwasow.musekit"
-    compileSdk = libs.versions.compileSdk.get().toInt()
+    compileSdk =
+        libs.versions.compileSdk
+            .get()
+            .toInt()
 
     defaultConfig {
         applicationId = "com.kwasow.musekit"
-        minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = libs.versions.versionCode.get().toInt()
+        minSdk =
+            libs.versions.minSdk
+                .get()
+                .toInt()
+        targetSdk =
+            libs.versions.targetSdk
+                .get()
+                .toInt()
+        versionCode =
+            libs.versions.versionCode
+                .get()
+                .toInt()
         versionName = libs.versions.versionName.get()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -152,7 +164,10 @@ baselineProfile {
 
 protobuf {
     protoc {
-        artifact = libs.google.libraries.protobuf.compiler.get().toString()
+        artifact =
+            libs.google.libraries.protobuf.compiler
+                .get()
+                .toString()
     }
 
     generateProtoTasks {
