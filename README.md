@@ -37,6 +37,7 @@ Contributors:
 
 - \[App\] Czech Translation by [@tomo90](https://github.com/tomo90)
 - \[App\] German Translation by [@FabiRich](https://github.com/FabiRich)
+- \[App\] Portuguese Translation by [@tnpapa](https://github.com/tnpapa)
 - \[Metadata\] German Translation by [@IzzySoft](https://github.com/IzzySoft)
 
 Third party libraries and tools:
