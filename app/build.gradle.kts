@@ -1,3 +1,4 @@
+import com.android.build.api.dsl.ApplicationExtension
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -10,7 +11,7 @@ plugins {
     alias(libs.plugins.ktlint)
 }
 
-android {
+configure<ApplicationExtension> {
     namespace = "com.kwasow.musekit"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
@@ -62,12 +63,6 @@ android {
         includeInBundle = false
     }
 
-    kotlin {
-        compilerOptions {
-            jvmTarget = JvmTarget.JVM_1_8
-        }
-    }
-
     buildFeatures {
         viewBinding = true
         buildConfig = true
@@ -88,18 +83,6 @@ android {
 
     lint {
         disable.add("MissingTranslation")
-    }
-
-    ktlint {
-        filter {
-            exclude { element ->
-                element.file.name == "rememberBoundService.kt"
-            }
-        }
-    }
-
-    baselineProfile {
-        mergeIntoMain = true
     }
 }
 
@@ -146,6 +129,24 @@ dependencies {
     debugImplementation(libs.compose.ui.test.manifest)
 
     baselineProfile(project(":app:baselineprofile"))
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = JvmTarget.JVM_1_8
+    }
+}
+
+ktlint {
+    filter {
+        exclude { element ->
+            element.file.name == "rememberBoundService.kt"
+        }
+    }
+}
+
+baselineProfile {
+    mergeIntoMain = true
 }
 
 protobuf {
