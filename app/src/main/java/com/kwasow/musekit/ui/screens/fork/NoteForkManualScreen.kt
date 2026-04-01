@@ -20,7 +20,7 @@ import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.MenuAnchorType
+import androidx.compose.material3.ExposedDropdownMenuAnchorType
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -121,7 +121,7 @@ private fun PresetPicker(
             readOnly = true,
             modifier =
                 Modifier
-                    .menuAnchor(type = MenuAnchorType.PrimaryNotEditable)
+                    .menuAnchor(type = ExposedDropdownMenuAnchorType.PrimaryNotEditable)
                     .fillMaxWidth(),
         )
 
