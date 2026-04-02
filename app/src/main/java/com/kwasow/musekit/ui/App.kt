@@ -48,21 +48,21 @@ fun App() {
 
     NavigationSuiteScaffold(
         navigationSuiteItems = {
-            topLevelRoutes.forEach { route ->
+            topLevelRoutes.forEach { (name, route, icon) ->
                 item(
                     icon = {
                         Icon(
-                            painter = route.icon,
-                            contentDescription = route.name,
+                            painter = icon,
+                            contentDescription = name,
                         )
                     },
-                    label = { Text(route.name) },
+                    label = { Text(name) },
                     selected =
                         currentDestination?.hierarchy?.any {
-                            it.hasRoute(route.route::class)
+                            it.hasRoute(route::class)
                         } == true,
                     onClick = {
-                        navController.navigate(route.route) {
+                        navController.navigate(route) {
                             popUpTo(navController.graph.startDestinationId) {
                                 saveState = true
                             }
