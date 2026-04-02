@@ -21,7 +21,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.window.core.layout.WindowHeightSizeClass
 import com.kwasow.musekit.R
 import com.kwasow.musekit.extensions.fadeComposable
 import com.kwasow.musekit.ui.screens.fork.NoteForkScreen
@@ -55,13 +54,14 @@ fun App() {
         )
 
     val adaptiveInfo = currentWindowAdaptiveInfo()
-    val customNavSuiteType = with(adaptiveInfo) {
-        if (windowSizeClass.windowHeightSizeClass == WindowHeightSizeClass.COMPACT) {
-            NavigationSuiteType.NavigationRail
-        } else {
-            NavigationSuiteScaffoldDefaults.calculateFromAdaptiveInfo(adaptiveInfo)
+    val customNavSuiteType =
+        with(adaptiveInfo) {
+            if (windowSizeClass.isHeightAtLeastBreakpoint(480)) {
+                NavigationSuiteScaffoldDefaults.calculateFromAdaptiveInfo(adaptiveInfo)
+            } else {
+                NavigationSuiteType.NavigationRail
+            }
         }
-    }
 
     NavigationSuiteScaffold(
         navigationSuiteItems = {
@@ -74,6 +74,20 @@ fun App() {
         layoutType = customNavSuiteType,
     ) {
         MainContent(navController = navController)
+    }
+}
+
+@Composable
+private fun MainContent(navController: NavHostController) {
+    Box(modifier = Modifier.safeDrawingPadding()) {
+        NavHost(
+            navController = navController,
+            startDestination = NoteFork,
+        ) {
+            fadeComposable<NoteFork> { NoteForkScreen() }
+            fadeComposable<Metronome> { MetronomeScreen() }
+            fadeComposable<Settings> { SettingsScreen() }
+        }
     }
 }
 
@@ -105,19 +119,5 @@ private fun NavigationSuiteScope.musekitMainNavigation(
                 }
             },
         )
-    }
-}
-
-@Composable
-private fun MainContent(navController: NavHostController) {
-    Box(modifier = Modifier.safeDrawingPadding()) {
-        NavHost(
-            navController = navController,
-            startDestination = NoteFork,
-        ) {
-            fadeComposable<NoteFork> { NoteForkScreen() }
-            fadeComposable<Metronome> { MetronomeScreen() }
-            fadeComposable<Settings> { SettingsScreen() }
-        }
     }
 }
