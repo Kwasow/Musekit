@@ -53,16 +53,6 @@ fun App() {
             ),
         )
 
-    val adaptiveInfo = currentWindowAdaptiveInfo()
-    val customNavSuiteType =
-        with(adaptiveInfo) {
-            if (windowSizeClass.isHeightAtLeastBreakpoint(480)) {
-                NavigationSuiteScaffoldDefaults.calculateFromAdaptiveInfo(adaptiveInfo)
-            } else {
-                NavigationSuiteType.NavigationRail
-            }
-        }
-
     NavigationSuiteScaffold(
         navigationSuiteItems = {
             musekitMainNavigation(
@@ -71,7 +61,7 @@ fun App() {
                 currentDestination = currentDestination,
             )
         },
-        layoutType = customNavSuiteType,
+        layoutType = musekitMainNavigationSuiteType(),
     ) {
         MainContent(navController = navController)
     }
@@ -87,6 +77,18 @@ private fun MainContent(navController: NavHostController) {
             fadeComposable<NoteFork> { NoteForkScreen() }
             fadeComposable<Metronome> { MetronomeScreen() }
             fadeComposable<Settings> { SettingsScreen() }
+        }
+    }
+}
+
+@Composable
+private fun musekitMainNavigationSuiteType(): NavigationSuiteType {
+    val adaptiveInfo = currentWindowAdaptiveInfo()
+    return with(adaptiveInfo) {
+        if (windowSizeClass.isHeightAtLeastBreakpoint(480)) {
+            NavigationSuiteScaffoldDefaults.calculateFromAdaptiveInfo(adaptiveInfo)
+        } else {
+            NavigationSuiteType.NavigationRail
         }
     }
 }
