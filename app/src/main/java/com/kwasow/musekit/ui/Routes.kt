@@ -1,19 +1,23 @@
 package com.kwasow.musekit.ui
 
-import androidx.compose.ui.graphics.painter.Painter
-import kotlinx.serialization.Serializable
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
+import com.kwasow.musekit.R
 
-data class TopLevelRoute<T : Any>(
-    val name: String,
-    val route: T,
-    val icon: Painter,
-)
-
-@Serializable
-object NoteFork
-
-@Serializable
-object Metronome
-
-@Serializable
-object Settings
+enum class TopLevelRoutes(
+    @StringRes val label: Int,
+    @DrawableRes val icon: Int,
+) {
+    NoteFork(
+        label = R.string.tuning,
+        icon = R.drawable.ic_note_fork,
+    ),
+    Metronome(
+        label = R.string.metronome,
+        icon = R.drawable.ic_metronome,
+    ),
+    Settings(
+        label = R.string.settings,
+        icon = R.drawable.ic_settings,
+    ),
+}
