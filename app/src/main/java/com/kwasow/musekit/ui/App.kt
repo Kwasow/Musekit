@@ -7,13 +7,17 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffoldDefaults
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScope
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -61,42 +65,59 @@ fun App() {
 
     NavigationSuiteScaffold(
         navigationSuiteItems = {
-            topLevelRoutes.forEach { (name, route, icon) ->
-                item(
-                    icon = {
-                        Icon(
-                            painter = icon,
-                            contentDescription = name,
-                        )
-                    },
-                    label = { Text(name) },
-                    selected =
-                        currentDestination?.hierarchy?.any {
-                            it.hasRoute(route::class)
-                        } == true,
-                    onClick = {
-                        navController.navigate(route) {
-                            popUpTo(navController.graph.startDestinationId) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
-                    },
-                )
-            }
+            musekitMainNavigation(
+                navController = navController,
+                topLevelRoutes = topLevelRoutes,
+                currentDestination = currentDestination,
+            )
         },
         layoutType = customNavSuiteType,
     ) {
-        Box(modifier = Modifier.safeDrawingPadding()) {
-            NavHost(
-                navController = navController,
-                startDestination = NoteFork,
-            ) {
-                fadeComposable<NoteFork> { NoteForkScreen() }
-                fadeComposable<Metronome> { MetronomeScreen() }
-                fadeComposable<Settings> { SettingsScreen() }
-            }
+        MainContent(navController = navController)
+    }
+}
+
+private fun NavigationSuiteScope.musekitMainNavigation(
+    navController: NavController,
+    topLevelRoutes: List<TopLevelRoute<*>>,
+    currentDestination: NavDestination?,
+) {
+    topLevelRoutes.forEach { (name, route, icon) ->
+        item(
+            icon = {
+                Icon(
+                    painter = icon,
+                    contentDescription = name,
+                )
+            },
+            label = { Text(name) },
+            selected =
+                currentDestination?.hierarchy?.any {
+                    it.hasRoute(route::class)
+                } == true,
+            onClick = {
+                navController.navigate(route) {
+                    popUpTo(navController.graph.startDestinationId) {
+                        saveState = true
+                    }
+                    launchSingleTop = true
+                    restoreState = true
+                }
+            },
+        )
+    }
+}
+
+@Composable
+private fun MainContent(navController: NavHostController) {
+    Box(modifier = Modifier.safeDrawingPadding()) {
+        NavHost(
+            navController = navController,
+            startDestination = NoteFork,
+        ) {
+            fadeComposable<NoteFork> { NoteForkScreen() }
+            fadeComposable<Metronome> { MetronomeScreen() }
+            fadeComposable<Settings> { SettingsScreen() }
         }
     }
 }
