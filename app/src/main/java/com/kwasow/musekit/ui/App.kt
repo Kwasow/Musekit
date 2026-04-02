@@ -4,7 +4,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffoldDefaults
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -14,6 +17,7 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.window.core.layout.WindowHeightSizeClass
 import com.kwasow.musekit.R
 import com.kwasow.musekit.extensions.fadeComposable
 import com.kwasow.musekit.ui.screens.fork.NoteForkScreen
@@ -46,6 +50,15 @@ fun App() {
             ),
         )
 
+    val adaptiveInfo = currentWindowAdaptiveInfo()
+    val customNavSuiteType = with(adaptiveInfo) {
+        if (windowSizeClass.windowHeightSizeClass == WindowHeightSizeClass.COMPACT) {
+            NavigationSuiteType.NavigationRail
+        } else {
+            NavigationSuiteScaffoldDefaults.calculateFromAdaptiveInfo(adaptiveInfo)
+        }
+    }
+
     NavigationSuiteScaffold(
         navigationSuiteItems = {
             topLevelRoutes.forEach { (name, route, icon) ->
@@ -73,6 +86,7 @@ fun App() {
                 )
             }
         },
+        layoutType = customNavSuiteType,
     ) {
         Box(modifier = Modifier.safeDrawingPadding()) {
             NavHost(
