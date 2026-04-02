@@ -17,9 +17,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.kwasow.musekit.R
+import kotlin.math.round
 
 // ====== Public composables
 @Composable
@@ -37,17 +39,7 @@ fun TunerView(
             cents = cents,
         )
 
-        Icon(
-            painter = painterResource(id = R.drawable.ic_check_circle),
-            contentDescription = stringResource(id = R.string.contentDescription_tuner_check),
-            modifier = Modifier.size(48.dp),
-            tint =
-                when (cents) {
-                    null -> MaterialTheme.colorScheme.surfaceContainer
-                    in -5.0..5.0 -> MaterialTheme.colorScheme.primary
-                    else -> MaterialTheme.colorScheme.surfaceContainer
-                },
-        )
+        FinishIndicator(cents = cents)
     }
 }
 
@@ -133,4 +125,34 @@ private fun Bar(
                     },
             ),
     )
+}
+
+@Composable
+private fun FinishIndicator(cents: Double?) {
+    val centsString = buildAnnotatedString {
+        cents?.let {
+            if (cents > 0) {
+                append("+")
+            }
+
+            append(round(cents).toString())
+            append("¢")
+        }
+    }
+
+    Column {
+        Icon(
+            painter = painterResource(id = R.drawable.ic_check_circle),
+            contentDescription = stringResource(id = R.string.contentDescription_tuner_check),
+            modifier = Modifier.size(48.dp),
+            tint =
+                when (cents) {
+                    null -> MaterialTheme.colorScheme.surfaceContainer
+                    in -5.0..5.0 -> MaterialTheme.colorScheme.primary
+                    else -> MaterialTheme.colorScheme.surfaceContainer
+                },
+        )
+
+        Text(centsString)
+    }
 }
