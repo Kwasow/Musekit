@@ -21,12 +21,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.window.core.layout.WindowSizeClass
 import com.kwasow.musekit.R
 import com.kwasow.musekit.extensions.fadeComposable
 import com.kwasow.musekit.ui.screens.fork.NoteForkScreen
 import com.kwasow.musekit.ui.screens.metronome.MetronomeScreen
 import com.kwasow.musekit.ui.screens.settings.SettingsScreen
+import com.kwasow.musekit.utils.ScreenUtils
 
 // ====== Public composables
 @Composable
@@ -85,15 +85,10 @@ private fun MainContent(navController: NavHostController) {
 @Composable
 private fun musekitMainNavigationSuiteType(): NavigationSuiteType {
     val adaptiveInfo = currentWindowAdaptiveInfo()
-    return with(adaptiveInfo) {
-        if (windowSizeClass.isHeightAtLeastBreakpoint(
-                WindowSizeClass.HEIGHT_DP_MEDIUM_LOWER_BOUND,
-            )
-        ) {
-            NavigationSuiteScaffoldDefaults.calculateFromAdaptiveInfo(adaptiveInfo)
-        } else {
-            NavigationSuiteType.NavigationRail
-        }
+    return if (ScreenUtils.isWide()) {
+        NavigationSuiteType.NavigationRail
+    } else {
+        NavigationSuiteScaffoldDefaults.calculateFromAdaptiveInfo(adaptiveInfo)
     }
 }
 
