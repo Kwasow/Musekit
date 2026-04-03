@@ -54,31 +54,9 @@ fun SettingsScreen() {
     val licenseDialog = remember { LicenseDialogInfo() }
 
     if (ScreenUtils.isWide()) {
-        Row(
-            modifier = Modifier.fillMaxSize(),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            AppDetails(modifier = Modifier.weight(0.4f))
-
-            Column(
-                modifier =
-                    Modifier
-                        .verticalScroll(rememberScrollState())
-                        .weight(0.6f),
-            ) {
-                MainColumn(licenseDialog = licenseDialog)
-            }
-        }
+        WideView(licenseDialog = licenseDialog)
     } else {
-        Column(
-            modifier =
-                Modifier
-                    .widthIn(0.dp, 480.dp)
-                    .verticalScroll(rememberScrollState()),
-        ) {
-            AppDetails(modifier = Modifier.fillMaxWidth())
-            MainColumn(licenseDialog = licenseDialog)
-        }
+        DefaultView(licenseDialog = licenseDialog)
     }
 
     LicenseDialog(
@@ -88,6 +66,38 @@ fun SettingsScreen() {
 }
 
 // ====== Private composables
+@Composable
+private fun DefaultView(licenseDialog: LicenseDialogInfo) {
+    Column(
+        modifier =
+            Modifier
+                .widthIn(0.dp, 480.dp)
+                .verticalScroll(rememberScrollState()),
+    ) {
+        AppDetails(modifier = Modifier.fillMaxWidth())
+        MainColumn(licenseDialog = licenseDialog)
+    }
+}
+
+@Composable
+private fun WideView(licenseDialog: LicenseDialogInfo) {
+    Row(
+        modifier = Modifier.fillMaxSize(),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        AppDetails(modifier = Modifier.weight(0.4f))
+
+        Column(
+            modifier =
+                Modifier
+                    .verticalScroll(rememberScrollState())
+                    .weight(0.6f),
+        ) {
+            MainColumn(licenseDialog = licenseDialog)
+        }
+    }
+}
+
 @Composable
 private fun MainColumn(licenseDialog: LicenseDialogInfo) {
     AppSettingsSection()
