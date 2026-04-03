@@ -86,7 +86,10 @@ private fun MainContent(navController: NavHostController) {
 private fun musekitMainNavigationSuiteType(): NavigationSuiteType {
     val adaptiveInfo = currentWindowAdaptiveInfo()
     return with(adaptiveInfo) {
-        if (windowSizeClass.isHeightAtLeastBreakpoint(WindowSizeClass.HEIGHT_DP_MEDIUM_LOWER_BOUND)) {
+        if (windowSizeClass.isHeightAtLeastBreakpoint(
+                WindowSizeClass.HEIGHT_DP_MEDIUM_LOWER_BOUND,
+            )
+        ) {
             NavigationSuiteScaffoldDefaults.calculateFromAdaptiveInfo(adaptiveInfo)
         } else {
             NavigationSuiteType.NavigationRail
