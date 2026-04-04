@@ -219,50 +219,55 @@ private fun PropertyCard(
     onDecrease: () -> Unit,
     modifier: Modifier,
 ) {
+    val pad = 16.dp
+
     Card(modifier = modifier) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(
-                text = label,
-                fontWeight = FontWeight.SemiBold,
-            )
+        Text(
+            text = label,
+            fontWeight = FontWeight.SemiBold,
+            modifier = Modifier.padding(start = pad, end = pad, top = pad)
+        )
 
-            AutoSizeText(
-                text = value,
-                boldFont = false,
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .aspectRatio(1f),
-            )
+        AutoSizeText(
+            text = value,
+            boldFont = false,
+            modifier =
+                Modifier
+                    .padding(horizontal = pad)
+                    .fillMaxWidth()
+                    .aspectRatio(1f),
+        )
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                IconButton(onClick = onDecrease) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_minus_circle),
-                        contentDescription =
-                            stringResource(
-                                id = R.string.contentDescription_decrease,
-                            ),
-                        modifier = Modifier.size(20.dp),
-                        tint = MaterialTheme.colorScheme.primary,
-                    )
-                }
+        Row(
+            modifier =
+                Modifier
+                    .padding(start = pad, end = pad, bottom = pad)
+                    .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            IconButton(onClick = onDecrease) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_minus_circle),
+                    contentDescription =
+                        stringResource(
+                            id = R.string.contentDescription_decrease,
+                        ),
+                    modifier = Modifier.size(20.dp),
+                    tint = MaterialTheme.colorScheme.primary,
+                )
+            }
 
-                IconButton(onClick = onIncrease) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_plus_circle),
-                        contentDescription =
-                            stringResource(
-                                id = R.string.contentDescription_increase,
-                            ),
-                        modifier = Modifier.size(20.dp),
-                        tint = MaterialTheme.colorScheme.primary,
-                    )
-                }
+            IconButton(onClick = onIncrease) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_plus_circle),
+                    contentDescription =
+                        stringResource(
+                            id = R.string.contentDescription_increase,
+                        ),
+                    modifier = Modifier.size(20.dp),
+                    tint = MaterialTheme.colorScheme.primary,
+                )
             }
         }
     }
