@@ -46,6 +46,8 @@ import com.kwasow.musekit.ui.dialogs.PresetRemoveDialog
 import com.kwasow.musekit.ui.dialogs.PresetSaveDialog
 import com.kwasow.musekit.utils.ScreenUtils
 import org.koin.androidx.compose.koinViewModel
+import org.koin.core.module.dsl.viewModel
+import org.koin.plugin.module.dsl.viewModel
 
 // ====== Public composables
 @Composable
@@ -134,7 +136,7 @@ private fun WideView(
     onSavePreset: () -> Unit,
     onRemovePreset: (String) -> Unit,
 ) {
-    Column {
+    Column(modifier = Modifier.padding(horizontal = 16.dp)) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
@@ -378,6 +380,7 @@ private fun AdditionalActions(
 ) {
     Row(
         horizontalArrangement = Arrangement.End,
+        verticalAlignment = Alignment.CenterVertically,
         modifier = modifier,
     ) {
         Button(

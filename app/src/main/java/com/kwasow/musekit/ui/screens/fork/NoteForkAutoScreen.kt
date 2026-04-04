@@ -177,7 +177,7 @@ private fun PitchSelectorContent(modifier: Modifier = Modifier) {
         contentDescription = stringResource(id = R.string.contentDescription_decrease),
         tint = MaterialTheme.colorScheme.primary,
         modifier =
-            modifier
+            Modifier
                 .padding(8.dp)
                 .clip(CircleShape)
                 .clickable {
@@ -195,7 +195,7 @@ private fun PitchSelectorContent(modifier: Modifier = Modifier) {
         contentDescription = stringResource(id = R.string.contentDescription_increase),
         tint = MaterialTheme.colorScheme.primary,
         modifier =
-            modifier
+            Modifier
                 .padding(8.dp)
                 .clip(CircleShape)
                 .clickable {
