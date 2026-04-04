@@ -153,7 +153,7 @@ private fun MainView(
     modifier: Modifier = Modifier,
 ) {
     Box(modifier = modifier) {
-        TempoDisplay(modifier = Modifier.align(Alignment.TopEnd))
+        TempoDisplay(modifier = Modifier.align(Alignment.TopStart))
 
         Column(
             modifier =
