@@ -148,7 +148,10 @@ private fun WideView(
                 onRemovePreset = onRemovePreset,
                 modifier = Modifier.weight(1f),
             )
-            AdditionalActions(onSavePreset = onSavePreset)
+            AdditionalActions(
+                onSavePreset = onSavePreset,
+                modifier = Modifier.padding(top = 8.dp),
+            )
         }
 
         Row(

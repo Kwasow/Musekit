@@ -51,7 +51,7 @@ fun NoteForkScreen() {
         modifier =
             Modifier
                 .fillMaxSize()
-                .padding(top = 16.dp),
+                .padding(top = 8.dp),
     ) {
         Navigation(
             pages = pages,
