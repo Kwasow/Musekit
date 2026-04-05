@@ -2,11 +2,13 @@ package com.kwasow.musekit.ui.screens.settings
 
 import android.os.Build
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
@@ -53,10 +55,12 @@ fun SettingsScreen() {
     val viewModel = koinViewModel<SettingsScreenViewModel>()
     val licenseDialog = remember { LicenseDialogInfo() }
 
-    if (ScreenUtils.isWide()) {
-        WideView(licenseDialog = licenseDialog)
-    } else {
-        DefaultView(licenseDialog = licenseDialog)
+    Box(modifier = Modifier.safeDrawingPadding()) {
+        if (ScreenUtils.isWide()) {
+            WideView(licenseDialog = licenseDialog)
+        } else {
+            DefaultView(licenseDialog = licenseDialog)
+        }
     }
 
     LicenseDialog(
