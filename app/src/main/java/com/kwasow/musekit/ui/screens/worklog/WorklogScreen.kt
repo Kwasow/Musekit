@@ -77,21 +77,18 @@ private fun MainView(paddingValues: PaddingValues) {
         if (sessions == null) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         } else {
-            val byMonth = sessions.groupBy { session ->
-                Pair(session.date.year, session.date.monthValue)
-            }
-
-
+            val byMonth =
+                sessions.groupBy { session ->
+                    Pair(session.date.year, session.date.monthValue)
+                }
         }
     }
 }
 
 @Composable
 private fun PracticeEntriesSection() {
-
 }
 
 @Composable
 private fun PracticeEntry() {
-
 }

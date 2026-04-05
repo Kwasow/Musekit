@@ -7,10 +7,11 @@ import org.koin.dsl.module
 val databaseModule =
     module {
         single<AppDatabase> {
-            Room.databaseBuilder(
-                get(),
-                AppDatabase::class.java,
-                "musekit-database",
-            ).build()
+            Room
+                .databaseBuilder(
+                    get(),
+                    AppDatabase::class.java,
+                    "musekit-database",
+                ).build()
         }
     }

@@ -192,8 +192,9 @@ protobuf {
     }
 }
 
-tasks.matching {
-    it.name == "kspDebugKotlin"
-}.configureEach {
-    dependsOn(tasks.named("generateDebugProto"))
-}
+tasks
+    .matching {
+        it.name == "kspDebugKotlin"
+    }.configureEach {
+        dependsOn(tasks.named("generateDebugProto"))
+    }

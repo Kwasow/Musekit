@@ -8,7 +8,7 @@ versionName = "2.6.5"
 # BoM
 composeBom = "2026.03.01"
 koinBom = "4.2.0"
-room = "2.8.1"
+room = "2.8.4"
 
 # Libraries
 accompanistPermissions = "0.37.3"
@@ -34,7 +34,7 @@ baselineProfile = "1.4.1"
 googleProtobufPlugin = "0.9.6"
 kotlinPlugins = "2.3.20"
 ktlintPlugin = "14.2.0"
-ksp = "2.2.20-2.0.3"
+ksp = "2.3.6"
 
 [libraries]
 android-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }

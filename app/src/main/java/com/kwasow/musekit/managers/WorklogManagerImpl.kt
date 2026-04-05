@@ -7,14 +7,14 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.temporal.ChronoUnit
 
-class WorklogManagerImpl(database: AppDatabase) : WorklogManager {
+class WorklogManagerImpl(
+    database: AppDatabase,
+) : WorklogManager {
     // ====== Fields
     private val practiceSessionDao = database.practiceSessionDao()
 
     // ====== Interface methods
-    override suspend fun getPracticeSessions(): List<PracticeSession> {
-        return practiceSessionDao.getAll()
-    }
+    override suspend fun getPracticeSessions(): List<PracticeSession> = practiceSessionDao.getAll()
 
     override suspend fun addWorklogEntry(
         startTime: LocalDateTime,
