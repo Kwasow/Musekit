@@ -66,13 +66,9 @@ class Note(
             this.octave == other.octave
     }
 
-    override fun hashCode(): Int {
-        return Objects.hash(pitch, note, octave)
-    }
+    override fun hashCode(): Int = Objects.hash(pitch, note, octave)
 
-    override fun toString(): String {
-        return note.name + octave
-    }
+    override fun toString(): String = note.name + octave
 
     // ====== Public methods
     fun getFrequency(): Double {

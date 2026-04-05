@@ -4,7 +4,9 @@ package com.kwasow.musekit.data
 //  - the "is" suffix is added to a note with a sharp
 //  - the "as" suffix is added to a note with a flat
 //  - the note one half step below C is known as H; H flat is B
-enum class Notes(val semitones: Int) {
+enum class Notes(
+    val semitones: Int,
+) {
     A(0),
     AisB(1),
     H(2),
@@ -20,8 +22,8 @@ enum class Notes(val semitones: Int) {
     ;
 
     companion object {
-        fun fromSemitones(semitones: Int): Notes {
-            return when (semitones) {
+        fun fromSemitones(semitones: Int): Notes =
+            when (semitones) {
                 1 -> AisB
                 2 -> H
                 3 -> C
@@ -35,7 +37,6 @@ enum class Notes(val semitones: Int) {
                 11 -> GisAs
                 else -> A
             }
-        }
     }
 
     fun getName(style: NotationStyle): String = style.noteNames[semitones]

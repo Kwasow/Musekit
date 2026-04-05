@@ -7,7 +7,9 @@ import com.kwasow.musekit.store.musekitPreferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class PreferencesManagerImpl(val context: Context) : PreferencesManager {
+class PreferencesManagerImpl(
+    val context: Context,
+) : PreferencesManager {
     // ====== Fields
     override val nightMode: Flow<Int> =
         context.musekitPreferencesDataStore.data
@@ -56,7 +58,8 @@ class PreferencesManagerImpl(val context: Context) : PreferencesManager {
     // ====== Public methods
     override suspend fun setNightMode(value: Int) {
         context.musekitPreferencesDataStore.updateData { currentPreferences ->
-            currentPreferences.toBuilder()
+            currentPreferences
+                .toBuilder()
                 .setNightMode(value)
                 .build()
         }
@@ -64,7 +67,8 @@ class PreferencesManagerImpl(val context: Context) : PreferencesManager {
 
     override suspend fun setNoteForkMode(value: Int) {
         context.musekitPreferencesDataStore.updateData { currentPreferences ->
-            currentPreferences.toBuilder()
+            currentPreferences
+                .toBuilder()
                 .setNoteForkMode(value)
                 .build()
         }
@@ -72,7 +76,8 @@ class PreferencesManagerImpl(val context: Context) : PreferencesManager {
 
     override suspend fun setNotationStyle(value: NotationStyle) {
         context.musekitPreferencesDataStore.updateData { currentPreferences ->
-            currentPreferences.toBuilder()
+            currentPreferences
+                .toBuilder()
                 .setNotationStyle(value.id)
                 .build()
         }
@@ -80,7 +85,8 @@ class PreferencesManagerImpl(val context: Context) : PreferencesManager {
 
     override suspend fun setAutomaticTunerPitch(value: Int) {
         context.musekitPreferencesDataStore.updateData { currentPreferences ->
-            currentPreferences.toBuilder()
+            currentPreferences
+                .toBuilder()
                 .setAutomaticTunerPitch(value)
                 .build()
         }
@@ -88,7 +94,8 @@ class PreferencesManagerImpl(val context: Context) : PreferencesManager {
 
     override suspend fun setMetronomeBpm(value: Int) {
         context.musekitPreferencesDataStore.updateData { currentPreferences ->
-            currentPreferences.toBuilder()
+            currentPreferences
+                .toBuilder()
                 .setMetronomeBpm(value.coerceIn(30, 300))
                 .build()
         }
@@ -96,7 +103,8 @@ class PreferencesManagerImpl(val context: Context) : PreferencesManager {
 
     override suspend fun setMetronomeSound(value: MetronomeSounds) {
         context.musekitPreferencesDataStore.updateData { currentPreferences ->
-            currentPreferences.toBuilder()
+            currentPreferences
+                .toBuilder()
                 .setMetronomeSound(value.id)
                 .build()
         }
@@ -104,7 +112,8 @@ class PreferencesManagerImpl(val context: Context) : PreferencesManager {
 
     override suspend fun setMetronomeNumberOfBeats(value: Int) {
         context.musekitPreferencesDataStore.updateData { currentPreferences ->
-            currentPreferences.toBuilder()
+            currentPreferences
+                .toBuilder()
                 .setMetronomeNumberOfBeats(value.coerceIn(2, 12))
                 .build()
         }

@@ -17,7 +17,8 @@ class PitchPlayerManagerImpl : PitchPlayerManager {
         }
 
     private val audioTrack by lazy {
-        AudioTrack.Builder()
+        AudioTrack
+            .Builder()
             .setTransferMode(AudioTrack.MODE_STATIC)
             .setBufferSizeInBytes(SAMPLE_RATE * 2)
             .build()
@@ -46,7 +47,7 @@ class PitchPlayerManagerImpl : PitchPlayerManager {
         val buffer = ShortArray(SAMPLE_RATE * 2)
 
         for (i in buffer.indices) {
-            val sample = sin(i * 2 * Math.PI * frequency.toInt() / SAMPLE_RATE)
+            val sample = sin(i * Math.PI * frequency.toInt() / SAMPLE_RATE)
             buffer[i] = (sample * Short.MAX_VALUE).toInt().toShort()
         }
 

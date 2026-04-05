@@ -44,7 +44,7 @@
     <string name="tarsos">TarsosDSP</string>
     <string name="contentDescription_right_arrow">Strzałka w prawo</string>
     <string name="contentDescription_save">Zapisz</string>
-    <string name="sound">Dźwięk metronomu</string>
+    <string name="sound">Dźwięk</string>
     <string name="tap_tempo">Wybij</string>
     <string name="tempo">Tempo</string>
     <string name="beats">Miary</string>
@@ -58,7 +58,7 @@
     <string name="theme_subtitle">Wybierz wygląd aplikacji</string>
     <string name="theme_dark">Ciemny</string>
     <string name="theme_light">Jasny</string>
-    <string name="theme_auto">Auto</string>
+    <string name="theme_auto">Systemowy</string>
     <string name="contentDescription_moon_icon">Ikonka księżyca</string>
     <string name="contentDescription_current_theme_symbol">Ikonka przedstawiająca aktualny motyw</string>
     <string name="contentDescription_check_icon">Haczyk oznaczający aktualny wybór</string>
@@ -70,7 +70,7 @@
     <string name="yellow">Żółty</string>
     <string name="note_fork_automatic">Automatyczny</string>
     <string name="record_permission_not_granted">Dostęp do mikrofonu nie został przyznany</string>
-    <string name="special_thanks">Specjalne podziękowania dla TarsosDSP za zbudowanie biblioteki do rozpoznawania tonów.</string>
+    <string name="special_thanks">Specjalne podziękowania dla TarsosDSP za zbudowanie biblioteki do rozpoznawania dźwięku.</string>
     <string name="set_tempo">Ustaw</string>
     <string name="contentDescription_internet_website">Strona internetowa</string>
     <string name="notation_style">Nazwy dźwięków</string>

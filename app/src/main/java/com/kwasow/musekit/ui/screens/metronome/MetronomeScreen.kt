@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -44,11 +45,11 @@ import com.kwasow.musekit.ui.components.PlayPauseButton
 import com.kwasow.musekit.ui.components.rememberBoundLocalService
 import com.kwasow.musekit.ui.composition.LocalMusekitNavigation
 import com.kwasow.musekit.ui.dialogs.SetBeatDialog
+import com.kwasow.musekit.utils.ScreenUtils
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 // ======= Public composables
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MetronomeScreen() {
     val viewModel = koinViewModel<MetronomeScreenViewModel>()
@@ -57,8 +58,7 @@ fun MetronomeScreen() {
     val context = LocalContext.current
     val metronomeService =
         rememberBoundLocalService<MetronomeService, MetronomeService.LocalBinder> { service }
-    val coroutineScope = rememberCoroutineScope()
-    val scaffoldState = rememberBottomSheetScaffoldState()
+
     var showSetBeatDialog by remember { mutableStateOf(false) }
 
     DisposableEffect(Unit) {
@@ -68,14 +68,49 @@ fun MetronomeScreen() {
         }
     }
 
+    if (ScreenUtils.isWide()) {
+        WideView(
+            metronomeService = metronomeService,
+            onOpenSetBeatDialog = { showSetBeatDialog = true },
+        )
+    } else {
+        DefaultView(
+            metronomeService = metronomeService,
+            onOpenSetBeatDialog = { showSetBeatDialog = true },
+        )
+    }
+
+    if (showSetBeatDialog) {
+        SetBeatDialog(
+            initialValue = bpm ?: 60,
+            onDismiss = { showSetBeatDialog = false },
+            onSet = { viewModel.setBpm(it) },
+        )
+    }
+}
+
+// ====== Private composables
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun DefaultView(
+    metronomeService: MetronomeService?,
+    onOpenSetBeatDialog: () -> Unit,
+) {
+    val scaffoldState = rememberBottomSheetScaffoldState()
+    val coroutineScope = rememberCoroutineScope()
+
     BottomSheetScaffold(
         sheetContent = {
-            MetronomeSettings(onOpenSetBeatDialog = { showSetBeatDialog = true })
+            MetronomeSettings(onOpenSetBeatDialog = onOpenSetBeatDialog)
         },
         scaffoldState = scaffoldState,
         sheetPeekHeight = 148.dp,
     ) {
         MainView(
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
             service = metronomeService,
             closeBottomSheet = {
                 coroutineScope.launch {
@@ -83,22 +118,43 @@ fun MetronomeScreen() {
                 }
             },
         )
-
-        if (showSetBeatDialog) {
-            SetBeatDialog(
-                initialValue = bpm ?: 60,
-                onDismiss = { showSetBeatDialog = false },
-                onSet = { viewModel.setBpm(it) },
-            )
-        }
     }
 }
 
-// ====== Private composables
+@Composable
+private fun WideView(
+    metronomeService: MetronomeService?,
+    onOpenSetBeatDialog: () -> Unit,
+) {
+    Row(
+        modifier = Modifier.fillMaxSize(),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        MainView(
+            modifier =
+                Modifier
+                    .weight(1f)
+                    .fillMaxHeight()
+                    .padding(16.dp),
+            service = metronomeService,
+            closeBottomSheet = {},
+        )
+
+        MetronomeSettings(
+            modifier =
+                Modifier
+                    .weight(1f)
+                    .padding(all = 16.dp),
+            onOpenSetBeatDialog = onOpenSetBeatDialog,
+        )
+    }
+}
+
 @Composable
 private fun MainView(
     service: MetronomeService?,
     closeBottomSheet: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Box(
         modifier =
@@ -133,6 +189,8 @@ private fun TopBar() {
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
+        TempoDisplay()
+
         IconButton(onClick = { navigation.navigateToWorklog() }) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_history),
@@ -142,13 +200,11 @@ private fun TopBar() {
                     ),
             )
         }
-
-        TempoDisplay()
     }
 }
 
 @Composable
-private fun TempoDisplay() {
+private fun TempoDisplay(modifier: Modifier = Modifier) {
     val viewModel = koinViewModel<MetronomeScreenViewModel>()
     val currentTempo by viewModel.metronomeBpm.collectAsState()
 
@@ -163,7 +219,7 @@ private fun TempoDisplay() {
     Text(
         text = text,
         fontSize = 20.sp,
-        modifier = Modifier.padding(8.dp),
+        modifier = modifier,
     )
 }
 

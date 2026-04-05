@@ -26,8 +26,8 @@ enum class MetronomeSounds(
     ;
 
     companion object {
-        fun valueOf(id: Int): MetronomeSounds? {
-            return when (id) {
+        fun valueOf(id: Int): MetronomeSounds? =
+            when (id) {
                 0 -> Default
                 1 -> Beep
                 2 -> Ding
@@ -35,7 +35,6 @@ enum class MetronomeSounds(
                 4 -> None
                 else -> null
             }
-        }
     }
 
     fun getResourceId(): Int {

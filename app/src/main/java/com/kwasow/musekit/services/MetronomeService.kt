@@ -6,8 +6,8 @@ import android.media.AudioAttributes
 import android.media.SoundPool
 import android.os.Binder
 import android.os.Handler
+import android.os.HandlerThread
 import android.os.IBinder
-import android.os.Looper
 import androidx.lifecycle.MutableLiveData
 import com.kwasow.musekit.data.MetronomeSounds
 import com.kwasow.musekit.managers.PreferencesManager
@@ -21,7 +21,9 @@ import org.koin.android.ext.android.inject
 import java.time.LocalDateTime
 import kotlin.properties.Delegates
 
-class MetronomeService : Service(), Runnable {
+class MetronomeService :
+    Service(),
+    Runnable {
     // ====== Fields
     inner class LocalBinder : Binder() {
         val service: MetronomeService = this@MetronomeService
@@ -34,7 +36,9 @@ class MetronomeService : Service(), Runnable {
 
     private var soundId by Delegates.notNull<Int>()
     private lateinit var soundPool: SoundPool
-    private lateinit var handler: Handler
+
+    private lateinit var handlerThread: HandlerThread
+    private lateinit var beatHandler: Handler
 
     private val job = SupervisorJob()
     private val coroutineScope = CoroutineScope(Dispatchers.IO + job)
@@ -53,43 +57,56 @@ class MetronomeService : Service(), Runnable {
         super.onCreate()
 
         val audioAttributes =
-            AudioAttributes.Builder()
+            AudioAttributes
+                .Builder()
                 .setUsage(AudioAttributes.USAGE_UNKNOWN)
                 .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                 .build()
 
         soundPool =
-            SoundPool.Builder()
+            SoundPool
+                .Builder()
                 .setAudioAttributes(audioAttributes)
-                .setMaxStreams(15)
+                .setMaxStreams(1)
                 .build()
 
         soundId = soundPool.load(this, sound.getResourceId(), 1)
-        handler = Handler(Looper.getMainLooper())
+
+        handlerThread = HandlerThread("MetronomeServiceHandlerThread")
+        handlerThread.start()
+
+        beatHandler = Handler(handlerThread.looper)
 
         setupCollectors()
     }
 
-    override fun onBind(intent: Intent?): IBinder {
-        return binder
-    }
+    override fun onBind(intent: Intent?): IBinder = binder
 
-    override fun onUnbind(intent: Intent?): Boolean {
-        return super.onUnbind(intent)
-    }
+    override fun onUnbind(intent: Intent?): Boolean = super.onUnbind(intent)
 
     override fun onDestroy() {
         super.onDestroy()
         job.cancelChildren()
 
+        // Stop metronome callbacks
+        if (this::beatHandler.isInitialized) {
+            beatHandler.removeCallbacks(this)
+        }
+
+        // Release audio resources
         if (this::soundPool.isInitialized) {
             soundPool.release()
+        }
+
+        // Shut down background looper thread
+        if (this::handlerThread.isInitialized) {
+            handlerThread.quitSafely()
         }
     }
 
     override fun run() {
         if (isPlaying.value == true) {
-            handler.postDelayed(this, interval)
+            beatHandler.postDelayed(this, interval)
 
             if (sound != MetronomeSounds.None) {
                 soundPool.play(soundId, 1F, 1F, 0, 0, 1F)
@@ -121,13 +138,17 @@ class MetronomeService : Service(), Runnable {
     private fun toInterval(bpm: Int): Long = (1000L * 60) / bpm
 
     private fun startMetronome() {
-        isPlaying.postValue(true)
-        currentBeat.postValue(0)
-        handler.post(this)
+        isPlaying.value = true
+        currentBeat.value = 0
+        beatHandler.post(this)
     }
 
     private fun stopMetronome() {
-        isPlaying.postValue(false)
+        isPlaying.value = false
+
+        if (this::beatHandler.isInitialized) {
+            beatHandler.removeCallbacks(this)
+        }
     }
 
     private fun setupCollectors() {

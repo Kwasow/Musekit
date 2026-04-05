@@ -39,13 +39,12 @@ enum class NotationStyle(
     ;
 
     companion object {
-        fun valueOf(id: Int): NotationStyle? {
-            return when (id) {
+        fun valueOf(id: Int): NotationStyle? =
+            when (id) {
                 0 -> English
                 1 -> German
                 2 -> FixedDo
                 else -> null
             }
-        }
     }
 }

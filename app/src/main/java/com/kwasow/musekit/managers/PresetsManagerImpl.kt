@@ -83,13 +83,12 @@ class PresetsManagerImpl(
     }
 
     // ====== Private methods
-    private fun toFileName(name: String): String {
-        return name
+    private fun toFileName(name: String): String =
+        name
             .filter { !isIllegalCharacter(it) }
-    }
 
-    private fun isIllegalCharacter(c: Char): Boolean {
-        return when (c) {
+    private fun isIllegalCharacter(c: Char): Boolean =
+        when (c) {
             '"' -> true
             '*' -> true
             '/' -> true
@@ -101,5 +100,4 @@ class PresetsManagerImpl(
             '|' -> true
             else -> false
         }
-    }
 }

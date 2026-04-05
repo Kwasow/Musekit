@@ -37,8 +37,12 @@ import org.koin.androidx.compose.koinViewModel
 
 // ====== Public composables
 @Composable
-fun MetronomeSettings(onOpenSetBeatDialog: () -> Unit) {
+fun MetronomeSettings(
+    onOpenSetBeatDialog: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     LazyColumn(
+        modifier = modifier,
         contentPadding = PaddingValues(horizontal = 16.dp),
     ) {
         item {
