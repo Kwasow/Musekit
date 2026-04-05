@@ -10,6 +10,7 @@ import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffo
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScope
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -23,9 +24,12 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.kwasow.musekit.R
 import com.kwasow.musekit.extensions.fadeComposable
+import com.kwasow.musekit.ui.composition.LocalMusekitNavigation
+import com.kwasow.musekit.ui.composition.MusekitNavigation
 import com.kwasow.musekit.ui.screens.fork.NoteForkScreen
 import com.kwasow.musekit.ui.screens.metronome.MetronomeScreen
 import com.kwasow.musekit.ui.screens.settings.SettingsScreen
+import com.kwasow.musekit.ui.screens.worklog.WorklogScreen
 import com.kwasow.musekit.utils.ScreenUtils
 
 // ====== Public composables
@@ -62,7 +66,7 @@ fun App() {
                 currentDestination = currentDestination,
             )
         },
-        layoutType = musekitMainNavigationSuiteType(),
+        layoutType = musekitMainNavigationSuiteType(currentDestination),
     ) {
         MainContent(navController = navController)
     }
@@ -70,22 +74,40 @@ fun App() {
 
 @Composable
 private fun MainContent(navController: NavHostController) {
+    val musekitNavigation =
+        MusekitNavigation(
+            navigateToWorklog = { navController.navigate(Worklog) },
+            navigateBack = { navController.popBackStack() },
+        )
+
     Box(modifier = Modifier.safeDrawingPadding()) {
-        NavHost(
-            navController = navController,
-            startDestination = NoteFork,
-        ) {
-            fadeComposable<NoteFork> { NoteForkScreen() }
-            fadeComposable<Metronome> { MetronomeScreen() }
-            fadeComposable<Settings> { SettingsScreen() }
+        CompositionLocalProvider(LocalMusekitNavigation provides musekitNavigation) {
+            NavHost(
+                navController = navController,
+                startDestination = NoteFork,
+            ) {
+                fadeComposable<NoteFork> { NoteForkScreen() }
+                fadeComposable<Metronome> { MetronomeScreen() }
+                fadeComposable<Worklog> { WorklogScreen() }
+                fadeComposable<Settings> { SettingsScreen() }
+            }
         }
     }
 }
 
 @Composable
-private fun musekitMainNavigationSuiteType(): NavigationSuiteType {
+private fun musekitMainNavigationSuiteType(
+    currentDestination: NavDestination?,
+): NavigationSuiteType {
     val adaptiveInfo = currentWindowAdaptiveInfo()
-    return if (ScreenUtils.isWide()) {
+
+    return if (
+        currentDestination?.hierarchy?.any {
+            it.hasRoute(Worklog::class)
+        } == true
+    ) {
+        NavigationSuiteType.None
+    } else if (ScreenUtils.isWide()) {
         NavigationSuiteType.NavigationRail
     } else {
         NavigationSuiteScaffoldDefaults.calculateFromAdaptiveInfo(adaptiveInfo)

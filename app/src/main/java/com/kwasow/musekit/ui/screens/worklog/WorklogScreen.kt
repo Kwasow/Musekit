@@ -38,12 +38,12 @@ fun WorklogScreen() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TopBar() {
-    val navigation = LocalMusekitNavigation.current
+    val (_, navigateBack) = LocalMusekitNavigation.current
 
     CenterAlignedTopAppBar(
         title = { Text(text = stringResource(id = R.string.practice_history)) },
         navigationIcon = {
-            IconButton(onClick = { navigation.navigateBack() }) {
+            IconButton(onClick = { navigateBack() }) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_back),
                     contentDescription = "TODO",

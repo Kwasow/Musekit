@@ -156,12 +156,7 @@ private fun MainView(
     closeBottomSheet: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Box(
-        modifier =
-            Modifier
-                .fillMaxSize()
-                .padding(horizontal = 16.dp),
-    ) {
+    Box(modifier = modifier) {
         TopBar()
 
         Column(
@@ -182,7 +177,7 @@ private fun MainView(
 
 @Composable
 private fun TopBar() {
-    val navigation = LocalMusekitNavigation.current
+    val (navigateToWorklog, _) = LocalMusekitNavigation.current
 
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -191,7 +186,7 @@ private fun TopBar() {
     ) {
         TempoDisplay()
 
-        IconButton(onClick = { navigation.navigateToWorklog() }) {
+        IconButton(onClick = { navigateToWorklog() }) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_history),
                 contentDescription =
