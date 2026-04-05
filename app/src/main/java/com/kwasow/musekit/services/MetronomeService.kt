@@ -121,15 +121,7 @@ class MetronomeService :
     fun startStopMetronome() {
         if (isPlaying.value == true) {
             stopMetronome()
-
-            sessionStart?.let { start ->
-                coroutineScope.launch {
-                    worklogManager.addWorklogEntry(start, LocalDateTime.now())
-                }
-            }
-            sessionStart = null
         } else {
-            sessionStart = LocalDateTime.now()
             startMetronome()
         }
     }
@@ -138,12 +130,21 @@ class MetronomeService :
     private fun toInterval(bpm: Int): Long = (1000L * 60) / bpm
 
     private fun startMetronome() {
+        sessionStart = LocalDateTime.now()
+
         isPlaying.value = true
         currentBeat.value = 0
         beatHandler.post(this)
     }
 
     private fun stopMetronome() {
+        sessionStart?.let { start ->
+            coroutineScope.launch {
+                worklogManager.addWorklogEntry(start, LocalDateTime.now())
+            }
+        }
+        sessionStart = null
+
         isPlaying.value = false
 
         if (this::beatHandler.isInitialized) {

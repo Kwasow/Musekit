@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -21,8 +23,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.kwasow.musekit.R
+import com.kwasow.musekit.room.PracticeSession
+import com.kwasow.musekit.ui.components.SettingsSection
 import com.kwasow.musekit.ui.composition.LocalMusekitNavigation
 import org.koin.compose.viewmodel.koinViewModel
+import java.time.Month
+import java.time.format.TextStyle
+import java.util.Locale
 
 // ====== Public composables
 @Composable
@@ -78,17 +85,41 @@ private fun MainView(paddingValues: PaddingValues) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         } else {
             val byMonth =
-                sessions.groupBy { session ->
-                    Pair(session.date.year, session.date.monthValue)
+                sessions.groupBy { (date) ->
+                    Pair(date.year, date.monthValue)
                 }
+
+            LazyColumn {
+                items(byMonth.keys.sortedBy { (year, month) -> year * 12 + month }) {
+                    PracticeEntriesSection(
+                        month = it.second,
+                        year = it.first,
+                        sessions = byMonth[it] ?: emptyList(),
+                    )
+                }
+            }
         }
     }
 }
 
 @Composable
-private fun PracticeEntriesSection() {
+private fun PracticeEntriesSection(
+    month: Int,
+    year: Int,
+    sessions: List<PracticeSession>,
+) {
+    val monthName = Month.of(month).getDisplayName(TextStyle.FULL_STANDALONE, Locale.getDefault())
+
+    SettingsSection(title = "$monthName $year") {
+        sessions.forEach {
+            PracticeEntry(session = it)
+        }
+    }
 }
 
 @Composable
-private fun PracticeEntry() {
+private fun PracticeEntry(session: PracticeSession) {
+    Text(
+        "${session.date} // ${session.length}"
+    )
 }
