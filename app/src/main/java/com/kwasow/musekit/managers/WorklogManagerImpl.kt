@@ -49,8 +49,8 @@ class WorklogManagerImpl(
         date: LocalDate,
         length: Long,
     ) {
-        val existingEntry = practiceSessionDao.get(date) ?: PracticeSession(date = date, length = 0)
-        val updatedEntry = existingEntry.copy(length = length)
+        val (date, prevLength) = practiceSessionDao.get(date) ?: PracticeSession(date, 0)
+        val updatedEntry = PracticeSession(date, prevLength + length)
         practiceSessionDao.insertAll(updatedEntry)
     }
 }

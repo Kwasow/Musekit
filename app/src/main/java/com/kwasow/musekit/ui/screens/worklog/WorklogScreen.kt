@@ -120,6 +120,6 @@ private fun PracticeEntriesSection(
 @Composable
 private fun PracticeEntry(session: PracticeSession) {
     Text(
-        "${session.date} // ${session.length}"
+        "${session.date} // ${session.length}",
     )
 }
