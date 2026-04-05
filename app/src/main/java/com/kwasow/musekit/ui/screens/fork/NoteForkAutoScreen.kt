@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -32,10 +33,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.kwasow.musekit.R
+import com.kwasow.musekit.data.Note
 import com.kwasow.musekit.ui.components.AutoSizeText
 import com.kwasow.musekit.ui.components.PermissionMicrophoneView
 import com.kwasow.musekit.ui.components.TunerView
 import com.kwasow.musekit.utils.MusekitPitchDetector
+import com.kwasow.musekit.utils.ScreenUtils
 import org.koin.androidx.compose.koinViewModel
 
 // ====== Public composables
@@ -55,7 +58,6 @@ fun NoteForkAutoScreen() {
 private fun MainView() {
     val viewModel = koinViewModel<NoteForkScreenViewModel>()
     val pitch by viewModel.automaticTunerPitch.collectAsState()
-    val style by viewModel.notationStyle.collectAsState()
 
     val dispatcher = remember { MusekitPitchDetector.buildDefaultDispatcher() }
     val pitchDetector = remember { MusekitPitchDetector(dispatcher) { pitch } }
@@ -70,6 +72,18 @@ private fun MainView() {
         }
     }
 
+    if (ScreenUtils.isWide()) {
+        WideView(detectionResult.value)
+    } else {
+        DefaultView(detectionResult.value)
+    }
+}
+
+@Composable
+private fun DefaultView(detectionResult: Pair<Note, Double>?) {
+    val viewModel = koinViewModel<NoteForkScreenViewModel>()
+    val style by viewModel.notationStyle.collectAsState()
+
     Box(
         modifier =
             Modifier
@@ -80,23 +94,20 @@ private fun MainView() {
         TunerView(
             note =
                 style.let { style ->
-                    val note = detectionResult.value?.first ?: return@let null
+                    val note = detectionResult?.first ?: return@let null
                     return@let viewModel.getSuperscriptedNote(note, style)
                 },
-            cents = detectionResult.value?.second,
+            cents = detectionResult?.second,
         )
 
-        PitchSelector(
+        DefaultPitchSelector(
             modifier = Modifier.align(Alignment.BottomCenter),
         )
     }
 }
 
 @Composable
-private fun PitchSelector(modifier: Modifier = Modifier) {
-    val viewModel = koinViewModel<NoteForkScreenViewModel>()
-    val automaticTunerPitch by viewModel.automaticTunerPitch.collectAsState()
-
+private fun DefaultPitchSelector(modifier: Modifier = Modifier) {
     Card(modifier = modifier.fillMaxWidth()) {
         Row(
             modifier =
@@ -107,40 +118,90 @@ private fun PitchSelector(modifier: Modifier = Modifier) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_minus_circle),
-                contentDescription = stringResource(id = R.string.contentDescription_decrease),
-                tint = MaterialTheme.colorScheme.primary,
-                modifier =
-                    Modifier
-                        .fillMaxHeight()
-                        .padding(8.dp)
-                        .clip(CircleShape)
-                        .clickable {
-                            viewModel.setAutomaticTunerPitch(automaticTunerPitch - 1)
-                        },
-            )
-
-            AutoSizeText(
-                text = stringResource(id = R.string.pitch_placeholder, automaticTunerPitch),
-                modifier = Modifier.fillMaxHeight(),
-            )
-
-            Icon(
-                painter = painterResource(id = R.drawable.ic_plus_circle),
-                contentDescription = stringResource(id = R.string.contentDescription_increase),
-                tint = MaterialTheme.colorScheme.primary,
-                modifier =
-                    Modifier
-                        .fillMaxHeight()
-                        .padding(8.dp)
-                        .clip(CircleShape)
-                        .clickable {
-                            viewModel.setAutomaticTunerPitch(automaticTunerPitch + 1)
-                        },
-            )
+            PitchSelectorContent(modifier = Modifier.fillMaxHeight())
         }
     }
+}
+
+@Composable
+private fun WideView(detectionResult: Pair<Note, Double>?) {
+    val viewModel = koinViewModel<NoteForkScreenViewModel>()
+    val style by viewModel.notationStyle.collectAsState()
+
+    Box(
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp, vertical = 8.dp),
+        contentAlignment = Alignment.Center,
+    ) {
+        TunerView(
+            note =
+                style.let { style ->
+                    val note = detectionResult?.first ?: return@let null
+                    return@let viewModel.getSuperscriptedNote(note, style)
+                },
+            cents = detectionResult?.second,
+        )
+
+        WidePitchSelector(
+            modifier = Modifier.align(Alignment.CenterEnd),
+        )
+    }
+}
+
+@Composable
+private fun WidePitchSelector(modifier: Modifier = Modifier) {
+    Card(modifier = modifier.fillMaxHeight()) {
+        Column(
+            modifier =
+                Modifier
+                    .padding(16.dp)
+                    .fillMaxHeight()
+                    .width(IntrinsicSize.Max),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceBetween,
+        ) {
+            PitchSelectorContent(modifier = Modifier.fillMaxWidth())
+        }
+    }
+}
+
+@Composable
+private fun PitchSelectorContent(modifier: Modifier = Modifier) {
+    val viewModel = koinViewModel<NoteForkScreenViewModel>()
+    val automaticTunerPitch by viewModel.automaticTunerPitch.collectAsState()
+
+    Icon(
+        painter = painterResource(id = R.drawable.ic_minus_circle),
+        contentDescription = stringResource(id = R.string.contentDescription_decrease),
+        tint = MaterialTheme.colorScheme.primary,
+        modifier =
+            Modifier
+                .padding(8.dp)
+                .clip(CircleShape)
+                .clickable {
+                    viewModel.setAutomaticTunerPitch(automaticTunerPitch - 1)
+                },
+    )
+
+    AutoSizeText(
+        text = stringResource(id = R.string.pitch_placeholder, automaticTunerPitch),
+        modifier = modifier,
+    )
+
+    Icon(
+        painter = painterResource(id = R.drawable.ic_plus_circle),
+        contentDescription = stringResource(id = R.string.contentDescription_increase),
+        tint = MaterialTheme.colorScheme.primary,
+        modifier =
+            Modifier
+                .padding(8.dp)
+                .clip(CircleShape)
+                .clickable {
+                    viewModel.setAutomaticTunerPitch(automaticTunerPitch + 1)
+                },
+    )
 }
 
 @Composable

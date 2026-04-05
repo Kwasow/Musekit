@@ -108,9 +108,10 @@ dependencies {
     // Compose
     implementation(libs.compose.accompanist.permissions)
     implementation(libs.compose.livedata)
-    implementation(libs.compose.material3)
     implementation(libs.compose.material.icons.core)
     implementation(libs.compose.material.icons.extended)
+    implementation(libs.compose.material3)
+    implementation(libs.compose.material3.adaptive.navigation)
     implementation(libs.compose.navigation)
     implementation(libs.compose.ui.tooling.preview)
 

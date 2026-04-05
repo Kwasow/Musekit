@@ -2,7 +2,6 @@ package com.kwasow.musekit.ui.screens.fork
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -45,7 +44,10 @@ import com.kwasow.musekit.ui.components.AutoSizeText
 import com.kwasow.musekit.ui.components.PlayPauseButton
 import com.kwasow.musekit.ui.dialogs.PresetRemoveDialog
 import com.kwasow.musekit.ui.dialogs.PresetSaveDialog
+import com.kwasow.musekit.utils.ScreenUtils
 import org.koin.androidx.compose.koinViewModel
+import org.koin.core.module.dsl.viewModel
+import org.koin.plugin.module.dsl.viewModel
 
 // ====== Public composables
 @Composable
@@ -54,21 +56,26 @@ fun NoteForkManualScreen() {
     var presetDialog by remember { mutableStateOf(RemovePresetDialog()) }
     var currentPreset by remember { mutableStateOf(viewModel.defaultPreset.first) }
 
-    Column(
-        modifier = Modifier.padding(horizontal = 16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        PresetPicker(
+    if (ScreenUtils.isWide()) {
+        WideView(
             currentPreset = currentPreset,
             setPreset = { name, note ->
                 currentPreset = name
                 viewModel.setNote(note)
             },
+            onSavePreset = { presetDialog.openSave() },
             onRemovePreset = { presetDialog.openRemove(it) },
         )
-        PitchPicker()
-        PlayPause(scope = this)
-        AdditionalActions(onSavePreset = { presetDialog.openSave() })
+    } else {
+        DefaultView(
+            currentPreset = currentPreset,
+            setPreset = { name, note ->
+                currentPreset = name
+                viewModel.setNote(note)
+            },
+            onSavePreset = { presetDialog.openSave() },
+            onRemovePreset = { presetDialog.openRemove(it) },
+        )
     }
 
     when (presetDialog.state) {
@@ -96,12 +103,78 @@ fun NoteForkManualScreen() {
 }
 
 // ====== Private methods
+@Composable
+private fun DefaultView(
+    currentPreset: String,
+    setPreset: (String, Note) -> Unit,
+    onSavePreset: () -> Unit,
+    onRemovePreset: (String) -> Unit,
+) {
+    Column(
+        modifier = Modifier.padding(horizontal = 16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        PresetPicker(
+            currentPreset = currentPreset,
+            setPreset = setPreset,
+            onRemovePreset = onRemovePreset,
+            modifier = Modifier.fillMaxWidth(),
+        )
+        PitchPicker()
+        PlayPause(modifier = Modifier.weight(1f))
+        AdditionalActions(
+            onSavePreset = onSavePreset,
+            modifier = Modifier.fillMaxWidth(),
+        )
+    }
+}
+
+@Composable
+private fun WideView(
+    currentPreset: String,
+    setPreset: (String, Note) -> Unit,
+    onSavePreset: () -> Unit,
+    onRemovePreset: (String) -> Unit,
+) {
+    Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            PresetPicker(
+                currentPreset = currentPreset,
+                setPreset = setPreset,
+                onRemovePreset = onRemovePreset,
+                modifier = Modifier.weight(1f),
+            )
+            AdditionalActions(
+                onSavePreset = onSavePreset,
+                modifier = Modifier.padding(top = 8.dp),
+            )
+        }
+
+        Row(
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            PitchPickerCards(modifier = Modifier.weight(1f))
+            PlayPause()
+        }
+    }
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun PresetPicker(
     currentPreset: String,
     setPreset: (String, Note) -> Unit,
     onRemovePreset: (String) -> Unit,
+    modifier: Modifier,
 ) {
     val viewModel = koinViewModel<NoteForkScreenViewModel>()
     val presets = viewModel.presets.observeAsState()
@@ -110,7 +183,7 @@ private fun PresetPicker(
     ExposedDropdownMenuBox(
         expanded = expanded,
         onExpandedChange = { expanded = !expanded },
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier,
     ) {
         OutlinedTextField(
             value = currentPreset,
@@ -172,43 +245,48 @@ private fun PresetPicker(
 
 @Composable
 private fun PitchPicker() {
-    val viewModel = koinViewModel<NoteForkScreenViewModel>()
-    val notationStyle by viewModel.notationStyle.collectAsState()
-
     Row(
         modifier = Modifier.padding(vertical = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        PropertyCard(
-            label = stringResource(id = R.string.note),
-            value = viewModel.getSuperscriptedNote(viewModel.currentNote, notationStyle),
-            onIncrease = {
-                viewModel.setNote(viewModel.currentNote.apply { up() })
-            },
-            onDecrease = {
-                viewModel.setNote(viewModel.currentNote.apply { down() })
-            },
-            modifier = Modifier.weight(1f),
-        )
-
-        PropertyCard(
-            label = stringResource(id = R.string.pitch),
-            value =
-                AnnotatedString(
-                    stringResource(
-                        id = R.string.pitch_placeholder,
-                        viewModel.currentNote.pitch,
-                    ),
-                ),
-            onIncrease = {
-                viewModel.setNote(viewModel.currentNote.apply { pitch += 1 })
-            },
-            onDecrease = {
-                viewModel.setNote(viewModel.currentNote.apply { pitch -= 1 })
-            },
-            modifier = Modifier.weight(1f),
-        )
+        PitchPickerCards(modifier = Modifier.weight(1f))
     }
+}
+
+@Composable
+private fun PitchPickerCards(modifier: Modifier) {
+    val viewModel = koinViewModel<NoteForkScreenViewModel>()
+    val notationStyle by viewModel.notationStyle.collectAsState()
+
+    PropertyCard(
+        label = stringResource(id = R.string.note),
+        value = viewModel.getSuperscriptedNote(viewModel.currentNote, notationStyle),
+        onIncrease = {
+            viewModel.setNote(viewModel.currentNote.apply { up() })
+        },
+        onDecrease = {
+            viewModel.setNote(viewModel.currentNote.apply { down() })
+        },
+        modifier = modifier,
+    )
+
+    PropertyCard(
+        label = stringResource(id = R.string.pitch),
+        value =
+            AnnotatedString(
+                stringResource(
+                    id = R.string.pitch_placeholder,
+                    viewModel.currentNote.pitch,
+                ),
+            ),
+        onIncrease = {
+            viewModel.setNote(viewModel.currentNote.apply { pitch += 1 })
+        },
+        onDecrease = {
+            viewModel.setNote(viewModel.currentNote.apply { pitch -= 1 })
+        },
+        modifier = modifier,
+    )
 }
 
 @Composable
@@ -219,57 +297,69 @@ private fun PropertyCard(
     onDecrease: () -> Unit,
     modifier: Modifier,
 ) {
+    val pad = 16.dp
+
     Card(modifier = modifier) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(
-                text = label,
-                fontWeight = FontWeight.SemiBold,
-            )
+        val textModifier =
+            if (ScreenUtils.isWide()) {
+                Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+            } else {
+                Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(1f)
+            }
 
-            AutoSizeText(
-                text = value,
-                boldFont = false,
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .aspectRatio(1f),
-            )
+        Text(
+            text = label,
+            fontWeight = FontWeight.SemiBold,
+            modifier = Modifier.padding(start = pad, end = pad, top = pad),
+        )
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                IconButton(onClick = onDecrease) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_minus_circle),
-                        contentDescription =
-                            stringResource(
-                                id = R.string.contentDescription_decrease,
-                            ),
-                        modifier = Modifier.size(20.dp),
-                        tint = MaterialTheme.colorScheme.primary,
-                    )
-                }
+        AutoSizeText(
+            text = value,
+            boldFont = false,
+            modifier = textModifier.padding(horizontal = pad),
+        )
 
-                IconButton(onClick = onIncrease) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_plus_circle),
-                        contentDescription =
-                            stringResource(
-                                id = R.string.contentDescription_increase,
-                            ),
-                        modifier = Modifier.size(20.dp),
-                        tint = MaterialTheme.colorScheme.primary,
-                    )
-                }
+        Row(
+            modifier =
+                Modifier
+                    .padding(start = pad, end = pad, bottom = pad)
+                    .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            IconButton(onClick = onDecrease) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_minus_circle),
+                    contentDescription =
+                        stringResource(
+                            id = R.string.contentDescription_decrease,
+                        ),
+                    modifier = Modifier.size(20.dp),
+                    tint = MaterialTheme.colorScheme.primary,
+                )
+            }
+
+            IconButton(onClick = onIncrease) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_plus_circle),
+                    contentDescription =
+                        stringResource(
+                            id = R.string.contentDescription_increase,
+                        ),
+                    modifier = Modifier.size(20.dp),
+                    tint = MaterialTheme.colorScheme.primary,
+                )
             }
         }
     }
 }
 
 @Composable
-private fun PlayPause(scope: ColumnScope) {
+private fun PlayPause(modifier: Modifier = Modifier) {
     val viewModel = koinViewModel<NoteForkScreenViewModel>()
     val isPlaying = viewModel.isPlaying.observeAsState(false)
 
@@ -279,20 +369,22 @@ private fun PlayPause(scope: ColumnScope) {
         }
     }
 
-    with(scope) {
-        PlayPauseButton(
-            modifier = Modifier.weight(1f),
-            isPlaying = isPlaying.value,
-            onChange = { viewModel.startStopNote() },
-        )
-    }
+    PlayPauseButton(
+        modifier = modifier,
+        isPlaying = isPlaying.value,
+        onChange = { viewModel.startStopNote() },
+    )
 }
 
 @Composable
-private fun AdditionalActions(onSavePreset: () -> Unit) {
+private fun AdditionalActions(
+    onSavePreset: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     Row(
         horizontalArrangement = Arrangement.End,
-        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier,
     ) {
         Button(
             onClick = onSavePreset,

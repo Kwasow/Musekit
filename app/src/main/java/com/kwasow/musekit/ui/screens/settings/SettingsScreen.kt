@@ -3,9 +3,12 @@ package com.kwasow.musekit.ui.screens.settings
 import android.os.Build
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CardDefaults
@@ -38,6 +41,7 @@ import com.kwasow.musekit.ui.components.SettingsDivider
 import com.kwasow.musekit.ui.components.SettingsEntry
 import com.kwasow.musekit.ui.components.SettingsSection
 import com.kwasow.musekit.ui.dialogs.LicenseDialog
+import com.kwasow.musekit.utils.ScreenUtils
 import org.koin.androidx.compose.koinViewModel
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM as NIGHT_SYSTEM
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO as NIGHT_NO
@@ -47,17 +51,12 @@ import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES as NIGHT_YES
 @Composable
 fun SettingsScreen() {
     val viewModel = koinViewModel<SettingsScreenViewModel>()
-    var licenseDialog = remember { LicenseDialogInfo() }
+    val licenseDialog = remember { LicenseDialogInfo() }
 
-    Column(
-        modifier = Modifier.verticalScroll(rememberScrollState()),
-    ) {
-        AppDetails()
-        AppSettingsSection()
-        AboutSection(
-            onOpenLicenseDialog = { licenseDialog.state = LicenseDialogInfo.State.DIALOG_OPEN },
-        )
-        Footer()
+    if (ScreenUtils.isWide()) {
+        WideView(licenseDialog = licenseDialog)
+    } else {
+        DefaultView(licenseDialog = licenseDialog)
     }
 
     LicenseDialog(
@@ -68,11 +67,52 @@ fun SettingsScreen() {
 
 // ====== Private composables
 @Composable
-private fun AppDetails() {
+private fun DefaultView(licenseDialog: LicenseDialogInfo) {
+    Column(
+        modifier =
+            Modifier
+                .widthIn(0.dp, 480.dp)
+                .verticalScroll(rememberScrollState()),
+    ) {
+        AppDetails(modifier = Modifier.fillMaxWidth())
+        MainColumn(licenseDialog = licenseDialog)
+    }
+}
+
+@Composable
+private fun WideView(licenseDialog: LicenseDialogInfo) {
+    Row(
+        modifier = Modifier.fillMaxSize(),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        AppDetails(modifier = Modifier.weight(0.4f))
+
+        Column(
+            modifier =
+                Modifier
+                    .verticalScroll(rememberScrollState())
+                    .weight(0.6f),
+        ) {
+            MainColumn(licenseDialog = licenseDialog)
+        }
+    }
+}
+
+@Composable
+private fun MainColumn(licenseDialog: LicenseDialogInfo) {
+    AppSettingsSection()
+    AboutSection(
+        onOpenLicenseDialog = { licenseDialog.state = LicenseDialogInfo.State.DIALOG_OPEN },
+    )
+    Footer()
+}
+
+@Composable
+private fun AppDetails(modifier: Modifier = Modifier) {
     val color = MaterialTheme.colorScheme.onPrimary
 
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         OutlinedCard(
