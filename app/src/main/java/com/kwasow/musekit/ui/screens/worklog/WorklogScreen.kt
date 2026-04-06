@@ -1,5 +1,6 @@
 package com.kwasow.musekit.ui.screens.worklog
 
+import android.text.format.DateUtils
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,6 +9,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
+import androidx.compose.material.icons.outlined.HourglassBottom
+import androidx.compose.material.icons.outlined.HourglassEmpty
+import androidx.compose.material.icons.outlined.HourglassFull
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -22,9 +26,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.stringResource
 import com.kwasow.musekit.R
 import com.kwasow.musekit.room.PracticeSession
+import com.kwasow.musekit.ui.components.ListDivider
+import com.kwasow.musekit.ui.components.ListEntry
 import com.kwasow.musekit.ui.components.ListSection
 import com.kwasow.musekit.ui.composition.LocalMusekitNavigation
 import org.koin.compose.viewmodel.koinViewModel
@@ -91,7 +98,7 @@ private fun MainView(paddingValues: PaddingValues) {
                 }
 
             LazyColumn {
-                items(byMonth.keys.sortedBy { (year, month) -> year * 12 + month }) {
+                items(byMonth.keys.sortedByDescending { (year, month) -> year * 12 + month }) {
                     PracticeEntriesSection(
                         month = it.second,
                         year = it.first,
@@ -112,15 +119,36 @@ private fun PracticeEntriesSection(
     val monthName = Month.of(month).getDisplayName(TextStyle.FULL_STANDALONE, Locale.getDefault())
 
     ListSection(title = "$monthName $year") {
-        sessions.forEach {
-            PracticeEntry(session = it)
+        sessions.sortedByDescending(PracticeSession::date).forEachIndexed { index, session ->
+            PracticeEntry(session = session)
+
+            if (index < sessions.lastIndex) {
+                ListDivider()
+            }
         }
     }
 }
 
 @Composable
 private fun PracticeEntry(session: PracticeSession) {
-    Text(
-        "${session.date} // ${session.length}",
+    val iconLittlePractice = rememberVectorPainter(Icons.Outlined.HourglassEmpty)
+    val iconSomePractice = rememberVectorPainter(Icons.Outlined.HourglassBottom)
+    val iconFullPractice = rememberVectorPainter(Icons.Outlined.HourglassFull)
+
+    val icon =
+        if (session.length < 30 * 60) {
+            iconLittlePractice
+        } else if (session.length < 60 * 60) {
+            iconSomePractice
+        } else {
+            iconFullPractice
+        }
+
+    ListEntry(
+        icon = icon,
+        iconDescription = "TODO",
+        header = DateUtils.formatElapsedTime(session.length),
+        description = session.date.toString(),
+        onClick = null,
     )
 }

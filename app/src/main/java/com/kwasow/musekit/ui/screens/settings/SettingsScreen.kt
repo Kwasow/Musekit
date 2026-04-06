@@ -173,7 +173,7 @@ private fun ThemeSetting() {
     ListEntry(
         icon = rememberVectorPainter(Icons.Outlined.Nightlight),
         iconDescription = stringResource(id = R.string.contentDescription_moon_icon),
-        name = stringResource(id = R.string.theme),
+        header = stringResource(id = R.string.theme),
         description = stringResource(id = R.string.theme_subtitle),
         onClick = null,
     )
@@ -229,7 +229,7 @@ private fun NotationStyleSetting() {
     ListEntry(
         icon = rememberVectorPainter(Icons.Outlined.Language),
         iconDescription = stringResource(id = R.string.contentDescription_localization),
-        name = stringResource(id = R.string.notation_style),
+        header = stringResource(id = R.string.notation_style),
         description = stringResource(id = R.string.notation_style_subtitle),
         onClick = null,
     )
@@ -263,7 +263,7 @@ private fun AboutSection(onOpenLicenseDialog: () -> Unit) {
         ListEntry(
             icon = painterResource(id = R.drawable.ic_github),
             iconDescription = stringResource(id = R.string.contentDescription_github_logo),
-            name = stringResource(id = R.string.source_code),
+            header = stringResource(id = R.string.source_code),
             description = stringResource(id = R.string.source_code_subtitle),
             onClick = { viewModel.openGithub() },
         )
@@ -273,7 +273,7 @@ private fun AboutSection(onOpenLicenseDialog: () -> Unit) {
         ListEntry(
             icon = painterResource(id = R.drawable.ic_mastodon),
             iconDescription = stringResource(id = R.string.contentDescription_mastodon_logo),
-            name = stringResource(id = R.string.developer),
+            header = stringResource(id = R.string.developer),
             description = stringResource(id = R.string.developer_subtitle),
             onClick = { viewModel.openMastodon() },
         )
@@ -283,7 +283,7 @@ private fun AboutSection(onOpenLicenseDialog: () -> Unit) {
         ListEntry(
             icon = rememberVectorPainter(Icons.Outlined.Web),
             iconDescription = stringResource(id = R.string.contentDescription_internet_website),
-            name = stringResource(id = R.string.developer_website),
+            header = stringResource(id = R.string.developer_website),
             description = stringResource(id = R.string.developer_website_subtitle),
             onClick = { viewModel.openWebsite() },
         )
@@ -293,7 +293,7 @@ private fun AboutSection(onOpenLicenseDialog: () -> Unit) {
         ListEntry(
             icon = rememberVectorPainter(Icons.AutoMirrored.Outlined.Notes),
             iconDescription = stringResource(id = R.string.contentDescription_file_icon),
-            name = stringResource(id = R.string.licenses),
+            header = stringResource(id = R.string.licenses),
             description = stringResource(id = R.string.licenses_subtitle),
             onClick = onOpenLicenseDialog,
         )

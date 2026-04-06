@@ -29,7 +29,7 @@ fun ListEntry(
     icon: Painter,
     iconTint: Color = LocalContentColor.current,
     iconDescription: String = "",
-    name: String,
+    header: String,
     description: String = "",
     onClick: (() -> Unit)?,
     trailingContent: @Composable () -> Unit = {},
@@ -54,7 +54,7 @@ fun ListEntry(
             contentDescription = iconDescription,
         )
         ListEntry(
-            header = name,
+            header = header,
             description = description,
             modifier = Modifier.weight(1f),
         )
@@ -110,7 +110,7 @@ private fun ListEntry(
 private fun ListEntryPreview() {
     ListEntry(
         icon = rememberVectorPainter(image = Icons.Outlined.Delete),
-        name = "Settings entry",
+        header = "Settings entry",
         description = "This is the setting description",
         onClick = {},
     )

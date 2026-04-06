@@ -60,20 +60,20 @@ private fun ListSectionPreview() {
         ListSection(title = "General") {
             ListEntry(
                 icon = rememberVectorPainter(image = Icons.Outlined.Add),
-                name = "Entry 1",
+                header = "Entry 1",
                 description = "This is the setting description",
                 onClick = {},
             )
             HorizontalDivider()
             ListEntry(
                 icon = rememberVectorPainter(image = Icons.Outlined.Add),
-                name = "Entry 2 (no description)",
+                header = "Entry 2 (no description)",
                 onClick = {},
             )
             HorizontalDivider()
             ListEntry(
                 icon = rememberVectorPainter(image = Icons.Outlined.Add),
-                name = "Entry 3",
+                header = "Entry 3",
                 description =
                     "This is the setting description that is so long that it doesn't" +
                         "fit on the screen",
