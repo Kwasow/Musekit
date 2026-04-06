@@ -1,0 +1,8 @@
+The app now includes a worklog feature, that tracks how long you've been
+practicing with a metronome.
+
+Other updates:
+- Support for landscape screens
+- Updated icons to be more consistent
+- Fixed issues with metronome timings
+
