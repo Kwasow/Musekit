@@ -10,11 +10,13 @@ class PresetsManagerImpl(
     private val presetDao = database.presetDao()
 
     // ====== Public methods
-    override suspend fun savePreset(preset: Preset) {
+    override suspend fun savePreset(preset: Preset): Long? {
         // TODO: Someone could name their preset "Default"
         if (preset.name.isNotBlank()) {
-            presetDao.insertAll(preset)
+            return presetDao.insert(preset)
         }
+
+        return null
     }
 
     override suspend fun getPresets(): List<Preset> = presetDao.getAll()

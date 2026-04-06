@@ -107,10 +107,10 @@ class NoteForkScreenViewModel(
             ),
         )
 
-    fun addPreset(
+    suspend fun addPreset(
         name: String,
         note: Note,
-    ) {
+    ): Preset? {
         val preset =
             Preset(
                 name = name,
@@ -119,10 +119,10 @@ class NoteForkScreenViewModel(
                 pitch = note.pitch,
             )
 
-        viewModelScope.launch {
-            presetsManager.savePreset(preset)
-            refreshPresets()
-        }
+        val id = presetsManager.savePreset(preset) ?: return null
+        refreshPresets()
+
+        return preset.copy(id = id)
     }
 
     fun removePreset(id: Long) {

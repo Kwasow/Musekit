@@ -4,7 +4,7 @@ import com.kwasow.musekit.room.Preset
 
 interface PresetsManager {
     // ====== Methods
-    suspend fun savePreset(preset: Preset)
+    suspend fun savePreset(preset: Preset): Long?
 
     suspend fun getPresets(): List<Preset>
 

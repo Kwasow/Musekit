@@ -34,6 +34,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,6 +50,7 @@ import com.kwasow.musekit.ui.components.PlayPauseButton
 import com.kwasow.musekit.ui.dialogs.PresetRemoveDialog
 import com.kwasow.musekit.ui.dialogs.PresetSaveDialog
 import com.kwasow.musekit.utils.ScreenUtils
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 // ====== Public composables
@@ -57,6 +59,8 @@ fun NoteForkManualScreen() {
     val viewModel = koinViewModel<NoteForkScreenViewModel>()
     var presetDialog by remember { mutableStateOf(RemovePresetDialog()) }
     var currentPreset: Preset? by remember { mutableStateOf(viewModel.defaultPreset) }
+
+    val coroutineScope = rememberCoroutineScope()
 
     if (ScreenUtils.isWide()) {
         WideView(
@@ -84,8 +88,11 @@ fun NoteForkManualScreen() {
         RemovePresetDialog.State.SAVE_PRESET ->
             PresetSaveDialog(
                 onSave = { name ->
-                    viewModel.addPreset(name, viewModel.currentNote)
-                    presetDialog.close()
+                    coroutineScope.launch {
+                        val newPreset = viewModel.addPreset(name, viewModel.currentNote)
+                        currentPreset = newPreset
+                        presetDialog.close()
+                    }
                 },
                 onDismiss = { presetDialog.close() },
             )

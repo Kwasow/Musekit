@@ -11,7 +11,7 @@ interface PresetDao {
     suspend fun getAll(): List<Preset>
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    suspend fun insertAll(vararg presets: Preset)
+    suspend fun insert(preset: Preset): Long?
 
     @Query("DELETE FROM Preset WHERE id = :id")
     suspend fun deleteById(id: Long)
