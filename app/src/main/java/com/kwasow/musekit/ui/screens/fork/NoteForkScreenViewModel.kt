@@ -12,6 +12,7 @@ import androidx.lifecycle.viewModelScope
 import com.kwasow.musekit.R
 import com.kwasow.musekit.data.NotationStyle
 import com.kwasow.musekit.data.Note
+import com.kwasow.musekit.data.Notes
 import com.kwasow.musekit.managers.PermissionManager
 import com.kwasow.musekit.managers.PitchPlayerManager
 import com.kwasow.musekit.managers.PreferencesManager
@@ -97,8 +98,14 @@ class NoteForkScreenViewModel(
         pitchPlayerManager.frequency = note.getFrequency()
     }
 
-    fun setNoteFromPreset(preset: Preset) {
-    }
+    fun setNoteFromPreset(preset: Preset) =
+        setNote(
+            Note(
+                pitch = preset.pitch,
+                note = Notes.fromSemitones(preset.semitones),
+                octave = preset.octave,
+            ),
+        )
 
     fun addPreset(
         name: String,
