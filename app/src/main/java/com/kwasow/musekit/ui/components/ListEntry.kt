@@ -25,7 +25,7 @@ import com.kwasow.musekit.data.ContentAlpha
 
 // ====== Public composables
 @Composable
-fun SettingsEntry(
+fun ListEntry(
     icon: Painter,
     iconTint: Color = LocalContentColor.current,
     iconDescription: String = "",
@@ -48,13 +48,13 @@ fun SettingsEntry(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        SettingIcon(
+        ListEntryIcon(
             icon = icon,
             tint = iconTint,
             contentDescription = iconDescription,
         )
-        SettingName(
-            name = name,
+        ListEntry(
+            header = name,
             description = description,
             modifier = Modifier.weight(1f),
         )
@@ -64,7 +64,7 @@ fun SettingsEntry(
 
 // ====== Private composable
 @Composable
-private fun SettingIcon(
+private fun ListEntryIcon(
     icon: Painter,
     contentDescription: String = "",
     tint: Color = LocalContentColor.current,
@@ -78,8 +78,8 @@ private fun SettingIcon(
 }
 
 @Composable
-private fun SettingName(
-    name: String,
+private fun ListEntry(
+    header: String,
     description: String,
     modifier: Modifier = Modifier,
 ) {
@@ -87,7 +87,7 @@ private fun SettingName(
         modifier = modifier,
     ) {
         Text(
-            text = name,
+            text = header,
             style = MaterialTheme.typography.bodyLarge,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
@@ -107,8 +107,8 @@ private fun SettingName(
 // ====== Previews
 @Preview
 @Composable
-private fun SettingsEntryPreview() {
-    SettingsEntry(
+private fun ListEntryPreview() {
+    ListEntry(
         icon = rememberVectorPainter(image = Icons.Outlined.Delete),
         name = "Settings entry",
         description = "This is the setting description",

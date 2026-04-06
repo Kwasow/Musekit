@@ -17,7 +17,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Notes
 import androidx.compose.material.icons.outlined.Language
 import androidx.compose.material.icons.outlined.Nightlight
-import androidx.compose.material.icons.outlined.Notes
 import androidx.compose.material.icons.outlined.Web
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -46,9 +45,9 @@ import com.kwasow.musekit.BuildConfig
 import com.kwasow.musekit.R
 import com.kwasow.musekit.data.NotationStyle
 import com.kwasow.musekit.data.dialogs.LicenseDialogInfo
-import com.kwasow.musekit.ui.components.SettingsDivider
-import com.kwasow.musekit.ui.components.SettingsEntry
-import com.kwasow.musekit.ui.components.SettingsSection
+import com.kwasow.musekit.ui.components.ListDivider
+import com.kwasow.musekit.ui.components.ListEntry
+import com.kwasow.musekit.ui.components.ListSection
 import com.kwasow.musekit.ui.dialogs.LicenseDialog
 import com.kwasow.musekit.utils.ScreenUtils
 import org.koin.androidx.compose.koinViewModel
@@ -155,10 +154,10 @@ private fun AppDetails(modifier: Modifier = Modifier) {
 
 @Composable
 private fun AppSettingsSection() {
-    SettingsSection(title = stringResource(id = R.string.settings)) {
+    ListSection(title = stringResource(id = R.string.settings)) {
         ThemeSetting()
 
-        SettingsDivider()
+        ListDivider()
 
         NotationStyleSetting()
     }
@@ -171,7 +170,7 @@ private fun ThemeSetting() {
 
     val count = if (Build.VERSION.SDK_INT >= 29) 3 else 2
 
-    SettingsEntry(
+    ListEntry(
         icon = rememberVectorPainter(Icons.Outlined.Nightlight),
         iconDescription = stringResource(id = R.string.contentDescription_moon_icon),
         name = stringResource(id = R.string.theme),
@@ -227,7 +226,7 @@ private fun NotationStyleSetting() {
     val viewModel = koinViewModel<SettingsScreenViewModel>()
     val notationStyle by viewModel.notationStyle.collectAsState()
 
-    SettingsEntry(
+    ListEntry(
         icon = rememberVectorPainter(Icons.Outlined.Language),
         iconDescription = stringResource(id = R.string.contentDescription_localization),
         name = stringResource(id = R.string.notation_style),
@@ -260,8 +259,8 @@ private fun NotationStyleSetting() {
 private fun AboutSection(onOpenLicenseDialog: () -> Unit) {
     val viewModel = koinViewModel<SettingsScreenViewModel>()
 
-    SettingsSection(title = stringResource(id = R.string.about)) {
-        SettingsEntry(
+    ListSection(title = stringResource(id = R.string.about)) {
+        ListEntry(
             icon = painterResource(id = R.drawable.ic_github),
             iconDescription = stringResource(id = R.string.contentDescription_github_logo),
             name = stringResource(id = R.string.source_code),
@@ -269,9 +268,9 @@ private fun AboutSection(onOpenLicenseDialog: () -> Unit) {
             onClick = { viewModel.openGithub() },
         )
 
-        SettingsDivider()
+        ListDivider()
 
-        SettingsEntry(
+        ListEntry(
             icon = painterResource(id = R.drawable.ic_mastodon),
             iconDescription = stringResource(id = R.string.contentDescription_mastodon_logo),
             name = stringResource(id = R.string.developer),
@@ -279,9 +278,9 @@ private fun AboutSection(onOpenLicenseDialog: () -> Unit) {
             onClick = { viewModel.openMastodon() },
         )
 
-        SettingsDivider()
+        ListDivider()
 
-        SettingsEntry(
+        ListEntry(
             icon = rememberVectorPainter(Icons.Outlined.Web),
             iconDescription = stringResource(id = R.string.contentDescription_internet_website),
             name = stringResource(id = R.string.developer_website),
@@ -289,9 +288,9 @@ private fun AboutSection(onOpenLicenseDialog: () -> Unit) {
             onClick = { viewModel.openWebsite() },
         )
 
-        SettingsDivider()
+        ListDivider()
 
-        SettingsEntry(
+        ListEntry(
             icon = rememberVectorPainter(Icons.AutoMirrored.Outlined.Notes),
             iconDescription = stringResource(id = R.string.contentDescription_file_icon),
             name = stringResource(id = R.string.licenses),

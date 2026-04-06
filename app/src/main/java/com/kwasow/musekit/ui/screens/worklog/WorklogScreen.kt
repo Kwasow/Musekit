@@ -8,7 +8,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
-import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -26,7 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.kwasow.musekit.R
 import com.kwasow.musekit.room.PracticeSession
-import com.kwasow.musekit.ui.components.SettingsSection
+import com.kwasow.musekit.ui.components.ListSection
 import com.kwasow.musekit.ui.composition.LocalMusekitNavigation
 import org.koin.compose.viewmodel.koinViewModel
 import java.time.Month
@@ -112,7 +111,7 @@ private fun PracticeEntriesSection(
 ) {
     val monthName = Month.of(month).getDisplayName(TextStyle.FULL_STANDALONE, Locale.getDefault())
 
-    SettingsSection(title = "$monthName $year") {
+    ListSection(title = "$monthName $year") {
         sessions.forEach {
             PracticeEntry(session = it)
         }
