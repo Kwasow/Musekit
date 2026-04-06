@@ -9,9 +9,14 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.History
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberBottomSheetScaffoldState
@@ -40,6 +45,7 @@ import com.kwasow.musekit.extensions.preventSleep
 import com.kwasow.musekit.services.MetronomeService
 import com.kwasow.musekit.ui.components.PlayPauseButton
 import com.kwasow.musekit.ui.components.rememberBoundLocalService
+import com.kwasow.musekit.ui.composition.LocalMusekitNavigation
 import com.kwasow.musekit.ui.dialogs.SetBeatDialog
 import com.kwasow.musekit.utils.ScreenUtils
 import kotlinx.coroutines.launch
@@ -64,16 +70,18 @@ fun MetronomeScreen() {
         }
     }
 
-    if (ScreenUtils.isWide()) {
-        WideView(
-            metronomeService = metronomeService,
-            onOpenSetBeatDialog = { showSetBeatDialog = true },
-        )
-    } else {
-        DefaultView(
-            metronomeService = metronomeService,
-            onOpenSetBeatDialog = { showSetBeatDialog = true },
-        )
+    Box(modifier = Modifier.safeDrawingPadding()) {
+        if (ScreenUtils.isWide()) {
+            WideView(
+                metronomeService = metronomeService,
+                onOpenSetBeatDialog = { showSetBeatDialog = true },
+            )
+        } else {
+            DefaultView(
+                metronomeService = metronomeService,
+                onOpenSetBeatDialog = { showSetBeatDialog = true },
+            )
+        }
     }
 
     if (showSetBeatDialog) {
@@ -153,7 +161,7 @@ private fun MainView(
     modifier: Modifier = Modifier,
 ) {
     Box(modifier = modifier) {
-        TempoDisplay(modifier = Modifier.align(Alignment.TopStart))
+        TopBar()
 
         Column(
             modifier =
@@ -166,6 +174,29 @@ private fun MainView(
             PlayPause(
                 service = service,
                 closeBottomSheet = closeBottomSheet,
+            )
+        }
+    }
+}
+
+@Composable
+private fun TopBar() {
+    val (navigateToWorklog, _) = LocalMusekitNavigation.current
+
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        TempoDisplay()
+
+        IconButton(onClick = { navigateToWorklog() }) {
+            Icon(
+                imageVector = Icons.Outlined.History,
+                contentDescription =
+                    stringResource(
+                        id = R.string.contentDescription_practice_history,
+                    ),
             )
         }
     }

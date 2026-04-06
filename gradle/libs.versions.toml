@@ -8,6 +8,7 @@ versionName = "2.6.5"
 # BoM
 composeBom = "2026.03.01"
 koinBom = "4.2.0"
+room = "2.8.4"
 
 # Libraries
 accompanistPermissions = "0.37.3"
@@ -20,6 +21,7 @@ appcompat = "1.7.1"
 composeLivedata = "1.10.6"
 composeNavigation = "2.9.7"
 graphicsShapes = "1.1.0"
+desugar = "2.1.5"
 junit = "4.13.2"
 kotlinCore = "1.18.0"
 profileInstaller = "1.4.1"
@@ -32,6 +34,7 @@ baselineProfile = "1.4.1"
 googleProtobufPlugin = "0.9.6"
 kotlinPlugins = "2.3.20"
 ktlintPlugin = "14.2.0"
+ksp = "2.3.6"
 
 [libraries]
 android-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
@@ -54,6 +57,7 @@ compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4
 compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 compose-ui-tooling-base = { group = "androidx.compose.ui", name = "ui-tooling" }
 compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+desugar = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar" }
 google-libraries-protobuf = { group = "com.google.protobuf", name = "protobuf-kotlin-lite", version.ref = "protobuf" }
 google-libraries-protobuf-compiler = { group = "com.google.protobuf", name = "protoc", version.ref = "protobuf" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -62,6 +66,9 @@ koin-android = { group = "io.insert-koin", name = "koin-android" }
 koin-core = { group = "io.insert-koin", name = "koin-core" }
 koin-compose-base = { group = "io.insert-koin", name = "koin-androidx-compose" }
 kotlin-core = { group = "androidx.core", name = "core-ktx", version.ref = "kotlinCore" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+room-kotlin = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiautomator" }
 
 [plugins]
@@ -71,4 +78,5 @@ android-test = { id = "com.android.test", version.ref = "androidGradlePlugin" }
 google-protobuf = { id = "com.google.protobuf", version.ref = "googleProtobufPlugin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlinPlugins" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinPlugins" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintPlugin" }

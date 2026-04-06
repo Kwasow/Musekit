@@ -9,11 +9,19 @@ data class TopLevelRoute<T : Any>(
     val icon: Painter,
 )
 
+// ====== Main routes
 @Serializable
-object NoteFork
+object Main
 
 @Serializable
+object Worklog
+
+// ====== Nested routes
+@Serializable
 object Metronome
+
+@Serializable
+object NoteFork
 
 @Serializable
 object Settings

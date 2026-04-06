@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 
 // ====== Public composables
 @Composable
-fun SettingsSection(
+fun ListSection(
     title: String = "",
     entries: @Composable ColumnScope.() -> Unit,
 ) {
@@ -53,27 +53,27 @@ fun SettingsSection(
 // ====== Previews
 @Preview
 @Composable
-private fun SettingsSectionPreview() {
+private fun ListSectionPreview() {
     Box(
         modifier = Modifier.background(MaterialTheme.colorScheme.background),
     ) {
-        SettingsSection(title = "General") {
-            SettingsEntry(
+        ListSection(title = "General") {
+            ListEntry(
                 icon = rememberVectorPainter(image = Icons.Outlined.Add),
-                name = "Entry 1",
+                header = "Entry 1",
                 description = "This is the setting description",
                 onClick = {},
             )
             HorizontalDivider()
-            SettingsEntry(
+            ListEntry(
                 icon = rememberVectorPainter(image = Icons.Outlined.Add),
-                name = "Entry 2 (no description)",
+                header = "Entry 2 (no description)",
                 onClick = {},
             )
             HorizontalDivider()
-            SettingsEntry(
+            ListEntry(
                 icon = rememberVectorPainter(image = Icons.Outlined.Add),
-                name = "Entry 3",
+                header = "Entry 3",
                 description =
                     "This is the setting description that is so long that it doesn't" +
                         "fit on the screen",

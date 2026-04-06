@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
@@ -51,6 +52,7 @@ fun NoteForkScreen() {
         modifier =
             Modifier
                 .fillMaxSize()
+                .safeDrawingPadding()
                 .padding(top = 8.dp),
     ) {
         Navigation(

@@ -3,6 +3,7 @@ package com.kwasow.musekit.koin
 import com.kwasow.musekit.ui.screens.fork.NoteForkScreenViewModel
 import com.kwasow.musekit.ui.screens.metronome.MetronomeScreenViewModel
 import com.kwasow.musekit.ui.screens.settings.SettingsScreenViewModel
+import com.kwasow.musekit.ui.screens.worklog.WorklogScreenViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
@@ -18,5 +19,9 @@ val viewModelsModule =
 
         viewModel {
             SettingsScreenViewModel(get(), get())
+        }
+
+        viewModel {
+            WorklogScreenViewModel(get())
         }
     }

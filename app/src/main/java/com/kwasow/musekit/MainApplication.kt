@@ -1,6 +1,7 @@
 package com.kwasow.musekit
 
 import android.app.Application
+import com.kwasow.musekit.koin.databaseModule
 import com.kwasow.musekit.koin.managersModule
 import com.kwasow.musekit.koin.viewModelsModule
 import org.koin.android.ext.koin.androidContext
@@ -13,7 +14,7 @@ class MainApplication : Application() {
 
         startKoin {
             androidContext(this@MainApplication)
-            modules(managersModule, viewModelsModule)
+            modules(databaseModule, managersModule, viewModelsModule)
         }
     }
 }

@@ -7,7 +7,7 @@ import androidx.compose.ui.unit.dp
 
 // ====== Public composables
 @Composable
-fun SettingsDivider() {
+fun ListDivider() {
     HorizontalDivider(
         thickness = 3.dp,
         color = MaterialTheme.colorScheme.background,
