@@ -1,6 +1,6 @@
 package com.kwasow.musekit.data
 
-data class Preset(
+data class PresetV1(
     val name: String,
     val semitones: Int,
     val octave: Int,

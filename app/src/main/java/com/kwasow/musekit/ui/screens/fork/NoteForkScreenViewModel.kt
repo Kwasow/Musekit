@@ -13,11 +13,11 @@ import com.kwasow.musekit.R
 import com.kwasow.musekit.data.NotationStyle
 import com.kwasow.musekit.data.Note
 import com.kwasow.musekit.data.Notes
-import com.kwasow.musekit.data.Preset
 import com.kwasow.musekit.managers.PermissionManager
 import com.kwasow.musekit.managers.PitchPlayerManager
 import com.kwasow.musekit.managers.PreferencesManager
 import com.kwasow.musekit.managers.PresetsManager
+import com.kwasow.musekit.room.Preset
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
@@ -33,9 +33,17 @@ class NoteForkScreenViewModel(
 ) : ViewModel() {
     // ====== Fields
     val defaultPreset =
-        applicationContext.getString(R.string.default_preset) to Note()
+        with(Note()) {
+            Preset(
+                id = -1,
+                name = applicationContext.getString(R.string.default_preset),
+                semitones = this.note.semitones,
+                octave = this.octave,
+                pitch = this.pitch,
+            )
+        }
 
-    val presets: MutableLiveData<List<Pair<String, Note>>> = MutableLiveData(emptyList())
+    val presets: MutableLiveData<List<Preset>> = MutableLiveData(emptyList())
     var currentNote by mutableStateOf(
         value = Note(),
         policy = neverEqualPolicy(),
@@ -59,7 +67,10 @@ class NoteForkScreenViewModel(
 
     // ====== Constructors
     init {
-        refreshPresets()
+        viewModelScope.launch {
+            refreshPresets()
+        }
+
         setNote(currentNote)
     }
 
@@ -87,10 +98,19 @@ class NoteForkScreenViewModel(
         pitchPlayerManager.frequency = note.getFrequency()
     }
 
-    fun addPreset(
+    fun setNoteFromPreset(preset: Preset) =
+        setNote(
+            Note(
+                pitch = preset.pitch,
+                note = Notes.fromSemitones(preset.semitones),
+                octave = preset.octave,
+            ),
+        )
+
+    suspend fun addPreset(
         name: String,
         note: Note,
-    ) {
+    ): Preset? {
         val preset =
             Preset(
                 name = name,
@@ -99,13 +119,17 @@ class NoteForkScreenViewModel(
                 pitch = note.pitch,
             )
 
-        presetsManager.savePreset(preset)
+        val id = presetsManager.savePreset(preset) ?: return null
         refreshPresets()
+
+        return preset.copy(id = id)
     }
 
-    fun removePreset(presetName: String) {
-        presetsManager.removePreset(presetName)
-        refreshPresets()
+    fun removePreset(id: Long) {
+        viewModelScope.launch {
+            presetsManager.removePreset(id)
+            refreshPresets()
+        }
     }
 
     fun startStopNote() {
@@ -127,14 +151,9 @@ class NoteForkScreenViewModel(
     }
 
     // ====== Private methods
-    private fun refreshPresets() {
+    private suspend fun refreshPresets() {
         val newPresets = mutableListOf(defaultPreset)
-        presetsManager.getPresets().forEach {
-            val name = it.name
-            val note = Note(it.pitch, Notes.fromSemitones(it.semitones), it.octave)
-
-            newPresets.add(name to note)
-        }
+        newPresets.addAll(presetsManager.getPresets())
 
         presets.postValue(newPresets)
     }

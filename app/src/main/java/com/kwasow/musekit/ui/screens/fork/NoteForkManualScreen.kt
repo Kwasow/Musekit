@@ -34,6 +34,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,30 +43,31 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.kwasow.musekit.R
-import com.kwasow.musekit.data.Note
 import com.kwasow.musekit.data.dialogs.RemovePresetDialog
+import com.kwasow.musekit.room.Preset
 import com.kwasow.musekit.ui.components.AutoSizeText
 import com.kwasow.musekit.ui.components.PlayPauseButton
 import com.kwasow.musekit.ui.dialogs.PresetRemoveDialog
 import com.kwasow.musekit.ui.dialogs.PresetSaveDialog
 import com.kwasow.musekit.utils.ScreenUtils
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
-import org.koin.core.module.dsl.viewModel
-import org.koin.plugin.module.dsl.viewModel
 
 // ====== Public composables
 @Composable
 fun NoteForkManualScreen() {
     val viewModel = koinViewModel<NoteForkScreenViewModel>()
     var presetDialog by remember { mutableStateOf(RemovePresetDialog()) }
-    var currentPreset by remember { mutableStateOf(viewModel.defaultPreset.first) }
+    var currentPreset: Preset? by remember { mutableStateOf(viewModel.defaultPreset) }
+
+    val coroutineScope = rememberCoroutineScope()
 
     if (ScreenUtils.isWide()) {
         WideView(
             currentPreset = currentPreset,
-            setPreset = { name, note ->
-                currentPreset = name
-                viewModel.setNote(note)
+            setPreset = { preset ->
+                currentPreset = preset
+                viewModel.setNoteFromPreset(preset)
             },
             onSavePreset = { presetDialog.openSave() },
             onRemovePreset = { presetDialog.openRemove(it) },
@@ -73,9 +75,9 @@ fun NoteForkManualScreen() {
     } else {
         DefaultView(
             currentPreset = currentPreset,
-            setPreset = { name, note ->
-                currentPreset = name
-                viewModel.setNote(note)
+            setPreset = { preset ->
+                currentPreset = preset
+                viewModel.setNoteFromPreset(preset)
             },
             onSavePreset = { presetDialog.openSave() },
             onRemovePreset = { presetDialog.openRemove(it) },
@@ -86,18 +88,22 @@ fun NoteForkManualScreen() {
         RemovePresetDialog.State.SAVE_PRESET ->
             PresetSaveDialog(
                 onSave = { name ->
-                    viewModel.addPreset(name, viewModel.currentNote)
-                    currentPreset = name
-                    presetDialog.close()
+                    coroutineScope.launch {
+                        val newPreset = viewModel.addPreset(name, viewModel.currentNote)
+                        currentPreset = newPreset
+                        presetDialog.close()
+                    }
                 },
                 onDismiss = { presetDialog.close() },
             )
         RemovePresetDialog.State.REMOVE_PRESET ->
             PresetRemoveDialog(
-                name = presetDialog.removePresetName,
+                name = presetDialog.removePreset?.name ?: "null",
                 onRemove = {
-                    viewModel.removePreset(presetDialog.removePresetName)
-                    currentPreset = "—"
+                    viewModel.removePreset(presetDialog.removePreset?.id ?: 0)
+                    if (presetDialog.removePreset?.id == currentPreset?.id) {
+                        currentPreset = null
+                    }
                     presetDialog.close()
                 },
                 onDismiss = { presetDialog.close() },
@@ -109,10 +115,10 @@ fun NoteForkManualScreen() {
 // ====== Private methods
 @Composable
 private fun DefaultView(
-    currentPreset: String,
-    setPreset: (String, Note) -> Unit,
+    currentPreset: Preset?,
+    setPreset: (Preset) -> Unit,
     onSavePreset: () -> Unit,
-    onRemovePreset: (String) -> Unit,
+    onRemovePreset: (Preset) -> Unit,
 ) {
     Column(
         modifier = Modifier.padding(horizontal = 16.dp),
@@ -135,10 +141,10 @@ private fun DefaultView(
 
 @Composable
 private fun WideView(
-    currentPreset: String,
-    setPreset: (String, Note) -> Unit,
+    currentPreset: Preset?,
+    setPreset: (Preset) -> Unit,
     onSavePreset: () -> Unit,
-    onRemovePreset: (String) -> Unit,
+    onRemovePreset: (Preset) -> Unit,
 ) {
     Column(modifier = Modifier.padding(horizontal = 16.dp)) {
         Row(
@@ -175,9 +181,9 @@ private fun WideView(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun PresetPicker(
-    currentPreset: String,
-    setPreset: (String, Note) -> Unit,
-    onRemovePreset: (String) -> Unit,
+    currentPreset: Preset?,
+    setPreset: (Preset) -> Unit,
+    onRemovePreset: (Preset) -> Unit,
     modifier: Modifier,
 ) {
     val viewModel = koinViewModel<NoteForkScreenViewModel>()
@@ -190,7 +196,7 @@ private fun PresetPicker(
         modifier = modifier,
     ) {
         OutlinedTextField(
-            value = currentPreset,
+            value = currentPreset?.name ?: "—",
             onValueChange = {},
             label = { Text(text = stringResource(id = R.string.presets)) },
             trailingIcon = {
@@ -207,9 +213,9 @@ private fun PresetPicker(
             expanded = expanded,
             onDismissRequest = { expanded = false },
         ) {
-            presets.value?.forEach { (name, note) ->
+            presets.value?.forEach { preset ->
                 val fontWeight =
-                    if (name == currentPreset) {
+                    if (preset.id == currentPreset?.id) {
                         FontWeight.Bold
                     } else {
                         FontWeight.Normal
@@ -218,18 +224,18 @@ private fun PresetPicker(
                 DropdownMenuItem(
                     text = {
                         Text(
-                            text = name,
+                            text = preset.name,
                             style = MaterialTheme.typography.bodyMedium,
                             fontWeight = fontWeight,
                         )
                     },
                     onClick = {
                         expanded = false
-                        setPreset(name, Note(note))
+                        setPreset(preset)
                     },
                     trailingIcon = {
-                        if (name != viewModel.defaultPreset.first) {
-                            IconButton(onClick = { onRemovePreset(name) }) {
+                        if (preset.id != viewModel.defaultPreset.id) {
+                            IconButton(onClick = { onRemovePreset(preset) }) {
                                 Icon(
                                     imageVector = Icons.Outlined.Delete,
                                     contentDescription =
