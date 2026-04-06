@@ -152,7 +152,9 @@ class NoteForkScreenViewModel(
 
     // ====== Private methods
     private suspend fun refreshPresets() {
-        val newPresets = presetsManager.getPresets()
+        val newPresets = mutableListOf(defaultPreset)
+        newPresets.addAll(presetsManager.getPresets())
+
         presets.postValue(newPresets)
     }
 }
