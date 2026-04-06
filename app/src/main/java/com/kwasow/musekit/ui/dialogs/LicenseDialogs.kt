@@ -109,8 +109,8 @@ private fun LicenseList(openSubDialog: (String, Int) -> Unit) {
 
         LicenseEntry(
             name = stringResource(id = R.string.icons),
-            description = stringResource(id = R.string.mit),
-            file = R.raw.mit,
+            description = stringResource(id = R.string.apache),
+            file = R.raw.apache2,
             openSubDialog = openSubDialog,
         )
     }
