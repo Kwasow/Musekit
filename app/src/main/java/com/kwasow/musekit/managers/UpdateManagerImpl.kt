@@ -32,7 +32,7 @@ class UpdateManagerImpl(
             "Last version code: $lastVersionCode, current version code: $currentVersionCode",
         )
 
-//        onUpdate(from = 1721768603) { migratePresets() }
+        onUpdate(from = 1721768603) { migratePresets() }
 
         // Update last version
         updateLastVersionCode()
