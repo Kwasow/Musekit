@@ -9,6 +9,11 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.AddCircleOutline
+import androidx.compose.material.icons.outlined.Delete
+import androidx.compose.material.icons.outlined.RemoveCircleOutline
+import androidx.compose.material.icons.outlined.Save
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -32,7 +37,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -227,7 +231,7 @@ private fun PresetPicker(
                         if (name != viewModel.defaultPreset.first) {
                             IconButton(onClick = { onRemovePreset(name) }) {
                                 Icon(
-                                    painter = painterResource(id = R.drawable.ic_delete),
+                                    imageVector = Icons.Outlined.Delete,
                                     contentDescription =
                                         stringResource(
                                             id = R.string.contentDescription_trash_can,
@@ -333,7 +337,7 @@ private fun PropertyCard(
         ) {
             IconButton(onClick = onDecrease) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_minus_circle),
+                    imageVector = Icons.Outlined.RemoveCircleOutline,
                     contentDescription =
                         stringResource(
                             id = R.string.contentDescription_decrease,
@@ -345,7 +349,7 @@ private fun PropertyCard(
 
             IconButton(onClick = onIncrease) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_plus_circle),
+                    imageVector = Icons.Outlined.AddCircleOutline,
                     contentDescription =
                         stringResource(
                             id = R.string.contentDescription_increase,
@@ -391,7 +395,7 @@ private fun AdditionalActions(
             contentPadding = PaddingValues(16.dp),
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.ic_save),
+                imageVector = Icons.Outlined.Save,
                 contentDescription = stringResource(id = R.string.contentDescription_save),
                 modifier = Modifier.size(ButtonDefaults.IconSize),
             )

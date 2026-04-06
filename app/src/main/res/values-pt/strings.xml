@@ -95,8 +95,8 @@
 
     <!-- Licenses dialog -->
     <string name="this_app">Este aplicativo</string>
-    <string name="icons">Ícones por css.gg</string>
-    <string name="mit">Licença MIT</string>
+    <string name="icons">Material Icons (Google)</string>
+    <string name="apache">Licença Apache 2.0</string>
     <string name="tarsos">TarsosDSP</string>
     <string name="contentDescription_right_arrow">Ver detalhes da licença</string>
     <string name="special_thanks">Agradecimento especial a TarsosDSP pela criação da biblioteca de reconhecimento de frequências.</string>

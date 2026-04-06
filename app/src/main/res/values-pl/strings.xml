@@ -39,8 +39,8 @@
     <string name="close_app">Zamknij aplikację</string>
     <string name="contentDescription_ghost_icon">Ikonka ducha</string>
     <string name="this_app">Ta aplikacja</string>
-    <string name="mit">Licencja MIT</string>
-    <string name="icons">Ikonki od css.gg</string>
+    <string name="apache">Licencja Apache 2.0</string>
+    <string name="icons">Material Icons (Google)</string>
     <string name="tarsos">TarsosDSP</string>
     <string name="contentDescription_right_arrow">Strzałka w prawo</string>
     <string name="contentDescription_save">Zapisz</string>

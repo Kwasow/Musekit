@@ -105,8 +105,8 @@
     <!-- Licenses dialog -->
     <string name="this_app">This app</string>
     <string name="gpl_3_0" translatable="false">GPLv3.0</string>
-    <string name="icons">Icons by css.gg</string>
-    <string name="mit">MIT License</string>
+    <string name="icons">Material Icons (Google)</string>
+    <string name="apache">Apache 2.0 License</string>
     <string name="tarsos">TarsosDSP</string>
     <string name="contentDescription_right_arrow">Right arrow</string>
     <string name="special_thanks">Special thanks to TarsosDSP for building the pitch recognition library.</string>

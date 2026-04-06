@@ -1,5 +1,8 @@
 package com.kwasow.musekit.ui
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.MusicNote
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
@@ -9,6 +12,7 @@ import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScope
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
@@ -41,17 +45,17 @@ fun App() {
             TopLevelRoute(
                 stringResource(id = R.string.tuning),
                 NoteFork,
-                painterResource(id = R.drawable.ic_note_fork),
+                rememberVectorPainter(Icons.Outlined.MusicNote),
             ),
             TopLevelRoute(
                 stringResource(id = R.string.metronome),
                 Metronome,
-                painterResource(id = R.drawable.ic_metronome),
+                painterResource(R.drawable.ic_metronome),
             ),
             TopLevelRoute(
                 stringResource(id = R.string.settings),
                 Settings,
-                painterResource(id = R.drawable.ic_settings),
+                rememberVectorPainter(Icons.Outlined.Settings),
             ),
         )
 

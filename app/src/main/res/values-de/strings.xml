@@ -95,8 +95,8 @@
 
     <!-- Licenses dialog -->
     <string name="this_app">Diese App</string>
-    <string name="icons">Symbole von css.gg</string>
-    <string name="mit">MIT-Lizenz</string>
+    <string name="icons">Material Icons (Google)</string>
+    <string name="apache">Apache 2.0-Lizenz</string>
     <string name="tarsos">TarsosDSP</string>
     <string name="contentDescription_right_arrow">Pfeil nach rechts</string>
     <string name="special_thanks">Besonderer Dank an TarsosDSP für die Erstellung der Tonhöhenerkennungsbibliothek.</string>
