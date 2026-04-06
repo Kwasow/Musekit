@@ -13,6 +13,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.AddCircleOutline
+import androidx.compose.material.icons.outlined.Edit
+import androidx.compose.material.icons.outlined.RemoveCircleOutline
+import androidx.compose.material.icons.outlined.TouchApp
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -26,7 +31,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -119,7 +123,7 @@ private fun TempoSetting(onOpenSetBeatDialog: () -> Unit) {
             modifier = Modifier.padding(end = 8.dp),
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.ic_edit),
+                imageVector = Icons.Outlined.Edit,
                 contentDescription = stringResource(id = R.string.contentDescription_pen),
                 modifier = Modifier.size(ButtonDefaults.IconSize),
             )
@@ -136,7 +140,7 @@ private fun TempoSetting(onOpenSetBeatDialog: () -> Unit) {
             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.ic_tap),
+                imageVector = Icons.Outlined.TouchApp,
                 contentDescription =
                     stringResource(
                         id = R.string.contentDescription_finger_tapping,
@@ -167,7 +171,7 @@ private fun BeatsSettings() {
             onClick = { numberOfBeats?.let { viewModel.setNumberOfBeats(it - 1) } },
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.ic_minus_circle),
+                imageVector = Icons.Outlined.RemoveCircleOutline,
                 contentDescription = stringResource(id = R.string.contentDescription_decrease),
                 modifier = Modifier.size(28.dp),
             )
@@ -182,7 +186,7 @@ private fun BeatsSettings() {
             onClick = { numberOfBeats?.let { viewModel.setNumberOfBeats(it + 1) } },
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.ic_plus_circle),
+                imageVector = Icons.Outlined.AddCircleOutline,
                 contentDescription = stringResource(id = R.string.contentDescription_increase),
                 modifier = Modifier.size(28.dp),
             )

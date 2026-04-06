@@ -11,6 +11,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.Notes
+import androidx.compose.material.icons.outlined.Language
+import androidx.compose.material.icons.outlined.Nightlight
+import androidx.compose.material.icons.outlined.Notes
+import androidx.compose.material.icons.outlined.Web
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
@@ -26,6 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -161,7 +168,7 @@ private fun ThemeSetting() {
     val count = if (Build.VERSION.SDK_INT >= 29) 3 else 2
 
     SettingsEntry(
-        icon = painterResource(id = R.drawable.ic_moon),
+        icon = rememberVectorPainter(Icons.Outlined.Nightlight),
         iconDescription = stringResource(id = R.string.contentDescription_moon_icon),
         name = stringResource(id = R.string.theme),
         description = stringResource(id = R.string.theme_subtitle),
@@ -217,7 +224,7 @@ private fun NotationStyleSetting() {
     val notationStyle by viewModel.notationStyle.collectAsState()
 
     SettingsEntry(
-        icon = painterResource(id = R.drawable.ic_globe),
+        icon = rememberVectorPainter(Icons.Outlined.Language),
         iconDescription = stringResource(id = R.string.contentDescription_localization),
         name = stringResource(id = R.string.notation_style),
         description = stringResource(id = R.string.notation_style_subtitle),
@@ -271,7 +278,7 @@ private fun AboutSection(onOpenLicenseDialog: () -> Unit) {
         SettingsDivider()
 
         SettingsEntry(
-            icon = painterResource(id = R.drawable.ic_web),
+            icon = rememberVectorPainter(Icons.Outlined.Web),
             iconDescription = stringResource(id = R.string.contentDescription_internet_website),
             name = stringResource(id = R.string.developer_website),
             description = stringResource(id = R.string.developer_website_subtitle),
@@ -281,7 +288,7 @@ private fun AboutSection(onOpenLicenseDialog: () -> Unit) {
         SettingsDivider()
 
         SettingsEntry(
-            icon = painterResource(id = R.drawable.ic_file),
+            icon = rememberVectorPainter(Icons.AutoMirrored.Outlined.Notes),
             iconDescription = stringResource(id = R.string.contentDescription_file_icon),
             name = stringResource(id = R.string.licenses),
             description = stringResource(id = R.string.licenses_subtitle),
