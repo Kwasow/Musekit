@@ -65,14 +65,14 @@ fun SettingsScreen() {
         modifier =
             Modifier
                 .safeDrawingPadding()
-                .fillMaxSize()
+                .fillMaxSize(),
     ) {
         if (ScreenUtils.isWide()) {
             WideView(licenseDialog = licenseDialog)
         } else {
             DefaultView(
                 licenseDialog = licenseDialog,
-                modifier = Modifier.align(Alignment.TopCenter)
+                modifier = Modifier.align(Alignment.TopCenter),
             )
         }
     }
@@ -87,7 +87,7 @@ fun SettingsScreen() {
 @Composable
 private fun DefaultView(
     licenseDialog: LicenseDialogInfo,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier =
