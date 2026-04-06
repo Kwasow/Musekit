@@ -61,7 +61,10 @@ private fun TopBar() {
             IconButton(onClick = { navigateBack() }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
-                    contentDescription = "TODO",
+                    contentDescription =
+                        stringResource(
+                            id = R.string.contentDescription_back_arrow,
+                        ),
                 )
             }
         },
@@ -135,18 +138,18 @@ private fun PracticeEntry(session: PracticeSession) {
     val iconSomePractice = rememberVectorPainter(Icons.Outlined.HourglassBottom)
     val iconFullPractice = rememberVectorPainter(Icons.Outlined.HourglassFull)
 
-    val icon =
+    val (icon, percent) =
         if (session.length < 30 * 60) {
-            iconLittlePractice
+            Pair(iconLittlePractice, 0)
         } else if (session.length < 60 * 60) {
-            iconSomePractice
+            Pair(iconSomePractice, 50)
         } else {
-            iconFullPractice
+            Pair(iconFullPractice, 100)
         }
 
     ListEntry(
         icon = icon,
-        iconDescription = "TODO",
+        iconDescription = stringResource(id = R.string.contentDescription_hourglass, percent),
         header = DateUtils.formatElapsedTime(session.length),
         description = session.date.toString(),
         onClick = null,
