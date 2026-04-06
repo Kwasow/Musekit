@@ -49,6 +49,8 @@
     <string name="tempo">Tempo</string>
     <string name="beats">Miary</string>
     <string name="contentDescription_finger_tapping">Stukanie palcem</string>
+    <string name="contentDescription_back_arrow">Strzałka wstecz</string>
+    <string name="contentDescription_practice_history">Historia</string>
     <string name="metronome_sound_default">Domyślny</string>
     <string name="metronome_sound_beep">Beep</string>
     <string name="metronome_sound_ding">Ding</string>
@@ -82,4 +84,6 @@
     <string name="contentDescription_increase">Zwiększ</string>
     <string name="contentDescription_trash_can">Śmietnik</string>
     <string name="contentDescription_pen">Długopis</string>
+    <string name="practice_history">Historia ćwiczeń</string>
+    <string name="contentDescription_hourglass">Klepsydra (%1$s)</string>
 </resources>

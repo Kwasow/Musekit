@@ -41,6 +41,12 @@
     <string name="beats">Batidas</string>"
     <string name="contentDescription_pen">Caneta</string>
     <string name="contentDescription_finger_tapping">Toque com o dedo</string>
+
+    <!-- Worklog -->
+    <string name="practice_history">Histórico de prática</string>
+    <string name="contentDescription_hourglass">Ampulheta (%1$s)</string>
+    <string name="contentDescription_back_arrow">Seta para trás</string>
+    <string name="contentDescription_practice_history">Histórico</string>
     
     <!-- Metronome sound names -->
     <string name="metronome_sound_default">Padrão</string>

@@ -41,6 +41,12 @@
     <string name="beats">Schläge</string>"
     <string name="contentDescription_pen">Stift</string>
     <string name="contentDescription_finger_tapping">Fingertippen</string>
+
+    <!-- Worklog -->
+    <string name="practice_history">Übungsverlauf</string>
+    <string name="contentDescription_hourglass">Sanduhr (%1$s)</string>
+    <string name="contentDescription_back_arrow">Zurück-Pfeil</string>
+    <string name="contentDescription_practice_history">Verlauf</string>
     
     <!-- Metronome sound names -->
     <string name="metronome_sound_default">Standard</string>

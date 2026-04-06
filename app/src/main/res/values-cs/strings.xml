@@ -41,6 +41,12 @@
     <string name="beats">Doby</string>"
     <string name="contentDescription_pen">Pero</string>
     <string name="contentDescription_finger_tapping">Ťukni prstem</string>
+
+    <!-- Worklog -->
+    <string name="practice_history">Historie cvičení</string>
+    <string name="contentDescription_hourglass">Přesýpací hodiny (%1$s)</string>
+    <string name="contentDescription_back_arrow">Šipka zpět</string>
+    <string name="contentDescription_practice_history">Historie</string>
     
     <!-- Metronome sound names -->
     <string name="metronome_sound_default">Výchozí</string>
