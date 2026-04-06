@@ -9,7 +9,7 @@ object ScreenUtils {
     fun isWide(): Boolean {
         val adaptiveInfo = currentWindowAdaptiveInfo()
         return with(adaptiveInfo) {
-            !windowSizeClass.isHeightAtLeastBreakpoint(WindowSizeClass.HEIGHT_DP_MEDIUM_LOWER_BOUND)
+            windowSizeClass.isWidthAtLeastBreakpoint(WindowSizeClass.WIDTH_DP_EXPANDED_LOWER_BOUND)
         }
     }
 }

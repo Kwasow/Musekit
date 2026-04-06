@@ -2,8 +2,8 @@
 # Build details
 compileSdk = "36"
 minSdk = "23"
-versionCode = "1721768603"
-versionName = "2.6.5"
+versionCode = "1721768604"
+versionName = "3.0.0"
 
 # BoM
 composeBom = "2026.03.01"
