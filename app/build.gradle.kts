@@ -11,6 +11,7 @@ plugins {
     alias(libs.plugins.ktlint)
 
     alias(libs.plugins.ksp)
+    alias(libs.plugins.room)
 }
 
 configure<ApplicationExtension> {
@@ -164,6 +165,10 @@ ktlint {
             element.file.name == "rememberBoundService.kt"
         }
     }
+}
+
+room {
+    schemaDirectory("$projectDir/room-schema")
 }
 
 baselineProfile {
