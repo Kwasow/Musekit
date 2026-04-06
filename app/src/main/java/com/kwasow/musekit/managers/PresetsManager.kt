@@ -1,12 +1,12 @@
 package com.kwasow.musekit.managers
 
-import com.kwasow.musekit.data.Preset
+import com.kwasow.musekit.room.Preset
 
 interface PresetsManager {
     // ====== Methods
-    fun savePreset(preset: Preset)
+    suspend fun savePreset(preset: Preset)
 
-    fun getPresets(): List<Preset>
+    suspend fun getPresets(): List<Preset>
 
-    fun removePreset(name: String)
+    suspend fun removePreset(id: Long)
 }
