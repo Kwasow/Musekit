@@ -61,11 +61,19 @@ fun SettingsScreen() {
     val viewModel = koinViewModel<SettingsScreenViewModel>()
     val licenseDialog = remember { LicenseDialogInfo() }
 
-    Box(modifier = Modifier.safeDrawingPadding()) {
+    Box(
+        modifier =
+            Modifier
+                .safeDrawingPadding()
+                .fillMaxSize()
+    ) {
         if (ScreenUtils.isWide()) {
             WideView(licenseDialog = licenseDialog)
         } else {
-            DefaultView(licenseDialog = licenseDialog)
+            DefaultView(
+                licenseDialog = licenseDialog,
+                modifier = Modifier.align(Alignment.TopCenter)
+            )
         }
     }
 
@@ -77,10 +85,13 @@ fun SettingsScreen() {
 
 // ====== Private composables
 @Composable
-private fun DefaultView(licenseDialog: LicenseDialogInfo) {
+private fun DefaultView(
+    licenseDialog: LicenseDialogInfo,
+    modifier: Modifier = Modifier
+) {
     Column(
         modifier =
-            Modifier
+            modifier
                 .widthIn(0.dp, 480.dp)
                 .verticalScroll(rememberScrollState()),
     ) {
