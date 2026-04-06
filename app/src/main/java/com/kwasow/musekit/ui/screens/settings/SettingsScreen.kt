@@ -116,7 +116,7 @@ private fun MainColumn(licenseDialog: LicenseDialogInfo) {
 
 @Composable
 private fun AppDetails(modifier: Modifier = Modifier) {
-    val color = MaterialTheme.colorScheme.onPrimary
+    val color = MaterialTheme.colorScheme.surfaceContainerHigh
 
     Column(
         modifier = modifier,

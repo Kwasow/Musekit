@@ -27,7 +27,7 @@ fun SettingsSection(
     title: String = "",
     entries: @Composable ColumnScope.() -> Unit,
 ) {
-    val color = MaterialTheme.colorScheme.onPrimary
+    val color = MaterialTheme.colorScheme.surfaceContainerHigh
 
     Column(modifier = Modifier.padding(16.dp)) {
         if (title.isNotEmpty()) {
