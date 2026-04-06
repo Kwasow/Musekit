@@ -101,7 +101,9 @@ fun NoteForkManualScreen() {
                 name = presetDialog.removePreset?.name ?: "null",
                 onRemove = {
                     viewModel.removePreset(presetDialog.removePreset?.id ?: 0)
-                    currentPreset = null
+                    if (presetDialog.removePreset?.id == currentPreset?.id) {
+                        currentPreset = null
+                    }
                     presetDialog.close()
                 },
                 onDismiss = { presetDialog.close() },
