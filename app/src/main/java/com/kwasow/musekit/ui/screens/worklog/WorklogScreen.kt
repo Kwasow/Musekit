@@ -28,6 +28,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Devices.PHONE
+import androidx.compose.ui.tooling.preview.Devices.TABLET
+import androidx.compose.ui.tooling.preview.Preview
 import com.kwasow.musekit.R
 import com.kwasow.musekit.room.PracticeSession
 import com.kwasow.musekit.ui.components.ListDivider
@@ -35,6 +38,7 @@ import com.kwasow.musekit.ui.components.ListEntry
 import com.kwasow.musekit.ui.components.ListSection
 import com.kwasow.musekit.ui.composition.LocalMusekitNavigation
 import org.koin.compose.viewmodel.koinViewModel
+import java.time.LocalDate
 import java.time.Month
 import java.time.format.TextStyle
 import java.util.Locale
@@ -49,17 +53,22 @@ fun WorklogScreen() {
         viewModel.getPracticeSessions()
     }
 
+    WorklogScreen(practiceSessions = practiceSessions.value)
+}
+
+// ====== Private composables
+@Composable
+private fun WorklogScreen(practiceSessions: List<PracticeSession>?) {
     Scaffold(
         topBar = { TopBar() },
     ) { paddingValues ->
         MainView(
             paddingValues = paddingValues,
-            practiceSessions = practiceSessions.value,
+            practiceSessions = practiceSessions,
         )
     }
 }
 
-// ====== Private composables
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TopBar() {
@@ -158,4 +167,125 @@ private fun PracticeEntry(session: PracticeSession) {
         description = session.date.toString(),
         onClick = null,
     )
+}
+
+// ====== Previews
+@Composable
+@Preview(device = PHONE)
+private fun PhonePortraitPreview() {
+    val practiceSessions =
+        listOf(
+            PracticeSession(
+                date = LocalDate.of(2026, 4, 6),
+                length = 768,
+            ),
+            PracticeSession(
+                date = LocalDate.of(2026, 4, 5),
+                length = 1890,
+            ),
+            PracticeSession(
+                date = LocalDate.of(2026, 4, 3),
+                length = 544,
+            ),
+            PracticeSession(
+                date = LocalDate.of(2026, 3, 22),
+                length = 3865,
+            ),
+            PracticeSession(
+                date = LocalDate.of(2026, 3, 21),
+                length = 153,
+            ),
+        )
+
+    WorklogScreen(practiceSessions = practiceSessions)
+}
+
+@Composable
+@Preview(device = "$PHONE,orientation=landscape")
+private fun PhoneLandscapePreview() {
+    val practiceSessions =
+        listOf(
+            PracticeSession(
+                date = LocalDate.of(2026, 4, 6),
+                length = 768,
+            ),
+            PracticeSession(
+                date = LocalDate.of(2026, 4, 5),
+                length = 1890,
+            ),
+            PracticeSession(
+                date = LocalDate.of(2026, 4, 3),
+                length = 544,
+            ),
+            PracticeSession(
+                date = LocalDate.of(2026, 3, 22),
+                length = 3865,
+            ),
+            PracticeSession(
+                date = LocalDate.of(2026, 3, 21),
+                length = 153,
+            ),
+        )
+
+    WorklogScreen(practiceSessions = practiceSessions)
+}
+
+@Composable
+@Preview(device = "$TABLET,orientation=portrait")
+private fun TabletPortraitPreview() {
+    val practiceSessions =
+        listOf(
+            PracticeSession(
+                date = LocalDate.of(2026, 4, 6),
+                length = 768,
+            ),
+            PracticeSession(
+                date = LocalDate.of(2026, 4, 5),
+                length = 1890,
+            ),
+            PracticeSession(
+                date = LocalDate.of(2026, 4, 3),
+                length = 544,
+            ),
+            PracticeSession(
+                date = LocalDate.of(2026, 3, 22),
+                length = 3865,
+            ),
+            PracticeSession(
+                date = LocalDate.of(2026, 3, 21),
+                length = 153,
+            ),
+        )
+
+    WorklogScreen(practiceSessions = practiceSessions)
+}
+
+@Composable
+@Preview(device = TABLET)
+private fun TabletLandscapePreview() {
+    val practiceSessions =
+        listOf(
+            PracticeSession(
+                date = LocalDate.of(2026, 4, 6),
+                length = 768,
+            ),
+            PracticeSession(
+                date = LocalDate.of(2026, 4, 5),
+                length = 1890,
+            ),
+            PracticeSession(
+                date = LocalDate.of(2026, 4, 3),
+                length = 544,
+            ),
+            PracticeSession(
+                date = LocalDate.of(2026, 3, 22),
+                length = 3865,
+            ),
+            PracticeSession(
+                date = LocalDate.of(2026, 3, 21),
+                length = 153,
+            ),
+        )
+
+    WorklogScreen(practiceSessions = practiceSessions)
 }
