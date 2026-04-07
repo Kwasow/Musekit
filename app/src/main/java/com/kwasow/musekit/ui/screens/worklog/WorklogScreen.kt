@@ -42,10 +42,20 @@ import java.util.Locale
 // ====== Public composables
 @Composable
 fun WorklogScreen() {
+    val viewModel = koinViewModel<WorklogScreenViewModel>()
+    val practiceSessions = viewModel.practiceSessions.observeAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.getPracticeSessions()
+    }
+
     Scaffold(
         topBar = { TopBar() },
     ) { paddingValues ->
-        MainView(paddingValues = paddingValues)
+        MainView(
+            paddingValues = paddingValues,
+            practiceSessions = practiceSessions.value,
+        )
     }
 }
 
@@ -76,27 +86,21 @@ private fun TopBar() {
 }
 
 @Composable
-private fun MainView(paddingValues: PaddingValues) {
-    val viewModel = koinViewModel<WorklogScreenViewModel>()
-    val practiceSessions = viewModel.practiceSessions.observeAsState()
-
-    LaunchedEffect(Unit) {
-        viewModel.getPracticeSessions()
-    }
-
+private fun MainView(
+    paddingValues: PaddingValues,
+    practiceSessions: List<PracticeSession>?,
+) {
     Box(
         modifier =
             Modifier
                 .fillMaxSize()
                 .padding(paddingValues),
     ) {
-        val sessions = practiceSessions.value
-
-        if (sessions == null) {
+        if (practiceSessions == null) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         } else {
             val byMonth =
-                sessions.groupBy { (date) ->
+                practiceSessions.groupBy { (date) ->
                     Pair(date.year, date.monthValue)
                 }
 
