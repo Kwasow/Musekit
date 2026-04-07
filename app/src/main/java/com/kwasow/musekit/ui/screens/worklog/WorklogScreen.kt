@@ -171,7 +171,7 @@ private fun PracticeEntry(session: PracticeSession) {
 
 // ====== Previews
 @Composable
-@Preview(device = PHONE)
+@Preview(showSystemUi = true, device = PHONE)
 private fun PhonePortraitPreview() {
     val practiceSessions =
         listOf(
@@ -201,7 +201,7 @@ private fun PhonePortraitPreview() {
 }
 
 @Composable
-@Preview(device = "$PHONE,orientation=landscape")
+@Preview(showSystemUi = true, device = "$PHONE,orientation=landscape")
 private fun PhoneLandscapePreview() {
     val practiceSessions =
         listOf(
@@ -231,7 +231,7 @@ private fun PhoneLandscapePreview() {
 }
 
 @Composable
-@Preview(device = "$TABLET,orientation=portrait")
+@Preview(showSystemUi = true, device = "$TABLET,orientation=portrait")
 private fun TabletPortraitPreview() {
     val practiceSessions =
         listOf(
@@ -261,7 +261,7 @@ private fun TabletPortraitPreview() {
 }
 
 @Composable
-@Preview(device = TABLET)
+@Preview(showSystemUi = true, device = TABLET)
 private fun TabletLandscapePreview() {
     val practiceSessions =
         listOf(
