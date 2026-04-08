@@ -45,7 +45,7 @@ import com.kwasow.musekit.BuildConfig
 import com.kwasow.musekit.R
 import com.kwasow.musekit.data.NotationStyle
 import com.kwasow.musekit.data.dialogs.LicenseDialogInfo
-import com.kwasow.musekit.ui.components.ListDivider
+import com.kwasow.musekit.extensions.itemsWithDividers
 import com.kwasow.musekit.ui.components.ListEntry
 import com.kwasow.musekit.ui.components.ListSection
 import com.kwasow.musekit.ui.dialogs.LicenseDialog
@@ -165,12 +165,14 @@ private fun AppDetails(modifier: Modifier = Modifier) {
 
 @Composable
 private fun AppSettingsSection() {
-    ListSection(title = stringResource(id = R.string.settings)) {
-        ThemeSetting()
+    val entries =
+        listOf<@Composable () -> Unit>(
+            { ThemeSetting() },
+            { NotationStyleSetting() },
+        )
 
-        ListDivider()
-
-        NotationStyleSetting()
+    ListSection(title = stringResource(id = R.string.settings)) { columns ->
+        itemsWithDividers(entries, columns) { it() }
     }
 }
 
@@ -270,44 +272,54 @@ private fun NotationStyleSetting() {
 private fun AboutSection(onOpenLicenseDialog: () -> Unit) {
     val viewModel = koinViewModel<SettingsScreenViewModel>()
 
-    ListSection(title = stringResource(id = R.string.about)) {
-        ListEntry(
-            icon = painterResource(id = R.drawable.ic_github),
-            iconDescription = stringResource(id = R.string.contentDescription_github_logo),
-            header = stringResource(id = R.string.source_code),
-            description = stringResource(id = R.string.source_code_subtitle),
-            onClick = { viewModel.openGithub() },
+    val entries =
+        listOf<@Composable () -> Unit>(
+            {
+                ListEntry(
+                    icon = painterResource(id = R.drawable.ic_github),
+                    iconDescription = stringResource(id = R.string.contentDescription_github_logo),
+                    header = stringResource(id = R.string.source_code),
+                    description = stringResource(id = R.string.source_code_subtitle),
+                    onClick = { viewModel.openGithub() },
+                )
+            },
+            {
+                ListEntry(
+                    icon = painterResource(id = R.drawable.ic_mastodon),
+                    iconDescription =
+                        stringResource(
+                            id = R.string.contentDescription_mastodon_logo,
+                        ),
+                    header = stringResource(id = R.string.developer),
+                    description = stringResource(id = R.string.developer_subtitle),
+                    onClick = { viewModel.openMastodon() },
+                )
+            },
+            {
+                ListEntry(
+                    icon = rememberVectorPainter(Icons.Outlined.Web),
+                    iconDescription =
+                        stringResource(
+                            id = R.string.contentDescription_internet_website,
+                        ),
+                    header = stringResource(id = R.string.developer_website),
+                    description = stringResource(id = R.string.developer_website_subtitle),
+                    onClick = { viewModel.openWebsite() },
+                )
+            },
+            {
+                ListEntry(
+                    icon = rememberVectorPainter(Icons.AutoMirrored.Outlined.Notes),
+                    iconDescription = stringResource(id = R.string.contentDescription_file_icon),
+                    header = stringResource(id = R.string.licenses),
+                    description = stringResource(id = R.string.licenses_subtitle),
+                    onClick = onOpenLicenseDialog,
+                )
+            },
         )
 
-        ListDivider()
-
-        ListEntry(
-            icon = painterResource(id = R.drawable.ic_mastodon),
-            iconDescription = stringResource(id = R.string.contentDescription_mastodon_logo),
-            header = stringResource(id = R.string.developer),
-            description = stringResource(id = R.string.developer_subtitle),
-            onClick = { viewModel.openMastodon() },
-        )
-
-        ListDivider()
-
-        ListEntry(
-            icon = rememberVectorPainter(Icons.Outlined.Web),
-            iconDescription = stringResource(id = R.string.contentDescription_internet_website),
-            header = stringResource(id = R.string.developer_website),
-            description = stringResource(id = R.string.developer_website_subtitle),
-            onClick = { viewModel.openWebsite() },
-        )
-
-        ListDivider()
-
-        ListEntry(
-            icon = rememberVectorPainter(Icons.AutoMirrored.Outlined.Notes),
-            iconDescription = stringResource(id = R.string.contentDescription_file_icon),
-            header = stringResource(id = R.string.licenses),
-            description = stringResource(id = R.string.licenses_subtitle),
-            onClick = onOpenLicenseDialog,
-        )
+    ListSection(title = stringResource(id = R.string.about)) { columns ->
+        itemsWithDividers(entries, columns) { it() }
     }
 }
 

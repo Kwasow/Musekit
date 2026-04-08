@@ -30,7 +30,7 @@ fun ListEntry(
     iconTint: Color = LocalContentColor.current,
     iconDescription: String = "",
     header: String,
-    description: String = "",
+    description: String? = null,
     onClick: (() -> Unit)?,
     trailingContent: @Composable () -> Unit = {},
 ) {
@@ -55,7 +55,7 @@ fun ListEntry(
         )
         ListEntry(
             header = header,
-            description = description,
+            description = description ?: "",
             modifier = Modifier.weight(1f),
         )
         trailingContent()

@@ -2,11 +2,10 @@ package com.kwasow.musekit.ui.screens.worklog
 
 import android.text.format.DateUtils
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.HourglassBottom
@@ -32,11 +31,12 @@ import androidx.compose.ui.tooling.preview.Devices.PHONE
 import androidx.compose.ui.tooling.preview.Devices.TABLET
 import androidx.compose.ui.tooling.preview.Preview
 import com.kwasow.musekit.R
+import com.kwasow.musekit.extensions.itemsWithDividers
 import com.kwasow.musekit.room.PracticeSession
-import com.kwasow.musekit.ui.components.ListDivider
 import com.kwasow.musekit.ui.components.ListEntry
 import com.kwasow.musekit.ui.components.ListSection
 import com.kwasow.musekit.ui.composition.LocalMusekitNavigation
+import com.kwasow.musekit.utils.ScreenUtils
 import org.koin.compose.viewmodel.koinViewModel
 import java.time.LocalDate
 import java.time.Month
@@ -113,8 +113,8 @@ private fun MainView(
                     Pair(date.year, date.monthValue)
                 }
 
-            LazyColumn {
-                items(byMonth.keys.sortedByDescending { (year, month) -> year * 12 + month }) {
+            Column {
+                byMonth.keys.sortedByDescending { (year, month) -> year * 12 + month }.forEach {
                     PracticeEntriesSection(
                         month = it.second,
                         year = it.first,
@@ -134,13 +134,12 @@ private fun PracticeEntriesSection(
 ) {
     val monthName = Month.of(month).getDisplayName(TextStyle.FULL_STANDALONE, Locale.getDefault())
 
-    ListSection(title = "$monthName $year") {
-        sessions.sortedByDescending(PracticeSession::date).forEachIndexed { index, session ->
-            PracticeEntry(session = session)
-
-            if (index < sessions.lastIndex) {
-                ListDivider()
-            }
+    ListSection(
+        title = "$monthName $year",
+        columns = if (ScreenUtils.isWide()) 2 else 1,
+    ) { columns ->
+        itemsWithDividers(sessions.sortedByDescending(PracticeSession::date), columns) {
+            PracticeEntry(session = it)
         }
     }
 }
