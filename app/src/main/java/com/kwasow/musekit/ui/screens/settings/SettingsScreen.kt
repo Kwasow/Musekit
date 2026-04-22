@@ -45,7 +45,6 @@ import com.kwasow.musekit.BuildConfig
 import com.kwasow.musekit.R
 import com.kwasow.musekit.data.NotationStyle
 import com.kwasow.musekit.data.dialogs.LicenseDialogInfo
-import com.kwasow.musekit.extensions.itemsWithDividers
 import com.kwasow.musekit.ui.components.ListEntry
 import com.kwasow.musekit.ui.components.ListSection
 import com.kwasow.musekit.ui.dialogs.LicenseDialog

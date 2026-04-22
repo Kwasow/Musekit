@@ -1,11 +1,9 @@
 package com.kwasow.musekit.ui.components
 
-import androidx.annotation.IntRange
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridItemScope
-import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
@@ -32,7 +30,7 @@ fun <T> ListSection(
     items: List<T>,
     columns: GridCells = GridCells.Fixed(1),
     state: LazyGridState = rememberLazyGridState(),
-    itemContent: @Composable (LazyGridItemScope.(index: Int, item: T) -> Unit)
+    itemContent: @Composable (LazyGridItemScope.(index: Int, item: T) -> Unit),
 ) {
     val color = MaterialTheme.colorScheme.surfaceContainerHigh
 
@@ -46,7 +44,7 @@ fun <T> ListSection(
                 itemsWithDividers(
                     items = items,
                     state = state,
-                    itemContent = itemContent
+                    itemContent = itemContent,
                 )
             }
         }
