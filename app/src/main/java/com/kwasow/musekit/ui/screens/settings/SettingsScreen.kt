@@ -171,8 +171,11 @@ private fun AppSettingsSection() {
             { NotationStyleSetting() },
         )
 
-    ListSection(title = stringResource(id = R.string.settings)) { columns ->
-        itemsWithDividers(entries, columns) { it() }
+    ListSection(
+        title = stringResource(id = R.string.settings),
+        items = entries,
+    ) { _, item ->
+        item()
     }
 }
 
@@ -318,8 +321,11 @@ private fun AboutSection(onOpenLicenseDialog: () -> Unit) {
             },
         )
 
-    ListSection(title = stringResource(id = R.string.about)) { columns ->
-        itemsWithDividers(entries, columns) { it() }
+    ListSection(
+        title = stringResource(id = R.string.about),
+        items = entries,
+    ) { _, item ->
+        item()
     }
 }
 

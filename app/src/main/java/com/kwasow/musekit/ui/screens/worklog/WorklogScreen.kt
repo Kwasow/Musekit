@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.HourglassBottom
@@ -136,11 +137,10 @@ private fun PracticeEntriesSection(
 
     ListSection(
         title = "$monthName $year",
-        columns = if (ScreenUtils.isWide()) 2 else 1,
-    ) { columns ->
-        itemsWithDividers(sessions.sortedByDescending(PracticeSession::date), columns) {
-            PracticeEntry(session = it)
-        }
+        items = sessions.sortedByDescending(PracticeSession::date),
+        columns = if (ScreenUtils.isWide()) GridCells.Fixed(2) else GridCells.Fixed(1),
+    ) { _, item ->
+        PracticeEntry(session = item)
     }
 }
 

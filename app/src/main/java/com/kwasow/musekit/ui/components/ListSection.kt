@@ -4,8 +4,11 @@ import androidx.annotation.IntRange
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyGridItemScope
 import androidx.compose.foundation.lazy.grid.LazyGridScope
+import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material3.Card
@@ -24,10 +27,12 @@ import com.kwasow.musekit.extensions.itemsWithDividers
 
 // ====== Public composables
 @Composable
-fun ListSection(
+fun <T> ListSection(
     title: String = "",
-    @IntRange(from = 1) columns: Int = 1,
-    entries: LazyGridScope.(Int) -> Unit,
+    items: List<T>,
+    columns: GridCells = GridCells.Fixed(1),
+    state: LazyGridState = rememberLazyGridState(),
+    itemContent: @Composable (LazyGridItemScope.(index: Int, item: T) -> Unit)
 ) {
     val color = MaterialTheme.colorScheme.surfaceContainerHigh
 
@@ -37,8 +42,12 @@ fun ListSection(
         }
 
         Card(colors = CardDefaults.cardColors(color)) {
-            LazyVerticalGrid(columns = GridCells.Fixed(columns)) {
-                entries(columns)
+            LazyVerticalGrid(columns = columns) {
+                itemsWithDividers(
+                    items = items,
+                    state = state,
+                    itemContent = itemContent
+                )
             }
         }
     }
@@ -88,15 +97,16 @@ private fun ListPreview() {
             ),
         )
 
-    ListSection(title = "General") { columns ->
-        itemsWithDividers(entries, columns) { (icon, header, description) ->
-            ListEntry(
-                icon = icon,
-                header = header,
-                description = description,
-                onClick = {},
-            )
-        }
+    ListSection(
+        title = "General",
+        items = entries,
+    ) { _, (icon, header, description) ->
+        ListEntry(
+            icon = icon,
+            header = header,
+            description = description,
+            onClick = {},
+        )
     }
 }
 
@@ -136,15 +146,14 @@ private fun GridPreview() {
 
     ListSection(
         title = "General",
-        columns = 2,
-    ) { columns ->
-        itemsWithDividers(entries, columns) { (icon, header, description) ->
-            ListEntry(
-                icon = icon,
-                header = header,
-                description = description,
-                onClick = {},
-            )
-        }
+        items = entries,
+        columns = GridCells.Fixed(2),
+    ) { _, (icon, header, description) ->
+        ListEntry(
+            icon = icon,
+            header = header,
+            description = description,
+            onClick = {},
+        )
     }
 }

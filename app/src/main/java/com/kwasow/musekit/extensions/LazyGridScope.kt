@@ -1,10 +1,13 @@
 package com.kwasow.musekit.extensions
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridItemScope
 import androidx.compose.foundation.lazy.grid.LazyGridItemSpanScope
 import androidx.compose.foundation.lazy.grid.LazyGridScope
+import androidx.compose.foundation.lazy.grid.LazyGridState
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -16,29 +19,25 @@ import androidx.compose.ui.unit.dp
 // ====== Public extensions
 inline fun <T> LazyGridScope.itemsWithDividers(
     items: List<T>,
-    columns: Int,
-    noinline key: ((index: Int, item: T) -> Any)? = null,
-    noinline span: (LazyGridItemSpanScope.(index: Int, item: T) -> GridItemSpan)? = null,
-    crossinline contentType: (index: Int, item: T) -> Any? = { _, _ -> null },
-    crossinline itemContent: @Composable LazyGridItemScope.(item: T) -> Unit,
-) = items(
-    count = items.size,
-    key = if (key != null) { index: Int -> key(index, items[index]) } else null,
-    span =
-        if (span != null) {
-            { span(it, items[it]) }
-        } else {
-            null
-        },
-    contentType = { index -> contentType(index, items[index]) },
-) {
+    state: LazyGridState,
+    crossinline itemContent: @Composable LazyGridItemScope.(index: Int, item: T) -> Unit,
+) = itemsIndexed(items) { index, item ->
+    // TODO: @FrequentlyChanging
+    val layoutInfo = state.layoutInfo
+    val columns = layoutInfo.viewportSize.width
+    val rows = layoutInfo.viewportSize.height
+
+    val itemInfo = layoutInfo.visibleItemsInfo.getOrNull(index)
+    val itemColumn = itemInfo?.column ?: 0
+    val itemRow = itemInfo?.row ?: 0
+
     val dividerColour = MaterialTheme.colorScheme.background
 
     Box(
         modifier =
             Modifier
                 .drawBehind {
-                    if (it != items.lastIndex) {
+                    if (itemColumn != columns) {
                         drawLine(
                             color = dividerColour,
                             start = Offset(0f, size.height),
@@ -47,7 +46,7 @@ inline fun <T> LazyGridScope.itemsWithDividers(
                         )
                     }
 
-                    if (it % columns != 0) {
+                    if (itemRow != rows) {
                         drawLine(
                             color = dividerColour,
                             start = Offset(0f, 0f),
@@ -57,7 +56,7 @@ inline fun <T> LazyGridScope.itemsWithDividers(
                     }
                 },
     ) {
-        itemContent(items[it])
+        itemContent(index, item)
     }
 }
 
