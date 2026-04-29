@@ -31,6 +31,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices.PHONE
 import androidx.compose.ui.tooling.preview.Devices.TABLET
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.kwasow.musekit.R
 import com.kwasow.musekit.room.PracticeSession
 import com.kwasow.musekit.ui.components.ListEntry
@@ -137,7 +138,7 @@ private fun PracticeEntriesSection(
     ListSection(
         title = "$monthName $year",
         items = sessions.sortedByDescending(PracticeSession::date),
-        columns = if (ScreenUtils.isWide()) GridCells.Fixed(2) else GridCells.Fixed(1),
+        columns = GridCells.Adaptive(minSize = 240.dp),
     ) { _, item ->
         PracticeEntry(session = item)
     }
