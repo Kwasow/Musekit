@@ -8,6 +8,8 @@ import com.kwasow.musekit.managers.PreferencesManager
 import com.kwasow.musekit.managers.PreferencesManagerImpl
 import com.kwasow.musekit.managers.PresetsManager
 import com.kwasow.musekit.managers.PresetsManagerImpl
+import com.kwasow.musekit.managers.ReviewManager
+import com.kwasow.musekit.managers.ReviewManagerImpl
 import com.kwasow.musekit.managers.UpdateManager
 import com.kwasow.musekit.managers.UpdateManagerImpl
 import com.kwasow.musekit.managers.WorklogManager
@@ -30,6 +32,10 @@ val managersModule =
 
         single<PresetsManager> {
             PresetsManagerImpl(get())
+        }
+
+        single<ReviewManager> {
+            ReviewManagerImpl()
         }
 
         single<UpdateManager> {
