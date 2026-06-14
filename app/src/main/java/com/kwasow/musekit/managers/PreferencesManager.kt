@@ -1,5 +1,6 @@
 package com.kwasow.musekit.managers
 
+import com.google.protobuf.Timestamp
 import com.kwasow.musekit.data.MetronomeSounds
 import com.kwasow.musekit.data.NotationStyle
 import kotlinx.coroutines.flow.Flow
@@ -20,6 +21,12 @@ interface PreferencesManager {
 
     val metronomeNumberOfBeats: Flow<Int>
 
+    val lastVersionCode: Flow<Long>
+
+    val lastUsedDate: Flow<Timestamp>
+
+    val daysUsedCounter: Flow<Long>
+
     // ====== Methods
     suspend fun setNightMode(value: Int)
 
@@ -34,4 +41,10 @@ interface PreferencesManager {
     suspend fun setMetronomeSound(value: MetronomeSounds)
 
     suspend fun setMetronomeNumberOfBeats(value: Int)
+
+    suspend fun setLastVersionCode(value: Long)
+
+    suspend fun setLastUsedDate(value: Timestamp)
+
+    suspend fun setDaysUsedCounter(value: Long)
 }

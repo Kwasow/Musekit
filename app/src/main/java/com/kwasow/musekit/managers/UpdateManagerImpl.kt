@@ -4,13 +4,12 @@ import android.content.Context
 import android.util.Log
 import com.kwasow.musekit.BuildConfig
 import com.kwasow.musekit.room.Preset
-import com.kwasow.musekit.store.musekitPreferencesDataStore
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 import kotlin.properties.Delegates
 
 class UpdateManagerImpl(
     val context: Context,
+    val preferencesManager: PreferencesManager,
     val presetsManager: PresetsManager,
 ) : UpdateManager {
     // ====== Fields
@@ -20,11 +19,7 @@ class UpdateManagerImpl(
     // ====== Interface methods
     override suspend fun init() {
         // Read last version
-        lastVersionCode =
-            context.musekitPreferencesDataStore.data
-                .map { preferences ->
-                    preferences.lastVersionCode
-                }.first()
+        lastVersionCode = preferencesManager.lastVersionCode.first()
 
         // Run updates
         Log.i(
@@ -48,14 +43,8 @@ class UpdateManagerImpl(
         }
     }
 
-    private suspend fun updateLastVersionCode() {
-        context.musekitPreferencesDataStore.updateData { currentPreferences ->
-            currentPreferences
-                .toBuilder()
-                .setLastVersionCode(BuildConfig.VERSION_CODE.toLong())
-                .build()
-        }
-    }
+    private suspend fun updateLastVersionCode() =
+        preferencesManager.setLastVersionCode(BuildConfig.VERSION_CODE.toLong())
 
     private suspend fun migratePresets() {
         val oldPresetManager = PresetsManagerV1Impl(context)

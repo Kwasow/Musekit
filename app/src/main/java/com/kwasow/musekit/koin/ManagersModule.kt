@@ -39,7 +39,7 @@ val managersModule =
         }
 
         single<UpdateManager> {
-            UpdateManagerImpl(get(), get())
+            UpdateManagerImpl(get(), get(), get())
         }
 
         single<WorklogManager> {
