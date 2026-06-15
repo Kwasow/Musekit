@@ -2,9 +2,7 @@ package com.kwasow.musekit.managers
 
 import com.kwasow.musekit.BuildConfig
 import kotlinx.coroutines.flow.first
-import java.time.Instant
 import java.util.Calendar
-import java.util.Date
 
 /**
  * The idea is to count on how many different days a user has opened the app. If they opened the app
@@ -12,7 +10,7 @@ import java.util.Date
  * if they are using the Play Store version of the app - the F-droid app never shows that.
  */
 class ReviewManagerImpl(
-    val preferencesManager: PreferencesManager
+    val preferencesManager: PreferencesManager,
 ) : ReviewManager {
     companion object {
         const val DISMISS_FOREVER: Long = -1
@@ -25,9 +23,10 @@ class ReviewManagerImpl(
         val lastUsed = Calendar.getInstance().apply { timeInMillis = lastUsedTimestamp }
         val today = Calendar.getInstance()
 
-        val differentDay = lastUsed.get(Calendar.YEAR) != today.get(Calendar.YEAR) ||
-            lastUsed.get(Calendar.MONTH) != today.get(Calendar.MONTH) ||
-            lastUsed.get(Calendar.DAY_OF_MONTH) != today.get(Calendar.DAY_OF_MONTH)
+        val differentDay =
+            lastUsed.get(Calendar.YEAR) != today.get(Calendar.YEAR) ||
+                lastUsed.get(Calendar.MONTH) != today.get(Calendar.MONTH) ||
+                lastUsed.get(Calendar.DAY_OF_MONTH) != today.get(Calendar.DAY_OF_MONTH)
 
         if (differentDay && daysUsedCounter != DISMISS_FOREVER) {
             preferencesManager.setDaysUsedCounter(daysUsedCounter + 1)
@@ -44,9 +43,7 @@ class ReviewManagerImpl(
         return uniqueDays > 5
     }
 
-    override suspend fun dismiss() =
-        preferencesManager.setDaysUsedCounter(0)
+    override suspend fun dismiss() = preferencesManager.setDaysUsedCounter(0)
 
-    override suspend fun dismissForever() =
-        preferencesManager.setDaysUsedCounter(DISMISS_FOREVER)
+    override suspend fun dismissForever() = preferencesManager.setDaysUsedCounter(DISMISS_FOREVER)
 }

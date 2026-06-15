@@ -11,7 +11,6 @@ import com.kwasow.musekit.managers.ReviewManager
 import com.kwasow.musekit.managers.UpdateManager
 import com.kwasow.musekit.ui.App
 import com.kwasow.musekit.ui.theme.MusekitTheme
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.koin.android.ext.android.inject
