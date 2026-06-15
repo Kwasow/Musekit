@@ -36,6 +36,19 @@ configure<ApplicationExtension> {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    flavorDimensions += "distributionChannel"
+    productFlavors {
+        create("google") {
+            dimension = "distributionChannel"
+            buildConfigField("String", "DISTRIBUTION_CHANNEL", "\"google\"")
+        }
+
+        create("foss") {
+            dimension = "distributionChannel"
+            buildConfigField("String", "DISTRIBUTION_CHANNEL", "\"foss\"")
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = true

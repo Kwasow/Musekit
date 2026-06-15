@@ -35,7 +35,7 @@ val managersModule =
         }
 
         single<ReviewManager> {
-            ReviewManagerImpl()
+            ReviewManagerImpl(get())
         }
 
         single<UpdateManager> {

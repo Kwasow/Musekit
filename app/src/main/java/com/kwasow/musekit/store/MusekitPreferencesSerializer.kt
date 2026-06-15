@@ -36,6 +36,8 @@ object MusekitPreferencesSerializer : Serializer<MusekitPreferences> {
 
             // Miscellaneous
             lastVersionCode = -1
+            lastUsedTimestamp = 0
+            daysUsedCounter = 0
         }
 
     override suspend fun readFrom(input: InputStream): MusekitPreferences {

@@ -55,6 +55,24 @@ class PreferencesManagerImpl(
                 return@map if (value == 0) 4 else value
             }
 
+    override val lastVersionCode: Flow<Long> =
+        context.musekitPreferencesDataStore.data
+            .map { preferences ->
+                preferences.lastVersionCode
+            }
+
+    override val lastUsedTimestamp: Flow<Long> =
+        context.musekitPreferencesDataStore.data
+            .map { preferences ->
+                preferences.lastUsedTimestamp
+            }
+
+    override val daysUsedCounter: Flow<Long> =
+        context.musekitPreferencesDataStore.data
+            .map { preferences ->
+                preferences.daysUsedCounter
+            }
+
     // ====== Public methods
     override suspend fun setNightMode(value: Int) {
         context.musekitPreferencesDataStore.updateData { currentPreferences ->
@@ -115,6 +133,33 @@ class PreferencesManagerImpl(
             currentPreferences
                 .toBuilder()
                 .setMetronomeNumberOfBeats(value.coerceIn(2, 12))
+                .build()
+        }
+    }
+
+    override suspend fun setLastVersionCode(value: Long) {
+        context.musekitPreferencesDataStore.updateData { currentPreferences ->
+            currentPreferences
+                .toBuilder()
+                .setLastVersionCode(value)
+                .build()
+        }
+    }
+
+    override suspend fun setLastUsedTimestamp(value: Long) {
+        context.musekitPreferencesDataStore.updateData { currentPreferences ->
+            currentPreferences
+                .toBuilder()
+                .setLastUsedTimestamp(value)
+                .build()
+        }
+    }
+
+    override suspend fun setDaysUsedCounter(value: Long) {
+        context.musekitPreferencesDataStore.updateData { currentPreferences ->
+            currentPreferences
+                .toBuilder()
+                .setDaysUsedCounter(value)
                 .build()
         }
     }

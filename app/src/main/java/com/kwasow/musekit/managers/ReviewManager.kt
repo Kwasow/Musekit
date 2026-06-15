@@ -1,5 +1,11 @@
 package com.kwasow.musekit.managers
 
 interface ReviewManager {
-    fun shouldShowReviewRequest(): Boolean
+    suspend fun init()
+
+    suspend fun shouldShowReviewRequest(): Boolean
+
+    suspend fun dismiss()
+
+    suspend fun dismissForever()
 }

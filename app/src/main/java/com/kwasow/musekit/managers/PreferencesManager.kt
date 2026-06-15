@@ -1,6 +1,5 @@
 package com.kwasow.musekit.managers
 
-import com.google.protobuf.Timestamp
 import com.kwasow.musekit.data.MetronomeSounds
 import com.kwasow.musekit.data.NotationStyle
 import kotlinx.coroutines.flow.Flow
@@ -23,7 +22,7 @@ interface PreferencesManager {
 
     val lastVersionCode: Flow<Long>
 
-    val lastUsedDate: Flow<Timestamp>
+    val lastUsedTimestamp: Flow<Long>
 
     val daysUsedCounter: Flow<Long>
 
@@ -44,7 +43,7 @@ interface PreferencesManager {
 
     suspend fun setLastVersionCode(value: Long)
 
-    suspend fun setLastUsedDate(value: Timestamp)
+    suspend fun setLastUsedTimestamp(value: Long)
 
     suspend fun setDaysUsedCounter(value: Long)
 }
