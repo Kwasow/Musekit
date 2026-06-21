@@ -1,0 +1,110 @@
+<resources>
+    <!-- Bottom navigation bar labels -->
+    <string name="tuning">调音</string>
+    <string name="metronome">节拍器</string>
+    <string name="settings">设置</string>
+
+    <!-- Note fork strings -->
+    <string name="note">音符</string>
+    <string name="pitch">音高</string>
+    <string name="note_fork_automatic">自动</string>
+    <string name="note_fork_manual">手动</string>
+    <string name="record_permission_not_granted">未授予麦克风权限</string>
+    <string name="play_sound_to_tune">播放声音以开始调音</string>
+    <string name="open_settings">打开设置</string>
+    <string name="contentDescription_tuner_check">调音准星</string>
+
+    <!-- Shared strings -->
+    <string name="contentDescription_increase">增加</string>
+    <string name="contentDescription_decrease">减少</string>
+    <string name="contentDescription_start">开始</string>
+    <string name="contentDescription_stop">停止</string>
+
+    <!-- Note fork presets -->
+    <string name="presets">预设</string>
+    <string name="default_preset">默认</string>
+    <string name="save_preset">保存预设</string>
+    <string name="save">保存</string>
+    <string name="cancel">取消</string>
+    <string name="preset_name">预设名称（必填）</string>
+    <string name="delete_preset">删除预设</string>
+    <string name="warning_preset_deletion">预设「%1$s」将被永久删除。</string>
+    <string name="delete">删除</string>
+    <string name="contentDescription_trash_can">垃圾桶</string>
+    <string name="contentDescription_save">保存</string>
+
+    <!-- Metronome strings -->
+    <string name="sound">音色</string>
+    <string name="set_tempo">设定</string>
+    <string name="tap_tempo">点按</string>
+    <string name="tempo">速度</string>
+    <string name="beats">拍数</string>
+    <string name="contentDescription_pen">笔</string>
+    <string name="contentDescription_finger_tapping">手指点按</string>
+
+    <!-- Worklog -->
+    <string name="practice_history">练习记录</string>
+    <string name="contentDescription_hourglass">沙漏 (%1$s)</string>
+    <string name="contentDescription_back_arrow">返回箭头</string>
+    <string name="contentDescription_practice_history">历史记录</string>
+    
+    <!-- Metronome sound names -->
+    <string name="metronome_sound_default">默认</string>
+    <string name="metronome_sound_beep">哔哔声</string>
+    <string name="metronome_sound_ding">叮咚声</string>
+    <string name="metronome_sound_wood">木鱼声</string>
+    <string name="metronome_sound_none">（无）</string>
+
+    <!-- Settings strings -->
+    <string name="about">关于</string>
+    <string name="contentDescription_app_icon">应用图标</string>
+    <string name="notation_style">记谱法</string>
+    <string name="notation_style_subtitle">选择音符的命名方式</string>
+    <string name="notation_style_english">英文</string>
+    <string name="notation_style_german">德文</string>
+    <string name="notation_style_fixed_do">固定调</string>
+    <string name="source_code">源代码</string>
+    <string name="source_code_subtitle">报告问题并请求新功能</string>
+    <string name="developer">开发者账号</string>
+    <string name="developer_subtitle">在 Mastodon 上找到我</string>
+    <string name="developer_website">开发者网站</string>
+    <string name="developer_website_subtitle">查看我的其他项目</string>
+    <string name="licenses">开源许可</string>
+    <string name="licenses_subtitle">音高识别、图标及其他</string>
+    <string name="version">版本 %1$s</string>
+    <string name="close">关闭</string>
+    <string name="contentDescription_github_logo">Github 图标</string>
+    <string name="contentDescription_mastodon_logo">Mastodon 图标</string>
+    <string name="contentDescription_internet_website">网站</string>
+    <string name="contentDescription_localization">本地化</string>
+    <string name="contentDescription_file_icon">文件</string>
+    <string name="contentDescription_moon_icon">月亮</string>
+    <string name="contentDescription_current_theme_symbol">当前主题</string>
+
+    <!-- Night mode dialog -->
+    <string name="theme">主题</string>
+    <string name="theme_subtitle">选择应用样式</string>
+    <string name="theme_dark">深色</string>
+    <string name="theme_light">浅色</string>
+    <string name="theme_auto">跟随系统</string>
+    <string name="accent_colour">强调色</string>
+    <string name="green">绿色</string>
+    <string name="red">红色</string>
+    <string name="blue">蓝色</string>
+    <string name="yellow">黄色</string>
+    <string name="contentDescription_check_icon">勾选标记</string>
+
+    <!-- Error string -->
+    <string name="whoopsie">哎呀，你不该出现在这里！</string>
+    <string name="close_app">关闭应用</string>
+    <string name="contentDescription_ghost_icon">幽灵图标</string>
+
+    <!-- Licenses dialog -->
+    <string name="this_app">本应用</string>
+    <string name="icons">Material Icons (Google)</string>
+    <string name="apache">Apache 2.0 许可证</string>
+    <string name="tarsos">TarsosDSP</string>
+    <string name="contentDescription_right_arrow">向右箭头</string>
+    <string name="special_thanks">特别感谢 TarsosDSP 构建了音高识别库。</string>
+
+</resources>
