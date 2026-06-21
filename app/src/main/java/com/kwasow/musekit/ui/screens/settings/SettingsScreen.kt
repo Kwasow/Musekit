@@ -26,9 +26,13 @@ import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -50,6 +54,7 @@ import com.kwasow.musekit.ui.components.ListEntry
 import com.kwasow.musekit.ui.components.ListSection
 import com.kwasow.musekit.ui.dialogs.LicenseDialog
 import com.kwasow.musekit.utils.ScreenUtils
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM as NIGHT_SYSTEM
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO as NIGHT_NO
@@ -59,7 +64,16 @@ import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES as NIGHT_YES
 @Composable
 fun SettingsScreen() {
     val viewModel = koinViewModel<SettingsScreenViewModel>()
+    val coroutineScope = rememberCoroutineScope()
+
     val licenseDialog = remember { LicenseDialogInfo() }
+    var reviewRequestVisible by remember { mutableStateOf(false) }
+
+    LaunchedEffect(false) {
+        coroutineScope.launch {
+            reviewRequestVisible = viewModel.shouldShowReviewRequest()
+        }
+    }
 
     Box(
         modifier =
@@ -68,10 +82,14 @@ fun SettingsScreen() {
                 .fillMaxSize(),
     ) {
         if (ScreenUtils.isWide()) {
-            WideView(licenseDialog = licenseDialog)
+            WideView(
+                licenseDialog = licenseDialog,
+                reviewRequestVisible = reviewRequestVisible,
+            )
         } else {
             DefaultView(
                 licenseDialog = licenseDialog,
+                reviewRequestVisible = reviewRequestVisible,
                 modifier = Modifier.align(Alignment.TopCenter),
             )
         }
@@ -87,6 +105,7 @@ fun SettingsScreen() {
 @Composable
 private fun DefaultView(
     licenseDialog: LicenseDialogInfo,
+    reviewRequestVisible: Boolean,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -96,12 +115,18 @@ private fun DefaultView(
                 .verticalScroll(rememberScrollState()),
     ) {
         AppDetails(modifier = Modifier.fillMaxWidth())
-        MainColumn(licenseDialog = licenseDialog)
+        MainColumn(
+            licenseDialog = licenseDialog,
+            reviewRequestVisible = reviewRequestVisible,
+        )
     }
 }
 
 @Composable
-private fun WideView(licenseDialog: LicenseDialogInfo) {
+private fun WideView(
+    licenseDialog: LicenseDialogInfo,
+    reviewRequestVisible: Boolean,
+) {
     Row(
         modifier = Modifier.fillMaxSize(),
         verticalAlignment = Alignment.CenterVertically,
@@ -114,13 +139,20 @@ private fun WideView(licenseDialog: LicenseDialogInfo) {
                     .verticalScroll(rememberScrollState())
                     .weight(0.6f),
         ) {
-            MainColumn(licenseDialog = licenseDialog)
+            MainColumn(
+                licenseDialog = licenseDialog,
+                reviewRequestVisible = reviewRequestVisible,
+            )
         }
     }
 }
 
 @Composable
-private fun MainColumn(licenseDialog: LicenseDialogInfo) {
+private fun MainColumn(
+    licenseDialog: LicenseDialogInfo,
+    reviewRequestVisible: Boolean,
+) {
+    ReviewCard(visible = reviewRequestVisible)
     AppSettingsSection()
     AboutSection(
         onOpenLicenseDialog = { licenseDialog.state = LicenseDialogInfo.State.DIALOG_OPEN },

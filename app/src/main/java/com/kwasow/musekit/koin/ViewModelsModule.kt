@@ -18,7 +18,7 @@ val viewModelsModule =
         }
 
         viewModel {
-            SettingsScreenViewModel(get(), get())
+            SettingsScreenViewModel(get(), get(), get())
         }
 
         viewModel {

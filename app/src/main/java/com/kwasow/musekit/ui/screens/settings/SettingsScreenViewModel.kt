@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kwasow.musekit.data.NotationStyle
 import com.kwasow.musekit.managers.PreferencesManager
+import com.kwasow.musekit.managers.ReviewManager
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -15,6 +16,7 @@ import kotlinx.coroutines.launch
 class SettingsScreenViewModel(
     private val applicationContext: Context,
     private val preferencesManager: PreferencesManager,
+    private val reviewManager: ReviewManager,
 ) : ViewModel() {
     // ====== Fields
     var notationStyle =
@@ -56,6 +58,8 @@ class SettingsScreenViewModel(
 
         return String(byteArray)
     }
+
+    suspend fun shouldShowReviewRequest(): Boolean = reviewManager.shouldShowReviewRequest()
 
     // ====== Private methods
     private fun openUrl(url: String) {
