@@ -1,9 +1,11 @@
 package com.kwasow.musekit.managers
 
-interface ReviewManager {
-    suspend fun init()
+import kotlinx.coroutines.flow.Flow
 
-    suspend fun shouldShowReviewRequest(): Boolean
+interface ReviewManager {
+    val shouldShowReviewRequest: Flow<Boolean>
+
+    suspend fun init()
 
     suspend fun dismiss()
 

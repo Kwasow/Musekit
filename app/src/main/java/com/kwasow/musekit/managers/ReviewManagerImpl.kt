@@ -1,7 +1,9 @@
 package com.kwasow.musekit.managers
 
 import com.kwasow.musekit.BuildConfig
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import java.util.Calendar
 
 /**
@@ -15,6 +17,11 @@ class ReviewManagerImpl(
     companion object {
         const val DISMISS_FOREVER: Long = -1
     }
+
+    override val shouldShowReviewRequest: Flow<Boolean> =
+        preferencesManager.daysUsedCounter.map { uniqueDays ->
+            return@map BuildConfig.DISTRIBUTION_CHANNEL != "foss" && uniqueDays > 5
+        }
 
     override suspend fun init() {
         val lastUsedTimestamp = preferencesManager.lastUsedTimestamp.first()
@@ -32,15 +39,6 @@ class ReviewManagerImpl(
             preferencesManager.setDaysUsedCounter(daysUsedCounter + 1)
             preferencesManager.setLastUsedTimestamp(today.timeInMillis)
         }
-    }
-
-    override suspend fun shouldShowReviewRequest(): Boolean {
-        if (BuildConfig.DISTRIBUTION_CHANNEL == "foss") {
-            return false
-        }
-
-        val uniqueDays = preferencesManager.daysUsedCounter.first()
-        return uniqueDays > 5
     }
 
     override suspend fun dismiss() = preferencesManager.setDaysUsedCounter(0)

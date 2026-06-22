@@ -26,13 +26,9 @@ import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -48,13 +44,13 @@ import androidx.compose.ui.unit.dp
 import com.kwasow.musekit.BuildConfig
 import com.kwasow.musekit.R
 import com.kwasow.musekit.data.NotationStyle
+import com.kwasow.musekit.data.ReviewRequestResult
 import com.kwasow.musekit.data.dialogs.LicenseDialogInfo
 import com.kwasow.musekit.ui.components.ListDivider
 import com.kwasow.musekit.ui.components.ListEntry
 import com.kwasow.musekit.ui.components.ListSection
 import com.kwasow.musekit.ui.dialogs.LicenseDialog
 import com.kwasow.musekit.utils.ScreenUtils
-import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM as NIGHT_SYSTEM
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO as NIGHT_NO
@@ -64,16 +60,9 @@ import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES as NIGHT_YES
 @Composable
 fun SettingsScreen() {
     val viewModel = koinViewModel<SettingsScreenViewModel>()
-    val coroutineScope = rememberCoroutineScope()
 
     val licenseDialog = remember { LicenseDialogInfo() }
-    var reviewRequestVisible by remember { mutableStateOf(false) }
-
-    LaunchedEffect(false) {
-        coroutineScope.launch {
-            reviewRequestVisible = viewModel.shouldShowReviewRequest()
-        }
-    }
+    val reviewRequestVisible by viewModel.shouldShowReviewRequest.collectAsState()
 
     Box(
         modifier =
@@ -85,12 +74,14 @@ fun SettingsScreen() {
             WideView(
                 licenseDialog = licenseDialog,
                 reviewRequestVisible = reviewRequestVisible,
+                onReviewResult = { viewModel.onReviewResult(it) },
             )
         } else {
             DefaultView(
                 licenseDialog = licenseDialog,
                 reviewRequestVisible = reviewRequestVisible,
                 modifier = Modifier.align(Alignment.TopCenter),
+                onReviewResult = { viewModel.onReviewResult(it) },
             )
         }
     }
@@ -106,6 +97,7 @@ fun SettingsScreen() {
 private fun DefaultView(
     licenseDialog: LicenseDialogInfo,
     reviewRequestVisible: Boolean,
+    onReviewResult: (ReviewRequestResult) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -118,6 +110,7 @@ private fun DefaultView(
         MainColumn(
             licenseDialog = licenseDialog,
             reviewRequestVisible = reviewRequestVisible,
+            onReviewResult = onReviewResult,
         )
     }
 }
@@ -126,6 +119,7 @@ private fun DefaultView(
 private fun WideView(
     licenseDialog: LicenseDialogInfo,
     reviewRequestVisible: Boolean,
+    onReviewResult: (ReviewRequestResult) -> Unit,
 ) {
     Row(
         modifier = Modifier.fillMaxSize(),
@@ -142,6 +136,7 @@ private fun WideView(
             MainColumn(
                 licenseDialog = licenseDialog,
                 reviewRequestVisible = reviewRequestVisible,
+                onReviewResult = onReviewResult,
             )
         }
     }
@@ -151,8 +146,12 @@ private fun WideView(
 private fun MainColumn(
     licenseDialog: LicenseDialogInfo,
     reviewRequestVisible: Boolean,
+    onReviewResult: (ReviewRequestResult) -> Unit,
 ) {
-    ReviewCard(visible = reviewRequestVisible)
+    ReviewCard(
+        visible = reviewRequestVisible,
+        onResult = onReviewResult,
+    )
     AppSettingsSection()
     AboutSection(
         onOpenLicenseDialog = { licenseDialog.state = LicenseDialogInfo.State.DIALOG_OPEN },

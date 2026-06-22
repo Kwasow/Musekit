@@ -86,6 +86,12 @@
     <string name="contentDescription_moon_icon">Moon</string>
     <string name="contentDescription_current_theme_symbol">Current theme</string>
 
+    <!-- Review popup -->
+    <string name="review_question">Like the app? I would love to hear you opinion!</string>
+    <string name="review_now">Review</string>
+    <string name="review_later">Later</string>
+    <string name="contentDescription_review_never">Don\'t show again</string>
+
     <!-- Night mode dialog -->
     <string name="theme">Theme</string>
     <string name="theme_subtitle">Choose the app style</string>

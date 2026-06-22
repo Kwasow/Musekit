@@ -6,7 +6,9 @@ import androidx.annotation.RawRes
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kwasow.musekit.BuildConfig
 import com.kwasow.musekit.data.NotationStyle
+import com.kwasow.musekit.data.ReviewRequestResult
 import com.kwasow.musekit.managers.PreferencesManager
 import com.kwasow.musekit.managers.ReviewManager
 import kotlinx.coroutines.flow.SharingStarted
@@ -31,6 +33,12 @@ class SettingsScreenViewModel(
             SharingStarted.WhileSubscribed(),
             null,
         )
+    var shouldShowReviewRequest =
+        reviewManager.shouldShowReviewRequest.stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(),
+            false,
+        )
 
     // ====== Public methods
     fun updateNotationStyle(style: NotationStyle) =
@@ -49,6 +57,9 @@ class SettingsScreenViewModel(
 
     fun openWebsite() = openUrl("https://kwasow.pl")
 
+    fun openPlayStore() =
+        openUrl("https://play.google.com/store/apps/details?id=${BuildConfig.APPLICATION_ID}")
+
     fun openFile(
         @RawRes id: Int,
     ): String {
@@ -59,7 +70,18 @@ class SettingsScreenViewModel(
         return String(byteArray)
     }
 
-    suspend fun shouldShowReviewRequest(): Boolean = reviewManager.shouldShowReviewRequest()
+    fun onReviewResult(result: ReviewRequestResult) {
+        viewModelScope.launch {
+            when (result) {
+                ReviewRequestResult.YES -> {
+                    reviewManager.dismissForever()
+                    openPlayStore()
+                }
+                ReviewRequestResult.LATER -> reviewManager.dismiss()
+                ReviewRequestResult.NEVER -> reviewManager.dismissForever()
+            }
+        }
+    }
 
     // ====== Private methods
     private fun openUrl(url: String) {
