@@ -1,6 +1,6 @@
 [versions]
 # Build details
-compileSdk = "36"
+compileSdk = "37"
 minSdk = "23"
 versionCode = "1721768604"
 versionName = "3.0.0"
