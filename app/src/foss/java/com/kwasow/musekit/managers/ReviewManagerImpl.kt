@@ -4,9 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
 /**
- * The idea is to count on how many different days a user has opened the app. If they opened the app
- * on more than 5 different days, we can show them an unobtrusive nudge to leave a review. That is,
- * if they are using the Play Store version of the app - the F-droid app never shows that.
+ * Never show a review request in the FOSS build.
  */
 class ReviewManagerImpl(
     val preferencesManager: PreferencesManager,
