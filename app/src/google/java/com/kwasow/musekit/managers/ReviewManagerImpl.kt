@@ -1,6 +1,5 @@
 package com.kwasow.musekit.managers
 
-import com.kwasow.musekit.BuildConfig
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -20,7 +19,7 @@ class ReviewManagerImpl(
 
     override val shouldShowReviewRequest: Flow<Boolean> =
         preferencesManager.daysUsedCounter.map { uniqueDays ->
-            return@map BuildConfig.DISTRIBUTION_CHANNEL != "foss" && uniqueDays > 0
+            return@map uniqueDays > 5
         }
 
     override suspend fun init() {

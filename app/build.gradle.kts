@@ -40,12 +40,10 @@ configure<ApplicationExtension> {
     productFlavors {
         create("google") {
             dimension = "distributionChannel"
-            buildConfigField("String", "DISTRIBUTION_CHANNEL", "\"google\"")
         }
 
         create("foss") {
             dimension = "distributionChannel"
-            buildConfigField("String", "DISTRIBUTION_CHANNEL", "\"foss\"")
         }
     }
 
