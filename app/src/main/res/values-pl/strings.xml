@@ -64,6 +64,7 @@
     <string name="contentDescription_moon_icon">Ikonka księżyca</string>
     <string name="contentDescription_current_theme_symbol">Ikonka przedstawiająca aktualny motyw</string>
     <string name="contentDescription_check_icon">Haczyk oznaczający aktualny wybór</string>
+    <string name="contentDescription_review_never">Nie pokazuj więcej</string>
     <string name="theme">Motyw</string>
     <string name="accent_colour">Akcent kolorystyczny</string>
     <string name="green">Zielony</string>
@@ -86,4 +87,8 @@
     <string name="contentDescription_pen">Długopis</string>
     <string name="practice_history">Historia ćwiczeń</string>
     <string name="contentDescription_hourglass">Klepsydra (%1$s)</string>
+    <string name="review_popup_title">Podoba Ci się?</string>
+    <string name="review_popup_content">Chęnie usłyszę Twoją opinię!</string>
+    <string name="review_now">Oceń</string>
+    <string name="review_later">Później</string>
 </resources>

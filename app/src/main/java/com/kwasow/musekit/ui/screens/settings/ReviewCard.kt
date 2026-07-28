@@ -51,7 +51,7 @@ fun ReviewCard(
                     horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
                     Text(
-                        text = "Like the app?",
+                        text = stringResource(id = R.string.review_popup_title),
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.SemiBold,
                     )
@@ -66,7 +66,7 @@ fun ReviewCard(
                     )
                 }
 
-                Text(text = "I would love to hear your opinion!")
+                Text(text = stringResource(id = R.string.review_popup_content))
 
                 Row(
                     modifier =
