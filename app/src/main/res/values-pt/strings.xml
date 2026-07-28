@@ -82,6 +82,7 @@
     <string name="contentDescription_current_theme_symbol">Tema atual</string>
 
     <!-- Night mode dialog -->
+    <string name="contentDescription_review_never">Não mostrar novamente</string>
     <string name="theme">Tema</string>
     <string name="theme_subtitle">Escolha o tema do aplicativo</string>
     <string name="theme_dark">Escuro</string>
@@ -106,5 +107,9 @@
     <string name="tarsos">TarsosDSP</string>
     <string name="contentDescription_right_arrow">Ver detalhes da licença</string>
     <string name="special_thanks">Agradecimento especial a TarsosDSP pela criação da biblioteca de reconhecimento de frequências.</string>
+    <string name="review_popup_title">Gosta da app?</string>
+    <string name="review_popup_content">Adoraríamos ouvir a sua opinião!</string>
+    <string name="review_now">Avaliar</string>
+    <string name="review_later">Depois</string>
 
 </resources>

@@ -6,8 +6,11 @@ import androidx.annotation.RawRes
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kwasow.musekit.BuildConfig
 import com.kwasow.musekit.data.NotationStyle
+import com.kwasow.musekit.data.ReviewRequestResult
 import com.kwasow.musekit.managers.PreferencesManager
+import com.kwasow.musekit.managers.ReviewManager
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -15,6 +18,7 @@ import kotlinx.coroutines.launch
 class SettingsScreenViewModel(
     private val applicationContext: Context,
     private val preferencesManager: PreferencesManager,
+    private val reviewManager: ReviewManager,
 ) : ViewModel() {
     // ====== Fields
     var notationStyle =
@@ -28,6 +32,12 @@ class SettingsScreenViewModel(
             viewModelScope,
             SharingStarted.WhileSubscribed(),
             null,
+        )
+    var shouldShowReviewRequest =
+        reviewManager.shouldShowReviewRequest.stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(),
+            false,
         )
 
     // ====== Public methods
@@ -47,6 +57,9 @@ class SettingsScreenViewModel(
 
     fun openWebsite() = openUrl("https://kwasow.pl")
 
+    fun openPlayStore() =
+        openUrl("https://play.google.com/store/apps/details?id=${BuildConfig.APPLICATION_ID}")
+
     fun openFile(
         @RawRes id: Int,
     ): String {
@@ -55,6 +68,19 @@ class SettingsScreenViewModel(
         inputStream.read(byteArray)
 
         return String(byteArray)
+    }
+
+    fun onReviewResult(result: ReviewRequestResult) {
+        viewModelScope.launch {
+            when (result) {
+                ReviewRequestResult.YES -> {
+                    reviewManager.dismissForever()
+                    openPlayStore()
+                }
+                ReviewRequestResult.LATER -> reviewManager.dismiss()
+                ReviewRequestResult.NEVER -> reviewManager.dismissForever()
+            }
+        }
     }
 
     // ====== Private methods

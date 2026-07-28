@@ -20,6 +20,12 @@ interface PreferencesManager {
 
     val metronomeNumberOfBeats: Flow<Int>
 
+    val lastVersionCode: Flow<Long>
+
+    val lastUsedTimestamp: Flow<Long>
+
+    val daysUsedCounter: Flow<Long>
+
     // ====== Methods
     suspend fun setNightMode(value: Int)
 
@@ -34,4 +40,10 @@ interface PreferencesManager {
     suspend fun setMetronomeSound(value: MetronomeSounds)
 
     suspend fun setMetronomeNumberOfBeats(value: Int)
+
+    suspend fun setLastVersionCode(value: Long)
+
+    suspend fun setLastUsedTimestamp(value: Long)
+
+    suspend fun setDaysUsedCounter(value: Long)
 }
