@@ -20,7 +20,7 @@ class ReviewManagerImpl(
 
     override val shouldShowReviewRequest: Flow<Boolean> =
         preferencesManager.daysUsedCounter.map { uniqueDays ->
-            return@map BuildConfig.DISTRIBUTION_CHANNEL != "foss" && uniqueDays > 5
+            return@map BuildConfig.DISTRIBUTION_CHANNEL != "foss" && uniqueDays > 0
         }
 
     override suspend fun init() {
