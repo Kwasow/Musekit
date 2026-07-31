@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.HourglassBottom
@@ -27,6 +28,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices.PHONE
 import androidx.compose.ui.tooling.preview.Devices.TABLET
@@ -37,12 +39,10 @@ import com.kwasow.musekit.room.PracticeSession
 import com.kwasow.musekit.ui.components.ListEntry
 import com.kwasow.musekit.ui.components.ListSection
 import com.kwasow.musekit.ui.composition.LocalMusekitNavigation
-import com.kwasow.musekit.utils.ScreenUtils
 import org.koin.compose.viewmodel.koinViewModel
 import java.time.LocalDate
 import java.time.Month
 import java.time.format.TextStyle
-import java.util.Locale
 
 // ====== Public composables
 @Composable
@@ -133,7 +133,10 @@ private fun PracticeEntriesSection(
     year: Int,
     sessions: List<PracticeSession>,
 ) {
-    val monthName = Month.of(month).getDisplayName(TextStyle.FULL_STANDALONE, Locale.getDefault())
+    val monthName =
+        Month
+            .of(month)
+            .getDisplayName(TextStyle.FULL_STANDALONE, LocalLocale.current.platformLocale)
 
     ListSection(
         title = "$monthName $year",
