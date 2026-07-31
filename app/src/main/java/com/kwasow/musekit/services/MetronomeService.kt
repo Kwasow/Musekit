@@ -3,10 +3,11 @@ package com.kwasow.musekit.services
 import android.app.Service
 import android.content.Intent
 import android.media.AudioAttributes
-import android.media.SoundPool
+import android.media.AudioFormat
+import android.media.AudioManager
+import android.media.AudioTrack
 import android.os.Binder
-import android.os.Handler
-import android.os.HandlerThread
+import kotlin.math.min
 import android.os.IBinder
 import androidx.lifecycle.MutableLiveData
 import com.kwasow.musekit.data.MetronomeSounds
@@ -22,8 +23,7 @@ import java.time.LocalDateTime
 import kotlin.properties.Delegates
 
 class MetronomeService :
-    Service(),
-    Runnable {
+    Service() {
     // ====== Fields
     inner class LocalBinder : Binder() {
         val service: MetronomeService = this@MetronomeService
@@ -35,15 +35,11 @@ class MetronomeService :
     private val worklogManager by inject<WorklogManager>()
 
     private var soundId by Delegates.notNull<Int>()
-    private lateinit var soundPool: SoundPool
-
-    private lateinit var handlerThread: HandlerThread
-    private lateinit var beatHandler: Handler
-
     private val job = SupervisorJob()
     private val coroutineScope = CoroutineScope(Dispatchers.IO + job)
 
     private var sound = MetronomeSounds.Default
+    private var audioData: MutableLiveData<ByteArray> = MutableLiveData(byteArrayOf())
     private var interval = toInterval(60)
     private var numberOfBeats = 4
 
@@ -55,28 +51,7 @@ class MetronomeService :
     // ====== Interface methods
     override fun onCreate() {
         super.onCreate()
-
-        val audioAttributes =
-            AudioAttributes
-                .Builder()
-                .setUsage(AudioAttributes.USAGE_UNKNOWN)
-                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                .build()
-
-        soundPool =
-            SoundPool
-                .Builder()
-                .setAudioAttributes(audioAttributes)
-                .setMaxStreams(1)
-                .build()
-
-        soundId = soundPool.load(this, sound.getResourceId(), 1)
-
-        handlerThread = HandlerThread("MetronomeServiceHandlerThread")
-        handlerThread.start()
-
-        beatHandler = Handler(handlerThread.looper)
-
+        soundId = sound.getResourceId()
         setupCollectors()
     }
 
@@ -87,34 +62,7 @@ class MetronomeService :
     override fun onDestroy() {
         super.onDestroy()
         job.cancelChildren()
-
-        // Stop metronome callbacks
-        if (this::beatHandler.isInitialized) {
-            beatHandler.removeCallbacks(this)
-        }
-
-        // Release audio resources
-        if (this::soundPool.isInitialized) {
-            soundPool.release()
-        }
-
-        // Shut down background looper thread
-        if (this::handlerThread.isInitialized) {
-            handlerThread.quitSafely()
-        }
-    }
-
-    override fun run() {
-        if (isPlaying.value == true) {
-            beatHandler.postDelayed(this, interval)
-
-            if (sound != MetronomeSounds.None) {
-                soundPool.play(soundId, 1F, 1F, 0, 0, 1F)
-            }
-            currentBeat.value?.let { old ->
-                currentBeat.postValue(old % numberOfBeats + 1)
-            }
-        }
+        stopMetronome()
     }
 
     // ====== Public methods
@@ -130,11 +78,72 @@ class MetronomeService :
     private fun toInterval(bpm: Int): Long = (1000L * 60) / bpm
 
     private fun startMetronome() {
-        sessionStart = LocalDateTime.now()
-
-        isPlaying.value = true
         currentBeat.value = 0
-        beatHandler.post(this)
+        val channelConfig = AudioFormat.CHANNEL_OUT_MONO
+        val audioFormatEncoding = AudioFormat.ENCODING_PCM_16BIT
+        val sampleRate = getPreferredSampleRate()
+
+        val minBufferSize = AudioTrack.getMinBufferSize(
+            sampleRate,
+            channelConfig,
+            audioFormatEncoding
+        )
+        val audioTrack = AudioTrack.Builder()
+            .setAudioAttributes(
+                AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_MEDIA)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .build()
+            )
+            .setAudioFormat(
+                AudioFormat.Builder()
+                    .setChannelMask(channelConfig)
+                    .setEncoding(audioFormatEncoding)
+                    .setSampleRate(sampleRate)
+                    .build()
+            )
+            .setBufferSizeInBytes(minBufferSize)
+            .setTransferMode(AudioTrack.MODE_STREAM) // <-- Changed to STREAM mode
+            .build()
+
+        audioTrack.play()
+        isPlaying.value = true
+
+        // Generate audio on a background thread
+        CoroutineScope(Dispatchers.IO).launch {
+            val buffer = ByteArray(minBufferSize)
+            var currentSample = 0
+
+            while (isPlaying.value == true) {
+                // ms between beats = interval
+                // samples between beats = sampleRate / (interval / 1000) * 2 (16bit sample)
+                val samplesPerBeat = (sampleRate * (interval.toFloat() / 1000.0)).toInt() * 2
+
+                for (i in buffer.indices) {
+                    // First sample of the beat
+                    if (currentSample == 0) {
+                        currentBeat.value?.let { old ->
+                            currentBeat.postValue(old % numberOfBeats + 1)
+                        }
+                    }
+
+                    if (currentSample >= (audioData.value?.size ?: 0)) {
+                        // beat audio over, fill with 0
+                        buffer[i] = 0
+                        currentSample += 1
+                    } else {
+                        // write audio into buffer
+                        buffer[i] = audioData.getValue()?.get(currentSample) ?: 0
+                        currentSample += 1
+                    }
+                    currentSample %= samplesPerBeat
+                }
+
+                val result = audioTrack.write(buffer, 0, buffer.size)
+                if (result < 0) break
+            }
+        }
+        sessionStart = LocalDateTime.now()
     }
 
     private fun stopMetronome() {
@@ -144,21 +153,31 @@ class MetronomeService :
             }
         }
         sessionStart = null
-
         isPlaying.value = false
+    }
 
-        if (this::beatHandler.isInitialized) {
-            beatHandler.removeCallbacks(this)
+    fun getPreferredSampleRate(): Int {
+        return AudioTrack.getNativeOutputSampleRate(AudioManager.STREAM_MUSIC)
+    }
+
+    // Load wav file into audioData
+    private fun loadAudioData() {
+        if (soundId != MetronomeSounds.None.getResourceId()) {
+            val inputStream = resources.openRawResource(soundId)
+            // skip header
+            inputStream.skip(44)
+            audioData.postValue(inputStream.readBytes())
+            inputStream.close()
+        } else {
+            audioData.postValue(ByteArray(0))
         }
     }
 
     private fun setupCollectors() {
         coroutineScope.launch {
             preferencesManager.metronomeSound.collect { collected ->
-                sound = collected
-                if (collected != MetronomeSounds.None) {
-                    soundId = soundPool.load(this@MetronomeService, collected.getResourceId(), 1)
-                }
+                soundId = collected.getResourceId()
+                loadAudioData()
             }
         }
 
