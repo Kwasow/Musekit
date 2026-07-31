@@ -82,6 +82,7 @@
     <string name="contentDescription_current_theme_symbol">Aktuelles Design</string>
 
     <!-- Night mode dialog -->
+    <string name="contentDescription_review_never">Nicht mehr anzeigen</string>
     <string name="theme">Design</string>
     <string name="theme_subtitle">Wählen Sie den App-Stil aus</string>
     <string name="theme_dark">Dunkel</string>
@@ -106,5 +107,9 @@
     <string name="tarsos">TarsosDSP</string>
     <string name="contentDescription_right_arrow">Pfeil nach rechts</string>
     <string name="special_thanks">Besonderer Dank an TarsosDSP für die Erstellung der Tonhöhenerkennungsbibliothek.</string>
+    <string name="review_popup_title">Gefällt dir die App?</string>
+    <string name="review_popup_content">Wir freuen uns auf dein Feedback!</string>
+    <string name="review_now">Bewerten</string>
+    <string name="review_later">Später</string>
 
 </resources>

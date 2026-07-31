@@ -36,6 +36,17 @@ configure<ApplicationExtension> {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    flavorDimensions += "distributionChannel"
+    productFlavors {
+        create("google") {
+            dimension = "distributionChannel"
+        }
+
+        create("foss") {
+            dimension = "distributionChannel"
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = true
@@ -67,8 +78,8 @@ configure<ApplicationExtension> {
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
 
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     dependenciesInfo {
@@ -155,7 +166,7 @@ dependencies {
 
 kotlin {
     compilerOptions {
-        jvmTarget = JvmTarget.JVM_1_8
+        jvmTarget = JvmTarget.JVM_17
     }
 }
 

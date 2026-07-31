@@ -17,5 +17,9 @@ message MusekitPreferences {
 
   // Miscellaneous
   uint64 last_version_code = 8;
+
+  // Show review dialog
+  int64 last_used_timestamp = 9;
+  int64 days_used_counter = 10;
 }
 
