@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import com.kwasow.musekit.BuildConfig
 import com.kwasow.musekit.R
 import com.kwasow.musekit.data.NotationStyle
+import com.kwasow.musekit.data.ReviewRequestResult
 import com.kwasow.musekit.data.dialogs.LicenseDialogInfo
 import com.kwasow.musekit.ui.components.ListEntry
 import com.kwasow.musekit.ui.components.ListSection
@@ -58,7 +59,9 @@ import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES as NIGHT_YES
 @Composable
 fun SettingsScreen() {
     val viewModel = koinViewModel<SettingsScreenViewModel>()
+
     val licenseDialog = remember { LicenseDialogInfo() }
+    val reviewRequestVisible by viewModel.shouldShowReviewRequest.collectAsState()
 
     Box(
         modifier =
@@ -67,11 +70,17 @@ fun SettingsScreen() {
                 .fillMaxSize(),
     ) {
         if (ScreenUtils.isWide()) {
-            WideView(licenseDialog = licenseDialog)
+            WideView(
+                licenseDialog = licenseDialog,
+                reviewRequestVisible = reviewRequestVisible,
+                onReviewResult = { viewModel.onReviewResult(it) },
+            )
         } else {
             DefaultView(
                 licenseDialog = licenseDialog,
+                reviewRequestVisible = reviewRequestVisible,
                 modifier = Modifier.align(Alignment.TopCenter),
+                onReviewResult = { viewModel.onReviewResult(it) },
             )
         }
     }
@@ -86,6 +95,8 @@ fun SettingsScreen() {
 @Composable
 private fun DefaultView(
     licenseDialog: LicenseDialogInfo,
+    reviewRequestVisible: Boolean,
+    onReviewResult: (ReviewRequestResult) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -95,12 +106,20 @@ private fun DefaultView(
                 .verticalScroll(rememberScrollState()),
     ) {
         AppDetails(modifier = Modifier.fillMaxWidth())
-        MainColumn(licenseDialog = licenseDialog)
+        MainColumn(
+            licenseDialog = licenseDialog,
+            reviewRequestVisible = reviewRequestVisible,
+            onReviewResult = onReviewResult,
+        )
     }
 }
 
 @Composable
-private fun WideView(licenseDialog: LicenseDialogInfo) {
+private fun WideView(
+    licenseDialog: LicenseDialogInfo,
+    reviewRequestVisible: Boolean,
+    onReviewResult: (ReviewRequestResult) -> Unit,
+) {
     Row(
         modifier = Modifier.fillMaxSize(),
         verticalAlignment = Alignment.CenterVertically,
@@ -113,13 +132,25 @@ private fun WideView(licenseDialog: LicenseDialogInfo) {
                     .verticalScroll(rememberScrollState())
                     .weight(0.6f),
         ) {
-            MainColumn(licenseDialog = licenseDialog)
+            MainColumn(
+                licenseDialog = licenseDialog,
+                reviewRequestVisible = reviewRequestVisible,
+                onReviewResult = onReviewResult,
+            )
         }
     }
 }
 
 @Composable
-private fun MainColumn(licenseDialog: LicenseDialogInfo) {
+private fun MainColumn(
+    licenseDialog: LicenseDialogInfo,
+    reviewRequestVisible: Boolean,
+    onReviewResult: (ReviewRequestResult) -> Unit,
+) {
+    ReviewCard(
+        visible = reviewRequestVisible,
+        onResult = onReviewResult,
+    )
     AppSettingsSection()
     AboutSection(
         onOpenLicenseDialog = { licenseDialog.state = LicenseDialogInfo.State.DIALOG_OPEN },
