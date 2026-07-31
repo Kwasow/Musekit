@@ -99,6 +99,13 @@
     <string name="close_app">关闭应用</string>
     <string name="contentDescription_ghost_icon">幽灵图标</string>
 
+    <!-- Review popup -->
+    <string name="review_popup_title">喜欢这款应用吗？</string>
+    <string name="review_popup_content">希望听到您的反馈！</string>
+    <string name="review_now">评价</string>
+    <string name="review_later">稍后</string>
+    <string name="contentDescription_review_never">不再显示</string>
+
     <!-- Licenses dialog -->
     <string name="this_app">本应用</string>
     <string name="icons">Material Icons (Google)</string>

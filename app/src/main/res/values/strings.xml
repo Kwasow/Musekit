@@ -88,7 +88,7 @@
 
     <!-- Review popup -->
     <string name="review_popup_title">Like the app?</string>
-    <string name="review_popup_content">I would love to hear you opinion!</string>
+    <string name="review_popup_content">I would love to hear your opinion!</string>
     <string name="review_now">Review</string>
     <string name="review_later">Later</string>
     <string name="contentDescription_review_never">Don\'t show again</string>
