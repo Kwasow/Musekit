@@ -15,6 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.VectorPainter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.text.font.FontWeight
@@ -30,14 +31,12 @@ fun <T> ListSection(
     columns: GridCells = GridCells.Fixed(1),
     itemContent: @Composable (LazyGridItemScope.(index: Int, item: T) -> Unit),
 ) {
-    val color = MaterialTheme.colorScheme.surfaceContainerHigh
-
     Column(modifier = Modifier.padding(16.dp)) {
         if (title.isNotEmpty()) {
             SectionTitle(title = title)
         }
 
-        Card(colors = CardDefaults.cardColors(color)) {
+        Card(colors = CardDefaults.cardColors(Color.Transparent)) {
             LazyVerticalGrid(
                 columns = columns,
                 verticalArrangement = Arrangement.spacedBy(4.dp),
