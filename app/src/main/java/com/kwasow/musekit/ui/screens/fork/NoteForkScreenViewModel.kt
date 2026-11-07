@@ -12,15 +12,20 @@ import com.kwasow.musekit.R
 import com.kwasow.musekit.data.NotationStyle
 import com.kwasow.musekit.data.Note
 import com.kwasow.musekit.data.Notes
+import com.kwasow.musekit.data.PitchDetectionResult
 import com.kwasow.musekit.managers.PermissionManager
 import com.kwasow.musekit.managers.PitchPlayerManager
 import com.kwasow.musekit.managers.PreferencesManager
 import com.kwasow.musekit.managers.PresetsManager
 import com.kwasow.musekit.room.Preset
+import com.kwasow.musekit.utils.MusekitPitchDetector
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.WhileSubscribed
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -72,6 +77,23 @@ class NoteForkScreenViewModel(
             SharingStarted.WhileSubscribed(5000),
             NotationStyle.English,
         )
+
+    val pitchDetectionResult: StateFlow<PitchDetectionResult?> =
+        callbackFlow {
+            val dispatcher = MusekitPitchDetector.buildDefaultDispatcher()
+            val detector = MusekitPitchDetector(dispatcher) { automaticTunerPitch.value }
+            detector.startListening()
+
+            val job =
+                launch {
+                    detector.detectionResult.collect { send(it) }
+                }
+
+            awaitClose {
+                job.cancel()
+                detector.stopListening()
+            }
+        }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), initialValue = null)
 
     // ====== Constructors
     init {
@@ -135,7 +157,7 @@ class NoteForkScreenViewModel(
     }
 
     fun startStopNote() {
-        if (isPlaying.value) {
+        if (_isPlaying.value) {
             stopNote()
         } else {
             startNote()

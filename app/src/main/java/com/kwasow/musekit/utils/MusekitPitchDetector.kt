@@ -1,7 +1,6 @@
 package com.kwasow.musekit.utils
 
 import android.os.CountDownTimer
-import androidx.lifecycle.MutableLiveData
 import be.tarsos.dsp.AudioDispatcher
 import be.tarsos.dsp.filters.HighPass
 import be.tarsos.dsp.io.android.AudioDispatcherFactory
@@ -9,7 +8,10 @@ import be.tarsos.dsp.pitch.PitchDetectionHandler
 import be.tarsos.dsp.pitch.PitchProcessor
 import be.tarsos.dsp.pitch.PitchProcessor.PitchEstimationAlgorithm
 import com.kwasow.musekit.data.Note
+import com.kwasow.musekit.data.PitchDetectionResult
 import com.kwasow.musekit.extensions.mostCommon
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlin.math.log2
 
 class MusekitPitchDetector(
@@ -59,7 +61,9 @@ class MusekitPitchDetector(
         object : CountDownTimer(3000, 1000) {
             override fun onTick(millisUntilFinished: Long) = Unit
 
-            override fun onFinish() = detectionResult.postValue(null)
+            override fun onFinish() {
+                _detectionResult.value = null
+            }
         }
 
     private val history = mutableListOf<Pair<Note, Double>>()
@@ -77,14 +81,13 @@ class MusekitPitchDetector(
                 timer.cancel()
                 timer.start()
 
-                detectionResult.postValue(calculateAverage())
+                _detectionResult.value = calculateAverage()
                 history.clear()
             }
         }
 
-    val detectionResult: MutableLiveData<Pair<Note, Double>?> by lazy {
-        MutableLiveData()
-    }
+    private val _detectionResult: MutableStateFlow<PitchDetectionResult?> = MutableStateFlow(null)
+    val detectionResult = _detectionResult.asStateFlow()
 
     // ====== Constructors
     init {
@@ -114,11 +117,11 @@ class MusekitPitchDetector(
     }
 
     // ====== Private methods
-    private fun calculateAverage(): Pair<Note, Double> {
+    private fun calculateAverage(): PitchDetectionResult {
         val mostCommon = history.map { it.first }.mostCommon()
         val filtered = history.filter { it.first == mostCommon }
 
         val avgCents = filtered.map { it.second }.average()
-        return Pair(mostCommon, avgCents)
+        return PitchDetectionResult(note = mostCommon, cents = avgCents)
     }
 }
