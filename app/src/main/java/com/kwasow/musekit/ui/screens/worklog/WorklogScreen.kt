@@ -5,8 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.HourglassBottom
@@ -27,29 +26,50 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Devices.PHONE
+import androidx.compose.ui.tooling.preview.Devices.TABLET
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.kwasow.musekit.R
+import com.kwasow.musekit.extensions.musekitHeader
+import com.kwasow.musekit.extensions.musekitItems
 import com.kwasow.musekit.room.PracticeSession
-import com.kwasow.musekit.ui.components.ListDivider
 import com.kwasow.musekit.ui.components.ListEntry
-import com.kwasow.musekit.ui.components.ListSection
+import com.kwasow.musekit.ui.components.MusekitLazyGrid
 import com.kwasow.musekit.ui.composition.LocalMusekitNavigation
 import org.koin.compose.viewmodel.koinViewModel
+import java.time.LocalDate
 import java.time.Month
 import java.time.format.TextStyle
-import java.util.Locale
 
 // ====== Public composables
 @Composable
 fun WorklogScreen() {
-    Scaffold(
-        topBar = { TopBar() },
-    ) { paddingValues ->
-        MainView(paddingValues = paddingValues)
+    val viewModel = koinViewModel<WorklogScreenViewModel>()
+    val practiceSessions = viewModel.practiceSessions.observeAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.getPracticeSessions()
     }
+
+    WorklogScreen(practiceSessions = practiceSessions.value)
 }
 
 // ====== Private composables
+@Composable
+private fun WorklogScreen(practiceSessions: List<PracticeSession>?) {
+    Scaffold(
+        topBar = { TopBar() },
+    ) { paddingValues ->
+        MainView(
+            paddingValues = paddingValues,
+            practiceSessions = practiceSessions,
+        )
+    }
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TopBar() {
@@ -76,57 +96,46 @@ private fun TopBar() {
 }
 
 @Composable
-private fun MainView(paddingValues: PaddingValues) {
-    val viewModel = koinViewModel<WorklogScreenViewModel>()
-    val practiceSessions = viewModel.practiceSessions.observeAsState()
-
-    LaunchedEffect(Unit) {
-        viewModel.getPracticeSessions()
-    }
-
+private fun MainView(
+    paddingValues: PaddingValues,
+    practiceSessions: List<PracticeSession>?,
+) {
     Box(
         modifier =
             Modifier
                 .fillMaxSize()
                 .padding(paddingValues),
     ) {
-        val sessions = practiceSessions.value
-
-        if (sessions == null) {
+        if (practiceSessions == null) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         } else {
+            // TODO: Can't have business logic in UI layer
             val byMonth =
-                sessions.groupBy { (date) ->
+                practiceSessions.groupBy { (date) ->
                     Pair(date.year, date.monthValue)
                 }
+            val locale = LocalLocale.current.platformLocale
 
-            LazyColumn {
-                items(byMonth.keys.sortedByDescending { (year, month) -> year * 12 + month }) {
-                    PracticeEntriesSection(
-                        month = it.second,
-                        year = it.first,
-                        sessions = byMonth[it] ?: emptyList(),
-                    )
-                }
-            }
-        }
-    }
-}
+            MusekitLazyGrid(
+                columns = GridCells.Adaptive(minSize = 240.dp),
+                modifier = Modifier.padding(horizontal = 16.dp),
+            ) {
+                // TODO: Can't have business login in UI layer
+                byMonth.keys
+                    .sortedByDescending { (year, month) -> year * 12 + month }
+                    .forEach {
+                        val year = it.first
+                        val monthName =
+                            Month
+                                .of(it.second)
+                                .getDisplayName(TextStyle.FULL_STANDALONE, locale)
+                        val sessions = byMonth[it] ?: emptyList()
 
-@Composable
-private fun PracticeEntriesSection(
-    month: Int,
-    year: Int,
-    sessions: List<PracticeSession>,
-) {
-    val monthName = Month.of(month).getDisplayName(TextStyle.FULL_STANDALONE, Locale.getDefault())
-
-    ListSection(title = "$monthName $year") {
-        sessions.sortedByDescending(PracticeSession::date).forEachIndexed { index, session ->
-            PracticeEntry(session = session)
-
-            if (index < sessions.lastIndex) {
-                ListDivider()
+                        musekitHeader("$monthName $year")
+                        musekitItems(items = sessions) { _, session ->
+                            PracticeEntry(session = session)
+                        }
+                    }
             }
         }
     }
@@ -154,4 +163,125 @@ private fun PracticeEntry(session: PracticeSession) {
         description = session.date.toString(),
         onClick = null,
     )
+}
+
+// ====== Previews
+@Composable
+@Preview(showSystemUi = true, device = PHONE)
+private fun PhonePortraitPreview() {
+    val practiceSessions =
+        listOf(
+            PracticeSession(
+                date = LocalDate.of(2026, 4, 6),
+                length = 768,
+            ),
+            PracticeSession(
+                date = LocalDate.of(2026, 4, 5),
+                length = 1890,
+            ),
+            PracticeSession(
+                date = LocalDate.of(2026, 4, 3),
+                length = 544,
+            ),
+            PracticeSession(
+                date = LocalDate.of(2026, 3, 22),
+                length = 3865,
+            ),
+            PracticeSession(
+                date = LocalDate.of(2026, 3, 21),
+                length = 153,
+            ),
+        )
+
+    WorklogScreen(practiceSessions = practiceSessions)
+}
+
+@Composable
+@Preview(showSystemUi = true, device = "$PHONE,orientation=landscape")
+private fun PhoneLandscapePreview() {
+    val practiceSessions =
+        listOf(
+            PracticeSession(
+                date = LocalDate.of(2026, 4, 6),
+                length = 768,
+            ),
+            PracticeSession(
+                date = LocalDate.of(2026, 4, 5),
+                length = 1890,
+            ),
+            PracticeSession(
+                date = LocalDate.of(2026, 4, 3),
+                length = 544,
+            ),
+            PracticeSession(
+                date = LocalDate.of(2026, 3, 22),
+                length = 3865,
+            ),
+            PracticeSession(
+                date = LocalDate.of(2026, 3, 21),
+                length = 153,
+            ),
+        )
+
+    WorklogScreen(practiceSessions = practiceSessions)
+}
+
+@Composable
+@Preview(showSystemUi = true, device = "$TABLET,orientation=portrait")
+private fun TabletPortraitPreview() {
+    val practiceSessions =
+        listOf(
+            PracticeSession(
+                date = LocalDate.of(2026, 4, 6),
+                length = 768,
+            ),
+            PracticeSession(
+                date = LocalDate.of(2026, 4, 5),
+                length = 1890,
+            ),
+            PracticeSession(
+                date = LocalDate.of(2026, 4, 3),
+                length = 544,
+            ),
+            PracticeSession(
+                date = LocalDate.of(2026, 3, 22),
+                length = 3865,
+            ),
+            PracticeSession(
+                date = LocalDate.of(2026, 3, 21),
+                length = 153,
+            ),
+        )
+
+    WorklogScreen(practiceSessions = practiceSessions)
+}
+
+@Composable
+@Preview(showSystemUi = true, device = TABLET)
+private fun TabletLandscapePreview() {
+    val practiceSessions =
+        listOf(
+            PracticeSession(
+                date = LocalDate.of(2026, 4, 6),
+                length = 768,
+            ),
+            PracticeSession(
+                date = LocalDate.of(2026, 4, 5),
+                length = 1890,
+            ),
+            PracticeSession(
+                date = LocalDate.of(2026, 4, 3),
+                length = 544,
+            ),
+            PracticeSession(
+                date = LocalDate.of(2026, 3, 22),
+                length = 3865,
+            ),
+            PracticeSession(
+                date = LocalDate.of(2026, 3, 21),
+                length = 153,
+            ),
+        )
+
+    WorklogScreen(practiceSessions = practiceSessions)
 }

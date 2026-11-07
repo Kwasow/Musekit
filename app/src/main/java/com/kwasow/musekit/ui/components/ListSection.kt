@@ -1,51 +1,47 @@
 package com.kwasow.musekit.ui.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 // ====== Public composables
 @Composable
 fun ListSection(
-    title: String = "",
-    entries: @Composable ColumnScope.() -> Unit,
+    title: String? = null,
+    entries: List<@Composable ColumnScope.() -> Unit>,
 ) {
-    val color = MaterialTheme.colorScheme.surfaceContainerHigh
-
     Column(modifier = Modifier.padding(16.dp)) {
-        if (title.isNotEmpty()) {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.SemiBold,
-                modifier = Modifier.padding(start = 16.dp, bottom = 12.dp),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-            )
-        }
+        title?.let { SectionTitle(title = it) }
 
-        Card(
-            modifier = Modifier.fillMaxWidth(),
-            colors = CardDefaults.cardColors(color),
-        ) {
-            entries()
+        entries.forEachIndexed { index, item ->
+            val shape =
+                MusekitUIHelpers.gridItemShape(
+                    index = index,
+                    totalItems = entries.size,
+                    columns = 1,
+                )
+
+            val padding = if (entries.lastIndex != index) 4.dp else 0.dp
+
+            Column(
+                modifier =
+                    Modifier
+                        .padding(bottom = padding)
+                        .clip(shape)
+                        .background(MaterialTheme.colorScheme.surfaceContainerHigh),
+            ) {
+                item()
+            }
         }
     }
 }
@@ -54,31 +50,35 @@ fun ListSection(
 @Preview
 @Composable
 private fun ListSectionPreview() {
-    Box(
-        modifier = Modifier.background(MaterialTheme.colorScheme.background),
-    ) {
-        ListSection(title = "General") {
-            ListEntry(
-                icon = rememberVectorPainter(image = Icons.Outlined.Add),
-                header = "Entry 1",
-                description = "This is the setting description",
-                onClick = {},
-            )
-            HorizontalDivider()
-            ListEntry(
-                icon = rememberVectorPainter(image = Icons.Outlined.Add),
-                header = "Entry 2 (no description)",
-                onClick = {},
-            )
-            HorizontalDivider()
-            ListEntry(
-                icon = rememberVectorPainter(image = Icons.Outlined.Add),
-                header = "Entry 3",
-                description =
-                    "This is the setting description that is so long that it doesn't" +
-                        "fit on the screen",
-                onClick = {},
-            )
-        }
-    }
+    ListSection(
+        title = "General",
+        entries =
+            listOf(
+                {
+                    ListEntry(
+                        icon = rememberVectorPainter(image = Icons.Outlined.Add),
+                        header = "Entry 1",
+                        description = "This is the setting description",
+                        onClick = {},
+                    )
+                },
+                {
+                    ListEntry(
+                        icon = rememberVectorPainter(image = Icons.Outlined.Add),
+                        header = "Entry 2 (no description)",
+                        onClick = {},
+                    )
+                },
+                {
+                    ListEntry(
+                        icon = rememberVectorPainter(image = Icons.Outlined.Add),
+                        header = "Entry 3",
+                        description =
+                            "This is the setting description that is so long that it doesn't" +
+                                "fit on the screen",
+                        onClick = {},
+                    )
+                },
+            ),
+    )
 }

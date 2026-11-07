@@ -1,5 +1,6 @@
 package com.kwasow.musekit.ui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -30,17 +31,20 @@ fun ListEntry(
     iconTint: Color = LocalContentColor.current,
     iconDescription: String = "",
     header: String,
-    description: String = "",
+    description: String? = null,
     onClick: (() -> Unit)?,
     trailingContent: @Composable () -> Unit = {},
 ) {
     var modifier = Modifier.fillMaxWidth()
+    val color = MaterialTheme.colorScheme.surfaceContainerHigh
+
     if (onClick != null) {
         modifier = modifier.clickable { onClick() }
     }
 
     modifier =
         modifier
+            .background(color)
             .height(64.dp)
             .padding(8.dp)
 
@@ -55,7 +59,7 @@ fun ListEntry(
         )
         ListEntry(
             header = header,
-            description = description,
+            description = description ?: "",
             modifier = Modifier.weight(1f),
         )
         trailingContent()
