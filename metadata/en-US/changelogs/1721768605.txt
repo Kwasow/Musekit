@@ -1,0 +1,4 @@
+The app now includes improved support for tablets. Several architectural
+changes have also been made under the hood to make the app faster and more
+performant.
+
