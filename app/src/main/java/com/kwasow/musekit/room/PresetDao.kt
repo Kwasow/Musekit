@@ -4,11 +4,12 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PresetDao {
     @Query("SELECT * FROM Preset")
-    suspend fun getAll(): List<Preset>
+    fun getAll(): Flow<List<Preset>>
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun insert(preset: Preset): Long?

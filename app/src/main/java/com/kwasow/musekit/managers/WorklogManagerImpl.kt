@@ -2,6 +2,7 @@ package com.kwasow.musekit.managers
 
 import com.kwasow.musekit.room.AppDatabase
 import com.kwasow.musekit.room.PracticeSession
+import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -14,13 +15,13 @@ class WorklogManagerImpl(
     private val practiceSessionDao = database.practiceSessionDao()
 
     // ====== Interface methods
-    override suspend fun getPracticeSessions(): List<PracticeSession> = practiceSessionDao.getAll()
+    override val practiceSessions: Flow<List<PracticeSession>> = practiceSessionDao.getAll()
 
     override suspend fun addWorklogEntry(
         startTime: LocalDateTime,
         endTime: LocalDateTime,
     ) {
-        // 1. If you practice while daylight saving time changes, you'll probably loose/gain
+        // 1. If you practice while daylight saving time changes, you'll probably lose/gain
         //    and hour of practice. I won't be testing or handling that. Maybe it is handled by
         //    the Java standard library.
         // 2. If you practice on your private jet going through timezones or even the international
