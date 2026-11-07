@@ -24,7 +24,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -42,9 +41,7 @@ import androidx.compose.ui.unit.sp
 import com.kwasow.musekit.R
 import com.kwasow.musekit.extensions.allowSleep
 import com.kwasow.musekit.extensions.preventSleep
-import com.kwasow.musekit.services.MetronomeService
 import com.kwasow.musekit.ui.components.PlayPauseButton
-import com.kwasow.musekit.ui.components.rememberBoundLocalService
 import com.kwasow.musekit.ui.composition.LocalMusekitNavigation
 import com.kwasow.musekit.ui.dialogs.SetBeatDialog
 import com.kwasow.musekit.utils.ScreenUtils
@@ -58,8 +55,6 @@ fun MetronomeScreen() {
     val bpm by viewModel.metronomeBpm.collectAsState()
 
     val context = LocalContext.current
-    val metronomeService =
-        rememberBoundLocalService<MetronomeService, MetronomeService.LocalBinder> { service }
 
     var showSetBeatDialog by remember { mutableStateOf(false) }
 
@@ -73,12 +68,10 @@ fun MetronomeScreen() {
     Box(modifier = Modifier.safeDrawingPadding()) {
         if (ScreenUtils.isWide()) {
             WideView(
-                metronomeService = metronomeService,
                 onOpenSetBeatDialog = { showSetBeatDialog = true },
             )
         } else {
             DefaultView(
-                metronomeService = metronomeService,
                 onOpenSetBeatDialog = { showSetBeatDialog = true },
             )
         }
@@ -96,10 +89,7 @@ fun MetronomeScreen() {
 // ====== Private composables
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun DefaultView(
-    metronomeService: MetronomeService?,
-    onOpenSetBeatDialog: () -> Unit,
-) {
+private fun DefaultView(onOpenSetBeatDialog: () -> Unit) {
     val scaffoldState = rememberBottomSheetScaffoldState()
     val coroutineScope = rememberCoroutineScope()
 
@@ -115,7 +105,6 @@ private fun DefaultView(
                 Modifier
                     .fillMaxSize()
                     .padding(16.dp),
-            service = metronomeService,
             closeBottomSheet = {
                 coroutineScope.launch {
                     scaffoldState.bottomSheetState.partialExpand()
@@ -126,10 +115,7 @@ private fun DefaultView(
 }
 
 @Composable
-private fun WideView(
-    metronomeService: MetronomeService?,
-    onOpenSetBeatDialog: () -> Unit,
-) {
+private fun WideView(onOpenSetBeatDialog: () -> Unit) {
     Row(
         modifier = Modifier.fillMaxSize(),
         verticalAlignment = Alignment.CenterVertically,
@@ -140,7 +126,6 @@ private fun WideView(
                     .weight(1f)
                     .fillMaxHeight()
                     .padding(16.dp),
-            service = metronomeService,
             closeBottomSheet = {},
         )
 
@@ -156,7 +141,6 @@ private fun WideView(
 
 @Composable
 private fun MainView(
-    service: MetronomeService?,
     closeBottomSheet: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -170,9 +154,8 @@ private fun MainView(
                     .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            BeatIndicator(service = service)
+            BeatIndicator()
             PlayPause(
-                service = service,
                 closeBottomSheet = closeBottomSheet,
             )
         }
@@ -223,12 +206,12 @@ private fun TempoDisplay(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun BeatIndicator(service: MetronomeService?) {
+private fun BeatIndicator() {
     val viewModel = koinViewModel<MetronomeScreenViewModel>()
 
-    val isPlaying = service?.isPlaying?.observeAsState()
+    val isPlaying by viewModel.isPlaying.collectAsState()
     val totalBeats by viewModel.metronomeNumberOfBeats.collectAsState()
-    val currentBeat = service?.currentBeat?.observeAsState()
+    val currentBeat by viewModel.currentBeat.collectAsState()
 
     Row(
         modifier =
@@ -239,7 +222,7 @@ private fun BeatIndicator(service: MetronomeService?) {
     ) {
         totalBeats?.let { beats ->
             (1..beats).forEach { index ->
-                val active = isPlaying?.value == true && currentBeat?.value == index
+                val active = isPlaying && currentBeat == index
                 val color =
                     if (active) {
                         MaterialTheme.colorScheme.primary
@@ -261,18 +244,17 @@ private fun BeatIndicator(service: MetronomeService?) {
 }
 
 @Composable
-private fun PlayPause(
-    service: MetronomeService?,
-    closeBottomSheet: () -> Unit,
-) {
-    val isPlaying = service?.isPlaying?.observeAsState()
+private fun PlayPause(closeBottomSheet: () -> Unit) {
+    val viewModel = koinViewModel<MetronomeScreenViewModel>()
+
+    val isPlaying by viewModel.isPlaying.collectAsState()
 
     PlayPauseButton(
-        isPlaying = isPlaying?.value == true,
+        isPlaying = isPlaying,
         onChange = {
-            service?.startStopMetronome()
+            viewModel.startStopMetronome()
 
-            if (isPlaying?.value == false) {
+            if (!isPlaying) {
                 closeBottomSheet()
             }
         },
