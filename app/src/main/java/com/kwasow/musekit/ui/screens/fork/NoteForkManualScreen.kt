@@ -31,7 +31,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -187,7 +186,7 @@ private fun PresetPicker(
     modifier: Modifier,
 ) {
     val viewModel = koinViewModel<NoteForkScreenViewModel>()
-    val presets = viewModel.presets.observeAsState()
+    val presets by viewModel.presets.collectAsState()
     var expanded by remember { mutableStateOf(false) }
 
     ExposedDropdownMenuBox(
@@ -213,7 +212,7 @@ private fun PresetPicker(
             expanded = expanded,
             onDismissRequest = { expanded = false },
         ) {
-            presets.value?.forEach { preset ->
+            presets.forEach { preset ->
                 val fontWeight =
                     if (preset.id == currentPreset?.id) {
                         FontWeight.Bold
@@ -371,7 +370,7 @@ private fun PropertyCard(
 @Composable
 private fun PlayPause(modifier: Modifier = Modifier) {
     val viewModel = koinViewModel<NoteForkScreenViewModel>()
-    val isPlaying = viewModel.isPlaying.observeAsState(false)
+    val isPlaying by viewModel.isPlaying.collectAsState()
 
     DisposableEffect(true) {
         onDispose {
@@ -381,7 +380,7 @@ private fun PlayPause(modifier: Modifier = Modifier) {
 
     PlayPauseButton(
         modifier = modifier,
-        isPlaying = isPlaying.value,
+        isPlaying = isPlaying,
         onChange = { viewModel.startStopNote() },
     )
 }

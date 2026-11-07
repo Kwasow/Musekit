@@ -6,7 +6,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.neverEqualPolicy
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.AnnotatedString
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kwasow.musekit.R
@@ -18,8 +17,12 @@ import com.kwasow.musekit.managers.PitchPlayerManager
 import com.kwasow.musekit.managers.PreferencesManager
 import com.kwasow.musekit.managers.PresetsManager
 import com.kwasow.musekit.room.Preset
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -43,34 +46,35 @@ class NoteForkScreenViewModel(
             )
         }
 
-    val presets: MutableLiveData<List<Preset>> = MutableLiveData(emptyList())
+    val presets: StateFlow<List<Preset>> =
+        presetsManager.presets
+            .map { presets ->
+                listOf(defaultPreset) + presets
+            }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), listOf(defaultPreset))
     var currentNote by mutableStateOf(
         value = Note(),
         policy = neverEqualPolicy(),
     )
         private set
-    val isPlaying = MutableLiveData(false)
+    private val _isPlaying = MutableStateFlow(false)
+    val isPlaying = _isPlaying.asStateFlow()
 
     val noteForkMode = runBlocking { preferencesManager.noteForkMode.first() }
     val automaticTunerPitch =
         preferencesManager.automaticTunerPitch.stateIn(
             viewModelScope,
-            SharingStarted.WhileSubscribed(),
+            SharingStarted.WhileSubscribed(5000),
             440,
         )
     val notationStyle =
         preferencesManager.notationStyle.stateIn(
             viewModelScope,
-            SharingStarted.WhileSubscribed(),
+            SharingStarted.WhileSubscribed(5000),
             NotationStyle.English,
         )
 
     // ====== Constructors
     init {
-        viewModelScope.launch {
-            refreshPresets()
-        }
-
         setNote(currentNote)
     }
 
@@ -120,7 +124,6 @@ class NoteForkScreenViewModel(
             )
 
         val id = presetsManager.savePreset(preset) ?: return null
-        refreshPresets()
 
         return preset.copy(id = id)
     }
@@ -128,12 +131,11 @@ class NoteForkScreenViewModel(
     fun removePreset(id: Long) {
         viewModelScope.launch {
             presetsManager.removePreset(id)
-            refreshPresets()
         }
     }
 
     fun startStopNote() {
-        if (isPlaying.value == true) {
+        if (isPlaying.value) {
             stopNote()
         } else {
             startNote()
@@ -142,19 +144,11 @@ class NoteForkScreenViewModel(
 
     fun startNote() {
         pitchPlayerManager.play()
-        isPlaying.postValue(true)
+        _isPlaying.value = true
     }
 
     fun stopNote() {
         pitchPlayerManager.stop()
-        isPlaying.postValue(false)
-    }
-
-    // ====== Private methods
-    private suspend fun refreshPresets() {
-        val newPresets = mutableListOf(defaultPreset)
-        newPresets.addAll(presetsManager.getPresets())
-
-        presets.postValue(newPresets)
+        _isPlaying.value = false
     }
 }

@@ -5,9 +5,10 @@ import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime
 
 interface WorklogManager {
-    // ====== Methods
+    // ====== Fields
     val practiceSessions: Flow<List<PracticeSession>>
 
+    // ====== Methods
     suspend fun addWorklogEntry(
         startTime: LocalDateTime,
         endTime: LocalDateTime,
