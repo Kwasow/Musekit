@@ -1,7 +1,7 @@
 [versions]
 # Build details
 compileSdk = "37"
-minSdk = "23"
+minSdk = "24"
 versionCode = "1721768604"
 versionName = "3.0.0"
 
