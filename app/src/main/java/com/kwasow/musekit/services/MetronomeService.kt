@@ -8,7 +8,6 @@ import android.os.Binder
 import android.os.Handler
 import android.os.HandlerThread
 import android.os.IBinder
-import androidx.lifecycle.MutableLiveData
 import com.kwasow.musekit.data.MetronomeSounds
 import com.kwasow.musekit.managers.PreferencesManager
 import com.kwasow.musekit.managers.WorklogManager
@@ -16,6 +15,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancelChildren
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import java.time.LocalDateTime
@@ -49,8 +51,11 @@ class MetronomeService :
 
     private var sessionStart: LocalDateTime? = null
 
-    val isPlaying: MutableLiveData<Boolean> = MutableLiveData(false)
-    val currentBeat: MutableLiveData<Int> = MutableLiveData(1)
+    private val _isPlaying = MutableStateFlow(false)
+    val isPlaying = _isPlaying.asStateFlow()
+
+    private val _currentBeat = MutableStateFlow(0)
+    val currentBeat = _currentBeat.asStateFlow()
 
     // ====== Interface methods
     override fun onCreate() {
@@ -105,21 +110,19 @@ class MetronomeService :
     }
 
     override fun run() {
-        if (isPlaying.value == true) {
+        if (_isPlaying.value) {
             beatHandler.postDelayed(this, interval)
 
             if (sound != MetronomeSounds.None) {
                 soundPool.play(soundId, 1F, 1F, 0, 0, 1F)
             }
-            currentBeat.value?.let { old ->
-                currentBeat.postValue(old % numberOfBeats + 1)
-            }
+            _currentBeat.update { old -> old % numberOfBeats + 1 }
         }
     }
 
     // ====== Public methods
     fun startStopMetronome() {
-        if (isPlaying.value == true) {
+        if (isPlaying.value) {
             stopMetronome()
         } else {
             startMetronome()
@@ -132,8 +135,8 @@ class MetronomeService :
     private fun startMetronome() {
         sessionStart = LocalDateTime.now()
 
-        isPlaying.value = true
-        currentBeat.value = 0
+        _isPlaying.value = true
+        _currentBeat.value = 0
         beatHandler.post(this)
     }
 
@@ -145,7 +148,7 @@ class MetronomeService :
         }
         sessionStart = null
 
-        isPlaying.value = false
+        _isPlaying.value = false
 
         if (this::beatHandler.isInitialized) {
             beatHandler.removeCallbacks(this)
