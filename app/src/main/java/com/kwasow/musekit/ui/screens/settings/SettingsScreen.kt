@@ -4,6 +4,7 @@ import android.os.Build
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -196,17 +197,15 @@ private fun AppDetails(modifier: Modifier = Modifier) {
 @Composable
 private fun AppSettingsSection() {
     val entries =
-        listOf<@Composable () -> Unit>(
+        listOf<@Composable ColumnScope.() -> Unit>(
             { ThemeSetting() },
             { NotationStyleSetting() },
         )
 
     ListSection(
         title = stringResource(id = R.string.settings),
-        items = entries,
-    ) { _, item ->
-        item()
-    }
+        entries = entries,
+    )
 }
 
 @Composable
@@ -306,7 +305,7 @@ private fun AboutSection(onOpenLicenseDialog: () -> Unit) {
     val viewModel = koinViewModel<SettingsScreenViewModel>()
 
     val entries =
-        listOf<@Composable () -> Unit>(
+        listOf<@Composable ColumnScope.() -> Unit>(
             {
                 ListEntry(
                     icon = painterResource(id = R.drawable.ic_github),
@@ -353,10 +352,8 @@ private fun AboutSection(onOpenLicenseDialog: () -> Unit) {
 
     ListSection(
         title = stringResource(id = R.string.about),
-        items = entries,
-    ) { _, item ->
-        item()
-    }
+        entries = entries,
+    )
 }
 
 @Composable

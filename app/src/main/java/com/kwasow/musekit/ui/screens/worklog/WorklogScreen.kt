@@ -2,7 +2,6 @@ package com.kwasow.musekit.ui.screens.worklog
 
 import android.text.format.DateUtils
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -34,9 +33,11 @@ import androidx.compose.ui.tooling.preview.Devices.TABLET
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.kwasow.musekit.R
+import com.kwasow.musekit.extensions.musekitHeader
+import com.kwasow.musekit.extensions.musekitItems
 import com.kwasow.musekit.room.PracticeSession
 import com.kwasow.musekit.ui.components.ListEntry
-import com.kwasow.musekit.ui.components.ListSection
+import com.kwasow.musekit.ui.components.MusekitLazyGrid
 import com.kwasow.musekit.ui.composition.LocalMusekitNavigation
 import org.koin.compose.viewmodel.koinViewModel
 import java.time.LocalDate
@@ -108,41 +109,35 @@ private fun MainView(
         if (practiceSessions == null) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         } else {
+            // TODO: Can't have business logic in UI layer
             val byMonth =
                 practiceSessions.groupBy { (date) ->
                     Pair(date.year, date.monthValue)
                 }
+            val locale = LocalLocale.current.platformLocale
 
-            Column {
-                byMonth.keys.sortedByDescending { (year, month) -> year * 12 + month }.forEach {
-                    PracticeEntriesSection(
-                        month = it.second,
-                        year = it.first,
-                        sessions = byMonth[it] ?: emptyList(),
-                    )
-                }
+            MusekitLazyGrid(
+                columns = GridCells.Adaptive(minSize = 240.dp),
+                modifier = Modifier.padding(horizontal = 16.dp),
+            ) {
+                // TODO: Can't have business login in UI layer
+                byMonth.keys
+                    .sortedByDescending { (year, month) -> year * 12 + month }
+                    .forEach {
+                        val year = it.first
+                        val monthName =
+                            Month
+                                .of(it.second)
+                                .getDisplayName(TextStyle.FULL_STANDALONE, locale)
+                        val sessions = byMonth[it] ?: emptyList()
+
+                        musekitHeader("$monthName $year")
+                        musekitItems(items = sessions) { _, session ->
+                            PracticeEntry(session = session)
+                        }
+                    }
             }
         }
-    }
-}
-
-@Composable
-private fun PracticeEntriesSection(
-    month: Int,
-    year: Int,
-    sessions: List<PracticeSession>,
-) {
-    val monthName =
-        Month
-            .of(month)
-            .getDisplayName(TextStyle.FULL_STANDALONE, LocalLocale.current.platformLocale)
-
-    ListSection(
-        title = "$monthName $year",
-        items = sessions.sortedByDescending(PracticeSession::date),
-        columns = GridCells.Adaptive(minSize = 240.dp),
-    ) { _, item ->
-        PracticeEntry(session = item)
     }
 }
 
