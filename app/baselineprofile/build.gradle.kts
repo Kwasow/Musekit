@@ -16,6 +16,17 @@ configure<TestExtension> {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    flavorDimensions += "distributionChannel"
+    productFlavors {
+        create("google") {
+            dimension = "distributionChannel"
+        }
+
+        create("foss") {
+            dimension = "distributionChannel"
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
